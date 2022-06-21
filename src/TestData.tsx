@@ -2,10 +2,10 @@ import { Button, TextField } from "@mui/material";
 import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { db } from "./Firebase";
-import { Menu } from "./Interface";
+import { MenuData } from "./Interface";
 export const TestData = () => {
 
-    const [menu, setMenu] = useState<Menu>({
+    const [menu, setMenu] = useState<MenuData>({
         title: "string",
         description: "string",
         price: 0,

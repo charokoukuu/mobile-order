@@ -1,4 +1,4 @@
-export interface Menu {
+export interface MenuData {
     title: string
     description: string
     price: number
@@ -9,7 +9,7 @@ export interface Menu {
     isStatus: boolean
 }
 
-export interface User {
+export interface UserData {
     uuid: string
     studentName: string
     mailAddress: string
@@ -17,15 +17,15 @@ export interface User {
 }
 
 
-export interface Order {
-    user: User
+export interface OrderData {
+    user: UserData
     totalPrice: number
-    menu: Menu
+    menu: MenuData
     isStatus: string
 }
 
 
-const menu: Array<Menu> = [
+const menu: Array<MenuData> = [
     {
         title: 'うどん',
         description: 'scatslkcんks',

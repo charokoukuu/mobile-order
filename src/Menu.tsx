@@ -1,18 +1,29 @@
 import { Button, Checkbox, Grid } from "@mui/material";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { DetailDialog } from "./component/DetailDialog";
 import { FoodCard } from "./component/FoodCard";
 import { db } from "./Firebase";
 import Header from "./Header";
-import "./Menu.css";
-
+import { MenuData } from "./Interface";
 type CategoryProp = "main" | "drink" | "topping";
-
+type Mode = "menu" | "cart" | "complete";
 export const Menu = () => {
-    const [mode, setMode] = useState<CategoryProp>("main");
+    const [categoryMode, setCategoryMode] = useState<CategoryProp>("main");
+    const [mode, setMode] = useState<Mode>("menu");
+    const [detailDialogOpen, setDetailDialogOpen] = useState(false);
     const [menu, setMenu] = useState<DocumentData[]>([]);
     const [checked, setChecked] = useState(true);
-
+    const [chosenMenu, setChosenMenu] = useState<MenuData>({
+        title: "",
+        description: "",
+        price: 0,
+        id: "",
+        image: "",
+        category: "",
+        isBigSize: false,
+        isStatus: true
+    });
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
     };
@@ -50,44 +61,66 @@ export const Menu = () => {
     return (
         <div>
             <Header />
-            <Grid container>
-                <Grid item xs={4}>
-                    <Button fullWidth onClick={() => {
-                        setMode("main");
-                    }}>メイン</Button>
-                </Grid>
-                <Grid item xs={4}>
-                    <Button fullWidth onClick={() => {
-                        setMode("drink");
-                    }}>ドリンク</Button>
-                </Grid>
-
-                <Grid item xs={4}>
-                    <Button fullWidth onClick={() => {
-                        setMode("topping");
-                    }}>トッピング</Button>
-                </Grid>
-            </Grid>
-            <Grid container spacing={3} alignItems="center" justifyItems={"center"}>
-                {menu.filter(item => item.category === mode && item.isStatus).map((menu, index) => {
-                    return (
-                        <Grid item key={index} style={{
-                            margin: "0 auto",
-                            textAlign: "center",
-                        }}>
-                            <FoodCard menu={menu} onClick={function (): void {
-                                console.log(menu);
-                            }} />
+            {
+                mode === "menu" ? <div>
+                    <Grid container>
+                        <Grid item xs={4}>
+                            <Button fullWidth onClick={() => {
+                                setCategoryMode("main");
+                            }}>メイン</Button>
                         </Grid>
-                    )
-                }
-                )}
-            </Grid>
-            <Checkbox
-                checked={checked}
-                onChange={handleChange}
-            />
+                        <Grid item xs={4}>
+                            <Button fullWidth onClick={() => {
+                                setCategoryMode("drink");
+                            }}>ドリンク</Button>
+                        </Grid>
 
+                        <Grid item xs={4}>
+                            <Button fullWidth onClick={() => {
+                                setCategoryMode("topping");
+                            }}>トッピング</Button>
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={3} alignItems="center" justifyItems={"center"}>
+                        {menu.filter(item => item.category === categoryMode && item.isStatus).map((menu, index) => {
+                            return (
+                                <Grid item key={index} style={{
+                                    margin: "0 auto",
+                                    textAlign: "center",
+                                }}>
+                                    <FoodCard menu={menu} onClick={function (): void {
+                                        setChosenMenu({
+                                            title: menu.title,
+                                            description: menu.description,
+                                            price: menu.price,
+                                            id: menu.id,
+                                            image: menu.image,
+                                            category: menu.category,
+                                            isBigSize: menu.isBigSize,
+                                            isStatus: menu.isStatus
+                                        });
+                                        setDetailDialogOpen(true);
+                                        console.log(menu);
+                                    }} />
+                                    <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={() => {
+                                        setMode("cart");
+                                        console.log(menu);
+                                        setDetailDialogOpen(false);
+                                    }} onPrev={() => {
+                                        setDetailDialogOpen(false);
+                                    }} />
+                                </Grid>
+                            )
+                        }
+                        )}
+                    </Grid>
+                    <Checkbox
+                        checked={checked}
+                        onChange={handleChange}
+                    />
+                </div> :
+                    <div>カート情報</div>
+            }
         </div>
     );
 }
