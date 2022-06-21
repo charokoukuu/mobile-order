@@ -6,6 +6,7 @@ import { Menu } from './Menu';
 import { Order } from './Order';
 import { Register } from './Register';
 import { Status } from './Status';
+import { TestData } from './TestData';
 
 
 const Router = () => {
@@ -17,6 +18,7 @@ const Router = () => {
                         <Route path="/" element={<Menu />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/order" element={<Order />} />
+                        <Route path="/test" element={<TestData />} />
                         <Route path="/status:id" element={<Status />} />
 
 
