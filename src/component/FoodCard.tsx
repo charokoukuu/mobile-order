@@ -8,9 +8,9 @@ interface FoodCardProps {
 export const FoodCard = (props: FoodCardProps) => {
     return (
         <div>
-            <Card sx={{ maxWidth: 345 }} onClick={() => {
+            <Card sx={{ width: 345 }} onClick={() => {
                 props.onClick();
-            }}>
+            }} >
                 <CardActionArea>
                     <CardMedia
                         component="img"
