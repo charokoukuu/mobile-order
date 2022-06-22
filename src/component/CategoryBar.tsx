@@ -1,6 +1,7 @@
 import { Button, Grid } from "@mui/material";
+import { CategoryProp } from "../Menu";
 interface CategoryBarProps {
-  category: string[];
+  category: CategoryProp[];
   onClick: (category: string) => void;
 }
 

@@ -1,4 +1,4 @@
-import { Button, Checkbox, Grid } from "@mui/material";
+import { Checkbox, Grid } from "@mui/material";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { CategoryBar } from "./component/CategoryBar";
@@ -7,7 +7,7 @@ import { FoodCard } from "./component/FoodCard";
 import { db } from "./Firebase";
 import Header from "./Header";
 import { MenuData } from "./Interface";
-type CategoryProp = "main" | "drink" | "topping";
+export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 type Mode = "menu" | "cart" | "complete";
 export const Menu = () => {
     const [categoryMode, setCategoryMode] = useState<any>("main");
@@ -64,8 +64,8 @@ export const Menu = () => {
             <Header />
             {
                 mode === "menu" ? <div>
-                    <CategoryBar category={["main", "drink", "topping"]} onClick={function (category: string): void {
-                        setCategoryMode(category)
+                    <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: string): void {
+                        setCategoryMode(category === "メイン" ? "main" : category === "ドリンク" ? "drink" : "topping")
                     }} />
                     <Grid container spacing={3} alignItems="center" justifyItems={"center"}>
                         {menu.filter(item => item.category === categoryMode && item.isStatus).map((menu, index) => {
