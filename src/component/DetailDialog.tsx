@@ -24,7 +24,9 @@ export const DetailDialog = (props: DetailDialogProps) => {
                     <DialogContentText >
                         {props.menu.title}
                         <img src={props.menu.image} alt="menu" />
-                        <span>{props.menu.description}</span>
+                        <span>{props.menu.description}
+                            conso
+                        </span>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
