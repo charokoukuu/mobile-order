@@ -1,6 +1,7 @@
 import { Button, Checkbox, Grid } from "@mui/material";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { CategoryBar } from "./component/CategoryBar";
 import { DetailDialog } from "./component/DetailDialog";
 import { FoodCard } from "./component/FoodCard";
 import { db } from "./Firebase";
@@ -9,7 +10,7 @@ import { MenuData } from "./Interface";
 type CategoryProp = "main" | "drink" | "topping";
 type Mode = "menu" | "cart" | "complete";
 export const Menu = () => {
-    const [categoryMode, setCategoryMode] = useState<CategoryProp>("main");
+    const [categoryMode, setCategoryMode] = useState<any>("main");
     const [mode, setMode] = useState<Mode>("menu");
     const [detailDialogOpen, setDetailDialogOpen] = useState(false);
     const [menu, setMenu] = useState<DocumentData[]>([]);
@@ -63,24 +64,9 @@ export const Menu = () => {
             <Header />
             {
                 mode === "menu" ? <div>
-                    <Grid container>
-                        <Grid item xs={4}>
-                            <Button fullWidth onClick={() => {
-                                setCategoryMode("main");
-                            }}>メイン</Button>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Button fullWidth onClick={() => {
-                                setCategoryMode("drink");
-                            }}>ドリンク</Button>
-                        </Grid>
-
-                        <Grid item xs={4}>
-                            <Button fullWidth onClick={() => {
-                                setCategoryMode("topping");
-                            }}>トッピング</Button>
-                        </Grid>
-                    </Grid>
+                    <CategoryBar category={["main", "drink", "topping"]} onClick={function (category: string): void {
+                        setCategoryMode(category)
+                    }} />
                     <Grid container spacing={3} alignItems="center" justifyItems={"center"}>
                         {menu.filter(item => item.category === categoryMode && item.isStatus).map((menu, index) => {
                             return (
