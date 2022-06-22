@@ -24,38 +24,3 @@ export interface OrderData {
     isStatus: string
 }
 
-
-const menu: Array<MenuData> = [
-    {
-        title: 'うどん',
-        description: 'scatslkcんks',
-        price: 390,
-        id: 'sdfvghj',
-        image: '',
-        category: '',
-        isStatus: true,
-        isBigSize: true
-    },
-    {
-        title: '唐揚げ',
-        description: '',
-        price: 100,
-        id: '',
-        image: '',
-        category: '',
-        isStatus: true
-    },
-    {
-        title: 'オレンジジュース',
-        description: '',
-        price: 100,
-        id: '',
-        image: '',
-        category: '',
-        isStatus: true
-    },
-
-
-]
-
-console.log(menu)
