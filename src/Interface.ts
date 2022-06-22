@@ -5,7 +5,7 @@ export interface MenuData {
     id: string
     image: string
     category: string
-    isBigSize?: boolean
+    isBigSize: boolean
     isStatus: boolean
 }
 
@@ -18,9 +18,11 @@ export interface UserData {
 
 
 export interface OrderData {
+    id: string
     user: UserData
     totalPrice: number
-    menu: MenuData
+    menu: MenuData[]
     isStatus: string
+    date: Date
 }
 
