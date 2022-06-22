@@ -26,9 +26,7 @@ export const DetailDialog = (props: DetailDialogProps) => {
                         <img style={{
                             width: "50%"
                         }} src={props.menu?.image} alt="menu" />
-                        <span>{props.menu?.description}
-                            conso
-                        </span>
+                        {props.menu?.description}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
