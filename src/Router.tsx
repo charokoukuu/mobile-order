@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ErrorPage } from "./ErrorPage";
 import { Menu } from "./Menu";
 import { Order } from "./Order";
-import { Register } from "./component/Register";
+import { Register } from "./Register";
 import { Status } from "./Status";
 import { TestData } from "./TestData";
 

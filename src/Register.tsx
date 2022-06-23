@@ -6,15 +6,18 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 const theme = createTheme();
 
 export const Register = () => {
   const [email, setEmail] = useState("");
+  const [isAddress, setIsAddress] = useState(false);
   // テキストフィールドに入力してる時の処理
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
+    const regex = /[a-zA-Z0-9._-]@oit.ac.jp$/;
+    setIsAddress(regex.test(email));
   };
   // SIGIN IN押したときの処理
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,8 +27,6 @@ export const Register = () => {
     });
     console.log(email);
     // 正規表現で大工大生かどうかチェック
-    const regex = /[a-zA-Z0-9]+[a-zA-Z0-9\._-]*@oit.ac.jp/;
-    const isAddress = regex.test(email);
     isAddress ? console.log("ok") : console.log("no");
   };
 
@@ -70,7 +71,7 @@ export const Register = () => {
             >
               Sign In
             </Button>
-            <p>{email ? "" : "大学メールアドレスを入力してください．"}</p>
+            <p>{isAddress ? "" : "大学メールアドレスを入力してください．"}</p>
           </Box>
         </Box>
       </Container>
