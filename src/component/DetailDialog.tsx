@@ -3,9 +3,9 @@ import { MenuData } from "../Interface";
 
 interface DetailDialogProps {
     open: boolean;
-    menu: MenuData;
+    menu: MenuData | undefined;
     topping?: MenuData[];
-    onNext: () => void;
+    onNext: (menu: MenuData | undefined) => void;
     onPrev: () => void;
 }
 
@@ -22,14 +22,18 @@ export const DetailDialog = (props: DetailDialogProps) => {
 
                 <DialogContent>
                     <DialogContentText >
-                        {props.menu.title}
-                        <img src={props.menu.image} alt="menu" />
-                        <span>{props.menu.description}</span>
+                        {props.menu?.title}
+                        <img style={{
+                            width: "50%"
+                        }} src={props.menu?.image} alt="menu" />
+                        {props.menu?.description}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={props.onPrev}>戻る</Button>
-                    <Button onClick={props.onNext} >
+                    <Button onClick={() => {
+                        props.onNext(props.menu)
+                    }} >
                         カートに追加
                     </Button>
                 </DialogActions>
