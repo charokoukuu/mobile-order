@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { ErrorPage } from './ErrorPage';
 import { Menu } from './Menu';
-import { Order } from './Order';
 import { Register } from './Register';
 import { Status } from './Status';
 import { TestData } from './TestData';
@@ -17,7 +16,6 @@ const Router = () => {
                     <Routes>
                         <Route path="/" element={<Menu />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/order" element={<Order />} />
                         <Route path="/test" element={<TestData />} />
                         <Route path="/status:id" element={<Status />} />
 

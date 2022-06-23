@@ -5,7 +5,7 @@ interface CartProps {
     onClick: () => void
     orderData: MenuData[]
 }
-export const Cart = (props: CartProps) => {
+export const Order = (props: CartProps) => {
     return (
         <div>
             <div>

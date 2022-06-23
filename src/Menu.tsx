@@ -1,14 +1,13 @@
 import { Checkbox, Grid } from "@mui/material";
-import { collection, DocumentData, getDocs } from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { Cart } from "./component/Cart";
+import { Order } from "./component/Order";
 import { CategoryBar } from "./component/CategoryBar";
 import { DetailDialog } from "./component/DetailDialog";
 import { FoodCard } from "./component/FoodCard";
-import { db } from "./Firebase";
 import Header from "./Header";
 import { MenuData } from "./Interface";
-import { OrderSubmit } from "./SubmitGet";
+import { GetAllData, OrderSubmit } from "./SubmitGet";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
@@ -23,21 +22,17 @@ export const Menu = () => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
     };
-    const GetMenuData = async () => {
 
-        const querySnapshot = await getDocs(collection(db, "menu"));
-        querySnapshot.forEach((doc) => {
-            setMenu(menu => [...menu, doc.data()]);
-        });
-    }
     useEffect(() => {
-        GetMenuData();
+        (async () => {
+            setMenu(await GetAllData("menu"));
+        })()
     }, []);
 
 
     useEffect(() => {
         let data: DocumentData[] = [];
-        menu.forEach(element => {
+        menu.forEach((element: any) => {
             data = [...data, {
                 title: element.title,
                 price: element.price,
@@ -61,7 +56,7 @@ export const Menu = () => {
                 setCategoryMode(category === "メイン" ? "main" : category === "ドリンク" ? "drink" : "topping")
             }} />
             <Grid container spacing={3} alignItems="center" justifyItems={"center"}>
-                {menu.filter(item => item.category === categoryMode && item.isStatus).map((menu, index) => {
+                {menu.filter((item: any) => item.category === categoryMode && item.isStatus).map((menu: any, index: number) => {
                     return (
                         <Grid item key={index} style={{
                             margin: "0 auto",
@@ -97,7 +92,7 @@ export const Menu = () => {
                 onChange={handleChange}
             />
             <div style={{ marginBottom: "13vw" }}>
-                <Cart orderData={orderData} totalPrice={totalPrice} onClick={() => {
+                <Order orderData={orderData} totalPrice={totalPrice} onClick={() => {
                     OrderSubmit({
                         user: {
                             uuid: "kfsldkfnldskgn:d",
