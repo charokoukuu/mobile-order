@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import App from "./App";
@@ -25,7 +25,6 @@ export const Register = () => {
         // const uid = user.uid;
         setUser(user.email || "");
         setIsLogin(true);
-        // ...
       } else {
 
       }
@@ -33,11 +32,9 @@ export const Register = () => {
 
   }, []);
 
-  const sendAsycEmail = async () => {
+  const LoginPopup = async () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        // const credential = GoogleAuthProvider.credentialFromResult(result);
-        // const token = credential?.accessToken;
         const user = result.user;
         console.log(user.email);
         setUser(user.email || "");
@@ -48,11 +45,16 @@ export const Register = () => {
       });
   };
 
-  // SIGIN IN押したときの処理
-  const handleSubmit = () => {
-    // 正規表現で大工大生かどうかチェック
-
-    sendAsycEmail()
+  const DeleteUserRedirect = () => {
+    if (auth.currentUser) {
+      deleteUser(auth.currentUser).then(() => {
+        console.log("delete user");
+        LoginPopup()
+      }).catch((error) => {
+        // An error ocurred
+        // ...
+      });
+    }
   };
 
 
@@ -61,7 +63,7 @@ export const Register = () => {
       {(correctEmail(user) && !isLogin) ?
         <Box
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={LoginPopup}
           noValidate
           sx={{ mt: 1 }}
         >
@@ -70,13 +72,13 @@ export const Register = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmit}
+            onClick={LoginPopup}
           >
             Sign In
           </Button>
         </Box>
         : (correctEmail(user) && isLogin) ? <App /> : <IllegalEmailAddress email={""} onClick={function (): void {
-          handleSubmit();
+          DeleteUserRedirect();
         }} />}
     </ThemeProvider>
   );
