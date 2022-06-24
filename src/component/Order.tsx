@@ -24,7 +24,7 @@ interface OrderProps {
     totalPrice: number
     onNext: () => void
     onPrev: () => void
-    onDelete: (e: MenuData) => void
+    onDelete: (e: MenuData, i: number) => void
     orderData: MenuData[]
 }
 export const Order = (props: OrderProps) => {
@@ -59,7 +59,7 @@ export const Order = (props: OrderProps) => {
                                     <div key={i} style={{ textAlign: "right" }}>
                                         {e.title} {e.price}円
                                         <span style={{ textAlign: "right" }}> <Button color="error" onClick={() => {
-                                            props.onDelete(e)
+                                            props.onDelete(e, i)
                                         }}><img src="svg/close-circle-outline.svg" alt="close" /></Button>
                                         </span>
                                     </div>
