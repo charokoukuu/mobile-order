@@ -8,9 +8,7 @@ import { FoodCard } from "./component/FoodCard";
 import { MenuData } from "./Interface";
 import { GetAllData, OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./Firebase";
-import { Register } from "./Register";
+
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
