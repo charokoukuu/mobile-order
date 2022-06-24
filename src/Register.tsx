@@ -6,8 +6,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { ChangeEvent, useEffect, useState } from "react";
-import { GoogleAuthProvider, sendSignInLinkToEmail, signInWithPopup } from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
+import { browserSessionPersistence, GoogleAuthProvider, onAuthStateChanged, sendSignInLinkToEmail, setPersistence, signInWithPopup } from "firebase/auth";
 import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import { Menu } from "@mui/material";
@@ -38,6 +38,22 @@ export const Register = () => {
     const regex = /^e[a-zA-Z0-9._-]+@oit.ac.jp$/;
     setIsAddress(regex.test(email));
   }, [email]);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        setUser(user.email || "");
+        setIsLogin(true);
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+
+  }, []);
   provider.setCustomParameters({
     'login_hint': 'user@oit.ac.jp'
   });
@@ -67,11 +83,9 @@ export const Register = () => {
   };
 
   // SIGIN IN押したときの処理
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(email);
+  const handleSubmit = () => {
     // 正規表現で大工大生かどうかチェック
-    isAddress ? sendAsycEmail() : console.log("no");
+    sendAsycEmail()
   };
 
   return (
@@ -108,10 +122,10 @@ export const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
             >
               Sign In
             </Button>
@@ -119,7 +133,7 @@ export const Register = () => {
           </Box>
         </Box>
       </Container> : (correctEmail(user) && isLogin) ? <App /> : <IllegalEmailAddress email={""} onClick={function (): void {
-        window.location.reload();
+        handleSubmit();
       }} />}
     </ThemeProvider>
   );

@@ -8,6 +8,9 @@ import { FoodCard } from "./component/FoodCard";
 import { MenuData } from "./Interface";
 import { GetAllData, OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./Firebase";
+import { Register } from "./Register";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
@@ -20,11 +23,12 @@ export const Menu = () => {
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [orderDialog, setOrderDialog] = useState<boolean>(false);
 
-
     useEffect(() => {
+        // window.location.href = "/register";
         (async () => {
             setMenu(await GetAllData("menu"));
         })()
+
     }, []);
     useEffect(() => {
         orderData.length === 0 && setOrderDialog(false)
@@ -92,5 +96,6 @@ export const Menu = () => {
             }} totalOrderItemsCount={orderData.length} totalPrice={totalPrice} />
             }
         </div>
+
     );
 }
