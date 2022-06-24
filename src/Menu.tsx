@@ -6,8 +6,11 @@ import { CategoryBar } from "./component/CategoryBar";
 import { DetailDialog } from "./component/DetailDialog";
 import { FoodCard } from "./component/FoodCard";
 import { MenuData } from "./Interface";
-import { GetAllData, OrderSubmit } from "./SubmitGet";
+import { CorrectEmail, GetAllData, OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "./Firebase";
+import ResponsiveAppBar from "./component/ResponsiveAppBar";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
@@ -20,20 +23,35 @@ export const Menu = () => {
     const [orderData, setOrderData] = useState<MenuData[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [orderDialog, setOrderDialog] = useState<boolean>(false);
-
+    const [user, setUser] = useState<User>();
     useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                if (!CorrectEmail(user?.email || "")) window.location.href = "/register";
+                setUser(user);
+                console.log(user);
+                // setIsLogin(true);
+            } else {
+                window.location.href = "/register"
+            }
+        });
         // window.location.href = "/register";
         (async () => {
             setMenu(await GetAllData("menu"));
         })()
 
     }, []);
+
+
+
+
     useEffect(() => {
         orderData.length === 0 && setOrderDialog(false)
     }, [orderData.length]);
 
     return (
         <div style={{ position: "relative" }}>
+            <ResponsiveAppBar photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} />
             <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: string): void {
                 setCategoryMode(category === "メイン" ? "main" : category === "ドリンク" ? "drink" : "topping")
             }} />
