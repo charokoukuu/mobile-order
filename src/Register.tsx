@@ -7,17 +7,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  getAuth,
-  fetchSignInMethodsForEmail,
-  EmailAuthProvider,
-  sendSignInLinkToEmail,
-} from "firebase/auth";
+import { GoogleAuthProvider, sendSignInLinkToEmail, signInWithPopup } from "firebase/auth";
+import { auth } from "./Firebase";
+import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
+import { Menu } from "@mui/material";
+import App from "./App";
 const theme = createTheme();
-
+const provider = new GoogleAuthProvider();
 export const Register = () => {
-  const auth = getAuth();
   const [email, setEmail] = useState("");
+  const [user, setUser] = useState<string>("e1xxx@oit.ac.jp");
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isAddress, setIsAddress] = useState(false);
 
   // 認証セッティング
@@ -27,37 +27,43 @@ export const Register = () => {
     url: "http://mobile-order-4d383.web.app",
     // This must be true.
     handleCodeInApp: true,
-    iOS: {
-      bundleId: "com.example.ios",
-    },
-    android: {
-      packageName: "com.example.android",
-      installApp: true,
-      minimumVersion: "12",
-    },
-    dynamicLinkDomain: "example.page.link",
-  };
 
-  // テキストフィールドに入力してる時の処理
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
   };
-
+  const correctEmail = (email: string) => {
+    const regex = /^e[a-zA-Z0-9._-]+@oit.ac.jp$/;
+    return regex.test(email);
+  }
   // 正規表現でemailをチェック
   useEffect(() => {
     const regex = /^e[a-zA-Z0-9._-]+@oit.ac.jp$/;
     setIsAddress(regex.test(email));
   }, [email]);
-
+  provider.setCustomParameters({
+    'login_hint': 'user@oit.ac.jp'
+  });
   const sendAsycEmail = async () => {
-    try {
-      // await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      // window.localStorage.setItem("emailForSignIn", email);
-      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-      window.localStorage.setItem("emailForSignIn", email);
-    } catch (error) {
-      console.log(error);
-    }
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user.email);
+        setUser(user.email || "");
+        setIsLogin(true);
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        console.log(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
 
   // SIGIN IN押したときの処理
@@ -70,7 +76,7 @@ export const Register = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      {(correctEmail(user) && !isLogin) ? <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -99,7 +105,7 @@ export const Register = () => {
               name="email"
               autoComplete="email"
               autoFocus
-              onChange={handleChangeEmail}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <Button
               type="submit"
@@ -112,7 +118,9 @@ export const Register = () => {
             <p>{isAddress ? "" : "大学メールアドレスを入力してください．"}</p>
           </Box>
         </Box>
-      </Container>
+      </Container> : (correctEmail(user) && isLogin) ? <App /> : <IllegalEmailAddress email={""} onClick={function (): void {
+        window.location.reload();
+      }} />}
     </ThemeProvider>
   );
 };
