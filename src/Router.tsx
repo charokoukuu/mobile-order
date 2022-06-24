@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import App from './App';
 import { ErrorPage } from './ErrorPage';
 import { Menu } from './Menu';
 import { Register } from './Register';
 import { Status } from './Status';
-import { TestData } from './TestData';
 
 
 const Router = () => {
@@ -15,7 +15,7 @@ const Router = () => {
                     <Routes>
                         <Route path="/" element={<Menu />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/test" element={<TestData />} />
+                        <Route path="/test" element={<App />} />
                         <Route path="/status:id" element={<Status />} />
 
 

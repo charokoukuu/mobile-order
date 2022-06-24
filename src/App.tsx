@@ -1,14 +1,13 @@
-import React from 'react';
-import './App.css';
+import { useEffect } from "react"
+
 
 function App() {
-
-
+  useEffect(() => {
+    window.location.href = "/";
+  }, [])
   return (
-    <div className="App">
-
-    </div>
-  );
+    <div></div>
+  )
 }
 
-export default App;
+export default App
