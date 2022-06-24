@@ -1,11 +1,17 @@
 import { MenuData, OrderData, UserData } from "./Interface"
 import { doc, getDocs, setDoc, collection, DocumentData } from "firebase/firestore";
 import { db } from "./Firebase"
-const RandomID = () => {
+export const RandomID = () => {
     var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     var N = 16
     return Array.from(crypto.getRandomValues(new Uint8Array(N))).map((n) => S[n % S.length]).join('')
 }
+
+export const CorrectEmail = (email: string) => {
+    const regex = /^e[a-zA-Z0-9._-]+@oit.ac.jp$/;
+    return regex.test(email);
+}
+
 export const GetAllData = async (collectionName: string) => {
     let data: DocumentData[] = [];
     const querySnapshot = await getDocs(collection(db, collectionName));

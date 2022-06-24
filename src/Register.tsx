@@ -2,29 +2,26 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import { deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, User } from "firebase/auth";
 import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import App from "./App";
+import { CorrectEmail } from "./SubmitGet";
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
 export const Register = () => {
-  const [user, setUser] = useState<string>("e1xxx@oit.ac.jp");
+  const [userEmail, setUserEmail] = useState<string>("e1xxx@oit.ac.jp");
+  const [user, setUser] = useState<User>();
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
-  const correctEmail = (email: string) => {
-    const regex = /^e[a-zA-Z0-9._-]+@oit.ac.jp$/;
-    return regex.test(email);
-  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // const uid = user.uid;
-        setUser(user.email || "");
-        setIsLogin(true);
+        setUserEmail(user.email || "");
+        setUser(user);
+        console.log(user);
+        // setIsLogin(true);
       } else {
 
       }
@@ -37,7 +34,7 @@ export const Register = () => {
       .then((result) => {
         const user = result.user;
         console.log(user.email);
-        setUser(user.email || "");
+        setUserEmail(user.email || "");
         setIsLogin(true);
         // ...
       }).catch((error) => {
@@ -60,14 +57,14 @@ export const Register = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {(correctEmail(user) && !isLogin) ?
+      {(CorrectEmail(userEmail) && !isLogin) ?
         <Box
           component="form"
           onSubmit={LoginPopup}
           noValidate
           sx={{ mt: 1 }}
         >
-
+          <img src={user?.photoURL || ""} alt="logo" />
           <Button
             fullWidth
             variant="contained"
@@ -77,7 +74,7 @@ export const Register = () => {
             Sign In
           </Button>
         </Box>
-        : (correctEmail(user) && isLogin) ? <App /> : <IllegalEmailAddress email={""} onClick={function (): void {
+        : (CorrectEmail(userEmail) && isLogin) ? <App /> : <IllegalEmailAddress email={""} onClick={function (): void {
           DeleteUserRedirect();
         }} />}
     </ThemeProvider>
