@@ -1,13 +1,13 @@
-import { Checkbox, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "./component/Order";
 import { CategoryBar } from "./component/CategoryBar";
 import { DetailDialog } from "./component/DetailDialog";
 import { FoodCard } from "./component/FoodCard";
-import Header from "./Header";
 import { MenuData } from "./Interface";
 import { GetAllData, OrderSubmit } from "./SubmitGet";
+import { Cart } from "./component/Cart";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
@@ -15,13 +15,11 @@ export const Menu = () => {
     // const [mode, setMode] = useState<Mode>("menu");
     const [detailDialogOpen, setDetailDialogOpen] = useState(false);
     const [menu, setMenu] = useState<DocumentData[]>([]);
-    const [checked, setChecked] = useState(true);
     const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
     const [orderData, setOrderData] = useState<MenuData[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
-    };
+    const [orderDialog, setOrderDialog] = useState<boolean>(false);
+
 
     useEffect(() => {
         (async () => {
@@ -29,29 +27,8 @@ export const Menu = () => {
         })()
     }, []);
 
-
-    useEffect(() => {
-        let data: DocumentData[] = [];
-        menu.forEach((element: any) => {
-            data = [...data, {
-                title: element.title,
-                price: element.price,
-                image: element.image,
-                category: element.category,
-                id: element.id,
-                isStatus: checked,
-
-            }];
-        });
-        setMenu(data);
-
-        //eslint-disable-next-line
-    }, [checked]);
-
-
     return (
-        <div>
-            <Header />
+        <div style={{ position: "relative" }}>
             <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: string): void {
                 setCategoryMode(category === "メイン" ? "main" : category === "ドリンク" ? "drink" : "topping")
             }} />
@@ -87,13 +64,14 @@ export const Menu = () => {
                 }
                 )}
             </Grid>
-            <Checkbox
-                checked={checked}
-                onChange={handleChange}
-            />
             <div style={{ marginBottom: "13vw" }}>
-                <Order orderData={orderData} totalPrice={totalPrice} onClick={() => {
-                    OrderSubmit({
+                <Order open={orderDialog} onDelete={(e) => {
+                    setOrderData(orderData.filter((value) => value.id !== e.id))
+                    setTotalPrice(totalPrice - e.price)
+                }} orderData={orderData} totalPrice={totalPrice} onPrev={() => {
+                    setOrderDialog(false);
+                }} onNext={async () => {
+                    await OrderSubmit({
                         user: {
                             uuid: "kfsldkfnldskgn:d",
                             studentName: "Hinata Saito",
@@ -103,8 +81,13 @@ export const Menu = () => {
                         totalPrice: totalPrice,
                         menu: orderData
                     })
+                    window.location.reload();
                 }} />
             </div>
+            {orderData.length !== 0 && <Cart onClick={() => {
+                setOrderDialog(true);
+            }} totalOrderItemsCount={orderData.length} totalPrice={totalPrice} />
+            }
         </div>
     );
 }

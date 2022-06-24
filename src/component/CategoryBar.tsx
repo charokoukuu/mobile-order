@@ -1,4 +1,5 @@
 import { Button, Grid } from "@mui/material";
+import { useState } from "react";
 import { CategoryProp } from "../Menu";
 interface CategoryBarProps {
   category: CategoryProp[];
@@ -7,16 +8,18 @@ interface CategoryBarProps {
 
 
 export const CategoryBar = (props: CategoryBarProps) => {
-
+  const [index, setIndex] = useState<number>(0);
   return (
-    <div>
+    <div style={{ margin: "3vw 0" }}>
       <Grid container>
         {props.category.map((e, i) => {
           return (
             <Grid key={i} item xs={4}>
               <Button fullWidth onClick={() => {
                 props.onClick(e);
-              }}>{e}</Button>
+                setIndex(i);
+              }}><div style={{ color: index === i ? "#006C9B" : "#838383" }}>{e}</div></Button>
+              {index === i && <div style={{ backgroundColor: "rgba(0,0,0,0.5)", width: "17vw", height: "1vw", textAlign: "center", marginLeft: "8.5vw" }}></div>}
             </Grid>
 
           )
