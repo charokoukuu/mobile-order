@@ -5,7 +5,6 @@ import { ErrorPage } from './ErrorPage';
 import { Menu } from './Menu';
 import { Register } from './Register';
 import { Status } from './Status';
-import { TestData } from './TestData';
 
 
 const Router = () => {
