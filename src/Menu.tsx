@@ -26,6 +26,9 @@ export const Menu = () => {
             setMenu(await GetAllData("menu"));
         })()
     }, []);
+    useEffect(() => {
+        orderData.length === 0 && setOrderDialog(false)
+    }, [orderData.length]);
 
     return (
         <div style={{ position: "relative" }}>
@@ -65,8 +68,8 @@ export const Menu = () => {
                 )}
             </Grid>
             <div style={{ marginBottom: "13vw" }}>
-                <Order open={orderDialog} onDelete={(e) => {
-                    setOrderData(orderData.filter((value) => value.id !== e.id))
+                <Order open={orderDialog} onDelete={(e, i) => {
+                    setOrderData(orderData.filter((_, index) => index !== i))
                     setTotalPrice(totalPrice - e.price)
                 }} orderData={orderData} totalPrice={totalPrice} onPrev={() => {
                     setOrderDialog(false);
