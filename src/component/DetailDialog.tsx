@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
+import { Button, Dialog } from "@mui/material";
 import { MenuData } from "../Interface";
 
 interface DetailDialogProps {
@@ -19,24 +19,19 @@ export const DetailDialog = (props: DetailDialogProps) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-
-                <DialogContent>
-                    <DialogContentText >
-                        {props.menu?.title}
-                        <img style={{
-                            width: "50%"
-                        }} src={props.menu?.image} alt="menu" />
-                        {props.menu?.description}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={props.onPrev}>戻る</Button>
-                    <Button onClick={() => {
-                        props.onNext(props.menu)
-                    }} >
-                        カートに追加
-                    </Button>
-                </DialogActions>
+                <div style={{ textAlign: "center", margin: "5vw 0", fontSize: "7vw" }}>
+                    {props.menu?.title}
+                </div>
+                <div>
+                    <img style={{ width: "80vw" }} src={props.menu?.image} alt="menu" />
+                </div>
+                <div style={{ textAlign: "center", margin: "5vw 0" }}>{props.menu?.description}</div>
+                <Button onClick={() => {
+                    props.onNext(props.menu)
+                }} >
+                    カートに追加
+                </Button>
+                <Button onClick={props.onPrev}>戻る</Button>
             </Dialog>
         </div>
     );
