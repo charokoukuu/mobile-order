@@ -1,23 +1,7 @@
 import React, { useEffect, useRef } from 'react'
-import { css } from '@emotion/react';
 
-const swipeTitle = {
-  fontSize: "20px",
-  textAlign: "center"
-}
-const swipeImpossible = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  background: "cadetblue",
-  color: "#fff",
-  padding: "100px 0",
-  fontWeight: "bold",
-  position: "relative"
-}
 
 function App() {
-
   const container = useRef<HTMLDivElement>(null);
 
   const touchStartEvent = (e: any) => {
