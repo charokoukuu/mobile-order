@@ -1,38 +1,77 @@
-.App {
+html {
+  background-color: #EEECE4;
+}
+
+.box {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Chrome, Safari 対応 */
+.box::-webkit-scrollbar {
+  display: none;
+}
+
+@font-face {
+  font-family: 'thin';
+  src: url(./font/NotoSansJP-Thin.otf);
+}
+
+
+.japanese_thin {
+  font-family: thin;
+}
+
+@font-face {
+  font-family: 'japan_l';
+  src: url(./font/Koruri-Light.ttf);
+}
+
+.japanese_L {
+  font-family: japan_l;
+  color: #707070;
+}
+
+@font-face {
+  font-family: 'japan_b';
+  src: url(./font/Koruri-Bold.ttf);
+}
+
+@font-face {
+  font-family: 'japan_r';
+  src: url(./font/Koruri-Regular.ttf);
+}
+
+.japanese_B {
+  font-family: japan_b;
+  color: #707070;
+}
+
+.japanese_R {
+  font-family: japan_r;
+  color: #707070;
+}
+
+.defaultButton {
+  background-color: "#E6E6E6";
+  box-shadow: "none"
+}
+
+.plessButton {
+  background-color: "#65FFA062";
+  box-shadow: "inset 0px 3px 6px #00000029";
+}
+
+.center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.themaFontColor {
+  color: #006C9B
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+div {
+  font-family: japan_b;
+  color: #111111;
 }
