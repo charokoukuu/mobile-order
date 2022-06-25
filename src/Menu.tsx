@@ -31,7 +31,6 @@ export const Menu = () => {
                 if (!CorrectEmail(user?.email || "")) window.location.href = "/register";
                 UserInfo.user = user;
                 setUser(user);
-                console.log(user);
                 // setIsLogin(true);
             } else {
                 window.location.href = "/register"
@@ -44,10 +43,6 @@ export const Menu = () => {
 
     }, []);
 
-
-    useEffect(() => {
-        console.log(UserInfo.user);
-    })
 
     useEffect(() => {
         orderData.length === 0 && setOrderDialog(false)
@@ -79,13 +74,7 @@ export const Menu = () => {
                                 });
                                 setDetailDialogOpen(true);
                             }} />
-                            <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {
-                                (e !== undefined) && setOrderData([...orderData, e]);
-                                (e !== undefined) && setTotalPrice(totalPrice + e.price);
-                                setDetailDialogOpen(false);
-                            }} onPrev={() => {
-                                setDetailDialogOpen(false);
-                            }} />
+
                         </Grid>
                     )
                 }
@@ -110,6 +99,13 @@ export const Menu = () => {
                     window.location.reload();
                 }} />
             </div>
+            <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {
+                (e !== undefined) && setOrderData([...orderData, e]);
+                (e !== undefined) && setTotalPrice(totalPrice + e.price);
+                setDetailDialogOpen(false);
+            }} onPrev={() => {
+                setDetailDialogOpen(false);
+            }} />
             {orderData.length !== 0 && <Cart onClick={() => {
                 setOrderDialog(true);
             }} totalOrderItemsCount={orderData.length} totalPrice={totalPrice} />
