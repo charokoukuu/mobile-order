@@ -75,3 +75,20 @@ div {
   font-family: japan_b;
   color: #111111;
 }
+
+.defaultButton {
+  background-color: #006C9B 0% 0% no-repeat padding-box;
+  width: 23vw;
+  height: 10vw;
+  box-shadow: inset 5px 5px 5px #00000029;
+  color: #ffffff;
+  border-radius: 17px;
+  border: none;
+}
+
+.selectedButton {
+  background: #848484 0% 0% no-repeat padding-box;
+  color: #ffffff;
+  border-radius: 17px;
+  border: none;
+}
