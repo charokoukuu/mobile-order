@@ -13,7 +13,6 @@ export interface UserData {
     uuid: string
     studentName: string
     mailAddress: string
-    isMailAddressConfirmed: boolean
 }
 
 
