@@ -11,6 +11,7 @@ import { Cart } from "./component/Cart";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "./Firebase";
 import ResponsiveAppBar from "./component/ResponsiveAppBar";
+import { UserInfo } from "./UserInfo";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
@@ -28,6 +29,7 @@ export const Menu = () => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 if (!CorrectEmail(user?.email || "")) window.location.href = "/register";
+                UserInfo.user = user;
                 setUser(user);
                 console.log(user);
                 // setIsLogin(true);
@@ -43,7 +45,9 @@ export const Menu = () => {
     }, []);
 
 
-
+    useEffect(() => {
+        console.log(UserInfo.user);
+    })
 
     useEffect(() => {
         orderData.length === 0 && setOrderDialog(false)
@@ -96,10 +100,9 @@ export const Menu = () => {
                 }} onNext={async () => {
                     await OrderSubmit({
                         user: {
-                            uuid: "kfsldkfnldskgn:d",
-                            studentName: "Hinata Saito",
-                            mailAddress: "e1920038@oit.ac.jp",
-                            isMailAddressConfirmed: true
+                            uuid: UserInfo.user.uid,
+                            studentName: UserInfo.user.displayName || "",
+                            mailAddress: user?.email || "",
                         },
                         totalPrice: totalPrice,
                         menu: orderData

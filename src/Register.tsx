@@ -6,7 +6,7 @@ import { deleteUser, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, Us
 import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import App from "./App";
-import { CorrectEmail } from "./SubmitGet";
+import { UserInfo } from "./UserInfo";
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
 export const Register = () => {
@@ -14,10 +14,15 @@ export const Register = () => {
   const [user, setUser] = useState<User>();
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
+  const correctEmail = (email: string) => {
+    const regex = /^e[a-zA-Z0-9._-]+@oit.ac.jp$/;
+    return regex.test(email);
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        UserInfo.user = user;
         setUserEmail(user.email || "");
         setUser(user);
         console.log(user);
@@ -57,7 +62,7 @@ export const Register = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {(CorrectEmail(userEmail) && !isLogin) ?
+      {(correctEmail(userEmail) && !isLogin) ?
         <Box
           component="form"
           onSubmit={LoginPopup}
@@ -74,7 +79,7 @@ export const Register = () => {
             Sign In
           </Button>
         </Box>
-        : (CorrectEmail(userEmail) && isLogin) ? <App /> : <IllegalEmailAddress email={""} onClick={function (): void {
+        : (correctEmail(userEmail) && isLogin) ? <App /> : <IllegalEmailAddress email={""} onClick={function (): void {
           DeleteUserRedirect();
         }} />}
     </ThemeProvider>
