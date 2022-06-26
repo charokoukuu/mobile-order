@@ -17,8 +17,10 @@ export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
     const [categoryMode, setCategoryMode] = useState<any>("main");
+
     const [kobayashi, setKobayashi] = useState<boolean>(false);
     const [naruki, setNaruki] = useState<boolean>(false);
+
     // const [mode, setMode] = useState<Mode>("menu");
     const [detailDialogOpen, setDetailDialogOpen] = useState(false);
     const [menu, setMenu] = useState<DocumentData[]>([]);
