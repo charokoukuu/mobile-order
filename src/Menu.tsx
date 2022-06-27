@@ -40,6 +40,7 @@ export const Menu = () => {
         (async () => {
             setMenu(await GetAllData("menu"));
         })()
+
     }, []);
 
 
@@ -97,7 +98,7 @@ export const Menu = () => {
                 }} onNext={async () => {
                     await OrderSubmit({
                         user: {
-                            uuid: UserInfo.user.uid,
+                            uid: UserInfo.user.uid,
                             studentName: UserInfo.user.displayName || "",
                             mailAddress: user?.email || "",
                         },

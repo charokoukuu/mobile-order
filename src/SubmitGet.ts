@@ -1,5 +1,5 @@
 import { MenuData, OrderData, UserData } from "./Interface"
-import { doc, getDocs, setDoc, collection, DocumentData } from "firebase/firestore";
+import { doc, getDocs, setDoc, collection, DocumentData, query, where } from "firebase/firestore";
 import { db } from "./Firebase"
 export const RandomID = () => {
     var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -41,6 +41,20 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
         date: date,
         isStatus: "注文済み"
     }
+
     console.log(props.menu)
     await setDoc(doc(db, "order", id), orderData);
 }
+
+export const SearchCollectionDataGet = async (docId: string, collectionId: string, seachId: string) => {
+    let data: DocumentData[] = [];
+    const q = query(collection(db, docId), where(collectionId, "==", seachId));
+    const querySnapshot = await getDocs(q);
+    return new Promise<DocumentData[]>((resolve, reject) => {
+        querySnapshot.forEach((doc) => {
+            data.push(doc.data());
+        });
+        resolve(data);
+    })
+}
+
