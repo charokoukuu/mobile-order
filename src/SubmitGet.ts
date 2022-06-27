@@ -1,6 +1,7 @@
 import { MenuData, OrderData, UserData } from "./Interface";
 import {
   doc,
+  getDoc,
   getDocs,
   setDoc,
   collection,
@@ -52,13 +53,18 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
   await setDoc(doc(db, "order", id), orderData);
 };
 
-export const GetOrderData = async (id: string) => {
-  let data: DocumentData[] = [];
-  const querySnapshot = await getDocs(collection(db, "order", id));
-  return new Promise<DocumentData[]>((resolve, reject) => {
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data());
-    });
-    resolve(data);
+export const GetOrderData: (
+  id: string
+) => Promise<DocumentData | undefined> = async (id: string) => {
+  const docRef = doc(db, "order", id);
+  const docSnap = await getDoc(docRef);
+  return new Promise((resolve, reject) => {
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+    resolve(docSnap.data());
   });
 };
