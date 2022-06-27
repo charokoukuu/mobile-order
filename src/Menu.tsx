@@ -40,7 +40,6 @@ export const Menu = () => {
         (async () => {
             setMenu(await GetAllData("menu"));
         })()
-
     }, []);
 
 
@@ -62,14 +61,23 @@ export const Menu = () => {
                             textAlign: "center",
                         }}>
                             <FoodCard menu={menu} onClick={function (): void {
-                                setChosenMenu({
+                                menu.isBigSize !== undefined && setChosenMenu({
                                     title: menu.title,
                                     description: menu.description,
                                     price: menu.price,
                                     id: menu.id,
                                     image: menu.image,
                                     category: menu.category,
-                                    isBigSize: menu.isBigSize || false,
+                                    isBigSize: menu.isBigSize,
+                                    isStatus: menu.isStatus
+                                });
+                                menu.isBigSize === undefined && setChosenMenu({
+                                    title: menu.title,
+                                    description: menu.description,
+                                    price: menu.price,
+                                    id: menu.id,
+                                    image: menu.image,
+                                    category: menu.category,
                                     isStatus: menu.isStatus
                                 });
                                 setDetailDialogOpen(true);

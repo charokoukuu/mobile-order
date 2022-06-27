@@ -4,8 +4,7 @@ import "../App.css"
 import { createContext, useContext, useEffect, useState } from "react";
 import React from "react";
 const menuData = createContext<any>(null);
-const totalPrice = createContext<number>(0);
-
+let baseMenuData: any;
 interface DetailDialogProps {
     open: boolean;
     menu: MenuData | undefined;
@@ -20,35 +19,34 @@ export const DetailDialog = (props: DetailDialogProps) => {
     const value = { menu, setMenu }
     useEffect(() => {
         setMenu(props.menu);
+        baseMenuData = { ...props.menu };
     }, [props.menu])
     return (
-        <div >
+        <div>
             <menuData.Provider value={value}>
-                <totalPrice.Provider value={props.menu?.price || 0}>
-                    <Dialog
-                        open={props.open}
-                        onClose={props.onPrev}
-                        PaperProps={{
-                            style: {
-                                backgroundColor: '#EFEFEF',
-                                borderRadius: '13px',
-                            },
-                        }}
+                <Dialog
+                    open={props.open}
+                    onClose={props.onPrev}
+                    PaperProps={{
+                        style: {
+                            backgroundColor: '#EFEFEF',
+                            borderRadius: '13px',
+                        },
+                    }}
 
-                    >
-                        <div style={{ width: "80vw" }}>
-                            <MaterialMenuCard />
-                            <MaterialSizeSelectCard />
-                            <div className="center themaFontColor" style={{ margin: "1vw 0", fontSize: "15vw" }}>{value.menu?.price}<span style={{ fontSize: "7vw" }}> 円</span></div>
-                            <div className="center">  <Button style={{ width: "70vw", backgroundColor: "#006C9B", height: "10vw", borderRadius: "11px" }} variant="contained" onClick={() => {
-                                props.onNext(value.menu);
-                            }} >
-                                カートに追加
-                            </Button></div>
-                            <div className="center" style={{ textDecoration: "underline #006C9B", margin: "2vw 0" }}><Button style={{ color: "#006C9B" }} onClick={props.onPrev}>閉じる</Button></div>
-                        </div>
-                    </Dialog>
-                </totalPrice.Provider>
+                >
+                    <div style={{ width: "80vw" }}>
+                        <MaterialMenuCard />
+                        {props.menu?.isBigSize !== undefined && <MaterialSizeSelectCard />}
+                        <div className="center themaFontColor" style={{ margin: "1vw 0", fontSize: "15vw" }}>{value.menu?.price}<span style={{ fontSize: "7vw" }}> 円</span></div>
+                        <div className="center">  <Button style={{ width: "70vw", backgroundColor: "#006C9B", height: "10vw", borderRadius: "11px" }} variant="contained" onClick={() => {
+                            props.onNext(value.menu);
+                        }} >
+                            カートに追加
+                        </Button></div>
+                        <div className="center" style={{ textDecoration: "underline #006C9B", margin: "2vw 0" }}><Button style={{ color: "#006C9B" }} onClick={props.onPrev}>閉じる</Button></div>
+                    </div>
+                </Dialog>
 
             </menuData.Provider>
 
@@ -87,10 +85,12 @@ const MaterialSizeSelectCard = () => {
 const SelectedCard = (props: { price: number }) => {
     const [isChecked, setIsChecked] = useState(false);
     const { setMenu } = useContext(menuData);
-    const price = useContext(totalPrice);
     useEffect(() => {
-        setMenu((prevState: any) => ({ ...prevState, price: isChecked ? price + 100 : price }));
-    }, [isChecked, price, setMenu])
+        setMenu((prevState: any) => ({
+            ...prevState, price: isChecked ? baseMenuData.price + 100 : baseMenuData.price,
+            title: isChecked ? baseMenuData.title + " (大)" : baseMenuData.title
+        }));
+    }, [isChecked, setMenu])
     const defaultButton = {
         background: "#006C9B 0% 0% no-repeat padding-box",
         width: "31vw",
