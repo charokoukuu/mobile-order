@@ -58,14 +58,13 @@ export const SearchCollectionDataGet = async (docId: string, collectionId: strin
   })
 }
 
-export const GetOrderData: (id: string) => Promise<DocumentData | undefined> = async (id: string) => {
-  const docRef = doc(db, "order", id);
+export const GetSpecificData: (docId: string, collectionId: string) => Promise<DocumentData | undefined> = async (docId: string, collectionId: string) => {
+  const docRef = doc(db, docId, collectionId);
   const docSnap = await getDoc(docRef);
   return new Promise((resolve, reject) => {
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
     resolve(docSnap.data());

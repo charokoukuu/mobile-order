@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { db } from "./Firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-import { GetAllData, GetOrderData } from "./SubmitGet";
-import { Order } from "./component/Order";
+import { GetSpecificData } from "./SubmitGet";
 import { DocumentData } from "firebase/firestore";
 export const OrderCompleted = () => {
   const [orderData, setOrderData] = useState<DocumentData>();
@@ -12,10 +8,10 @@ export const OrderCompleted = () => {
 
   useEffect(() => {
     (async () => {
-      params.id && setOrderData(await GetOrderData(params.id));
+      params.id && setOrderData(await GetSpecificData("order", params.id));
       console.log(params.id);
     })();
-  }, []);
+  }, [params.id]);
 
   useEffect(() => {
     console.log(orderData);
