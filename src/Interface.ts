@@ -10,7 +10,7 @@ export interface MenuData {
 }
 
 export interface UserData {
-    uuid: string
+    uid: string
     studentName: string
     mailAddress: string
 }
