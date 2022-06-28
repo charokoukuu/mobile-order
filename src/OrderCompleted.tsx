@@ -5,7 +5,6 @@ import { DocumentData } from "firebase/firestore";
 import { UserInfo } from "./UserInfo";
 import { QRCodeSVG } from "qrcode.react";
 import { Card } from "@mui/material";
-import ResponsiveAppBar from "./component/ResponsiveAppBar";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 
 export const OrderCompleted = () => {
