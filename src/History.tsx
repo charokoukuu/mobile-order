@@ -1,7 +1,6 @@
 import { User } from "@firebase/auth";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { MenuData } from "./Interface";
 import { GetUserInfo, SearchCollectionDataGet } from "./SubmitGet";
 
 export const History = () => {
@@ -20,8 +19,7 @@ export const History = () => {
         })()
     }, [user])
     useEffect(() => {
-        let test: any = oneOrderData?.map(e => e.menu).flatMap(e => e).map(e => e.title);
-        console.log(oneOrderData);
+        oneOrderData && console.log(oneOrderData[1].date);
     }, [oneOrderData])
     return (
         <div >
@@ -30,12 +28,11 @@ export const History = () => {
                 oneOrderData?.map((e, i) => {
                     return (
                         <div style={{ margin: "20vw 0" }} key={i}>
-                            <p>{e.id}</p>
-                            <p>{e.user.uid}</p>
+                            <div>{e.id}</div>
                             <div>{e.menu.map((e: any, i: number) => {
-                                return <p key={i}> {e.title}</p>
+                                return <div key={i}> {e.title}</div>
                             })}</div>
-                            <p>{e.date.toString()}</p>
+                            <div>{e.date.toDate().toString()}</div>
                         </div>
                     )
                 }
