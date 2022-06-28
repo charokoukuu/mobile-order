@@ -6,7 +6,7 @@ import { Menu } from "./Menu";
 import { OrderCompleted } from "./OrderCompleted";
 import { Register } from "./Register";
 import { Status } from "./Status";
-
+import { History } from "./History";
 const Router = () => {
   return (
     <div>
@@ -18,6 +18,7 @@ const Router = () => {
             <Route path="/test" element={<App />} />
             <Route path="/status:id" element={<Status />} />
             <Route path="/order/:id" element={<OrderCompleted />} />
+            <Route path="/history" element={<History />} />
 
             <Route
               path="*"
