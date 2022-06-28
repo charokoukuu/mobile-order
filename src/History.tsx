@@ -7,6 +7,7 @@ import { UserInfo } from "./UserInfo";
 export const History = () => {
     const [oneOrderData, setOneOrderData] = useState<DocumentData[]>();
     const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
+    const [sortOrderData, setSortOrderData] = useState<DocumentData[]>();
 
 
     useEffect(() => {
@@ -16,14 +17,26 @@ export const History = () => {
         })()
     }, [])
     useEffect(() => {
-        oneOrderData && console.log(oneOrderData[1].date);
+        let order = oneOrderData;
+        order?.sort((prev, curr) => {
+            if (prev.date.seconds > curr.date.seconds) {
+                return -1;
+            } else if (prev.date.seconds < curr.date.seconds) {
+                return 1;
+            } else {
+                return 0;
+            }
+
+        });
+        setSortOrderData(order);
+
     }, [oneOrderData])
     return (
         <div >
             <h1>History</h1>
             {
                 isGetHistoryData ?
-                    oneOrderData?.map((e, i) => {
+                    sortOrderData?.map((e, i) => {
                         return (
                             <div style={{ margin: "20vw 0" }} key={i}>
                                 <div>{e.id}</div>
