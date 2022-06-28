@@ -46,6 +46,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
 
   console.log(props.menu)
   await setDoc(doc(db, "order", id), orderData);
+  return id;
 }
 
 export const SearchCollectionDataGet = async (docId: string, collectionId: string, seachId: string) => {
@@ -74,13 +75,18 @@ export const GetSpecificData: (docId: string, collectionId: string) => Promise<D
 };
 
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      if (!CorrectEmail(user?.email || "")) window.location.href = "/register";
-      UserInfo.user = user;
-      callback(user);
-    } else {
-      window.location.href = "/register"
-    }
+  const pathName = "/register";
+  return new Promise<any>((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        if (!CorrectEmail(user?.email || "") && window.location.pathname !== pathName) window.location.href = pathName;
+        UserInfo.user = user;
+        callback(user);
+        resolve("");
+      } else {
+        if (window.location.pathname !== pathName) window.location.href = pathName;
+        resolve("");
+      }
+    })
   });
 }

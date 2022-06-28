@@ -7,45 +7,63 @@ import { OrderCompleted } from "./OrderCompleted";
 import { Register } from "./Register";
 import { Status } from "./Status";
 import { History } from "./History";
+import ResponsiveAppBar from "./component/ResponsiveAppBar";
+import { User } from "firebase/auth";
+import { GetUserInfo } from "./SubmitGet";
+import { UserInfo } from "./UserInfo";
+import { useEffect } from "react";
 const Router = () => {
+  const [user, setUser] = React.useState<User>();
+  const [isLogin, setIsLogin] = React.useState<boolean>(false);
+  useEffect(() => {
+    (async () => {
+      await GetUserInfo((e) => {
+        UserInfo.user = e;
+        setUser(e);
+      });
+      setIsLogin(true);
+    })()
+  }, [])
   return (
     <div>
       <BrowserRouter>
         <div>
-          <Routes>
-            <Route path="/" element={<Menu />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/test" element={<App />} />
-            <Route path="/status:id" element={<Status />} />
-            <Route path="/order/:id" element={<OrderCompleted />} />
-            <Route path="/history" element={<History />} />
+          <ResponsiveAppBar photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} />
+          {isLogin &&
+            <Routes>
+              <Route path="/" element={<Menu />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/test" element={<App />} />
+              <Route path="/status:id" element={<Status />} />
+              <Route path="/order/:id" element={<OrderCompleted />} />
+              <Route path="/history" element={<History />} />
+              <Route
+                path="*"
+                element={
+                  <ErrorPage
+                    text={"お探しのページは見つかりませんでした"}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                  />
+                }
+              />
 
-            <Route
-              path="*"
-              element={
-                <ErrorPage
-                  text={"お探しのページは見つかりませんでした"}
-                  onClick={() => {
-                    window.location.href = "/";
-                  }}
-                  buttonText={"ホームに戻る"}
-                />
-              }
-            />
-
-            <Route
-              path="*"
-              element={
-                <ErrorPage
-                  text={"お探しのページは見つかりませんでした"}
-                  onClick={() => {
-                    window.location.href = "/";
-                  }}
-                  buttonText={"ホームに戻る"}
-                />
-              }
-            />
-          </Routes>
+              <Route
+                path="*"
+                element={
+                  <ErrorPage
+                    text={"お探しのページは見つかりませんでした"}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                  />
+                }
+              />
+            </Routes>
+          }
         </div>
       </BrowserRouter>
     </div>
