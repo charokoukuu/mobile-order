@@ -1,6 +1,8 @@
 import { MenuData, OrderData, UserData } from "./Interface"
 import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc } from "firebase/firestore";
-import { db } from "./Firebase"
+import { auth, db } from "./Firebase"
+import { onAuthStateChanged, User } from "firebase/auth";
+import { UserInfo } from "./UserInfo";
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
   var N = 16
@@ -70,3 +72,15 @@ export const GetSpecificData: (docId: string, collectionId: string) => Promise<D
     resolve(docSnap.data());
   });
 };
+
+export const GetUserInfo = (callback: (userInfo: User) => void) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      if (!CorrectEmail(user?.email || "")) window.location.href = "/register";
+      UserInfo.user = user;
+      callback(user);
+    } else {
+      window.location.href = "/register"
+    }
+  });
+}

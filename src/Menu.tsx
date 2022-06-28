@@ -6,10 +6,9 @@ import { CategoryBar } from "./component/CategoryBar";
 import { DetailDialog } from "./component/DetailDialog";
 import { FoodCard } from "./component/FoodCard";
 import { MenuData } from "./Interface";
-import { CorrectEmail, GetAllData, OrderSubmit } from "./SubmitGet";
+import { GetAllData, GetUserInfo, OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
-import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "./Firebase";
+import { User } from "firebase/auth";
 import ResponsiveAppBar from "./component/ResponsiveAppBar";
 import { UserInfo } from "./UserInfo";
 
@@ -26,15 +25,8 @@ export const Menu = () => {
     const [orderDialog, setOrderDialog] = useState<boolean>(false);
     const [user, setUser] = useState<User>();
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                if (!CorrectEmail(user?.email || "")) window.location.href = "/register";
-                UserInfo.user = user;
-                setUser(user);
-                // setIsLogin(true);
-            } else {
-                window.location.href = "/register"
-            }
+        GetUserInfo((user) => {
+            setUser(user);
         });
         // window.location.href = "/register";
         (async () => {
