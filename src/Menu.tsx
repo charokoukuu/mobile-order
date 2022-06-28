@@ -1,4 +1,4 @@
-import { Grid, Link } from "@mui/material";
+import { Grid } from "@mui/material";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "./component/Order";
@@ -44,12 +44,11 @@ export const Menu = () => {
                 <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: string): void {
                     setCategoryMode(category === "メイン" ? "main" : category === "ドリンク" ? "drink" : "topping")
                 }} />
-                <Grid container spacing={3} alignItems="center" justifyItems={"center"}>
+                <Grid container >
                     {menu.filter((item: any) => item.category === categoryMode && item.isStatus).map((menu: any, index: number) => {
                         return (
                             <Grid item key={index} style={{
-                                margin: "0 auto",
-                                textAlign: "center",
+                                margin: "3vw auto"
                             }}>
                                 <FoodCard menu={menu} onClick={function (): void {
                                     menu.isBigSize !== undefined && setChosenMenu({
@@ -62,15 +61,7 @@ export const Menu = () => {
                                         isBigSize: menu.isBigSize,
                                         isStatus: menu.isStatus
                                     });
-                                    menu.isBigSize === undefined && setChosenMenu({
-                                        title: menu.title,
-                                        description: menu.description,
-                                        price: menu.price,
-                                        id: menu.id,
-                                        image: menu.image,
-                                        category: menu.category,
-                                        isStatus: menu.isStatus
-                                    });
+                                    menu.isBigSize === undefined && setChosenMenu(menu);
                                     setDetailDialogOpen(true);
                                 }} />
 

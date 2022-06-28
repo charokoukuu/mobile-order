@@ -39,6 +39,8 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
 
     const handleCloseUserMenu = (setting: string) => {
         setting === "ログアウト" ? signOut(auth) : console.log("");
+        setting === "注文履歴" ? window.location.href = "/history" : console.log("");
+
         setAnchorElUser(null);
     };
 
