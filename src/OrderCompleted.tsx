@@ -5,8 +5,9 @@ import { GetSpecificData } from "./SubmitGet";
 import { DocumentData } from "firebase/firestore";
 import { UserInfo } from "./UserInfo";
 import { QRCodeSVG } from "qrcode.react";
-import { Card, Paper } from "@mui/material";
+import { Card } from "@mui/material";
 import { LoadingAnimation } from "./component/LoadingAnimation";
+import Slide from "./component/Slide";
 
 export const OrderCompleted = () => {
   const [orderData, setOrderData] = useState<DocumentData>();
@@ -54,6 +55,7 @@ export const OrderCompleted = () => {
               >
                 {`￥${orderData?.totalPrice}`}
               </h2>
+              {/* <QrCodeMock /> */}
               <div style={{ margin: "5% 0" }}>
                 {orderData.menu.map((e: MenuData, i: number) => {
                   return (
@@ -83,6 +85,10 @@ export const OrderCompleted = () => {
                     </div>
                   );
                 })}
+                <div style={{ margin: "10% 0" }}>
+                  <h2 style={{ textAlign: "center" }}>チケット受け取り方法</h2>
+                  <Slide />
+                </div>
               </div>
             </>
           ) : (
