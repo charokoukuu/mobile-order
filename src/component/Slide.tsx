@@ -12,6 +12,7 @@ export default function Slide() {
     display: "flex",
     justifyContent: "center",
     hight: "30%",
+    maxWidth: "90%",
   };
 
   // slideSetting
@@ -39,7 +40,7 @@ export default function Slide() {
       {Slides.map((slide, i) => {
         return (
           <div key={i}>
-            <p>{slide[0]}</p>
+            <p style={{ margin: "5% 10%" }}>{slide[0]}</p>
             <img style={SlideStyle} src={slide[1]} alt="slide" />
           </div>
         );

@@ -37,25 +37,26 @@ export const OrderCompleted = () => {
           {UserInfo.user.uid === orderData?.user.uid ? (
             <>
               {/* <p>{orderData?.id}</p> */}
-              <QRCodeSVG
-                style={{
-                  display: "flex",
-                  margin: "0 auto",
-                  height: "30vh",
-                }}
-                value={orderData?.id}
-                size={200}
-              />
+              {orderData.isStatus === "注文済み" && (
+                <QRCodeSVG
+                  style={{
+                    display: "flex",
+                    margin: "0 auto",
+                    height: "30vh",
+                  }}
+                  value={orderData?.id}
+                  size={200}
+                />
+              )}
               <h2
                 style={{
                   textAlign: "center",
-                  margin: "10px auto",
+                  margin: "0 auto",
                   fontSize: "30px",
                 }}
               >
                 {`￥${orderData?.totalPrice}`}
               </h2>
-              {/* <QrCodeMock /> */}
               <div style={{ margin: "5% 0" }}>
                 {orderData.menu.map((e: MenuData, i: number) => {
                   return (
@@ -67,7 +68,6 @@ export const OrderCompleted = () => {
                       }}
                       key={i}
                     >
-                      {/* {`${e.title}:${e.price}`} */}
                       <span
                         style={{
                           display: "table-cell",
@@ -85,14 +85,20 @@ export const OrderCompleted = () => {
                     </div>
                   );
                 })}
-                <div style={{ margin: "10% 0" }}>
-                  <h2 style={{ textAlign: "center" }}>チケット受け取り方法</h2>
-                  <Slide />
-                </div>
+                {orderData.isStatus === "注文済み" && (
+                  <div style={{ margin: "10% 0" }}>
+                    <h2 style={{ textAlign: "center" }}>
+                      チケット受け取り方法
+                    </h2>
+                    <Slide />
+                  </div>
+                )}
               </div>
             </>
           ) : (
-            <p>権限ないよ</p>
+            <>
+              <p style={{ textAlign: "center" }}>権限がありません</p>
+            </>
           )}
         </Card>
       ) : (
