@@ -7,6 +7,7 @@ import { OrderCompleted } from "./OrderCompleted";
 import { Register } from "./Register";
 import { Status } from "./Status";
 import { History } from "./History";
+import { Stripe } from "./Stripe";
 import ResponsiveAppBar from "./component/ResponsiveAppBar";
 import { User } from "firebase/auth";
 import { GetUserInfo } from "./SubmitGet";
@@ -22,14 +23,16 @@ const Router = () => {
         setUser(e);
       });
       setIsLogin(true);
-    })()
-  }, [])
+    })();
+  }, []);
   return (
     <div>
       <BrowserRouter>
         <div>
-          <ResponsiveAppBar photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} />
-          {isLogin &&
+          <ResponsiveAppBar
+            photoURL={user?.photoURL || "/static/images/avatar/2.jpg"}
+          />
+          {isLogin && (
             <Routes>
               <Route path="/" element={<Menu />} />
               <Route path="/register" element={<Register />} />
@@ -37,6 +40,7 @@ const Router = () => {
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
               <Route path="/history" element={<History />} />
+              <Route path="/stripe" element={<Stripe />} />
               <Route
                 path="*"
                 element={
@@ -63,7 +67,7 @@ const Router = () => {
                 }
               />
             </Routes>
-          }
+          )}
         </div>
       </BrowserRouter>
     </div>
