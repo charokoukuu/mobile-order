@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { MenuData } from "./Interface";
 import { useParams } from "react-router-dom";
 import { GetSpecificData } from "./SubmitGet";
 import { DocumentData } from "firebase/firestore";
 import { UserInfo } from "./UserInfo";
 import { QRCodeSVG } from "qrcode.react";
-import { Card } from "@mui/material";
+import { Card, Paper } from "@mui/material";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 
 export const OrderCompleted = () => {
@@ -39,11 +40,45 @@ export const OrderCompleted = () => {
                 style={{
                   display: "flex",
                   margin: "0 auto",
-                  height: "60vh",
+                  height: "30vh",
                 }}
                 value={orderData?.id}
                 size={200}
               />
+              <h2
+                style={{
+                  textAlign: "center",
+                  margin: "10px auto",
+                  fontSize: "30px",
+                }}
+              >
+                {`￥${orderData?.totalPrice}`}
+              </h2>
+
+              {orderData.menu.map((e: MenuData, i: number) => {
+                return (
+                  <div
+                    style={{ display: "table", width: "50%", margin: "0 auto" }}
+                    key={i}
+                  >
+                    {/* {`${e.title}:${e.price}`} */}
+                    <span
+                      style={{
+                        display: "table-cell",
+                        verticalAlign: "left",
+                      }}
+                    >
+                      {e.title}
+                    </span>
+                    <span
+                      style={{
+                        display: "table-cell",
+                        textAlign: "right",
+                      }}
+                    >{`￥${e.price}`}</span>
+                  </div>
+                );
+              })}
             </>
           ) : (
             <p>権限ないよ</p>
