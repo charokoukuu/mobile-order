@@ -54,31 +54,36 @@ export const OrderCompleted = () => {
               >
                 {`￥${orderData?.totalPrice}`}
               </h2>
-
-              {orderData.menu.map((e: MenuData, i: number) => {
-                return (
-                  <div
-                    style={{ display: "table", width: "50%", margin: "0 auto" }}
-                    key={i}
-                  >
-                    {/* {`${e.title}:${e.price}`} */}
-                    <span
+              <div style={{ margin: "5% 0" }}>
+                {orderData.menu.map((e: MenuData, i: number) => {
+                  return (
+                    <div
                       style={{
-                        display: "table-cell",
-                        verticalAlign: "left",
+                        display: "table",
+                        width: "50%",
+                        margin: "0 auto",
                       }}
+                      key={i}
                     >
-                      {e.title}
-                    </span>
-                    <span
-                      style={{
-                        display: "table-cell",
-                        textAlign: "right",
-                      }}
-                    >{`￥${e.price}`}</span>
-                  </div>
-                );
-              })}
+                      {/* {`${e.title}:${e.price}`} */}
+                      <span
+                        style={{
+                          display: "table-cell",
+                          verticalAlign: "left",
+                        }}
+                      >
+                        {e.title}
+                      </span>
+                      <span
+                        style={{
+                          display: "table-cell",
+                          textAlign: "right",
+                        }}
+                      >{`￥${e.price}`}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </>
           ) : (
             <p>権限ないよ</p>
