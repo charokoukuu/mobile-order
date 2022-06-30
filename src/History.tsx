@@ -33,7 +33,7 @@ export const History = () => {
 
   return (
     <div>
-      <h1>History</h1>
+      <h1 style={{textAlign:"center",color:"#707070"}}>注文履歴</h1>
       {isGetHistoryData ? (
         oneOrderData?.map((e, i) => {
           return (
@@ -41,7 +41,7 @@ export const History = () => {
               <Card
                 sx={{ minWidth: 275 }}
                 onClick={() => {
-                  console.log(e.id);
+                //   console.log(e.id);
                   window.location.href = `/order/${e.id}`;
                 }}
               >
@@ -51,18 +51,18 @@ export const History = () => {
                     color="text.secondary"
                     gutterBottom
                   >
-                    <div style={{ textAlign: "right" }}>
+                    <div style={{ textAlign: "right",color:"#707070" }}>
                       {e.date.toDate().toLocaleString()}
                     </div>
                   </Typography>
                   <Typography
                     variant="h5"
                     component="div"
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{ display: "flex", justifyContent: "space-between"}}
                   >
                     <div style={{ margin: "auto 0" }}>
                       {e.menu.map((e: DocumentData, i: number) => (
-                        <div key={i}> {e.title}</div>
+                        <div key={i} style={{color:"#707070"}}> {e.title}</div>
                       ))}
                     </div>
                     <div style={{ fontSize: 50, margin: "auto 0" }}>
@@ -70,7 +70,7 @@ export const History = () => {
                     </div>
                   </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    <div style={{ textAlign: "right", clear: "both" }}>
+                    <div style={{ textAlign: "right", clear: "both",color:"#1FA7D0" }}>
                       ID:{e.id}
                     </div>
                   </Typography>
