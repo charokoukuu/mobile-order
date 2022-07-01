@@ -74,9 +74,15 @@ export const Register = () => {
           component="form"
           onSubmit={LoginPopup}
           noValidate
-          sx={{ mt: 12, mx: 8 }}
+          sx={{ my: 12, mx: 5 }}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          <Avatar src={user?.photoURL || ""} alt="logo" sx={{ mx: 12 }} />
+          <Avatar src={user?.photoURL || ""} alt="logo" sx={{ mx: 17 }} />
           <h2 style={{ textAlign: "center" }}>
             学生のGoogleアカウントでサインインしてください。
           </h2>
