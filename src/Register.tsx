@@ -105,7 +105,7 @@ export const Register = () => {
                 fullWidth
                 variant="outlined"
                 sx={{ mt: 3, mb: 2 }}
-                color="success"
+                color="error"
                 onClick={() => {
                   auth.signOut();
                   window.location.reload();
