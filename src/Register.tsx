@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import { signOut } from "firebase/auth";
 import {
   deleteUser,
   GoogleAuthProvider,
@@ -25,7 +24,7 @@ export const Register = () => {
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const correctEmail = (email: string) => {
-    const regex = /[a-zA-Z0-9._-]+@oit.ac.jp$/ || /^runticket21@gmail.com$/;
+    const regex = /([a-zA-Z0-9._-]+@oit.ac.jp$)|(^runticket21@gmail.com$)/;
     return regex.test(email);
   };
 
