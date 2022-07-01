@@ -14,7 +14,7 @@ import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import App from "./App";
 import { UserInfo } from "./UserInfo";
-import GoogleIcon from "@mui/icons-material/Google";
+import { Link } from "react-router-dom";
 
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
@@ -86,23 +86,36 @@ export const Register = () => {
         >
           <Avatar src={user?.photoURL || ""} alt="logo" sx={{ mx: 17 }} />
           {user?.displayName ? (
-            <h2 style={{ textAlign: "center" }}>
-              お帰りなさい{user?.displayName || ""}さん
-            </h2>
+            <>
+              <h2 style={{ textAlign: "center" }}>
+                お帰りなさい{user?.displayName || ""}さん
+              </h2>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="success"
+                component={Link}
+                to="/"
+              >
+                メニューを見る
+              </Button>
+            </>
           ) : (
-            <h2 style={{ textAlign: "center" }}>
-              学生のGoogleアカウントでサインインしてください。
-            </h2>
+            <>
+              <h2 style={{ textAlign: "center" }}>
+                学生のGoogleアカウントでサインインしてください。
+              </h2>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={LoginPopup}
+              >
+                Login
+              </Button>
+            </>
           )}
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={LoginPopup}
-          >
-            {/* <GoogleIcon /> */}
-            Login
-          </Button>
         </Box>
       ) : correctEmail(userEmail) && isLogin ? (
         <App />
