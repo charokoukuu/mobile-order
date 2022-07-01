@@ -38,15 +38,15 @@ export const OrderCompleted = () => {
             <>
               {/* <p>{orderData?.id}</p> */}
               {orderData.isStatus === "注文済み" && (
-                <QRCodeSVG
-                  style={{
-                    display: "flex",
-                    margin: "0 auto",
-                    height: "30vh",
-                  }}
-                  value={orderData?.id}
-                  size={200}
-                />
+                <div style={{ display: "flex", height: "30vh" }}>
+                  <QRCodeSVG
+                    style={{
+                      margin: "0 auto",
+                    }}
+                    value={orderData?.id}
+                    size={200}
+                  />
+                </div>
               )}
               <h2
                 style={{

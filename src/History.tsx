@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import { SearchCollectionDataGet } from "./SubmitGet";
 import { UserInfo } from "./UserInfo";
+import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 // import { OrderCompleted } from "./OrderCompleted";
@@ -36,42 +37,55 @@ export const History = () => {
       {isGetHistoryData ? (
         oneOrderData?.map((e, i) => {
           return (
-            <div style={{ margin: "2vw 0" }} key={i}>
-              <Card
-                style={{ borderRadius: "3px" }}
-                sx={{ minWidth: 275 }}
-                onClick={() => {
-                  //   console.log(e.id);
-                  window.location.href = `/order/${e.id}`;
+            <div key={i} style={{ margin: "2vw 0" }}>
+              <Link
+                style={{
+                  textDecoration: "none",
                 }}
+                to={`/order/${e.id}`}
               >
-                <CardContent>
-                  <div
-                    color="text.secondary"
-                  >
-                    <div style={{ textAlign: "right", color: "#707070" }}>
-                      {e.date.toDate().toLocaleString()}
+                <Card style={{ borderRadius: "3px" }} sx={{ minWidth: 275 }}>
+                  <CardContent>
+                    <div color="text.secondary">
+                      <div style={{ textAlign: "right", color: "#707070" }}>
+                        {e.date.toDate().toLocaleString()}
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <div style={{ margin: "auto 0" }}>
-                      {e.menu.map((e: DocumentData, i: number) => (
-                        <div key={i} style={{ color: "#707070" }}> {e.title}</div>
-                      ))}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div style={{ margin: "auto 0" }}>
+                        {e.menu.map((e: DocumentData, i: number) => (
+                          <div key={i} style={{ color: "#707070" }}>
+                            {" "}
+                            {e.title}
+                          </div>
+                        ))}
+                      </div>
+                      <div
+                        className="japanese_B"
+                        style={{ fontSize: 30, margin: "auto 0" }}
+                      >
+                        ¥{e.totalPrice}
+                      </div>
                     </div>
-                    <div className="japanese_B" style={{ fontSize: 30, margin: "auto 0" }}>
-                      ¥{e.totalPrice}
+                    <div color="text.secondary">
+                      <div
+                        style={{
+                          textAlign: "right",
+                          clear: "both",
+                          color: "#1FA7D0",
+                        }}
+                      >
+                        ID:{e.id}
+                      </div>
                     </div>
-                  </div>
-                  <div color="text.secondary">
-                    <div style={{ textAlign: "right", clear: "both", color: "#1FA7D0" }}>
-                      ID:{e.id}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Link>
             </div>
           );
         })
