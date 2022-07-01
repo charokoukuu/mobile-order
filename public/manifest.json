@@ -1,6 +1,32 @@
 {
   "short_name": "React App",
   "name": "Create React App Sample",
+  "shortcuts": [
+    {
+      "name": "ホーム",
+      "short_name": "home",
+      "description": "ゲームをします",
+      "url": "/",
+      "icons": [
+        {
+          "src": "./shortcuts/home-256.png",
+          "sizes": "256x256"
+        }
+      ]
+    },
+    {
+      "name": "ランキング",
+      "short_name": "rank",
+      "description": "ランキングを見ます",
+      "url": "/setting.html",
+      "icons": [
+        {
+          "src": "./shortcuts/ranking-256.png",
+          "sizes": "256x256"
+        }
+      ]
+    }
+  ],
   "icons": [
     {
       "src": "/icon-192x192.png",
@@ -22,6 +48,11 @@
       "src": "/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    }
+  ],
+  "url_handlers": [
+    {
+      "origin": "https://mobile-order-4d383.web.app/"
     }
   ],
   "start_url": ".",

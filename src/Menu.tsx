@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Alert, Grid } from "@mui/material";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "./component/Order";
@@ -44,6 +44,9 @@ export const Menu = () => {
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
+                <Alert severity="error" onClick={() => {
+                    window.location.href = "/history";
+                }}><div className="japanese_R">未受け取りの注文があります (詳細)</div></Alert>
                 <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: CategoryProp): void {
                     setCategoryMode(category)
                 }} />

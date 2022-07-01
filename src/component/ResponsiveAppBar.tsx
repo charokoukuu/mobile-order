@@ -34,16 +34,11 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
     };
 
     const handleCloseNavMenu = () => {
+
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = (setting: string) => {
-        // setting === "ログアウト" ? signOut(auth) : console.log("");
-        // setting === "注文履歴" ? window.location.href = "/history" : console.log("");
-        // setting === "お問い合わせ" ? window.location.href = "https://docs.google.com/forms/d/1mHS9PZT-0CSoTgkFG5tmaRNICSovkdCLAUri3bdcQpY/edit" : console.log("");
 
-        setAnchorElUser(null);
-    };
 
     return (
         <AppBar position="static" style={{ backgroundColor: "#006C9B" }}>
@@ -99,7 +94,9 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem key={page} onClick={() => {
+                                    window.location.href = "/";
+                                }}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
@@ -142,10 +139,14 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
+                            onClose={() => {
+                                setAnchorElUser(null);
+                            }}
                         >
                             {settings.map((setting, index: number) => (
-                                <MenuItem key={setting} component={Link} to={toLink[index]}>
+                                <MenuItem key={setting} component={Link} to={toLink[index]} onClick={() => {
+                                    setAnchorElUser(null);
+                                }}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
