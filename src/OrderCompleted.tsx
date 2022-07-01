@@ -23,14 +23,14 @@ export const OrderCompleted = () => {
   }, [params.id]);
 
   return (
-    <div>
+    <div style={{ margin: "10px 0" }}>
       {isGetOrderData ? (
         <Card
           style={{
             marginTop: "20px",
             margin: "auto",
             maxWidth: "1200px",
-            width: "90vw",
+            width: "95vw",
           }}
         >
           <h1 style={{ textAlign: "center" }}>Order</h1>
