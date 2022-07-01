@@ -124,7 +124,7 @@ export const Register = () => {
                 sx={{ mt: 3, mb: 2 }}
                 onClick={LoginPopup}
               >
-                Login
+                ログイン
               </Button>
             </>
           )}
