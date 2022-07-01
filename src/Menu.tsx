@@ -88,7 +88,7 @@ export const Menu = () => {
                             menu: orderData
                         })
                         const Pay = () => {
-                            axios.post("http://localhost:3001/paypay", {
+                            axios.post("http://localhost:3001/paypay?orderId=" + orderId, {
                                 amount: totalPrice,
                                 orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
                             }, {
@@ -100,8 +100,8 @@ export const Menu = () => {
                                 window.location.href = res.data.data.url;
                             })
                         }
-                        // Pay();
-                        window.location.href = "/order/" + orderId;
+                        Pay();
+                        // window.location.href = "/order/" + orderId;
                     }} />
                 </div>
                 <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {

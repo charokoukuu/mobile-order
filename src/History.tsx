@@ -5,7 +5,6 @@ import { SearchCollectionDataGet } from "./SubmitGet";
 import { UserInfo } from "./UserInfo";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
 // import { OrderCompleted } from "./OrderCompleted";
 // import dayjs from "dayjs";
 // import 'dayjs/locale/ja';
@@ -33,47 +32,44 @@ export const History = () => {
 
   return (
     <div>
-      <h1 style={{textAlign:"center",color:"#707070"}}>注文履歴</h1>
+      <h1 style={{ textAlign: "center", color: "#707070" }}>注文履歴</h1>
       {isGetHistoryData ? (
         oneOrderData?.map((e, i) => {
           return (
-            <div style={{ margin: "5vw 0" }} key={i}>
+            <div style={{ margin: "2vw 0" }} key={i}>
               <Card
+                style={{ borderRadius: "3px" }}
                 sx={{ minWidth: 275 }}
                 onClick={() => {
-                //   console.log(e.id);
+                  //   console.log(e.id);
                   window.location.href = `/order/${e.id}`;
                 }}
               >
                 <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
+                  <div
                     color="text.secondary"
-                    gutterBottom
                   >
-                    <div style={{ textAlign: "right",color:"#707070" }}>
+                    <div style={{ textAlign: "right", color: "#707070" }}>
                       {e.date.toDate().toLocaleString()}
                     </div>
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    component="div"
-                    style={{ display: "flex", justifyContent: "space-between"}}
+                  </div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <div style={{ margin: "auto 0" }}>
                       {e.menu.map((e: DocumentData, i: number) => (
-                        <div key={i} style={{color:"#707070"}}> {e.title}</div>
+                        <div key={i} style={{ color: "#707070" }}> {e.title}</div>
                       ))}
                     </div>
-                    <div style={{ fontSize: 50, margin: "auto 0" }}>
-                      ￥{e.totalPrice}
+                    <div className="japanese_B" style={{ fontSize: 30, margin: "auto 0" }}>
+                      ¥{e.totalPrice}
                     </div>
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    <div style={{ textAlign: "right", clear: "both",color:"#1FA7D0" }}>
+                  </div>
+                  <div color="text.secondary">
+                    <div style={{ textAlign: "right", clear: "both", color: "#1FA7D0" }}>
                       ID:{e.id}
                     </div>
-                  </Typography>
+                  </div>
                 </CardContent>
               </Card>
             </div>
