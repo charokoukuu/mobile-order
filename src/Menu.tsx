@@ -100,8 +100,8 @@ export const Menu = () => {
                                 window.location.href = res.data.data.url;
                             })
                         }
-                        Pay();
-                        // window.location.href = "/order/" + orderId;
+                        // Pay();
+                        window.location.href = "/order/" + orderId;
                     }} />
                 </div>
                 <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {
