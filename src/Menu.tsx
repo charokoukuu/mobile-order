@@ -10,6 +10,7 @@ import { GetAllData, OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
 import { UserInfo } from "./UserInfo";
 import { LoadingAnimation } from "./component/LoadingAnimation";
+import axios from "axios";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
@@ -86,7 +87,21 @@ export const Menu = () => {
                             totalPrice: totalPrice,
                             menu: orderData
                         })
-                        window.location.href = "/order/" + orderId;
+                        const Pay = () => {
+                            axios.post("http://localhost:3001/paypay?orderId=" + orderId, {
+                                amount: totalPrice,
+                                orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
+                            }, {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                }
+                            }).then((res) => {
+                                console.log(res.data.data.url);
+                                window.location.href = res.data.data.url;
+                            })
+                        }
+                        Pay();
+                        // window.location.href = "/order/" + orderId;
                     }} />
                 </div>
                 <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {

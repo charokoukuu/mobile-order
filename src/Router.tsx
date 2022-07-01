@@ -1,6 +1,5 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import App from "./App";
 import { ErrorPage } from "./ErrorPage";
 import { Menu } from "./Menu";
 import { OrderCompleted } from "./OrderCompleted";
@@ -12,6 +11,7 @@ import { User } from "firebase/auth";
 import { GetUserInfo } from "./SubmitGet";
 import { UserInfo } from "./UserInfo";
 import { useEffect } from "react";
+import { TestData } from "./TestData";
 const Router = () => {
   const [user, setUser] = React.useState<User>();
   const [isLogin, setIsLogin] = React.useState<boolean>(false);
@@ -33,7 +33,7 @@ const Router = () => {
             <Routes>
               <Route path="/" element={<Menu />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/test" element={<App />} />
+              <Route path="/test" element={<TestData />} />
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
               <Route path="/history" element={<History />} />
