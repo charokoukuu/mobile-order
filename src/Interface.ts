@@ -5,7 +5,8 @@ export interface MenuData {
     id: string
     image: string
     category: string
-    isBigSize?: boolean
+    isBigSize: string
+    bigSizeDiffPrice: number
     isStatus: boolean
 }
 

@@ -4,7 +4,7 @@ import { CategoryProp } from "../Menu";
 import "../App.css";
 interface CategoryBarProps {
   category: CategoryProp[];
-  onClick: (category: string) => void;
+  onClick: (category: CategoryProp) => void;
 }
 
 
