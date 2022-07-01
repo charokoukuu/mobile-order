@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
+import { signOut } from "firebase/auth";
 import {
   deleteUser,
   GoogleAuthProvider,
@@ -99,6 +100,18 @@ export const Register = () => {
                 to="/"
               >
                 メニューを見る
+              </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                sx={{ mt: 3, mb: 2 }}
+                color="success"
+                onClick={() => {
+                  auth.signOut();
+                  window.location.reload();
+                }}
+              >
+                ログアウト
               </Button>
             </>
           ) : (
