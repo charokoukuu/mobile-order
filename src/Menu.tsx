@@ -11,11 +11,11 @@ import { Cart } from "./component/Cart";
 import { UserInfo } from "./UserInfo";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import axios from "axios";
-
+const apiUrl = "https://pocketmansion.tk/"
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
-    const [categoryMode, setCategoryMode] = useState<any>("main");
+    const [categoryMode, setCategoryMode] = useState<CategoryProp>("メイン");
     // const [mode, setMode] = useState<Mode>("menu");
     const [detailDialogOpen, setDetailDialogOpen] = useState(false);
     const [menu, setMenu] = useState<DocumentData[]>([]);
@@ -42,8 +42,8 @@ export const Menu = () => {
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
-                <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: string): void {
-                    setCategoryMode(category === "メイン" ? "main" : category === "ドリンク" ? "drink" : "topping")
+                <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: CategoryProp): void {
+                    setCategoryMode(category)
                 }} />
                 <Grid container >
                     {menu.filter((item: any) => item.category === categoryMode && item.isStatus).map((menu: any, index: number) => {
@@ -60,6 +60,7 @@ export const Menu = () => {
                                         image: menu.image,
                                         category: menu.category,
                                         isBigSize: menu.isBigSize,
+                                        bigSizeDiffPrice: menu.bigSizeDiffPrice,
                                         isStatus: menu.isStatus
                                     });
                                     menu.isBigSize === undefined && setChosenMenu(menu);
@@ -88,7 +89,7 @@ export const Menu = () => {
                             menu: orderData
                         })
                         const Pay = () => {
-                            axios.post("http://localhost:3001/paypay?orderId=" + orderId, {
+                            axios.post(apiUrl + "paypay?orderId=" + orderId, {
                                 amount: totalPrice,
                                 orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
                             }, {
@@ -96,7 +97,7 @@ export const Menu = () => {
                                     "Content-Type": "application/json",
                                 }
                             }).then((res) => {
-                                console.log(res.data.data.url);
+                                console.log(res.data);
                                 window.location.href = res.data.data.url;
                             })
                         }
