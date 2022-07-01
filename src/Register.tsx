@@ -14,6 +14,8 @@ import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import App from "./App";
 import { UserInfo } from "./UserInfo";
+import GoogleIcon from "@mui/icons-material/Google";
+
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
 export const Register = () => {
@@ -83,16 +85,23 @@ export const Register = () => {
           }}
         >
           <Avatar src={user?.photoURL || ""} alt="logo" sx={{ mx: 17 }} />
-          <h2 style={{ textAlign: "center" }}>
-            学生のGoogleアカウントでサインインしてください。
-          </h2>
+          {user?.displayName ? (
+            <h2 style={{ textAlign: "center" }}>
+              お帰りなさい{user?.displayName || ""}さん
+            </h2>
+          ) : (
+            <h2 style={{ textAlign: "center" }}>
+              学生のGoogleアカウントでサインインしてください。
+            </h2>
+          )}
           <Button
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={LoginPopup}
           >
-            Sign In
+            {/* <GoogleIcon /> */}
+            Login
           </Button>
         </Box>
       ) : correctEmail(userEmail) && isLogin ? (
