@@ -12,6 +12,7 @@ import { GetUserInfo } from "./SubmitGet";
 import { UserInfo } from "./UserInfo";
 import { useEffect } from "react";
 import { TestData } from "./TestData";
+import { Redirect } from "./component/Redirect";
 const Router = () => {
   const [user, setUser] = React.useState<User>();
   const [isLogin, setIsLogin] = React.useState<boolean>(false);
@@ -37,6 +38,9 @@ const Router = () => {
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
               <Route path="/history" element={<History />} />
+              <Route path="/logout" element={<Redirect logout={true} />} />
+              <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />
+              } />
               <Route
                 path="*"
                 element={

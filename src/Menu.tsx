@@ -12,6 +12,8 @@ import { UserInfo } from "./UserInfo";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import axios from "axios";
 const apiUrl = "https://pocketmansion.tk/"
+// const hostUrl = "http://localhost:3000";
+const hostUrl = "https://mobile-order-4d383.web.app";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
@@ -89,7 +91,7 @@ export const Menu = () => {
                             menu: orderData
                         })
                         const Pay = () => {
-                            axios.post(apiUrl + "paypay?orderId=" + orderId, {
+                            axios.post(apiUrl + "paypay?orderId=" + orderId + "&url=" + hostUrl, {
                                 amount: totalPrice,
                                 orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
                             }, {

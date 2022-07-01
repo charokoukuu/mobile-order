@@ -12,11 +12,11 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { signOut } from 'firebase/auth';
-import { auth } from '../Firebase';
+import { Link } from 'react-router-dom';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['メニュー'];
 const settings = ["注文履歴", "設定", "お問い合わせ", "ログアウト"];
+const toLink = ["/history", "/setting", "/contact", "/logout"];
 
 
 interface ResponsiveAppBarProps {
@@ -38,8 +38,9 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
     };
 
     const handleCloseUserMenu = (setting: string) => {
-        setting === "ログアウト" ? signOut(auth) : console.log("");
-        setting === "注文履歴" ? window.location.href = "/history" : console.log("");
+        // setting === "ログアウト" ? signOut(auth) : console.log("");
+        // setting === "注文履歴" ? window.location.href = "/history" : console.log("");
+        // setting === "お問い合わせ" ? window.location.href = "https://docs.google.com/forms/d/1mHS9PZT-0CSoTgkFG5tmaRNICSovkdCLAUri3bdcQpY/edit" : console.log("");
 
         setAnchorElUser(null);
     };
@@ -59,12 +60,13 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
+                            textAlign: 'center',
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        Runticket
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -74,9 +76,9 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit"
+                            color="default"
                         >
-                            <MenuIcon />
+                            <MenuIcon style={{ color: "#ffffff" }} />
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -103,25 +105,11 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+                    <Button onClick={() => {
+                        window.location.href = "/";
+                    }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "7vw", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
+                        <div className='japanese_L' style={{ color: "#ffffff" }}>Runticket</div></Button>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
@@ -156,8 +144,8 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={() => { handleCloseUserMenu(setting) }}>
+                            {settings.map((setting, index: number) => (
+                                <MenuItem key={setting} component={Link} to={toLink[index]}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}

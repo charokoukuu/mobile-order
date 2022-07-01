@@ -119,7 +119,7 @@ const SelectedCard = (props: { price: number }) => {
                 <Button onClick={() => {
                     setIsChecked(true)
                 }} style={isChecked ? { ...defaultButton, marginRight: "3vw" } : { ...selectedButton, marginRight: "3vw" }} variant="contained">
-                    <div className="japanese_R" style={{ fontSize: "4vw", color: "#ffffff" }}>大 (+100円)</div>
+                    <div className="japanese_R" style={{ fontSize: "4vw", color: "#ffffff" }}>大 (+{baseMenuData.bigSizeDiffPrice}円)</div>
                 </Button>
             </Grid>
         </Grid>
