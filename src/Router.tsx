@@ -12,6 +12,7 @@ import { User } from "firebase/auth";
 import { GetUserInfo } from "./SubmitGet";
 import { UserInfo } from "./UserInfo";
 import { useEffect } from "react";
+import { TestData } from "./TestData";
 const Router = () => {
   const [user, setUser] = React.useState<User>();
   const [isLogin, setIsLogin] = React.useState<boolean>(false);
@@ -33,7 +34,7 @@ const Router = () => {
             <Routes>
               <Route path="/" element={<Menu />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/test" element={<App />} />
+              <Route path="/test" element={<TestData />} />
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
               <Route path="/history" element={<History />} />
