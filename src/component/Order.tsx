@@ -24,6 +24,7 @@ interface OrderProps {
   totalPrice: number;
   onNext: () => void;
   onPrev: () => void;
+  onStripe: () => void;
   onDelete: (e: MenuData, i: number) => void;
   orderData: MenuData[];
 }
@@ -78,7 +79,10 @@ export const Order = (props: OrderProps) => {
           </div>
         </List>
         <Button onClick={props.onNext} variant="outlined">
-          購入する
+          PayPayで購入する
+        </Button>
+        <Button onClick={props.onStripe} variant="outlined">
+          クレジットカードで購入する
         </Button>
         <Button
           style={{ marginTop: "3vw" }}

@@ -138,6 +138,33 @@ export const Menu = () => {
                 Pay();
                 // window.location.href = "/order/" + orderId;
               }}
+              onStripe={async () => {
+                const orderId = await OrderSubmit({
+                  user: {
+                    uid: UserInfo.user.uid,
+                    studentName: UserInfo.user.displayName || "",
+                    mailAddress: UserInfo.user.email || "",
+                  },
+                  totalPrice: totalPrice,
+                  menu: orderData,
+                });
+                const Stripe = () => {
+                  axios
+                    .post("http://localhost:4242/create-checkout-session", {
+                      // orders: orderData,
+                      name: "Test Payment",
+                      orderData: orderData,
+                      orderId: orderId,
+                      price: totalPrice,
+                    })
+                    .then((res) => {
+                      // console.log(res.data);
+                      window.location.href = res.data;
+                      console.log(res.data);
+                    });
+                };
+                Stripe();
+              }}
             />
           </div>
           <DetailDialog

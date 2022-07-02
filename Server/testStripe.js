@@ -1,35 +1,47 @@
 const express = require("express");
 const app = express();
-// This is your test secret API key.
+const cors = require("cors");
+
+const bodyParser = require("body-parser");
+
 const stripe = require("stripe")(
   "sk_test_51LGG4SAYr0GKBopU3nKzyYdbMxkR7VgHllg0riGMvD3tfJ8TsGHRMgqzibyIA8lMkRw6CyI8FB7IYDCkKarADT6X00ZxMN1PO0"
 );
 
-app.use(express.static("public"));
-app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
 
-const calculateOrderAmount = (items) => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1400;
-};
+app.post("/create-checkout-session", async (req, res) => {
+  // res.set({ "Access-Control-Allow-Origin": "*" });
+  const orderData = req.body.orderData;
+  const orderTitle = orderData.map((item) => item.title).join(",");
 
-app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
-
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: "eur",
-    automatic_payment_methods: {
-      enabled: true,
+  const data = orderData.flatMap((item) => [
+    {
+      price_data: {
+        currency: "jpy",
+        product_data: {
+          name: item.title.toString(),
+        },
+        unit_amount: item.price,
+      },
+      quantity: 1,
     },
+  ]);
+
+  const images = orderData.flatMap((item) => [item.image]);
+
+  console.log(data);
+  const session = await stripe.checkout.sessions.create({
+    line_items: data,
+    mode: "payment",
+    success_url: `http://localhost:3000/order/${req.body.orderId}`,
+    cancel_url: `http://localhost:3000/order/${req.body.orderId}`,
   });
 
-  res.send({
-    clientSecret: paymentIntent.client_secret,
-  });
+  res.send(session.url);
+  console.log("ok");
+  // console.log(orderTitle);
 });
 
-app.listen(4242, () => console.log("Node server listening on port 4242!"));
+app.listen(4242, () => console.log(`Listening on port ${4242}!`));
