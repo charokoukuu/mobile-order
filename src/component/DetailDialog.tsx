@@ -37,7 +37,7 @@ export const DetailDialog = (props: DetailDialogProps) => {
                     <div style={{ width: "80vw" }}>
                         <MaterialMenuCard />
                         {props.menu?.isBigSize && <MaterialSizeSelectCard />}
-                        <div className="center themaFontColor" style={{ margin: "1vw 0", fontSize: "15vw" }}>{value.menu?.price}<span style={{ fontSize: "7vw" }}> 円</span></div>
+                        <div className="center themeFontColor" style={{ margin: "1vw 0", fontSize: "15vw" }}>{value.menu?.price}<span style={{ fontSize: "7vw" }}> 円</span></div>
                         <div className="center">  <Button style={{ width: "70vw", backgroundColor: "#006C9B", height: "10vw", borderRadius: "11px" }} variant="contained" onClick={() => {
                             props.onNext(value.menu);
                         }} >

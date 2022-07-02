@@ -67,7 +67,7 @@ export const History = () => {
                           ))}
                         </div>
                         <div
-                          className="japanese_B"
+                          className="japanese_B themeFontColor"
                           style={{ fontSize: 30, margin: "auto 0" }}
                         >
                           ¥{e.totalPrice}

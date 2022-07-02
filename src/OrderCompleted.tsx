@@ -33,7 +33,9 @@ export const OrderCompleted = () => {
             width: "95vw",
           }}
         >
-          <h1 style={{ textAlign: "center" }}>Order</h1>
+          <h2 className="japanese_L" style={{ textAlign: "center" }}>
+            {orderData?.id}
+          </h2>
           {UserInfo.user.uid === orderData?.user.uid ? (
             <>
               {/* <p>{orderData?.id}</p> */}

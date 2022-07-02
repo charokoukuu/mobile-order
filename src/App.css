@@ -67,8 +67,12 @@ html {
   text-align: center;
 }
 
-.themaFontColor {
+.themeFontColor {
   color: #006C9B
+}
+
+.themeBackgroundColor {
+  background-color: #006C9B
 }
 
 div {

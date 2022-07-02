@@ -10,7 +10,7 @@ export const RandomID = () => {
 }
 
 export const CorrectEmail = (email: string) => {
-  const regex = /^e[a-zA-Z0-9._-]+@oit.ac.jp$/;
+  const regex = /([a-zA-Z0-9._-]+@oit.ac.jp$)|(^runticket21@gmail.com$)/;
   return regex.test(email);
 }
 
