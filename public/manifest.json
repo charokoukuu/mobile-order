@@ -50,9 +50,22 @@
       "type": "image/png"
     }
   ],
+  "capture_links": "existing_client_event",
   "url_handlers": [
     {
-      "origin": "https://mobile-order-4d383.web.app/"
+      "origin": "https://mobile-order-4d383.web.app"
+    },
+    {
+      "origin": "https://mobile-order-4d383.web.so"
+    },
+    {
+      "origin": "https://*.mobile-order-4d383.web.app"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+dino",
+      "url": "/%s"
     }
   ],
   "start_url": ".",
