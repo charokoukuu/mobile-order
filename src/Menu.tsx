@@ -33,7 +33,7 @@ export const Menu = () => {
             setMenu(await GetAllData("menu"));
             setIsGetMenu(true);
         })()
-
+        console.log(navigator.userAgent);
     }, []);
 
 

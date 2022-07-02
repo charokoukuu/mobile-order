@@ -27,6 +27,14 @@
       ]
     }
   ],
+  "description": "学内モバイルオーダーRunTicketでスピーディーに食券を発券してみませんか？\nPayPay決済のみ対応",
+  "screenshots": [
+    {
+      "src": "./icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
   "icons": [
     {
       "src": "/icon-192x192.png",
