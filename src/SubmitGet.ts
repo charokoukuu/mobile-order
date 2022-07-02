@@ -14,6 +14,7 @@ export const CorrectEmail = (email: string) => {
   return regex.test(email);
 }
 
+
 export const GetAllData = async (collectionName: string) => {
   let data: DocumentData[] = [];
   const querySnapshot = await getDocs(collection(db, collectionName));
@@ -90,3 +91,5 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
     })
   });
 }
+
+export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
