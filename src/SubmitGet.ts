@@ -2,7 +2,6 @@ import { MenuData, OrderData, UserData } from "./Interface"
 import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc } from "firebase/firestore";
 import { auth, db } from "./Firebase"
 import { onAuthStateChanged, User } from "firebase/auth";
-import { UserInfo } from "./UserInfo";
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
   var N = 16
@@ -81,7 +80,6 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         if (!CorrectEmail(user?.email || "") && window.location.pathname !== pathName) window.location.href = pathName;
-        UserInfo.user = user;
         callback(user);
         resolve("");
       } else {

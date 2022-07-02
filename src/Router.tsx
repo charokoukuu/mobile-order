@@ -9,7 +9,6 @@ import { History } from "./History";
 import ResponsiveAppBar from "./component/ResponsiveAppBar";
 import { User } from "firebase/auth";
 import { GetUserInfo } from "./SubmitGet";
-import { UserInfo } from "./UserInfo";
 import { useEffect } from "react";
 import { TestData } from "./TestData";
 import { Redirect } from "./component/Redirect";
@@ -19,7 +18,7 @@ const Router = () => {
   useEffect(() => {
     (async () => {
       await GetUserInfo((e) => {
-        UserInfo.user = e;
+        // UserInfo.user = e;
         setUser(e);
       });
       setIsLogin(true);

@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.post("/create-checkout-session", async (req, res) => {
   // res.set({ "Access-Control-Allow-Origin": "*" });
   const orderData = req.body.orderData;
-  const orderTitle = orderData.map((item) => item.title).join(",");
+  // const orderTitle = orderData.map((item) => item.title).join(",");
 
   const data = orderData.flatMap((item) => [
     {
@@ -28,8 +28,6 @@ app.post("/create-checkout-session", async (req, res) => {
       quantity: 1,
     },
   ]);
-
-  const images = orderData.flatMap((item) => [item.image]);
 
   console.log(data);
   const session = await stripe.checkout.sessions.create({

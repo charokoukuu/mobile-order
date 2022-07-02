@@ -5,7 +5,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { CorrectEmail } from "./SubmitGet";
 import {
-  deleteUser,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
@@ -14,7 +13,6 @@ import {
 import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import App from "./App";
-import { UserInfo } from "./UserInfo";
 import { Link } from "react-router-dom";
 
 const theme = createTheme();
@@ -27,7 +25,6 @@ export const Register = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        UserInfo.user = user;
         setUserEmail(user.email || "");
         setUser(user);
         // console.log(user);
@@ -44,6 +41,7 @@ export const Register = () => {
         // console.log(user.email);
         setUserEmail(user.email || "");
         setIsLogin(true);
+        window.location.reload();
         // ...
       })
       .catch((error) => {
@@ -52,17 +50,9 @@ export const Register = () => {
   };
 
   const DeleteUserRedirect = () => {
-    if (auth.currentUser) {
-      deleteUser(auth.currentUser)
-        .then(() => {
-          // console.log("delete user");
-          LoginPopup();
-        })
-        .catch((error) => {
-          // An error ocurred
-          // ...
-        });
-    }
+
+    LoginPopup();
+
   };
 
   return (
