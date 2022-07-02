@@ -1,4 +1,7 @@
 import { Button } from "@mui/material";
+import { deleteUser } from "firebase/auth";
+import { useEffect } from "react";
+import { auth } from "../Firebase";
 
 
 interface IllegalEmailAddressProps {
@@ -8,6 +11,15 @@ interface IllegalEmailAddressProps {
 
 export const IllegalEmailAddress = (props: IllegalEmailAddressProps) => {
 
+    useEffect(() => {
+        const DeleteUserRedirect = () => {
+            if (auth.currentUser) {
+                deleteUser(auth.currentUser)
+            }
+        };
+        DeleteUserRedirect();
+        console.log(auth.currentUser);
+    }, [])
     return (
         <div>
             <div style={{ textAlign: "center", margin: "5vw 0", fontSize: "7vw" }}>
