@@ -3,11 +3,11 @@ import { MenuData } from "./Interface";
 import { useParams } from "react-router-dom";
 import { GetSpecificData } from "./SubmitGet";
 import { DocumentData } from "firebase/firestore";
-import { UserInfo } from "./UserInfo";
 import { QRCodeSVG } from "qrcode.react";
 import { Card } from "@mui/material";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import Slide from "./component/Slide";
+import { auth } from "./Firebase";
 
 export const OrderCompleted = () => {
   const [orderData, setOrderData] = useState<DocumentData>();
@@ -36,10 +36,10 @@ export const OrderCompleted = () => {
           <h2 className="japanese_L" style={{ textAlign: "center" }}>
             {orderData?.id}
           </h2>
-          {UserInfo.user.uid === orderData?.user.uid ? (
+          {auth.currentUser?.uid === orderData?.user.uid ? (
             <>
               {/* <p>{orderData?.id}</p> */}
-              {orderData.isStatus === "注文済み" && (
+              {orderData?.isStatus === "注文済み" && (
                 <div style={{ display: "flex", height: "30vh" }}>
                   <QRCodeSVG
                     style={{
@@ -60,7 +60,7 @@ export const OrderCompleted = () => {
                 {`￥${orderData?.totalPrice}`}
               </h2>
               <div style={{ margin: "5% 0" }}>
-                {orderData.menu.map((e: MenuData, i: number) => {
+                {orderData?.menu.map((e: MenuData, i: number) => {
                   return (
                     <div
                       style={{
@@ -87,7 +87,7 @@ export const OrderCompleted = () => {
                     </div>
                   );
                 })}
-                {orderData.isStatus === "注文済み" && (
+                {orderData?.isStatus === "注文済み" && (
                   <div style={{ margin: "10% 0" }}>
                     <h2 style={{ textAlign: "center" }}>
                       チケット受け取り方法

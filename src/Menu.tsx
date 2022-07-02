@@ -8,9 +8,9 @@ import { FoodCard } from "./component/FoodCard";
 import { MenuData } from "./Interface";
 import { GetAllData, OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
-import { UserInfo } from "./UserInfo";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import axios from "axios";
+import { auth } from "./Firebase";
 const apiUrl = "https://pocketmansion.tk/"
 // const hostUrl = "http://localhost:3000";
 const hostUrl = "https://mobile-order-4d383.web.app";
@@ -86,9 +86,9 @@ export const Menu = () => {
                     }} onNext={async () => {
                         const orderId = await OrderSubmit({
                             user: {
-                                uid: UserInfo.user.uid,
-                                studentName: UserInfo.user.displayName || "",
-                                mailAddress: UserInfo.user.email || "",
+                                uid: auth.currentUser?.uid || "",
+                                studentName: auth.currentUser?.displayName || "",
+                                mailAddress: auth.currentUser?.email || "",
                             },
                             totalPrice: totalPrice,
                             menu: orderData

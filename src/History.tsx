@@ -2,10 +2,10 @@ import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import { SearchCollectionDataGet } from "./SubmitGet";
-import { UserInfo } from "./UserInfo";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { auth } from "./Firebase";
 // import { OrderCompleted } from "./OrderCompleted";
 // import dayjs from "dayjs";
 // import 'dayjs/locale/ja';
@@ -19,7 +19,7 @@ export const History = () => {
       let order = await SearchCollectionDataGet(
         "order",
         "user.uid",
-        UserInfo.user.uid
+        auth.currentUser?.uid || ""
       );
       order?.sort((prev, curr) => {
         if (prev.date.seconds > curr.date.seconds) return -1;
