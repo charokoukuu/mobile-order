@@ -23,14 +23,14 @@ export const OrderCompleted = () => {
   }, [params.id]);
 
   return (
-    <div>
+    <div style={{ margin: "10px 0" }}>
       {isGetOrderData ? (
         <Card
           style={{
             marginTop: "20px",
             margin: "auto",
             maxWidth: "1200px",
-            width: "90vw",
+            width: "95vw",
           }}
         >
           <h1 style={{ textAlign: "center" }}>Order</h1>
@@ -38,15 +38,15 @@ export const OrderCompleted = () => {
             <>
               {/* <p>{orderData?.id}</p> */}
               {orderData.isStatus === "注文済み" && (
-                <QRCodeSVG
-                  style={{
-                    display: "flex",
-                    margin: "0 auto",
-                    height: "30vh",
-                  }}
-                  value={orderData?.id}
-                  size={200}
-                />
+                <div style={{ display: "flex", height: "30vh" }}>
+                  <QRCodeSVG
+                    style={{
+                      margin: "0 auto",
+                    }}
+                    value={orderData?.id}
+                    size={200}
+                  />
+                </div>
               )}
               <h2
                 style={{
