@@ -6,7 +6,6 @@ import { OrderCompleted } from "./OrderCompleted";
 import { Register } from "./Register";
 import { Status } from "./Status";
 import { History } from "./History";
-import { Stripe } from "./Stripe";
 import ResponsiveAppBar from "./component/ResponsiveAppBar";
 import { User } from "firebase/auth";
 import { GetUserInfo } from "./SubmitGet";
@@ -41,7 +40,6 @@ const Router = () => {
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
               <Route path="/history" element={<History />} />
-              <Route path="/stripe" element={<Stripe />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
               <Route
                 path="/contact"
