@@ -24,7 +24,7 @@ export const Cart = (props: CartProps) => {
                         </StyledBadge>
                     </IconButton>
                 </div>
-                <div className="japanese_B themaFontColor" style={{ position: "absolute", bottom: "50%", right: props.totalPrice.toString().length === 3 ? "45%" : "40%", transform: "translate(0%,50%)", fontSize: "11vw" }}>¥{props.totalPrice}</div>
+                <div className="japanese_B themeFontColor" style={{ position: "absolute", bottom: "50%", right: props.totalPrice.toString().length === 3 ? "45%" : "40%", transform: "translate(0%,50%)", fontSize: "11vw" }}>¥{props.totalPrice}</div>
                 <div style={{ textAlign: "right", margin: "auto 3vw", position: "absolute", bottom: "50%", right: 0, transform: "translate(0%,50%)" }}><Button style={{ backgroundColor: "#006C9B", height: "11vw", borderRadius: "2vw" }} variant="contained" onClick={() => {
                     props.onClick()
                 }}>カートを見る</Button></div>

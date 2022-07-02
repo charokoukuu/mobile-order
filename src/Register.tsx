@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
+import { CorrectEmail } from "./SubmitGet";
 import {
   deleteUser,
   GoogleAuthProvider,
@@ -22,11 +23,6 @@ export const Register = () => {
   const [userEmail, setUserEmail] = useState<string>("e1xxx@oit.ac.jp");
   const [user, setUser] = useState<User>();
   const [isLogin, setIsLogin] = useState<boolean>(false);
-
-  const correctEmail = (email: string) => {
-    const regex = /([a-zA-Z0-9._-]+@oit.ac.jp$)|(^runticket21@gmail.com$)/;
-    return regex.test(email);
-  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -71,7 +67,7 @@ export const Register = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {correctEmail(userEmail) && !isLogin ? (
+      {CorrectEmail(userEmail) && !isLogin ? (
         <Box
           component="form"
           onSubmit={LoginPopup}
@@ -91,10 +87,12 @@ export const Register = () => {
                 お帰りなさい{user?.displayName || ""}さん
               </h2>
               <Button
+                style={{
+                  backgroundColor: "#006C9B",
+                }}
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                color="success"
                 component={Link}
                 to="/"
               >
@@ -129,7 +127,7 @@ export const Register = () => {
             </>
           )}
         </Box>
-      ) : correctEmail(userEmail) && isLogin ? (
+      ) : CorrectEmail(userEmail) && isLogin ? (
         <App />
       ) : (
         <IllegalEmailAddress

@@ -32,66 +32,68 @@ export const History = () => {
   }, []);
 
   return (
-    <div>
-      <h1 style={{ textAlign: "center", color: "#707070" }}>注文履歴</h1>
-      {isGetHistoryData ? (
-        oneOrderData?.map((e, i) => {
-          return (
-            <div key={i} style={{ margin: "2vw 0" }}>
-              <Link
-                style={{
-                  textDecoration: "none",
-                }}
-                to={`/order/${e.id}`}
-              >
-                <Card style={{ borderRadius: "3px" }} sx={{ minWidth: 275 }}>
-                  <CardContent>
-                    <div color="text.secondary">
-                      <div style={{ textAlign: "right", color: "#707070" }}>
-                        {e.date.toDate().toLocaleString()}
+    <div style={{ marginTop: "3vw" }}>
+      <div style={{ backgroundColor: "#ffffff", paddingTop: "1vw", borderRadius: "13px", width: "95vw", margin: "0 auto" }}>
+        <h2 className="japanese_L" style={{ textAlign: "center", color: "#707070" }}>注文履歴</h2>
+        {isGetHistoryData ? (
+          oneOrderData?.map((e, i) => {
+            return (
+              <div key={i} style={{ margin: "4vw 0" }}>
+                <Link
+                  style={{
+                    textDecoration: "none",
+                  }}
+                  to={`/order/${e.id}`}
+                >
+                  <Card style={{ borderRadius: "13px", boxShadow: "0px 3px 6px rgba(0,0,0,0.2)" }} sx={{ width: "89vw", margin: "0 auto" }} >
+                    <CardContent>
+                      <div color="text.secondary">
+                        <div className="japanese_L" style={{ textAlign: "right", color: "#707070" }}>
+                          {e.date.toDate().toLocaleString()}
+                        </div>
                       </div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <div style={{ margin: "auto 0" }}>
-                        {e.menu.map((e: DocumentData, i: number) => (
-                          <div key={i} style={{ color: "#707070" }}>
-                            {" "}
-                            {e.title}
-                          </div>
-                        ))}
-                      </div>
-                      <div
-                        className="japanese_B"
-                        style={{ fontSize: 30, margin: "auto 0" }}
-                      >
-                        ¥{e.totalPrice}
-                      </div>
-                    </div>
-                    <div color="text.secondary">
                       <div
                         style={{
-                          textAlign: "right",
-                          clear: "both",
-                          color: "#1FA7D0",
+                          display: "flex",
+                          justifyContent: "space-between",
                         }}
                       >
-                        ID:{e.id}
+                        <div style={{ margin: "auto 0" }}>
+                          {e.menu.map((e: DocumentData, i: number) => (
+                            <div key={i} style={{ color: "#707070", marginLeft: "2vw" }}>
+                              {" "}
+                              {e.title}
+                            </div>
+                          ))}
+                        </div>
+                        <div
+                          className="japanese_B themeFontColor"
+                          style={{ fontSize: 30, margin: "auto 0" }}
+                        >
+                          ¥{e.totalPrice}
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            </div>
-          );
-        })
-      ) : (
-        <LoadingAnimation />
-      )}
+                      <div color="text.secondary">
+                        <div
+                          className="japanese_R"
+                          style={{
+                            textAlign: "right",
+                            color: "#1FA7D0",
+                          }}
+                        >
+                          ID:{e.id}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            );
+          })
+        ) : (
+          <LoadingAnimation />
+        )}
+      </div>
     </div>
   );
 };
