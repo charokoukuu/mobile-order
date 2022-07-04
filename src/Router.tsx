@@ -38,7 +38,7 @@ const Router = () => {
               <Route path="/test" element={<TestData />} />
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
-              <Route path="/order/:id/:paycomplete" element={<OrderCompleted />}/>
+              <Route path="/order/:id/:status" element={<OrderCompleted />}/>
               <Route path="/history" element={<History />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
               <Route

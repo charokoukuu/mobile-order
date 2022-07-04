@@ -26,7 +26,7 @@ export const OrderCompleted = () => {
 
   return (
     <>
-    {params.paycomplete === "complete" && 
+    {params.status === "success" && 
       <IntegrationNotistack message="注文が完了しました" variant="success" />
     }
     <div style={{ margin: "10px 0" }}>
