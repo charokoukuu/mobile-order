@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import axios from "axios";
+import IntegrationNotistack from "./component/IntegrationNotistack";
 
 export const TestData = () => {
     const Pay = () => {
@@ -18,6 +19,7 @@ export const TestData = () => {
         <div>
             <h1>TestData</h1>
             <Button onClick={Pay}>Pay</Button>
+            <IntegrationNotistack message={"支払い完了"} variant={"success"} />
         </div>
     );
 }
