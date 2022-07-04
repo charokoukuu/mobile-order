@@ -17,27 +17,27 @@ const hostUrl = "https://mobile-order-4d383.web.app";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
-  const [categoryMode, setCategoryMode] = useState<CategoryProp>("メイン");
-  // const [mode, setMode] = useState<Mode>("menu");
-  const [detailDialogOpen, setDetailDialogOpen] = useState(false);
-  const [menu, setMenu] = useState<DocumentData[]>([]);
-  const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
-  const [orderData, setOrderData] = useState<MenuData[]>([]);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [orderDialog, setOrderDialog] = useState<boolean>(false);
-  const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
-  useEffect(() => {
-    // window.location.href = "/register";
-    (async () => {
-      setMenu(await GetAllData("menu"));
-      setIsGetMenu(true);
-    })();
-    console.log(navigator.userAgent);
-  }, []);
+    const [categoryMode, setCategoryMode] = useState<CategoryProp>("メイン");
+    // const [mode, setMode] = useState<Mode>("menu");
+    const [detailDialogOpen, setDetailDialogOpen] = useState(false);
+    const [menu, setMenu] = useState<DocumentData[]>([]);
+    const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
+    const [orderData, setOrderData] = useState<MenuData[]>([]);
+    const [totalPrice, setTotalPrice] = useState<number>(0);
+    const [orderDialog, setOrderDialog] = useState<boolean>(false);
+    const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
+    useEffect(() => {
+        // window.location.href = "/register";
+        (async () => {
+            setMenu(await GetAllData("menu"));
+            setIsGetMenu(true);
+        })();
+        console.log(navigator.userAgent);
+    }, []);
 
-  useEffect(() => {
-    orderData.length === 0 && setOrderDialog(false);
-  }, [orderData.length]);
+    useEffect(() => {
+        orderData.length === 0 && setOrderDialog(false);
+    }, [orderData.length]);
 
     useEffect(() => {
         orderData.length === 0 && setOrderDialog(false)
@@ -85,7 +85,7 @@ export const Menu = () => {
                         setTotalPrice(totalPrice - e.price)
                     }} orderData={orderData} totalPrice={totalPrice} onPrev={() => {
                         setOrderDialog(false);
-                    }} onNext={async () => {
+                    }} onNext={async (payment) => {
                         const orderId = await OrderSubmit({
                             user: {
                                 uid: auth.currentUser?.uid || "",
@@ -95,47 +95,24 @@ export const Menu = () => {
                             totalPrice: totalPrice,
                             menu: orderData
                         })
-                        const Pay = () => {
-                            axios.post(apiUrl + "paypay?orderId=" + orderId + "&url=" + hostUrl, {
-                                amount: totalPrice,
-                                orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
-                            }, {
-                                headers: {
-                                    "Content-Type": "application/json",
+                        if (payment === "paypay") {
+                            const resData = await axios.post(apiUrl + "paypay?orderId=" + orderId + "&url=" + hostUrl,
+                                {
+                                    amount: totalPrice,
+                                    orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
+                                })
+                            window.location.href = resData.data.data.url;
+                        } else if (payment === "stripe") {
+                            const resData = await axios.post("http://localhost:4242/create-checkout-session",
+                                {
+                                    orderData: orderData,
+                                    orderId: orderId,
                                 }
-                            }).then((res) => {
-                                console.log(res.data);
-                                window.location.href = res.data.data.url;
-                            })
-                        }
-                        Pay();
-                        // window.location.href = "/order/" + orderId;
-                    }} 
-                    onStripe={async() => {
-                        const orderId = await OrderSubmit({
-                            user: {
-                                uid: auth.currentUser?.uid || "",
-                                studentName: auth.currentUser?.displayName || "",
-                                mailAddress: auth.currentUser?.email || "",
-                            },
-                            totalPrice: totalPrice,
-                            menu: orderData
-                        })
-                        const Stripe = () => {
-                            axios.post(
-                                "http://localhost:4242/create-checkout-session",
-                            {
-                                orderData: orderData,
-                                orderId: orderId,
-                            }
-                            ).then((res) => {
-                                console.log(res.data);
-                                window.location.href = res.data;
-                            }
                             )
-                    }
-                    Stripe();
+                            window.location.href = resData.data;
+                        }
                     }}
+
                     />
                 </div>
                 <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {
@@ -153,5 +130,5 @@ export const Menu = () => {
                 <LoadingAnimation />
             }
         </div>
-  );
+    );
 };
