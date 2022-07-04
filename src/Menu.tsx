@@ -12,8 +12,9 @@ import { LoadingAnimation } from "./component/LoadingAnimation";
 import axios from "axios";
 import { auth } from "./Firebase";
 const apiUrl = "https://pocketmansion.tk/"
-// const hostUrl = "http://localhost:3000";
-const hostUrl = "https://mobile-order-4d383.web.app";
+// const apiUrl = "http://localhost:3001/"
+const hostUrl = "http://localhost:3000";
+// const hostUrl = "https://mobile-order-4d383.web.app";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
