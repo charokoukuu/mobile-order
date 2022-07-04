@@ -22,14 +22,16 @@ const Router = () => {
         setUser(e);
       });
       setIsLogin(true);
-    })()
-  }, [])
+    })();
+  }, []);
   return (
     <div>
       <BrowserRouter>
         <div>
-          <ResponsiveAppBar photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} />
-          {isLogin &&
+          <ResponsiveAppBar
+            photoURL={user?.photoURL || "/static/images/avatar/2.jpg"}
+          />
+          {isLogin && (
             <Routes>
               <Route path="/" element={<Menu />} />
               <Route path="/register" element={<Register />} />
@@ -38,8 +40,12 @@ const Router = () => {
               <Route path="/order/:id" element={<OrderCompleted />} />
               <Route path="/history" element={<History />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
-              <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />
-              } />
+              <Route
+                path="/contact"
+                element={
+                  <Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />
+                }
+              />
               <Route
                 path="*"
                 element={
@@ -66,7 +72,7 @@ const Router = () => {
                 }
               />
             </Routes>
-          }
+          )}
         </div>
       </BrowserRouter>
     </div>

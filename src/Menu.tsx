@@ -17,25 +17,27 @@ const hostUrl = "https://mobile-order-4d383.web.app";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
-    const [categoryMode, setCategoryMode] = useState<CategoryProp>("メイン");
-    // const [mode, setMode] = useState<Mode>("menu");
-    const [detailDialogOpen, setDetailDialogOpen] = useState(false);
-    const [menu, setMenu] = useState<DocumentData[]>([]);
-    const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
-    const [orderData, setOrderData] = useState<MenuData[]>([]);
-    const [totalPrice, setTotalPrice] = useState<number>(0);
-    const [orderDialog, setOrderDialog] = useState<boolean>(false);
-    const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
-    useEffect(() => {
+  const [categoryMode, setCategoryMode] = useState<CategoryProp>("メイン");
+  // const [mode, setMode] = useState<Mode>("menu");
+  const [detailDialogOpen, setDetailDialogOpen] = useState(false);
+  const [menu, setMenu] = useState<DocumentData[]>([]);
+  const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
+  const [orderData, setOrderData] = useState<MenuData[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [orderDialog, setOrderDialog] = useState<boolean>(false);
+  const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
+  useEffect(() => {
+    // window.location.href = "/register";
+    (async () => {
+      setMenu(await GetAllData("menu"));
+      setIsGetMenu(true);
+    })();
+    console.log(navigator.userAgent);
+  }, []);
 
-        // window.location.href = "/register";
-        (async () => {
-            setMenu(await GetAllData("menu"));
-            setIsGetMenu(true);
-        })()
-        console.log(navigator.userAgent);
-    }, []);
-
+  useEffect(() => {
+    orderData.length === 0 && setOrderDialog(false);
+  }, [orderData.length]);
 
     useEffect(() => {
         orderData.length === 0 && setOrderDialog(false)
@@ -108,7 +110,33 @@ export const Menu = () => {
                         }
                         Pay();
                         // window.location.href = "/order/" + orderId;
-                    }} />
+                    }} 
+                    onStripe={async() => {
+                        const orderId = await OrderSubmit({
+                            user: {
+                                uid: auth.currentUser?.uid || "",
+                                studentName: auth.currentUser?.displayName || "",
+                                mailAddress: auth.currentUser?.email || "",
+                            },
+                            totalPrice: totalPrice,
+                            menu: orderData
+                        })
+                        const Stripe = () => {
+                            axios.post(
+                                "http://localhost:4242/create-checkout-session",
+                            {
+                                orderData: orderData,
+                                orderId: orderId,
+                            }
+                            ).then((res) => {
+                                console.log(res.data);
+                                window.location.href = res.data;
+                            }
+                            )
+                    }
+                    Stripe();
+                    }}
+                    />
                 </div>
                 <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {
                     (e !== undefined) && setOrderData([...orderData, e]);
@@ -123,8 +151,7 @@ export const Menu = () => {
                 }
             </div> :
                 <LoadingAnimation />
-
             }
         </div>
-    );
-}
+  );
+};
