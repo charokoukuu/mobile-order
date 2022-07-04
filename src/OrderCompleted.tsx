@@ -8,11 +8,10 @@ import { Button, Card } from "@mui/material";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import Slide from "./component/Slide";
 import { auth } from "./Firebase";
+import IntegrationNotistack from "./component/IntegrationNotistack";
 
-interface OrderCompletedProps {
-  isPayCompletedConfirm: boolean;
-}
-export const OrderCompleted = (props: OrderCompletedProps) => {
+
+export const OrderCompleted = () => {
   const [orderData, setOrderData] = useState<DocumentData>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
   const params = useParams();
@@ -25,15 +24,11 @@ export const OrderCompleted = (props: OrderCompletedProps) => {
     })();
   }, [params.id]);
 
-    // パラメーターに"/complete"がある場合は、完了画面を表示する
-  useEffect(() => {
-    {params.paycomplete === "complete" &&
-      console.log("paycomplete is complete");}
-  }
-  , [props.isPayCompletedConfirm]);
-
-
   return (
+    <>
+    {params.paycomplete === "complete" && 
+      <IntegrationNotistack message="注文が完了しました" variant="success" />
+    }
     <div style={{ margin: "10px 0" }}>
       {isGetOrderData ? (
         <Card
@@ -67,8 +62,7 @@ export const OrderCompleted = (props: OrderCompletedProps) => {
                       display: "flex",
                     }}
                     value={orderData?.id}
-                    size={150}
-                  />
+                    size={150} />
                   <h2
                     className="japanese_L"
                     style={{
@@ -176,6 +170,6 @@ export const OrderCompleted = (props: OrderCompletedProps) => {
       ) : (
         <LoadingAnimation />
       )}
-    </div>
+    </div></>
   );
 };
