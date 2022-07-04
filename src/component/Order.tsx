@@ -78,10 +78,17 @@ export const Order = (props: OrderProps) => {
             <div>合計: {props.totalPrice}円</div>
           </div>
         </List>
-        <Button onClick={props.onNext} variant="outlined">
+        <Button 
+          onClick={props.onNext} 
+          variant="outlined"
+        >
           PayPayで購入する
         </Button>
-        <Button onClick={props.onStripe} variant="outlined">
+        <Button 
+          style={{ marginTop: "3vw" }}
+          onClick={props.onStripe} 
+          variant="outlined"
+        >
           クレジットカードで購入する
         </Button>
         <Button
