@@ -40,10 +40,6 @@ export const Menu = () => {
         orderData.length === 0 && setOrderDialog(false);
     }, [orderData.length]);
 
-    useEffect(() => {
-        orderData.length === 0 && setOrderDialog(false)
-    }, [orderData.length]);
-
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
@@ -54,13 +50,13 @@ export const Menu = () => {
                     setCategoryMode(category)
                 }} />
                 <Grid container >
-                    {menu.filter((item: any) => item.category === categoryMode && item.isStatus).map((menu: any, index: number) => {
+                    {menu.filter((item: any) => item.category === categoryMode).map((menu: any, index: number) => {
                         return (
                             <Grid item key={index} style={{
                                 margin: "3vw auto"
                             }}>
                                 <FoodCard menu={menu} onClick={function (): void {
-                                    menu.isBigSize !== undefined && setChosenMenu({
+                                    menu.isBigSize === true && setChosenMenu({
                                         title: menu.title,
                                         description: menu.description,
                                         price: menu.price,
@@ -71,7 +67,7 @@ export const Menu = () => {
                                         bigSizeDiffPrice: menu.bigSizeDiffPrice,
                                         isStatus: menu.isStatus
                                     });
-                                    menu.isBigSize === undefined && setChosenMenu(menu);
+                                    menu.isBigSize === false && setChosenMenu(menu);
                                     setDetailDialogOpen(true);
                                 }} />
 
