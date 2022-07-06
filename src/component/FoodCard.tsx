@@ -11,20 +11,25 @@ export const FoodCard = (props: FoodCardProps) => {
             <Card 
                 onClick={() => {
                     //  売り切れならクリックできない
-                    {props.menu.isStatus &&
+                    // eslint-disable-next-line 
+                    {props.menu.isSale &&
                         props.onClick();
                     }
                 }} 
-            style={{ borderRadius: "13px", width: "45vw", height: "45vw" }}
-            >
+            style={{
+                borderRadius: "13px",
+                width: "45vw",
+                height: "45vw" 
+            }}>
+            
                 <CardActionArea>
                     <CardMedia
                         component="img"
                         image={props.menu.image}
                         alt="grenen iguana"
-                        style={{ position: "relative", height: "45vw", filter: props.menu.isStatus ? "": "brightness(35%)" }}
+                        style={{ position: "relative", height: "45vw", filter: props.menu.isSale ? "": "brightness(35%)" }}
                     />
-                    {props.menu.isStatus === false &&
+                    {props.menu.isSale === false &&
                     <div 
                     style={{
                         position:"absolute",

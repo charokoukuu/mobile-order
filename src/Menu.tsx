@@ -50,7 +50,7 @@ export const Menu = () => {
                     setCategoryMode(category)
                 }} />
                 <Grid container >
-                    {menu.filter((item: any) => item.category === categoryMode).map((menu: any, index: number) => {
+                    {menu.filter((item: any) => item.category === categoryMode && item.isStatus).map((menu: any, index: number) => {
                         return (
                             <Grid item key={index} style={{
                                 margin: "3vw auto"
@@ -65,7 +65,8 @@ export const Menu = () => {
                                         category: menu.category,
                                         isBigSize: menu.isBigSize,
                                         bigSizeDiffPrice: menu.bigSizeDiffPrice,
-                                        isStatus: menu.isStatus
+                                        isStatus: menu.isStatus,
+                                        isSale: menu.isSale,
                                     });
                                     menu.isBigSize === false && setChosenMenu(menu);
                                     setDetailDialogOpen(true);

@@ -8,6 +8,7 @@ export interface MenuData {
     isBigSize: string
     bigSizeDiffPrice: number
     isStatus: boolean
+    isSale: boolean
 }
 
 export interface UserData {
