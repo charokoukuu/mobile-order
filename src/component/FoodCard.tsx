@@ -26,7 +26,7 @@ export const FoodCard = (props: FoodCardProps) => {
                     <CardMedia
                         component="img"
                         image={props.menu.image}
-                        alt="grenen iguana"
+                        alt="menu image"
                         style={{ position: "relative", height: "45vw", filter: props.menu.isSale ? "": "brightness(35%)" }}
                     />
                     {props.menu.isSale === false &&
