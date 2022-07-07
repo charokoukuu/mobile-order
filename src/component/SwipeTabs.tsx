@@ -16,17 +16,15 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
-interface FilterMenuDataProps {
-  menu: DocumentData[];
-  categoryMode: string;
-  setChosenMenu: (e: MenuData) => void;
-  setDetailDialogOpen: (e: boolean) => void;
-}
 
 interface SwipeTabsProps {
   menu: DocumentData[];
   setChosenMenu: (e: MenuData) => void;
   setDetailDialogOpen: (e: boolean) => void;
+}
+
+interface FilterMenuDataProps extends SwipeTabsProps {
+  categoryMode: string;
 }
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
