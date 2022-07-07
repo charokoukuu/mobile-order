@@ -3,8 +3,6 @@ import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { FoodCard } from './FoodCard';
 import { Grid } from '@mui/material';
 import { DocumentData } from 'firebase/firestore';
@@ -42,9 +40,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
+        <div>{children}</div>
       )}
     </div>
   );
@@ -69,31 +65,45 @@ export default function SwipeTabs(props: SwipeTabsProps) {
   };
 
   return (
-    <Box sx={{ bgcolor: 'background.paper' }}>
+    <div>
       <AppBar position="static">
         <Tabs
+          style={{
+            backgroundColor: "#ffffff",
+            color: "white",
+          }}
           value={value}
           onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
+          indicatorColor="primary"
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          {
+            menuCategoryArray.map((e, i) => {
+              return <Tab key={e} label={e} {...a11yProps(i)} />;
+            }
+            )
+          }
+
         </Tabs>
       </AppBar>
       <SwipeableViews
         index={value}
         onChangeIndex={handleChangeIndex}
       >
+        {
+          menuCategoryArray.map((category: string, index: number) => {
+            return (
+              <TabPanel value={value} index={index} key={index}>
+                <FilterMenuData menu={props.menu} categoryMode={category} setChosenMenu={props.setChosenMenu} setDetailDialogOpen={props.setDetailDialogOpen} />
+              </TabPanel>
+            );
 
-        <TabPanel value={value} index={0}>
-          <FilterMenuData menu={props.menu} categoryMode={"メイン"} setChosenMenu={props.setChosenMenu} setDetailDialogOpen={props.setDetailDialogOpen} />
-        </TabPanel>
+          })
+        }
+
       </SwipeableViews>
-    </Box>
+    </div>
   );
 }
 
