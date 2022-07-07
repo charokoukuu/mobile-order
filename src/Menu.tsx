@@ -1,24 +1,22 @@
-import { Alert, Grid } from "@mui/material";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "./component/Order";
-import { CategoryBar } from "./component/CategoryBar";
 import { DetailDialog } from "./component/DetailDialog";
-import { FoodCard } from "./component/FoodCard";
 import { MenuData } from "./Interface";
 import { GetAllData, OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import axios from "axios";
 import { auth } from "./Firebase";
+import SwipeTabs from "./component/SwipeTabs";
+import IntegrationNotistack from "./component/IntegrationNotistack";
 const apiUrl = "https://pocketmansion.tk/"
 // const apiUrl = "http://localhost:3001/"
-const hostUrl = "http://localhost:3000";
-// const hostUrl = "https://mobile-order-4d383.web.app";
+// const hostUrl = "http://localhost:3000";
+const hostUrl = "https://mobile-order-4d383.web.app";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 // type Mode = "menu" | "complete";
 export const Menu = () => {
-    const [categoryMode, setCategoryMode] = useState<CategoryProp>("メイン");
     // const [mode, setMode] = useState<Mode>("menu");
     const [detailDialogOpen, setDetailDialogOpen] = useState(false);
     const [menu, setMenu] = useState<DocumentData[]>([]);
@@ -43,40 +41,9 @@ export const Menu = () => {
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
-                <Alert severity="error" onClick={() => {
-                    window.location.href = "/history";
-                }}><div className="japanese_R">未受け取りの注文があります (詳細)</div></Alert>
-                <CategoryBar category={["メイン", "ドリンク", "トッピング"]} onClick={function (category: CategoryProp): void {
-                    setCategoryMode(category)
-                }} />
-                <Grid container >
-                    {menu.filter((item: any) => item.category === categoryMode && item.isStatus).map((menu: any, index: number) => {
-                        return (
-                            <Grid item key={index} style={{
-                                margin: "3vw auto"
-                            }}>
-                                <FoodCard menu={menu} onClick={function (): void {
-                                    menu.isBigSize === true && setChosenMenu({
-                                        title: menu.title,
-                                        description: menu.description,
-                                        price: menu.price,
-                                        id: menu.id,
-                                        image: menu.image,
-                                        category: menu.category,
-                                        isBigSize: menu.isBigSize,
-                                        bigSizeDiffPrice: menu.bigSizeDiffPrice,
-                                        isStatus: menu.isStatus,
-                                        isSale: menu.isSale,
-                                    });
-                                    menu.isBigSize === false && setChosenMenu(menu);
-                                    setDetailDialogOpen(true);
-                                }} />
+                <IntegrationNotistack message="未受け取りの注文があります" variant="warning" />
+                <SwipeTabs menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
 
-                            </Grid>
-                        )
-                    }
-                    )}
-                </Grid>
                 <div style={{ marginBottom: "13vw" }}>
                     <Order open={orderDialog} onDelete={(e, i) => {
                         setOrderData(orderData.filter((_, index) => index !== i))
