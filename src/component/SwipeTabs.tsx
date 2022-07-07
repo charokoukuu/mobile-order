@@ -88,15 +88,10 @@ export default function SwipeTabs(props: SwipeTabsProps) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        {
-          menuCategoryArray.map((category, index) => {
-            return (
-              <TabPanel key={category} value={value} index={index}>
-                <FilterMenuData menu={props.menu} categoryMode={category} setChosenMenu={props.setChosenMenu} setDetailDialogOpen={props.setDetailDialogOpen} />
-              </TabPanel>
-            )
-          })
-        }
+
+        <TabPanel value={value} index={0}>
+          <FilterMenuData menu={props.menu} categoryMode={"メイン"} setChosenMenu={props.setChosenMenu} setDetailDialogOpen={props.setDetailDialogOpen} />
+        </TabPanel>
       </SwipeableViews>
     </Box>
   );
