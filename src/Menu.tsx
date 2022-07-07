@@ -40,10 +40,6 @@ export const Menu = () => {
         orderData.length === 0 && setOrderDialog(false);
     }, [orderData.length]);
 
-    useEffect(() => {
-        orderData.length === 0 && setOrderDialog(false)
-    }, [orderData.length]);
-
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
@@ -60,7 +56,7 @@ export const Menu = () => {
                                 margin: "3vw auto"
                             }}>
                                 <FoodCard menu={menu} onClick={function (): void {
-                                    menu.isBigSize !== undefined && setChosenMenu({
+                                    menu.isBigSize === true && setChosenMenu({
                                         title: menu.title,
                                         description: menu.description,
                                         price: menu.price,
@@ -69,9 +65,10 @@ export const Menu = () => {
                                         category: menu.category,
                                         isBigSize: menu.isBigSize,
                                         bigSizeDiffPrice: menu.bigSizeDiffPrice,
-                                        isStatus: menu.isStatus
+                                        isStatus: menu.isStatus,
+                                        isSale: menu.isSale,
                                     });
-                                    menu.isBigSize === undefined && setChosenMenu(menu);
+                                    menu.isBigSize === false && setChosenMenu(menu);
                                     setDetailDialogOpen(true);
                                 }} />
 
