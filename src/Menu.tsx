@@ -17,6 +17,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import SwipeTabs from "./component/SwipeTabs";
 
 const apiUrl = "https://pocketmansion.tk/"
 // const apiUrl = "http://localhost:3001/"
@@ -102,7 +103,7 @@ export const Menu = () => {
                     setCategoryMode(category)
                 }} /> */}
 
-
+                <SwipeTabs />
                 <AppBar position="static">
                     <Tabs
                         style={{
