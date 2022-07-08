@@ -10,6 +10,8 @@ import axios from "axios";
 import { auth } from "./Firebase";
 import SwipeTabs from "./component/SwipeTabs";
 import IntegrationNotistack from "./component/IntegrationNotistack";
+import { getFunctions, httpsCallable } from "firebase/functions";
+
 const apiUrl = "https://pocketmansion.tk/"
 // const apiUrl = "http://localhost:3001/"
 // const hostUrl = "http://localhost:3000";
@@ -25,6 +27,7 @@ export const Menu = () => {
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [orderDialog, setOrderDialog] = useState<boolean>(false);
     const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
+    const functions = getFunctions();
     useEffect(() => {
         // window.location.href = "/register";
         (async () => {
@@ -68,13 +71,23 @@ export const Menu = () => {
                                 })
                             window.location.href = resData.data.data.url;
                         } else if (payment === "stripe") {
-                            const resData = await axios.post("http://localhost:4242/create-checkout-session",
-                                {
-                                    orderData: orderData,
-                                    orderId: orderId,
-                                }
-                            )
-                            window.location.href = resData.data;
+                            const StripeWebhook = httpsCallable(
+                                functions,
+                                "StripeWebhook"
+                              );
+                              StripeWebhook({
+                                orderData: orderData,
+                                orderId: orderId,
+                              })
+                                .then((res) => {
+                                  console.log(res);
+                                  const url = res.data;
+                                  window.location.href = String(url);
+                                })
+                                .catch((err) => {
+                                  console.log(err);
+                                });
+                              setOrderDialog(false);
                         }
                     }}
 
