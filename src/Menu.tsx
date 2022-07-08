@@ -68,7 +68,8 @@ export const Menu = () => {
                                 })
                             window.location.href = resData.data.data.url;
                         } else if (payment === "stripe") {
-                            const resData = await axios.post("http://localhost:4242/create-checkout-session",
+                            console.log(payment);
+                            const resData = await axios.post(apiUrl + "stripe?url=" + hostUrl,
                                 {
                                     orderData: orderData,
                                     orderId: orderId,
