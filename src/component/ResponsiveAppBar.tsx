@@ -61,7 +61,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             textDecoration: 'none',
                         }}
                     >
-                        Runticket
+                        RunTicket
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -106,7 +106,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                     <Button onClick={() => {
                         window.location.href = "/";
                     }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "7vw", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
-                        <div className='japanese_L' style={{ color: "#ffffff" }}>Runticket</div></Button>
+                        <div className='japanese_L' style={{ color: "#ffffff" }}>RunTicket</div></Button>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button

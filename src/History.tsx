@@ -91,7 +91,7 @@ export const History = () => {
             );
           })
         ) : (
-          <LoadingAnimation />
+          <LoadingAnimation type={"jelly"} />
         )}
       </div>
     </div>

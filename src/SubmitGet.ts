@@ -1,16 +1,15 @@
-import { MenuData, OrderData, UserData } from "./Interface";
-import {
-  doc,
-  getDocs,
-  setDoc,
-  collection,
-  DocumentData,
-  query,
-  where,
-  getDoc,
-} from "firebase/firestore";
-import { auth, db } from "./Firebase";
+import { MenuData, OrderData, UserData } from "./Interface"
+import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc } from "firebase/firestore";
+import { auth, db, functions } from "./Firebase"
 import { onAuthStateChanged, User } from "firebase/auth";
+import { httpsCallable } from "firebase/functions";
+import axios from "axios";
+import { paymentType } from "./component/Order";
+
+const apiUrl = "https://pocketmansion.tk/"
+// const apiUrl = "http://localhost:3001/"
+// const hostUrl = "http://localhost:3000";
+const hostUrl = "https://mobile-order-4d383.web.app";
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var N = 16;
@@ -114,4 +113,37 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
   });
 };
 
+export const Payment = async (type: paymentType, orderId: String, totalPrice: number, orderData: MenuData[], callback: (e: boolean) => void) => {
+  if (type === "stripe") {
+    const StripeWebhook = httpsCallable(
+      functions,
+      "StripeWebhook"
+    );
+    try {
+      const resData = await StripeWebhook({
+        orderData: orderData,
+        orderId: orderId,
+      })
+      const url = resData.data;
+      window.location.href = String(url);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      callback(false);
+    }
+  } else if (type === "paypay") {
+    try {
+      const resData = await axios.post(apiUrl + "paypay?orderId=" + orderId + "&url=" + hostUrl,
+        {
+          amount: totalPrice,
+          orderDescription: orderId
+        })
+      window.location.href = resData.data.data.url;
+    } catch (e) {
+      console.log(e)
+    } finally {
+      callback(false);
+    }
+  }
+}
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
