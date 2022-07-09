@@ -3,8 +3,12 @@ import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { FoodCard } from './FoodCard';
+import { Grid } from '@mui/material';
+import { DocumentData } from 'firebase/firestore';
+import { MenuData } from '../Interface';
+import { CategoryProp } from '../Menu';
+const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -13,6 +17,15 @@ interface TabPanelProps {
   value: number;
 }
 
+interface SwipeTabsProps {
+  menu: DocumentData[];
+  setChosenMenu: (e: MenuData) => void;
+  setDetailDialogOpen: (e: boolean) => void;
+}
+
+interface FilterMenuDataProps extends SwipeTabsProps {
+  categoryMode: string;
+}
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
@@ -25,9 +38,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
+        <div>{children}</div>
       )}
     </div>
   );
@@ -40,7 +51,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function SwipeTabs() {
+export default function SwipeTabs(props: SwipeTabsProps) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -52,35 +63,77 @@ export default function SwipeTabs() {
   };
 
   return (
-    <Box sx={{ bgcolor: 'background.paper' }}>
+    <div>
       <AppBar position="static">
         <Tabs
+          style={{
+            backgroundColor: "#ffffff",
+            color: "white",
+          }}
           value={value}
           onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
+          indicatorColor="primary"
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          {
+            menuCategoryArray.map((e, i) => {
+              return <Tab key={e} label={e} {...a11yProps(i)} />;
+            }
+            )
+          }
+
         </Tabs>
       </AppBar>
       <SwipeableViews
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
+        {
+          menuCategoryArray.map((category: string, index: number) => {
+            return (
+              <TabPanel value={value} index={index} key={index}>
+                <FilterMenuData menu={props.menu} categoryMode={category} setChosenMenu={props.setChosenMenu} setDetailDialogOpen={props.setDetailDialogOpen} />
+              </TabPanel>
+            );
+
+          })
+        }
+
       </SwipeableViews>
-    </Box>
+    </div>
   );
+}
+
+const FilterMenuData = (props: FilterMenuDataProps) => {
+  return (
+    <Grid container >
+      {props.menu.filter((item: any) => item.category === props.categoryMode && item.isStatus).map((menu: any, index: number) => {
+        return (
+          <Grid item key={index} style={{
+            margin: "3vw auto"
+          }}>
+            <FoodCard menu={menu} onClick={function (): void {
+              menu.isBigSize === true && props.setChosenMenu({
+                title: menu.title,
+                description: menu.description,
+                price: menu.price,
+                id: menu.id,
+                image: menu.image,
+                category: menu.category,
+                isBigSize: menu.isBigSize,
+                bigSizeDiffPrice: menu.bigSizeDiffPrice,
+                isStatus: menu.isStatus,
+                isSale: menu.isSale,
+              });
+              menu.isBigSize === false && props.setChosenMenu(menu);
+              props.setDetailDialogOpen(true);
+            }} />
+
+          </Grid>
+        )
+      }
+      )}
+    </Grid>
+  )
 }
