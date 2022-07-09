@@ -10,6 +10,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import { forwardRef, useState } from "react";
 import VirtualizedList from "./VirtualizedList";
 import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
+import { LoadingAnimation } from "./LoadingAnimation";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -23,13 +24,14 @@ type paymentType = "" | "paypay" | "stripe";
 interface OrderProps {
   open: boolean;
   totalPrice: number;
-  onNext: (payment: paymentType) => void;
+  onNext: (payment: paymentType, setIsLoad: (load: boolean) => void) => void;
   onPrev: () => void;
   onDelete: (e: MenuData, i: number) => void;
   orderData: MenuData[];
 }
 export const Order = (props: OrderProps) => {
   const [payment, setPayment] = useState<paymentType>("");
+  const [isLoad, setIsLoad] = useState<boolean>(false);
   return (
     <div>
       <Dialog
@@ -65,16 +67,19 @@ export const Order = (props: OrderProps) => {
         <Divider />
         <div style={{ margin: "7vw auto" }}>
           <div >
-            <Button
+            {!isLoad && <Button
               style={{ width: "90vw", marginTop: "3vw", backgroundColor: payment === "" ? "#848484" : "#006C9B", color: "white", borderRadius: "7px", fontSize: "5vw" }}
               onClick={() => {
-                props.onNext(payment);
+                setIsLoad(true);
+                props.onNext(payment, setIsLoad);
               }}
               variant="contained"
               disabled={payment === ""}
             >
               購入する
             </Button>
+            }
+            {isLoad && <LoadingAnimation type={"orbit"} />}
           </div>
           <div >
             <Button

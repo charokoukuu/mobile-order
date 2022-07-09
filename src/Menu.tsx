@@ -53,7 +53,7 @@ export const Menu = () => {
                         setTotalPrice(totalPrice - e.price)
                     }} orderData={orderData} totalPrice={totalPrice} onPrev={() => {
                         setOrderDialog(false);
-                    }} onNext={async (payment) => {
+                    }} onNext={async (payment, setIsLoad) => {
                         const orderId = await OrderSubmit({
                             user: {
                                 uid: auth.currentUser?.uid || "",
@@ -74,20 +74,21 @@ export const Menu = () => {
                             const StripeWebhook = httpsCallable(
                                 functions,
                                 "StripeWebhook"
-                              );
-                              StripeWebhook({
+                            );
+                            StripeWebhook({
                                 orderData: orderData,
                                 orderId: orderId,
-                              })
+                            })
                                 .then((res) => {
-                                  console.log(res);
-                                  const url = res.data;
-                                  window.location.href = String(url);
+                                    console.log(res);
+                                    const url = res.data;
+                                    window.location.href = String(url);
                                 })
                                 .catch((err) => {
-                                  console.log(err);
+                                    console.log(err);
                                 });
-                              setOrderDialog(false);
+                            setIsLoad(false);
+                            setOrderDialog(false);
                         }
                     }}
 
@@ -105,7 +106,7 @@ export const Menu = () => {
                 }} totalOrderItemsCount={orderData.length} totalPrice={totalPrice} />
                 }
             </div> :
-                <LoadingAnimation />
+                <LoadingAnimation type={"jelly"} />
             }
         </div>
     );
