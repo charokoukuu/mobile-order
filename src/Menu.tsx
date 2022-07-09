@@ -39,7 +39,9 @@ export const Menu = () => {
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
-                <IntegrationNotistack message="未受け取りの注文があります" variant="warning" />
+                <IntegrationNotistack message="未受け取りの注文があります" variant="warning" onClick={() => {
+                    window.location.href = "/history";
+                }} />
                 <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
 
                 <div style={{ marginBottom: "13vw" }}>

@@ -5,6 +5,7 @@ import { SnackbarProvider, VariantType, useSnackbar } from 'notistack';
 interface IntegrationNotistackProps {
     message: string;
     variant: VariantType;
+    onClick?: () => void;
 }
 function MyApp(props: IntegrationNotistackProps) {
     const { enqueueSnackbar } = useSnackbar();
@@ -21,7 +22,7 @@ function MyApp(props: IntegrationNotistackProps) {
 
 export default function IntegrationNotistack(props: IntegrationNotistackProps) {
     return (
-        <SnackbarProvider maxSnack={3} >
+        <SnackbarProvider maxSnack={3} onClick={props.onClick}>
             <MyApp message={props.message} variant={props.variant} />
         </SnackbarProvider>
     );

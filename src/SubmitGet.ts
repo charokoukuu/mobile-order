@@ -80,17 +80,17 @@ export const GetSpecificData: (
   docId: string,
   collectionId: string
 ) => {
-  const docRef = doc(db, docId, collectionId);
-  const docSnap = await getDoc(docRef);
-  return new Promise((resolve, reject) => {
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      console.log("No such document!");
-    }
-    resolve(docSnap.data());
-  });
-};
+    const docRef = doc(db, docId, collectionId);
+    const docSnap = await getDoc(docRef);
+    return new Promise((resolve, reject) => {
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+      resolve(docSnap.data());
+    });
+  };
 
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
@@ -114,6 +114,7 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
 };
 
 export const Payment = async (type: paymentType, orderId: String, totalPrice: number, orderData: MenuData[], callback: (e: boolean) => void) => {
+  const orderDescription: String = orderData.map(menu => menu.title).join(",");
   if (type === "stripe") {
     const StripeWebhook = httpsCallable(
       functions,
@@ -126,22 +127,22 @@ export const Payment = async (type: paymentType, orderId: String, totalPrice: nu
       })
       const url = resData.data;
       window.location.href = String(url);
-    } catch (e) {
-      console.log(e);
-    } finally {
+    } catch (err) {
+      console.log(err);
       callback(false);
     }
   } else if (type === "paypay") {
     try {
-      const resData = await axios.post(apiUrl + "paypay?orderId=" + orderId + "&url=" + hostUrl,
+      const resData = await axios.post(apiUrl + "paypay",
         {
+          orderId: orderId,
+          redirectUrl: hostUrl,
           amount: totalPrice,
-          orderDescription: orderId
+          orderDescription: orderDescription,
         })
       window.location.href = resData.data.data.url;
-    } catch (e) {
-      console.log(e)
-    } finally {
+    } catch (err) {
+      console.log(err)
       callback(false);
     }
   }
