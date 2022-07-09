@@ -11,16 +11,17 @@ const apiUrl = "https://pocketmansion.tk/"
 // const hostUrl = "http://localhost:3000";
 const hostUrl = "https://mobile-order-4d383.web.app";
 export const RandomID = () => {
-  var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-  var N = 16
-  return Array.from(crypto.getRandomValues(new Uint8Array(N))).map((n) => S[n % S.length]).join('')
-}
+  var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  var N = 16;
+  return Array.from(crypto.getRandomValues(new Uint8Array(N)))
+    .map((n) => S[n % S.length])
+    .join("");
+};
 
 export const CorrectEmail = (email: string) => {
   const regex = /([a-zA-Z0-9._-]+@oit.ac.jp$)|(^runticket21@gmail.com$)/;
   return regex.test(email);
-}
-
+};
 
 export const GetAllData = async (collectionName: string) => {
   let data: DocumentData[] = [];
@@ -30,15 +31,14 @@ export const GetAllData = async (collectionName: string) => {
       data.push(doc.data());
     });
     resolve(data);
-  })
-}
+  });
+};
 
 interface OrderSubmitProps {
-  user: UserData
-  totalPrice: number
-  menu: MenuData[]
+  user: UserData;
+  totalPrice: number;
+  menu: MenuData[];
 }
-
 
 export const OrderSubmit = async (props: OrderSubmitProps) => {
   const id = RandomID();
@@ -49,15 +49,19 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     totalPrice: props.totalPrice,
     menu: props.menu,
     date: date,
-    isStatus: "注文済み"
-  }
+    isStatus: "注文済み",
+  };
 
-  console.log(props.menu)
+  console.log(props.menu);
   await setDoc(doc(db, "order", id), orderData);
   return id;
-}
+};
 
-export const SearchCollectionDataGet = async (docId: string, collectionId: string, seachId: string) => {
+export const SearchCollectionDataGet = async (
+  docId: string,
+  collectionId: string,
+  seachId: string
+) => {
   let data: DocumentData[] = [];
   const q = query(collection(db, docId), where(collectionId, "==", seachId));
   const querySnapshot = await getDocs(q);
@@ -66,10 +70,16 @@ export const SearchCollectionDataGet = async (docId: string, collectionId: strin
       data.push(doc.data());
     });
     resolve(data);
-  })
-}
+  });
+};
 
-export const GetSpecificData: (docId: string, collectionId: string) => Promise<DocumentData | undefined> = async (docId: string, collectionId: string) => {
+export const GetSpecificData: (
+  docId: string,
+  collectionId: string
+) => Promise<DocumentData | undefined> = async (
+  docId: string,
+  collectionId: string
+) => {
   const docRef = doc(db, docId, collectionId);
   const docSnap = await getDoc(docRef);
   return new Promise((resolve, reject) => {
@@ -87,16 +97,21 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
   return new Promise<any>((resolve) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        if (!CorrectEmail(user?.email || "") && window.location.pathname !== pathName) window.location.href = pathName;
+        if (
+          !CorrectEmail(user?.email || "") &&
+          window.location.pathname !== pathName
+        )
+          window.location.href = pathName;
         callback(user);
         resolve("");
       } else {
-        if (window.location.pathname !== pathName) window.location.href = pathName;
+        if (window.location.pathname !== pathName)
+          window.location.href = pathName;
         resolve("");
       }
-    })
+    });
   });
-}
+};
 
 export const Payment = async (type: paymentType, orderId: String, totalPrice: number, orderData: MenuData[], callback: (e: boolean) => void) => {
   if (type === "stripe") {
