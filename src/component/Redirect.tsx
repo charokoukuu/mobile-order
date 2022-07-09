@@ -15,6 +15,6 @@ export const Redirect = (props: RedirectProps) => {
         //eslint-disable-next-line
     }, [])
     return (
-        <div><LoadingAnimation /></div>
+        <div><LoadingAnimation type={"jelly"} /></div>
     )
 }

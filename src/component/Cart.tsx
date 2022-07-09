@@ -16,7 +16,9 @@ export const Cart = (props: CartProps) => {
         },
     }));
     return (
-        <div style={{ width: "100vw", position: "fixed", bottom: "0", left: "0", backgroundColor: "#FFFFFF", boxShadow: "0px -3px 6px #00000029", margin: "auto 0", padding: "4vw 0" }}>
+        <div onClick={() => {
+            props.onClick()
+        }} style={{ width: "100vw", position: "fixed", bottom: "0", left: "0", backgroundColor: "#FFFFFF", boxShadow: "0px -3px 6px #00000029", margin: "auto 0", padding: "4vw 0" }}>
             <div style={{ padding: isIOS ? "7vw 0" : "5vw 0", position: "relative" }}>
                 <div style={{ margin: "auto 3vw", textAlign: "left", color: "#707070", position: "absolute", bottom: isIOS ? "70%" : "50%", left: 0, transform: "translate(0,50%)" }}>
                     <IconButton aria-label="cart">
