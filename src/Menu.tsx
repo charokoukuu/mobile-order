@@ -3,20 +3,16 @@ import { useEffect, useState } from "react";
 import { Order } from "./component/Order";
 import { DetailDialog } from "./component/DetailDialog";
 import { MenuData } from "./Interface";
-import { GetAllData, OrderSubmit } from "./SubmitGet";
+import { GetAllData, OrderSubmit, Payment } from "./SubmitGet";
 import { Cart } from "./component/Cart";
 import { LoadingAnimation } from "./component/LoadingAnimation";
-import axios from "axios";
 import { auth } from "./Firebase";
 import SwipeTabs from "./component/SwipeTabs";
 import IntegrationNotistack from "./component/IntegrationNotistack";
-import { getFunctions, httpsCallable } from "firebase/functions";
 
-const apiUrl = "https://pocketmansion.tk/"
-// const apiUrl = "http://localhost:3001/"
-// const hostUrl = "http://localhost:3000";
-const hostUrl = "https://mobile-order-4d383.web.app";
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
+const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
+
 // type Mode = "menu" | "complete";
 export const Menu = () => {
     // const [mode, setMode] = useState<Mode>("menu");
@@ -27,7 +23,6 @@ export const Menu = () => {
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [orderDialog, setOrderDialog] = useState<boolean>(false);
     const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
-    const functions = getFunctions();
     useEffect(() => {
         // window.location.href = "/register";
         (async () => {
@@ -45,7 +40,7 @@ export const Menu = () => {
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
                 <IntegrationNotistack message="未受け取りの注文があります" variant="warning" />
-                <SwipeTabs menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
+                <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
 
                 <div style={{ marginBottom: "13vw" }}>
                     <Order open={orderDialog} onDelete={(e, i) => {
@@ -63,33 +58,10 @@ export const Menu = () => {
                             totalPrice: totalPrice,
                             menu: orderData
                         })
-                        if (payment === "paypay") {
-                            const resData = await axios.post(apiUrl + "paypay?orderId=" + orderId + "&url=" + hostUrl,
-                                {
-                                    amount: totalPrice,
-                                    orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
-                                })
-                            window.location.href = resData.data.data.url;
-                        } else if (payment === "stripe") {
-                            const StripeWebhook = httpsCallable(
-                                functions,
-                                "StripeWebhook"
-                            );
-                            StripeWebhook({
-                                orderData: orderData,
-                                orderId: orderId,
-                            })
-                                .then((res) => {
-                                    console.log(res);
-                                    const url = res.data;
-                                    window.location.href = String(url);
-                                })
-                                .catch((err) => {
-                                    console.log(err);
-                                });
-                            setIsLoad(false);
-                            setOrderDialog(false);
-                        }
+                        Payment(payment, orderId, totalPrice, orderData, (e) => {
+                            setIsLoad(e)
+                        });
+
                     }}
 
                     />

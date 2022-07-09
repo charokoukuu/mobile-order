@@ -8,7 +8,6 @@ import { Grid } from '@mui/material';
 import { DocumentData } from 'firebase/firestore';
 import { MenuData } from '../Interface';
 import { CategoryProp } from '../Menu';
-const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -19,6 +18,7 @@ interface TabPanelProps {
 
 interface SwipeTabsProps {
   menu: DocumentData[];
+  category: CategoryProp[];
   setChosenMenu: (e: MenuData) => void;
   setDetailDialogOpen: (e: boolean) => void;
 }
@@ -53,7 +53,7 @@ function a11yProps(index: number) {
 
 export default function SwipeTabs(props: SwipeTabsProps) {
   const [value, setValue] = React.useState(0);
-
+  const menuCategoryArray: CategoryProp[] = props.category;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -93,7 +93,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
           menuCategoryArray.map((category: string, index: number) => {
             return (
               <TabPanel value={value} index={index} key={index}>
-                <FilterMenuData menu={props.menu} categoryMode={category} setChosenMenu={props.setChosenMenu} setDetailDialogOpen={props.setDetailDialogOpen} />
+                <FilterMenuData menu={props.menu} categoryMode={category} setChosenMenu={props.setChosenMenu} setDetailDialogOpen={props.setDetailDialogOpen} category={props.category} />
               </TabPanel>
             );
 

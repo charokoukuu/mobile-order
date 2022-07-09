@@ -16,7 +16,7 @@ export const LoadingAnimation = (props: LoadingAnimationProps) => {
 
                 </div>
             </div>}
-            {props.type === "orbit" && <div style={{ position: "relative", width: "100%", height: "10vw" }}>
+            {props.type === "orbit" && <div style={{ position: "relative", width: "100%", height: "12vw" }}>
                 <div style={{ position: "absolute", top: "35%", right: "50%", transform: "translate(50%,-50%)" }}>
                     <Orbit
                         size={60}

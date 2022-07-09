@@ -20,7 +20,7 @@ const Transition = forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-type paymentType = "" | "paypay" | "stripe";
+export type paymentType = "" | "paypay" | "stripe";
 interface OrderProps {
   open: boolean;
   totalPrice: number;
