@@ -45,9 +45,11 @@ export const OrderCompleted = () => {
                 {/* <p>{orderData?.id}</p> */}
                 {orderData?.isStatus === "注文済み" && (
                   <div>
-                    <div style={{ height: "5vh" }}>
+                    <div style={{ display: "flex", height: "10vh" }}>
                       <h2
                         style={{
+                          margin: "0 auto",
+                          marginTop: "10px",
                           textAlign: "center",
                         }}
                       >
@@ -57,7 +59,7 @@ export const OrderCompleted = () => {
                     <QRCodeSVG
                       style={{
                         margin: "0 auto",
-                        display: "block",
+                        display: "flex",
                       }}
                       value={orderData?.id}
                       size={150} />
