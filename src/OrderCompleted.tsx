@@ -27,7 +27,7 @@ export const OrderCompleted = () => {
   return (
     <>
       {params.status === "success" &&
-        <IntegrationNotistack message="注文が完了しました" variant="success" />
+        <IntegrationNotistack message="決済が完了しました" variant="success" />
       }
       <div style={{ margin: "10px 0" }}>
         {isGetOrderData ? (
@@ -51,18 +51,23 @@ export const OrderCompleted = () => {
                           margin: "0 auto",
                           marginTop: "10px",
                           textAlign: "center",
+                          color: "#000000",
                         }}
                       >
                         チケット発行QR
                       </h2>
                     </div>
-                    <QRCodeSVG
-                      style={{
-                        margin: "0 auto",
-                        display: "flex",
-                      }}
-                      value={orderData?.id}
-                      size={150} />
+                    <div style={{ position: "relative", width: "100%", height: "100%", padding: "80px 0" }}>
+                      <QRCodeSVG
+                        style={{
+                          position: "absolute",
+                          top: "0%",
+                          right: "50%",
+                          transform: "translate(50%, 0)",
+                        }}
+                        value={orderData?.id}
+                        size={150} />
+                    </div>
                     <h2
                       className="japanese_L"
                       style={{
