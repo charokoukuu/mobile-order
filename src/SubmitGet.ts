@@ -128,21 +128,25 @@ export const Payment = async (type: paymentType, orderId: String, totalPrice: nu
       const url = resData.data;
       window.location.href = String(url);
     } catch (err) {
-      console.log(err);
+      alert("決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。");
       callback(false);
     }
   } else if (type === "paypay") {
     try {
-      const resData = await axios.post(apiUrl + "paypay",
-        {
+      const resData = await axios({
+        method: "POST",
+        url: apiUrl + "paypay",
+        timeout: 10000,
+        data: {
           orderId: orderId,
           redirectUrl: hostUrl,
           amount: totalPrice,
           orderDescription: orderDescription,
-        })
+        }
+      })
       window.location.href = resData.data.data.url;
     } catch (err) {
-      console.log(err)
+      alert("決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。");
       callback(false);
     }
   }
