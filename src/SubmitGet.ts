@@ -62,10 +62,11 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
 export const SearchCollectionDataGet = async (
   docId: string,
   collectionId: string,
-  seachId: string
+  seachId: string,
+  maxValue: number
 ) => {
   let data: DocumentData[] = [];
-  const q = query(collection(db, docId), where(collectionId, "==", seachId), orderBy("date"), limit(10));
+  const q = query(collection(db, docId), where(collectionId, "==", seachId), orderBy("date", "desc"), limit(maxValue));
   const querySnapshot = await getDocs(q);
   return new Promise<DocumentData[]>((resolve, reject) => {
     querySnapshot.forEach((doc) => {

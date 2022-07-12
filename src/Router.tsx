@@ -12,7 +12,10 @@ import { GetUserInfo } from "./SubmitGet";
 import { useEffect } from "react";
 import { TestData } from "./TestData";
 import { Redirect } from "./component/Redirect";
+import DrawerLeft from "./component/DrawerLeft";
+import { Terms } from "./Terms";
 const Router = () => {
+  const [isMenu, setIsMenu] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<User>();
   const [isLogin, setIsLogin] = React.useState<boolean>(false);
   useEffect(() => {
@@ -28,9 +31,19 @@ const Router = () => {
     <div>
       <BrowserRouter>
         <div>
+          <DrawerLeft open={isMenu} setIsmenu={setIsMenu} onClick={function (item: string): void {
+            let url: string = "";
+            url = item === "ヘルプ" ? "/help" :
+              item === "注文履歴" ? "/history" :
+                item === "利用規約" ? "/terms" :
+                  item === "お問い合わせ" ? "/contact" :
+                    ""
+            window.location.href = url || "/";
+          }} />
           <ResponsiveAppBar
-            photoURL={user?.photoURL || "/static/images/avatar/2.jpg"}
-          />
+            photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
+              setIsMenu(!isMenu);
+            }} />
           {isLogin && (
             <Routes>
               <Route path="/" element={<Menu />} />
@@ -38,8 +51,9 @@ const Router = () => {
               <Route path="/test" element={<TestData />} />
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
-              <Route path="/order/:id/:status" element={<OrderCompleted />}/>
+              <Route path="/order/:id/:status" element={<OrderCompleted />} />
               <Route path="/history" element={<History />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
               <Route
                 path="/contact"

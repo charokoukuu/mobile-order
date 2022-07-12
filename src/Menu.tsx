@@ -30,6 +30,7 @@ export const Menu = () => {
             setIsGetMenu(true);
         })();
         console.log(navigator.userAgent);
+
     }, []);
 
     useEffect(() => {

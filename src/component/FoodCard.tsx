@@ -7,15 +7,11 @@ interface FoodCardProps {
 }
 export const FoodCard = (props: FoodCardProps) => {
     return (
-        <span >
+        <div >
             <Card
                 onClick={() => {
-                    //  売り切れならクリックできない
-                    // eslint-disable-next-line 
-                    {
-                        props.menu.isSale &&
-                            props.onClick();
-                    }
+                    props.menu.isSale &&
+                        props.onClick();
                 }}
                 style={{
                     borderRadius: "13px",
@@ -31,30 +27,33 @@ export const FoodCard = (props: FoodCardProps) => {
                         style={{ position: "relative", height: "45vw", filter: props.menu.isSale ? "" : "brightness(35%)" }}
                     />
                     {props.menu.isSale === false &&
-                        <span
+                        <div
+                            className="japanese_B"
                             style={{
                                 position: "absolute",
                                 top: "50%",
                                 left: "50%",
                                 fontSize: "5vw",
-                                transform: "translate(-50%, -50%) rotate(-23deg)",
-                                color: "#ff2424",
+                                transform: "translate(-50%, -50%) rotate(-20deg)",
+                                color: "#FC3f46",
                                 textAlign: "center",
-                                width: "60%",
-                                backgroundColor: "rgba(255,255,255,0.7)",
+                                width: "80%",
+                                borderStyle: "solid",
+                                borderWidth: "3px",
+                                zIndex: 1
                             }}>
                             SOLD OUT
-                        </span>
+                        </div>
                     }
-                    <span style={{ position: "absolute", right: "0", bottom: "0", width: "90vw", height: "30%", backgroundColor: "rgba(0,0,0,0.7)", }}></span>
-                    <span className="japanese_R" style={{ position: "absolute", left: "4vw", top: "33vw", color: "#ffffff", fontSize: "4.2vw" }}>
+                    <div style={{ position: "absolute", right: "0", bottom: "0", width: "90vw", height: "33%", backgroundColor: "rgba(0,0,0,0.7)", }}></div>
+                    <div className="japanese_R" style={{ position: "absolute", left: "4vw", top: "32vw", color: "#ffffff", fontSize: "4.2vw" }}>
                         {props.menu.title}
-                    </span>
-                    <span className="japanese_B" style={{ position: "absolute", right: "4vw", top: "36vw", color: "#ffffff", fontSize: "5vw" }}>
+                    </div>
+                    <div className="japanese_B" style={{ position: "absolute", right: "4vw", top: "36vw", color: "#ffffff", fontSize: "5vw" }}>
                         ¥{props.menu.price}
-                    </span>
+                    </div>
                 </CardActionArea>
             </Card>
-        </span>
+        </div>
     );
 }
