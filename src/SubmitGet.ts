@@ -51,7 +51,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     menu: props.menu,
     date: date,
     isStatus: "注文済み",
-    payment: "paypay"
+    payment: props.payment
   };
 
   console.log(props.menu);
