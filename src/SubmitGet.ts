@@ -1,5 +1,5 @@
 import { MenuData, OrderData, UserData } from "./Interface"
-import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc } from "firebase/firestore";
+import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy } from "firebase/firestore";
 import { auth, db, functions } from "./Firebase"
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
@@ -38,6 +38,7 @@ interface OrderSubmitProps {
   user: UserData;
   totalPrice: number;
   menu: MenuData[];
+  payment: paymentType;
 }
 
 export const OrderSubmit = async (props: OrderSubmitProps) => {
@@ -50,6 +51,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     menu: props.menu,
     date: date,
     isStatus: "注文済み",
+    payment: "paypay"
   };
 
   console.log(props.menu);
@@ -63,7 +65,7 @@ export const SearchCollectionDataGet = async (
   seachId: string
 ) => {
   let data: DocumentData[] = [];
-  const q = query(collection(db, docId), where(collectionId, "==", seachId));
+  const q = query(collection(db, docId), where(collectionId, "==", seachId), orderBy("date"), limit(10));
   const querySnapshot = await getDocs(q);
   return new Promise<DocumentData[]>((resolve, reject) => {
     querySnapshot.forEach((doc) => {

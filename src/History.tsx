@@ -21,11 +21,11 @@ export const History = () => {
         "user.uid",
         auth.currentUser?.uid || ""
       );
-      order?.sort((prev, curr) => {
-        if (prev.date.seconds > curr.date.seconds) return -1;
-        else if (prev.date.seconds < curr.date.seconds) return 1;
-        else return 0;
-      });
+      // order?.sort((prev, curr) => {
+      //   if (prev.date.seconds > curr.date.seconds) return -1;
+      //   else if (prev.date.seconds < curr.date.seconds) return 1;
+      //   else return 0;
+      // });
       setOneOrderData(order);
       setIsGetHistoryData(true);
     })();
@@ -33,7 +33,7 @@ export const History = () => {
 
   return (
     <div style={{ marginTop: "3vw" }}>
-      <div style={{ backgroundColor: "#ffffff", paddingTop: "1vw", borderRadius: "13px", width: "95vw", margin: "0 auto" }}>
+      <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "13px", width: "95vw", margin: "0 auto" }}>
         <h2 className="japanese_L" style={{ textAlign: "center", color: "#707070" }}>注文履歴</h2>
         {isGetHistoryData ? (
           !oneOrderData?.length ? (
