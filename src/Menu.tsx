@@ -58,7 +58,8 @@ export const Menu = () => {
                                 mailAddress: auth.currentUser?.email || "",
                             },
                             totalPrice: totalPrice,
-                            menu: orderData
+                            menu: orderData,
+                            payment: payment,
                         })
                         Payment(payment, orderId, totalPrice, orderData, (e) => {
                             setIsLoad(e)

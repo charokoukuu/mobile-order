@@ -1,3 +1,5 @@
+import { paymentType } from "./component/Order"
+
 export interface MenuData {
     title: string
     description: string
@@ -25,5 +27,6 @@ export interface OrderData {
     menu: MenuData[]
     isStatus: string
     date: Date
+    payment: paymentType;
 }
 
