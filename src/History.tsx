@@ -19,13 +19,10 @@ export const History = () => {
       let order = await SearchCollectionDataGet(
         "order",
         "user.uid",
-        auth.currentUser?.uid || ""
+        auth.currentUser?.uid || "",
+        10
       );
-      // order?.sort((prev, curr) => {
-      //   if (prev.date.seconds > curr.date.seconds) return -1;
-      //   else if (prev.date.seconds < curr.date.seconds) return 1;
-      //   else return 0;
-      // });
+
       setOneOrderData(order);
       setIsGetHistoryData(true);
     })();

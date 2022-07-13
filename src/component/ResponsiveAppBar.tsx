@@ -15,20 +15,17 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 
 const pages = ['メニュー'];
-const settings = ["注文履歴", "設定", "お問い合わせ", "ログアウト"];
-const toLink = ["/history", "/setting", "/contact", "/logout"];
+const settings = ["ログアウト"];
+const toLink = ["/logout"];
 
 
 interface ResponsiveAppBarProps {
     photoURL: string;
+    onClick: () => void;
 }
 const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -70,7 +67,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
+                            onClick={props.onClick}
                             color="default"
                         >
                             <MenuIcon style={{ color: "#ffffff" }} />
