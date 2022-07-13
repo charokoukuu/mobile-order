@@ -36,6 +36,7 @@ export const Register = () => {
   }, []);
 
   const LoginPopup = async () => {
+    setOpen(false);
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
