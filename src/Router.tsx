@@ -55,12 +55,7 @@ const Router = () => {
               <Route path="/history" element={<History />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
-              <Route
-                path="/contact"
-                element={
-                  <Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />
-                }
-              />
+              <Route path="/contact" element={ <Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
               <Route
                 path="*"
                 element={
