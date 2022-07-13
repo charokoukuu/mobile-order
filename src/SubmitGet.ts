@@ -27,10 +27,14 @@ export const GetAllData = async (collectionName: string) => {
   let data: DocumentData[] = [];
   const querySnapshot = await getDocs(collection(db, collectionName));
   return new Promise<DocumentData[]>((resolve, reject) => {
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data());
-    });
-    resolve(data);
+    try {
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+      });
+      resolve(data);
+    } catch (e) {
+      reject(e);
+    }
   });
 };
 

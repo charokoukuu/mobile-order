@@ -80,7 +80,7 @@ export const Order = (props: OrderProps) => {
           setIsDelete(false);
         }} OnCancel={function (): void {
           setIsDelete(false);
-        }} title={"カート削除"} content={choosedMenu?.title + "をカートから削除しますか？" || ""} />
+        }} title={"注文を削除"} content={choosedMenu?.title + "をカートから削除しますか？" || ""} color={"error"} yesText={"削除"} noText={"いいえ"} />
         <div style={{ textAlign: "center", margin: "4vw 0" }}>
           <div style={{ fontSize: "12vw", color: "#006C9B" }}><span style={{ fontSize: "8vw" }}>{props.orderData.length}点</span> ¥{props.totalPrice}</div>
         </div>

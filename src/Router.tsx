@@ -36,7 +36,7 @@ const Router = () => {
             url = item === "ヘルプ" ? "/help" :
               item === "注文履歴" ? "/history" :
                 item === "利用規約" ? "/terms" :
-                  item === "お問い合わせ" ? "/contact" :
+                  item === "お問い合わせ" ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" :
                     ""
             window.location.href = url || "/";
           }} />
@@ -55,7 +55,7 @@ const Router = () => {
               <Route path="/history" element={<History />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
-              <Route path="/contact" element={ <Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
+              <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
               <Route
                 path="*"
                 element={
