@@ -127,9 +127,12 @@ export const Payment = async (type: paymentType, orderId: String, totalPrice: nu
       const resData = await StripeWebhook({
         orderData: orderData,
         orderId: orderId,
+        uId: auth.currentUser?.uid,
+        uMail: auth.currentUser?.email,
       })
-      const url = resData.data;
-      window.location.href = String(url);
+      const respons:any = resData.data;
+      window.location.href = String(respons.url);
+      console.log(respons);
     } catch (err) {
       alert("決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。");
       callback(false);
