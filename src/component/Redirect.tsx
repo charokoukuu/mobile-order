@@ -11,7 +11,7 @@ export const Redirect = (props: RedirectProps) => {
     useEffect(() => {
         props.url && window.open(props.url);
         props.logout && signOut(auth);
-        window.location.href = "/";
+        window.location.href = props.url || "/";
         //eslint-disable-next-line
     }, [])
     return (

@@ -29,10 +29,10 @@ export default function Slide() {
 
   const Slides = [
     [
-      "チケットの受け取りには、画面に表示されたQRコードを利用します。",
+      "チケットの受け取りには、画面に表示されたQRコードを利用します",
       QrCodeMock,
     ],
-    ["21階に設置したQRコードをリーダーにかざしてください。", PhoneMock],
+    ["21階に設置したQRコードをリーダーにかざしてください", PhoneMock],
   ];
 
   return (
@@ -40,7 +40,7 @@ export default function Slide() {
       {Slides.map((slide, i) => {
         return (
           <div key={i}>
-            <p style={{ margin: "5% 10%" }}>{slide[0]}</p>
+            <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0]}</p>
             <img style={SlideStyle} src={slide[1]} alt="slide" />
           </div>
         );

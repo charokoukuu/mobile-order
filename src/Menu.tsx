@@ -26,10 +26,16 @@ export const Menu = () => {
     useEffect(() => {
         // window.location.href = "/register";
         (async () => {
-            setMenu(await GetAllData("menu"));
-            setIsGetMenu(true);
+            try {
+                setMenu(await GetAllData("menu"));
+                setIsGetMenu(true);
+            } catch (e) {
+                alert("メニューの取得に失敗しました。申し訳ございませんが、再度お試しください。");
+                window.location.href = "/";
+            }
         })();
         console.log(navigator.userAgent);
+
     }, []);
 
     useEffect(() => {

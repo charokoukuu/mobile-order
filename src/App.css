@@ -13,6 +13,15 @@ html {
   display: none;
 }
 
+p {
+  font-family: 'japan_l';
+}
+
+h2 {
+  font-family: 'japan_l';
+  color: #707070;
+}
+
 @font-face {
   font-family: 'thin';
   src: url(./font/NotoSansJP-Thin.otf);

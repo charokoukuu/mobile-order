@@ -19,25 +19,22 @@ export const History = () => {
       let order = await SearchCollectionDataGet(
         "order",
         "user.uid",
-        auth.currentUser?.uid || ""
+        auth.currentUser?.uid || "",
+        10
       );
-      // order?.sort((prev, curr) => {
-      //   if (prev.date.seconds > curr.date.seconds) return -1;
-      //   else if (prev.date.seconds < curr.date.seconds) return 1;
-      //   else return 0;
-      // });
+
       setOneOrderData(order);
       setIsGetHistoryData(true);
     })();
   }, []);
 
   return (
-    <div style={{ marginTop: "3vw" }}>
-      <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "13px", width: "95vw", margin: "0 auto" }}>
+    <div style={{ marginTop: "2vw" }}>
+      <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "92vw", margin: "0 auto" }}>
         <h2 className="japanese_L" style={{ textAlign: "center", color: "#707070" }}>注文履歴</h2>
         {isGetHistoryData ? (
           !oneOrderData?.length ? (
-            <div style={{ textAlign: "center" }}>履歴無し</div>
+            <div style={{ textAlign: "center" }}>注文履歴はありません</div>
           ) : (
             oneOrderData?.map((e, i) => {
               return (
@@ -48,7 +45,7 @@ export const History = () => {
                     }}
                     to={`/order/${e.id}`}
                   >
-                    <Card style={{ borderRadius: "13px", boxShadow: "0px 3px 6px rgba(0,0,0,0.2)" }} sx={{ width: "89vw", margin: "0 auto" }} >
+                    <Card style={{ borderRadius: "8px", boxShadow: "0px 3px 6px rgba(0,0,0,0.2)" }} sx={{ width: "89vw", margin: "0 auto" }} >
                       <CardContent>
                         <div color="text.secondary">
                           <div className="japanese_L" style={{ textAlign: "right", color: "#707070" }}>

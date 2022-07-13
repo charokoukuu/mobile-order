@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { MenuData } from "../Interface";
 import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
@@ -8,9 +8,10 @@ import IconButton from "@mui/material/IconButton";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { forwardRef, useState } from "react";
-import VirtualizedList from "./VirtualizedList";
 import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
 import { LoadingAnimation } from "./LoadingAnimation";
+import { FoodCard } from "./FoodCard";
+import ConfirmDialog from "./ConfirmDialog";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -32,6 +33,8 @@ interface OrderProps {
 export const Order = (props: OrderProps) => {
   const [payment, setPayment] = useState<paymentType>("");
   const [isLoad, setIsLoad] = useState<boolean>(false);
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+  const [choosedMenu, setChoosedMenu] = useState<MenuData>();
   return (
     <div>
       <Dialog
@@ -54,11 +57,30 @@ export const Order = (props: OrderProps) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <div style={{ margin: "0 auto" }}>
-          <VirtualizedList menu={props.orderData} totalPrice={props.totalPrice} onDelete={function (e: MenuData, i: number): void {
-            props.onDelete(e, i);
-          }} />
+        <Box style={{ marginTop: "3vw" }} />
+        <div className="japanese_L" style={{ margin: "7vw 0", textAlign: "center" }}>選択されたメニュー</div>
+        <div>
+          <div className="box" style={{ display: "flex", padding: "5vw 0", marginBottom: "5vw", backgroundColor: "#EEECE4" }}>
+            <Box style={{ marginLeft: (window.innerWidth / 2 - 105) + "px" }} />
+            {props.orderData.map((menu, index) => {
+              return (
+                <div key={index} style={{ margin: "0 4vw" }}>
+                  <FoodCard menu={menu} onClick={function (): void {
+                    setChoosedMenu(menu);
+                    setIsDelete(true);
+                  }} />
+                </div>
+              )
+            })
+            }
+          </div>
         </div>
+        <ConfirmDialog open={isDelete} OnConfirm={function (): void {
+          choosedMenu && props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
+          setIsDelete(false);
+        }} OnCancel={function (): void {
+          setIsDelete(false);
+        }} title={"注文を削除"} content={choosedMenu?.title + "をカートから削除しますか？" || ""} color={"error"} yesText={"削除"} noText={"いいえ"} />
         <div style={{ textAlign: "center", margin: "4vw 0" }}>
           <div style={{ fontSize: "12vw", color: "#006C9B" }}><span style={{ fontSize: "8vw" }}>{props.orderData.length}点</span> ¥{props.totalPrice}</div>
         </div>

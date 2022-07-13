@@ -13,7 +13,7 @@ import {
 import { auth } from "./Firebase";
 import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
 import App from "./App";
-import { Link } from "react-router-dom";
+import ScrollDialog from "./component/ScrollDialog";
 
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
@@ -21,6 +21,7 @@ export const Register = () => {
   const [userEmail, setUserEmail] = useState<string>("e1xxx@oit.ac.jp");
   const [user, setUser] = useState<User>();
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -83,8 +84,9 @@ export const Register = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                component={Link}
-                to="/"
+                onClick={() => {
+                  window.location.href = "/";
+                }}
               >
                 メニューを見る
               </Button>
@@ -104,18 +106,23 @@ export const Register = () => {
           ) : (
             <>
               <h2 style={{ textAlign: "center" }}>
-                学生のGoogleアカウントでサインインしてください。
+                学生のGoogleアカウントでサインインしてください
               </h2>
               <Button
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={LoginPopup}
+                onClick={() => {
+                  setOpen(true);
+                }}
               >
                 ログイン
               </Button>
             </>
           )}
+          <ScrollDialog open={open} onClick={function (): void {
+            LoginPopup()
+          }} setIsClose={setOpen} />
         </Box>
       ) : CorrectEmail(userEmail) && isLogin ? (
         <App />
