@@ -1,9 +1,10 @@
-export const Terms = () => {
+
+export const Terms = (props: { width?: string }) => {
     return (
-        <div style={{ marginTop: "3vw" }}>
-            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "13px", width: "92vw", margin: "0 auto" }}>
-                <h1 className="japanese_L" style={{ textAlign: "center", color: "#707070" }}>利用規約</h1>
-                <div style={{ width: "80vw", margin: "auto" }}>
+        <div style={{ margin: "3vw auto" }}>
+            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: props.width ? props.width : "92vw", margin: "0 auto" }}>
+                <h1 className="japanese_L" style={{ textAlign: "center", color: "#707070", margin: "auto" }}>利用規約</h1>
+                <div style={{ width: props.width ? props.width : "80vw", margin: "auto" }}>
                     <p>この本規約は、当社がこのウェブサイト上で提供する本サービスの利用条件を定めるものです。登録ユーザーの皆さまには，本規約に従って，本サービスをご利用いただきます。</p>
                     <h2>第1条（適用）</h2>
                     <p>

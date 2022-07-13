@@ -59,7 +59,9 @@ export default function TemporaryDrawer(props: TemporaryDrawerProps) {
                 {['メニュー', "注文履歴"].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
-                            <ListItemIcon>
+                            <ListItemIcon onClick={() => {
+                                props.onClick(text)
+                            }} >
                                 {text === "メニュー" && <RestaurantMenuIcon />}
                                 {text === "注文履歴" && <HistoryIcon />}
                             </ListItemIcon>

@@ -74,6 +74,7 @@ export const OrderCompleted = () => {
                         textAlign: "center",
                         fontSize: "20px",
                         marginTop: "5px",
+                        color: "#000000",
                       }}
                     >
                       {`注文ID: ${orderData?.id}`}
@@ -86,6 +87,7 @@ export const OrderCompleted = () => {
                       style={{
                         margin: "0 auto",
                         marginTop: "10px",
+                        color: "#000000",
                         textAlign: "center",
                       }}
                     >
@@ -97,6 +99,7 @@ export const OrderCompleted = () => {
                   style={{
                     textAlign: "center",
                     margin: "0 auto",
+                    color: "#000000",
                     fontSize: "30px",
                   }}
                 >
@@ -118,6 +121,7 @@ export const OrderCompleted = () => {
                           style={{
                             display: "table-cell",
                             verticalAlign: "left",
+                            color: "#000000",
                           }}
                         >
                           {e.title}
@@ -126,6 +130,7 @@ export const OrderCompleted = () => {
                           style={{
                             display: "table-cell",
                             textAlign: "right",
+                            color: "#000000",
                           }}
                         >{`￥${e.price}`}</span>
                       </div>
@@ -133,7 +138,7 @@ export const OrderCompleted = () => {
                   })}
                   {orderData?.isStatus === "注文済み" && (
                     <div style={{ margin: "10% 0" }}>
-                      <h2 style={{ textAlign: "center" }}>
+                      <h2 style={{ textAlign: "center", color: "#000000" }}>
                         チケット受け取り方法
                       </h2>
                       <Slide />
