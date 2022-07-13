@@ -14,23 +14,11 @@ interface ScrollDialogProps {
 
 
 export default function ScrollDialog(props: ScrollDialogProps) {
-    const [open, setOpen] = React.useState(false);
 
 
     const handleClose = () => {
         props.setIsClose(false);
-        setOpen(false);
     };
-
-    const descriptionElementRef = React.useRef<HTMLElement>(null);
-    React.useEffect(() => {
-        if (open) {
-            const { current: descriptionElement } = descriptionElementRef;
-            if (descriptionElement !== null) {
-                descriptionElement.focus();
-            }
-        }
-    }, [open]);
 
     return (
         <div>
