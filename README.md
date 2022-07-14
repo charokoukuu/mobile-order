@@ -46,3 +46,5 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## 自動デプロイ設定追加
+
+- pull request 送るとプレビュー URL が発行される
