@@ -14,14 +14,15 @@ import { TestData } from "./TestData";
 import { Redirect } from "./component/Redirect";
 import DrawerLeft from "./component/DrawerLeft";
 import { Terms } from "./Terms";
+import { Help } from "./Help";
 const Router = () => {
   const [isMenu, setIsMenu] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<User>();
   const [isLogin, setIsLogin] = React.useState<boolean>(false);
   useEffect(() => {
+    window.document.title = "RunTicket";
     (async () => {
       await GetUserInfo((e) => {
-        // UserInfo.user = e;
         setUser(e);
       });
       setIsLogin(true);
@@ -56,6 +57,7 @@ const Router = () => {
               <Route path="/terms" element={<Terms />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
               <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
+              <Route path="/help" element={<Help />} />
               <Route
                 path="*"
                 element={

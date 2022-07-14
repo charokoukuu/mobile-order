@@ -1,11 +1,11 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "RunTicket",
+  "name": "RunTicket",
   "shortcuts": [
     {
-      "name": "ホーム",
-      "short_name": "home",
-      "description": "ゲームをします",
+      "name": "メニュー",
+      "short_name": "menu",
+      "description": "メニュー閲覧",
       "url": "/",
       "icons": [
         {
@@ -15,10 +15,10 @@
       ]
     },
     {
-      "name": "ランキング",
-      "short_name": "rank",
-      "description": "ランキングを見ます",
-      "url": "/setting.html",
+      "name": "注文履歴",
+      "short_name": "history",
+      "description": "注文履歴を見る",
+      "url": "/history",
       "icons": [
         {
           "src": "./shortcuts/ranking-256.png",
@@ -27,7 +27,7 @@
       ]
     }
   ],
-  "description": "学内モバイルオーダーRunTicketでスピーディーに食券を発券してみませんか？\nPayPay決済のみ対応",
+  "description": "学内モバイルオーダー「RunTicket」でスピーディーに食券を発券してみませんか？\nPayPay・クレジット決済・Apple Payなど、様々な支払い方法に対応できます。",
   "screenshots": [
     {
       "src": "./icon-512x512.png",
