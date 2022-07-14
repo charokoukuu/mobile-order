@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Alert, AlertTitle, Box, Button } from "@mui/material";
 import { MenuData } from "../Interface";
 import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
@@ -85,6 +85,10 @@ export const Order = (props: OrderProps) => {
           <div style={{ fontSize: "12vw", color: "#006C9B" }}><span style={{ fontSize: "8vw" }}>{props.orderData.length}点</span> ¥{props.totalPrice}</div>
         </div>
         <Divider />
+        <Alert severity="warning">
+          <AlertTitle>Warning</AlertTitle>
+          テストモードのため決済フローはスキップされます
+        </Alert>
         <ControlledRadioButtonsGroup payment={payment} setPayment={setPayment} />
         <Divider />
         <div style={{ margin: "7vw auto" }}>
