@@ -4,7 +4,7 @@ import IntegrationNotistack from "./component/IntegrationNotistack";
 
 export const TestData = () => {
     const Pay = () => {
-        axios.post("http://localhost:3001/paypay", {
+        axios.post("http://localhost:4242/create-checkout-session", {
             amount: 20,
             orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
         }, {
