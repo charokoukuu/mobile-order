@@ -9,6 +9,7 @@ import { LoadingAnimation } from "./component/LoadingAnimation";
 import Slide from "./component/Slide";
 import { auth } from "./Firebase";
 import IntegrationNotistack from "./component/IntegrationNotistack";
+import { UserInfo } from "./UserInfo";
 
 
 export const OrderCompleted = () => {
@@ -40,7 +41,7 @@ export const OrderCompleted = () => {
               padding: "10% 0",
             }}
           >
-            {auth.currentUser?.uid === orderData?.user.uid ? (
+            {UserInfo.user.uid === orderData?.user.uid ? (
               <>
                 {/* <p>{orderData?.id}</p> */}
                 {orderData?.isStatus === "注文済み" && (

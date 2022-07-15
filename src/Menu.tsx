@@ -6,9 +6,9 @@ import { MenuData } from "./Interface";
 import { OrderSubmit } from "./SubmitGet";
 import { Cart } from "./component/Cart";
 import { LoadingAnimation } from "./component/LoadingAnimation";
-import { auth } from "./Firebase";
 import SwipeTabs from "./component/SwipeTabs";
 import IntegrationNotistack from "./component/IntegrationNotistack";
+import { UserInfo } from "./UserInfo";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
@@ -32,7 +32,7 @@ export const Menu = () => {
                     "id": "6ZjdzBMSKW9pRYDVCI6q",
                     "image": "https://www.kikkoman.co.jp/homecook/search/recipe/img/00005991.jpg",
                     "price": 100,
-                    "description": "美味しコシヒカリ",
+                    "description": "美味しいコシヒカリ",
                     "bigSizeDiffPrice": 0,
                     "isBigSize": false,
                     "isStatus": true,
@@ -55,7 +55,7 @@ export const Menu = () => {
                     "image": "https://media.delishkitchen.tv/article/349/xcfzfecwdzh.jpeg?version=1599726116",
                     "price": 100,
                     "title": "紅茶",
-                    "description": "スリランカ産希少茶葉使用",
+                    "description": "",
                     "id": "KD5rDV4C8zL3be2TzShl",
                     "isSale": true,
                     "bigSizeDiffPrice": 0,
@@ -72,7 +72,7 @@ export const Menu = () => {
                     "isSale": true,
                     "category": "メイン",
                     "bigSizeDiffPrice": 0,
-                    "description": "兵庫県産マグロ",
+                    "description": "美味しいマグロ丼",
                     "price": 420
                 },
                 {
@@ -94,7 +94,7 @@ export const Menu = () => {
                     "image": "https://www.freshnessburger.co.jp/images/menu/orange_juice.jpg",
                     "isStatus": true,
                     "id": "Z1BErhKQZGOZv2dtbc1B",
-                    "description": "100％オレンジ",
+                    "description": "",
                     "isBigSize": false,
                     "isSale": true,
                     "price": 100
@@ -108,7 +108,7 @@ export const Menu = () => {
                     "category": "ドリンク",
                     "bigSizeDiffPrice": 0,
                     "isStatus": true,
-                    "description": "ブルーマウンテン100％",
+                    "description": "",
                     "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/235px-A_small_cup_of_coffee.JPG"
                 },
                 {
@@ -167,7 +167,7 @@ export const Menu = () => {
                     "category": "トッピング",
                     "price": 150,
                     "isStatus": true,
-                    "description": "唐揚げ定食の唐揚げ",
+                    "description": "",
                     "image": "https://video.kurashiru.com/production/articles/38eb9a8c-ce4b-4a3f-abbd-9cbd3a4e8d93/image_large.jpg?1553476035",
                     "bigSizeDiffPrice": 0
                 },
@@ -176,7 +176,7 @@ export const Menu = () => {
                     "id": "wKcxj1a3ysnsEjc2uhky",
                     "bigSizeDiffPrice": 0,
                     "isSale": true,
-                    "description": "有馬温泉から毎日直送する温泉卵",
+                    "description": "",
                     "isBigSize": false,
                     "isStatus": true,
                     "price": 100,
@@ -197,7 +197,7 @@ export const Menu = () => {
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
-                <IntegrationNotistack message="公開テストモード" variant="warning" />
+                <IntegrationNotistack message="一般ユーザーテストモード" variant="warning" />
                 <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
 
                 <div style={{ marginBottom: "13vw" }}>
@@ -209,9 +209,9 @@ export const Menu = () => {
                     }} onNext={async (payment, setIsLoad) => {
                         const orderId = await OrderSubmit({
                             user: {
-                                uid: auth.currentUser?.uid || "",
-                                studentName: auth.currentUser?.displayName || "",
-                                mailAddress: auth.currentUser?.email || "",
+                                uid: UserInfo.user.uid,
+                                studentName: UserInfo.user.displayName,
+                                mailAddress: UserInfo.user.email,
                             },
                             totalPrice: totalPrice,
                             menu: orderData,

@@ -1,10 +1,10 @@
 import { MenuData, OrderData, UserData } from "./Interface"
 import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy } from "firebase/firestore";
 import { auth, db, functions } from "./Firebase"
-import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import axios from "axios";
 import { paymentType } from "./component/Order";
+import { UserInfo } from "./UserInfo";
 
 const apiUrl = "https://pocketmansion.tk/"
 // const apiUrl = "http://localhost:3001/"
@@ -99,25 +99,16 @@ export const GetSpecificData: (
     });
   };
 
-export const GetUserInfo = (callback: (userInfo: User) => void) => {
-  const pathName = "/register";
-  return new Promise<any>((resolve) => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (
-          !CorrectEmail(user?.email || "") &&
-          window.location.pathname !== pathName
-        )
-          window.location.href = pathName;
-        callback(user);
-        resolve("");
-      } else {
-        if (window.location.pathname !== pathName)
-          window.location.href = pathName;
-        resolve("");
-      }
-    });
-  });
+export const GetUserInfo = () => {
+  new Promise((resolve) => {
+    UserInfo.user = {
+      displayName: "TestUser",
+      email: "example.oit.ac.jp",
+      photoURL: "https://icons-for-free.com/download-icon-person-1324760545186718018_512.png",
+      uid: "runticket21",
+    }
+    resolve("");
+  })
 };
 
 export const Payment = async (type: paymentType, orderId: String, totalPrice: number, orderData: MenuData[], callback: (e: boolean) => void) => {
@@ -134,7 +125,7 @@ export const Payment = async (type: paymentType, orderId: String, totalPrice: nu
         uId: auth.currentUser?.uid,
         uMail: auth.currentUser?.email,
       })
-      const respons:any = resData.data;
+      const respons: any = resData.data;
       window.location.href = String(respons.url);
       console.log(respons);
     } catch (err) {

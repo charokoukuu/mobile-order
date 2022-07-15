@@ -7,9 +7,6 @@ import { Register } from "./Register";
 import { Status } from "./Status";
 import { History } from "./History";
 import ResponsiveAppBar from "./component/ResponsiveAppBar";
-import { User } from "firebase/auth";
-import { GetUserInfo } from "./SubmitGet";
-import { useEffect } from "react";
 import { TestData } from "./TestData";
 import { Redirect } from "./component/Redirect";
 import DrawerLeft from "./component/DrawerLeft";
@@ -17,17 +14,8 @@ import { Terms } from "./Terms";
 import { Help } from "./Help";
 const Router = () => {
   const [isMenu, setIsMenu] = React.useState<boolean>(false);
-  const [user, setUser] = React.useState<User>();
-  const [isLogin, setIsLogin] = React.useState<boolean>(false);
-  useEffect(() => {
-    window.document.title = "RunTicket";
-    (async () => {
-      await GetUserInfo((e) => {
-        setUser(e);
-      });
-      setIsLogin(true);
-    })();
-  }, []);
+
+  // }, []);
   return (
     <div>
       <BrowserRouter>
@@ -42,10 +30,10 @@ const Router = () => {
             window.location.href = url || "/";
           }} />
           <ResponsiveAppBar
-            photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
+            photoURL={""} onClick={function (): void {
               setIsMenu(!isMenu);
             }} />
-          {isLogin && (
+          {true && (
             <Routes>
               <Route path="/" element={<Menu />} />
               <Route path="/register" element={<Register />} />
