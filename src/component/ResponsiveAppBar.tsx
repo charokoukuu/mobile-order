@@ -102,7 +102,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                     {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
                     <Button onClick={() => {
                         window.location.href = "/";
-                    }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "7vw", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
+                    }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "200%", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
                         <div className='japanese_L' style={{ color: "#ffffff" }}>RunTicket</div></Button>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
