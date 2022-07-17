@@ -3,12 +3,8 @@ import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, l
 import { auth, db, functions } from "./Firebase"
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
-import axios from "axios";
 import { paymentType } from "./component/Order";
 
-const apiUrl = "https://pocketmansion.tk/"
-// const apiUrl = "http://localhost:3001/"
-// const hostUrl = "http://localhost:3000";
 const hostUrl = "https://mobile-order-4d383.web.app";
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -134,7 +130,7 @@ export const Payment = async (type: paymentType, orderId: String, totalPrice: nu
         uId: auth.currentUser?.uid,
         uMail: auth.currentUser?.email,
       })
-      const respons:any = resData.data;
+      const respons: any = resData.data;
       window.location.href = String(respons.url);
       console.log(respons);
     } catch (err) {
@@ -143,18 +139,20 @@ export const Payment = async (type: paymentType, orderId: String, totalPrice: nu
     }
   } else if (type === "paypay") {
     try {
-      const resData = await axios({
-        method: "POST",
-        url: apiUrl + "paypay",
-        timeout: 10000,
-        data: {
-          orderId: orderId,
-          redirectUrl: hostUrl,
-          amount: totalPrice,
-          orderDescription: orderDescription,
-        }
-      })
-      window.location.href = resData.data.data.url;
+      const paypay = httpsCallable(
+        functions,
+        "PayPayAPI"
+      );
+      const data: any = await paypay({
+        orderId: orderId,
+        redirectUrl: hostUrl,
+        amount: totalPrice,
+        orderDescription: orderDescription,
+      });
+      console.log(data.data.BODY.data.url);
+      window.location.href = data.data.BODY.data.url;
+
+
     } catch (err) {
       alert("決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。");
       callback(false);
