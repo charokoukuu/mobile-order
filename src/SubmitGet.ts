@@ -1,6 +1,18 @@
-import { MenuData, OrderData, UserData } from "./Interface"
-import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy } from "firebase/firestore";
-import { auth, db, functions } from "./Firebase"
+import { MenuData, OrderData, UserData } from "./Interface";
+import {
+  doc,
+  getDocs,
+  setDoc,
+  collection,
+  DocumentData,
+  query,
+  where,
+  getDoc,
+  limit,
+  orderBy,
+  updateDoc,
+} from "firebase/firestore";
+import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "./component/Order";
@@ -51,7 +63,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     menu: props.menu,
     date: date,
     isStatus: "注文済み",
-    payment: props.payment
+    payment: props.payment,
   };
 
   console.log(props.menu);
@@ -66,7 +78,12 @@ export const SearchCollectionDataGet = async (
   maxValue: number
 ) => {
   let data: DocumentData[] = [];
-  const q = query(collection(db, docId), where(collectionId, "==", seachId), orderBy("date", "desc"), limit(maxValue));
+  const q = query(
+    collection(db, docId),
+    where(collectionId, "==", seachId),
+    orderBy("date", "desc"),
+    limit(maxValue)
+  );
   const querySnapshot = await getDocs(q);
   return new Promise<DocumentData[]>((resolve, reject) => {
     querySnapshot.forEach((doc) => {
@@ -83,17 +100,17 @@ export const GetSpecificData: (
   docId: string,
   collectionId: string
 ) => {
-    const docRef = doc(db, docId, collectionId);
-    const docSnap = await getDoc(docRef);
-    return new Promise((resolve, reject) => {
-      if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-      } else {
-        console.log("No such document!");
-      }
-      resolve(docSnap.data());
-    });
-  };
+  const docRef = doc(db, docId, collectionId);
+  const docSnap = await getDoc(docRef);
+  return new Promise((resolve, reject) => {
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+    resolve(docSnap.data());
+  });
+};
 
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
@@ -116,25 +133,32 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
   });
 };
 
-export const Payment = async (type: paymentType, orderId: String, totalPrice: number, orderData: MenuData[], callback: (e: boolean) => void) => {
-  const orderDescription: String = orderData.map(menu => menu.title).join(",");
+export const Payment = async (
+  type: paymentType,
+  orderId: String,
+  totalPrice: number,
+  orderData: MenuData[],
+  callback: (e: boolean) => void
+) => {
+  const orderDescription: String = orderData
+    .map((menu) => menu.title)
+    .join(",");
   if (type === "stripe") {
-    const StripeWebhook = httpsCallable(
-      functions,
-      "StripeWebhook"
-    );
+    const StripeWebhook = httpsCallable(functions, "StripeWebhook");
     try {
       const resData = await StripeWebhook({
         orderData: orderData,
         orderId: orderId,
         uId: auth.currentUser?.uid,
         uMail: auth.currentUser?.email,
-      })
+      });
       const respons: any = resData.data;
       window.location.href = String(respons.url);
       console.log(respons);
     } catch (err) {
-      alert("決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。");
+      alert(
+        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
+      );
       callback(false);
     }
   } else if (type === "paypay") {
@@ -154,9 +178,38 @@ export const Payment = async (type: paymentType, orderId: String, totalPrice: nu
 
 
     } catch (err) {
-      alert("決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。");
+      alert(
+        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
+      );
       callback(false);
     }
   }
-}
+};
+
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
+
+export const CheckPayment = async (payment:"paypay"|"stripe",checkoutId: string) => {
+  if(payment==="stripe"){
+
+  const CheckStripePayment = httpsCallable(functions, "CheckStripePayment");
+  try {
+    const result: any = await CheckStripePayment({
+      orderId: checkoutId,
+    });
+    var orderId=result.data.client_reference_id;
+    // console.log(result)
+if(result.data.status==="complete"){
+  console.log(orderId);
+    const washingtonRef = doc(db, "order", orderId);
+        await updateDoc(washingtonRef, {
+          isStatus: "決済完了",
+        });
+        window.location.href = `/order/${orderId}/success`;
+}else{
+  window.location.href = `/order/${orderId}/faild`;
+}
+  } catch (error) {
+    console.log(error);
+  }
+};
+  }
