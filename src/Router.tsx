@@ -15,6 +15,7 @@ import { Redirect } from "./component/Redirect";
 import DrawerLeft from "./component/DrawerLeft";
 import { Terms } from "./Terms";
 import { Help } from "./Help";
+import { GetPaymentStatus } from "./GetPaymentStatus";
 const Router = () => {
   const [isMenu, setIsMenu] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<User>();
@@ -53,6 +54,7 @@ const Router = () => {
               <Route path="/status:id" element={<Status />} />
               <Route path="/order/:id" element={<OrderCompleted />} />
               <Route path="/order/:id/:status" element={<OrderCompleted />} />
+              <Route path="/check/:id" element={<GetPaymentStatus />} />
               <Route path="/history" element={<History />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
