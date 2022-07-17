@@ -26,8 +26,10 @@ export const OrderCompleted = () => {
 
   return (
     <>
-      {params.status === "success" &&
+      {params.status === "success" ?
         <IntegrationNotistack message="決済が完了しました" variant="success" />
+         : params.status === "faild" &&
+        <IntegrationNotistack message="決済が失敗しました" variant="error" />
       }
       <div style={{ margin: "10px 0" }}>
         {isGetOrderData ? (
@@ -43,7 +45,7 @@ export const OrderCompleted = () => {
             {auth.currentUser?.uid === orderData?.user.uid ? (
               <>
                 {/* <p>{orderData?.id}</p> */}
-                {orderData?.isStatus === "注文済み" && (
+                {orderData?.isStatus === "決済完了" && (
                   <div>
                     <div style={{ display: "flex", height: "10vh" }}>
                       <h2
@@ -136,7 +138,7 @@ export const OrderCompleted = () => {
                       </div>
                     );
                   })}
-                  {orderData?.isStatus === "注文済み" && (
+                  {orderData?.isStatus === "決済完了" && (
                     <div style={{ margin: "10% 0" }}>
                       <h2 style={{ textAlign: "center", color: "#000000" }}>
                         チケット受け取り方法
