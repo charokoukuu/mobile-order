@@ -1,19 +1,18 @@
 import { Button } from "@mui/material";
-import axios from "axios";
+import { httpsCallable } from "firebase/functions";
 import IntegrationNotistack from "./component/IntegrationNotistack";
+import { functions } from "./Firebase";
 
 export const TestData = () => {
     const Pay = () => {
-        axios.post("http://localhost:4242/create-checkout-session", {
-            amount: 20,
-            orderDescription: "Test Payment" // 場合によってはここも動的に変更すると良いかも
-        }, {
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }).then((res) => {
-            console.log(res.data);
-        })
+        const paypay = httpsCallable(
+            functions,
+            "naruki"
+        );
+        (async () => {
+            const data: any = await paypay({ orderId: "ljnvkjdnjdfnjklsf", redirectUrl: "https://mobile-order-4d383.web.app", amount: 300, orderDescription: "test" });
+            console.log(data);
+        })()
     }
     return (
         <div>

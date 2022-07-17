@@ -15,12 +15,8 @@ import {
 import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
-import axios from "axios";
 import { paymentType } from "./component/Order";
 
-const apiUrl = "https://pocketmansion.tk/";
-// const apiUrl = "http://localhost:3001/"
-// const hostUrl = "http://localhost:3000";
 const hostUrl = "https://mobile-order-4d383.web.app";
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -167,18 +163,20 @@ export const Payment = async (
     }
   } else if (type === "paypay") {
     try {
-      const resData = await axios({
-        method: "POST",
-        url: apiUrl + "paypay",
-        timeout: 10000,
-        data: {
-          orderId: orderId,
-          redirectUrl: hostUrl,
-          amount: totalPrice,
-          orderDescription: orderDescription,
-        },
+      const paypay = httpsCallable(
+        functions,
+        "PayPayAPI"
+      );
+      const data: any = await paypay({
+        orderId: orderId,
+        redirectUrl: hostUrl,
+        amount: totalPrice,
+        orderDescription: orderDescription,
       });
-      window.location.href = resData.data.data.url;
+      console.log(data.data.BODY.data.url);
+      window.location.href = data.data.BODY.data.url;
+
+
     } catch (err) {
       alert(
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
