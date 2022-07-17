@@ -1,20 +1,25 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LoadingAnimation } from "./component/LoadingAnimation";
-import { CheckPayment } from "./SubmitGet";
+import { PayPayGetStatus, StripeGetStatus } from "./SubmitGet";
 export const GetPaymentStatus = () => {
   const params = useParams();
   useEffect(() => {
     (async () => {
       const checkoutId = params.id;
-      console.log(checkoutId);
-      await CheckPayment("stripe",checkoutId||"");
+      const paymentType = params.paymentType;
+      if (paymentType === "stripe") {
+        await StripeGetStatus(checkoutId || "");
+      } else if (paymentType === "paypay") {
+        await PayPayGetStatus(checkoutId || "");
+      }
     })();
-  }, [params.id]);
+  }, [params.id, params.paymentType]);
 
   return (
     <>
-      <LoadingAnimation type={"jelly"} />
+      <h2 style={{ textAlign: "center" }}>決済を確認中です...</h2>
+      <LoadingAnimation type={"orbit"} top="70%" />
     </>
   );
 };

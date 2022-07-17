@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MenuData } from "./Interface";
 import { Link, useParams } from "react-router-dom";
-import { GetSpecificData } from "./SubmitGet";
+import { GetSpecificData, hostUrl } from "./SubmitGet";
 import { DocumentData } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card } from "@mui/material";
@@ -28,7 +28,7 @@ export const OrderCompleted = () => {
     <>
       {params.status === "success" ?
         <IntegrationNotistack message="決済が完了しました" variant="success" />
-         : params.status === "faild" &&
+        : params.status === "faild" &&
         <IntegrationNotistack message="決済が失敗しました" variant="error" />
       }
       <div style={{ margin: "10px 0" }}>
@@ -83,20 +83,7 @@ export const OrderCompleted = () => {
                     </h2>
                   </div>
                 )}
-                {orderData?.isStatus === "支払い済み" && (
-                  <div style={{ display: "flex", height: "10vh" }}>
-                    <h2
-                      style={{
-                        margin: "0 auto",
-                        marginTop: "10px",
-                        color: "#000000",
-                        textAlign: "center",
-                      }}
-                    >
-                      注文詳細
-                    </h2>
-                  </div>
-                )}
+
                 <h2
                   style={{
                     textAlign: "center",
@@ -138,6 +125,13 @@ export const OrderCompleted = () => {
                       </div>
                     );
                   })}
+                  {orderData?.isStatus === "注文済み" && (
+                    <div style={{ textAlign: "center", marginTop: "10vw" }}>
+                      <Button variant="contained" onClick={() => {
+                        window.location.href = `${hostUrl}/check/${orderData.id}/${orderData.payment}`;
+                      }}>決済情報の更新</Button>
+                    </div>
+                  )}
                   {orderData?.isStatus === "決済完了" && (
                     <div style={{ margin: "10% 0" }}>
                       <h2 style={{ textAlign: "center", color: "#000000" }}>

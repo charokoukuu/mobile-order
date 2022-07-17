@@ -1,23 +1,11 @@
 import { MenuData, OrderData, UserData } from "./Interface";
-import {
-  doc,
-  getDocs,
-  setDoc,
-  collection,
-  DocumentData,
-  query,
-  where,
-  getDoc,
-  limit,
-  orderBy,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy, updateDoc } from "firebase/firestore";
 import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "./component/Order";
 
-const hostUrl = "https://mobile-order-4d383.web.app";
+export const hostUrl = "https://mobile-order-4d383.web.app";
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var N = 16;
@@ -100,17 +88,17 @@ export const GetSpecificData: (
   docId: string,
   collectionId: string
 ) => {
-  const docRef = doc(db, docId, collectionId);
-  const docSnap = await getDoc(docRef);
-  return new Promise((resolve, reject) => {
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      console.log("No such document!");
-    }
-    resolve(docSnap.data());
-  });
-};
+    const docRef = doc(db, docId, collectionId);
+    const docSnap = await getDoc(docRef);
+    return new Promise((resolve, reject) => {
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+      resolve(docSnap.data());
+    });
+  };
 
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
@@ -188,28 +176,49 @@ export const Payment = async (
 
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
-export const CheckPayment = async (payment:"paypay"|"stripe",checkoutId: string) => {
-  if(payment==="stripe"){
+export const StripeGetStatus = async (checkoutId: string) => {
 
-  const CheckStripePayment = httpsCallable(functions, "CheckStripePayment");
+  const CheckStatusPayment = httpsCallable(functions, "CheckStripePayment");
   try {
-    const result: any = await CheckStripePayment({
+    const result: any = await CheckStatusPayment({
       orderId: checkoutId,
     });
-    var orderId=result.data.client_reference_id;
+    const orderId = result.data.client_reference_id;
     // console.log(result)
-if(result.data.status==="complete"){
-  console.log(orderId);
-    const washingtonRef = doc(db, "order", orderId);
-        await updateDoc(washingtonRef, {
-          isStatus: "決済完了",
-        });
-        window.location.href = `/order/${orderId}/success`;
-}else{
-  window.location.href = `/order/${orderId}/faild`;
-}
+    if (result.data.status === "complete") {
+      console.log(orderId);
+      const washingtonRef = doc(db, "order", orderId);
+      await updateDoc(washingtonRef, {
+        isStatus: "決済完了",
+      });
+      window.location.href = `/order/${orderId}/success`;
+    } else {
+      window.location.href = `/order/${orderId}/faild`;
+    }
   } catch (error) {
     console.log(error);
   }
-};
+
+}
+export const PayPayGetStatus = async (orderId: string) => {
+
+  const CheckStatusPayment = httpsCallable(functions, "PayPayGetStatus");
+  try {
+    const result: any = await CheckStatusPayment({
+      orderId: orderId,
+    });
+    const paymentStatus = result.data.BODY.data.status;
+    if (paymentStatus === "COMPLETED") {
+      const washingtonRef = doc(db, "order", orderId);
+      await updateDoc(washingtonRef, {
+        isStatus: "決済完了",
+      });
+      window.location.href = `/order/${orderId}/success`;
+    } else {
+      window.location.href = `/order/${orderId}/faild`;
+    }
+  } catch (error) {
+    console.log(error);
   }
+
+}

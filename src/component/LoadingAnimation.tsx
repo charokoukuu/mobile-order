@@ -2,6 +2,7 @@ import { Jelly, Orbit } from "@uiball/loaders"
 
 interface LoadingAnimationProps {
     type: "jelly" | "orbit";
+    top?: string;
 }
 export const LoadingAnimation = (props: LoadingAnimationProps) => {
     return (
@@ -17,7 +18,7 @@ export const LoadingAnimation = (props: LoadingAnimationProps) => {
                 </div>
             </div>}
             {props.type === "orbit" && <div style={{ position: "relative", width: "100%", height: "12vw" }}>
-                <div style={{ position: "absolute", top: "35%", right: "50%", transform: "translate(50%,-50%)" }}>
+                <div style={{ position: "absolute", top: props.top ? props.top : "35%", right: "50%", transform: "translate(50%,-50%)" }}>
                     <Orbit
                         size={60}
                         speed={1.2}
