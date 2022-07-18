@@ -14,6 +14,7 @@ import { TestData } from "./TestData";
 import { Redirect } from "./component/Redirect";
 import DrawerLeft from "./component/DrawerLeft";
 import { Terms } from "./Terms";
+import { PrivacyPolicy } from "./PrivacyPolicy";
 import { Help } from "./Help";
 import { GetPaymentStatus } from "./GetPaymentStatus";
 const Router = () => {
@@ -57,6 +58,7 @@ const Router = () => {
               <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
               <Route path="/history" element={<History />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
               <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
               <Route path="/help" element={<Help />} />
