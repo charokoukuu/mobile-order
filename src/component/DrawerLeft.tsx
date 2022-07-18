@@ -11,6 +11,7 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import HistoryIcon from '@mui/icons-material/History';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import { useState } from 'react';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
@@ -74,12 +75,13 @@ export default function TemporaryDrawer(props: TemporaryDrawerProps) {
             </List>
             <Divider />
             <List>
-                {["ヘルプ", "利用規約", "お問い合わせ"].map((text, index) => (
+                {["ヘルプ", "利用規約","プライバシー","お問い合わせ"].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 {text === "ヘルプ" && <HelpOutlineIcon />}
                                 {text === "利用規約" && <InboxIcon />}
+                                {text === "プライバシー" && <PrivacyTipIcon />}
                                 {text === "お問い合わせ" && <ContactPageIcon />}
                             </ListItemIcon>
                             <ListItemText primary={text} onClick={() => {

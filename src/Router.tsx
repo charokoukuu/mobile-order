@@ -39,8 +39,9 @@ const Router = () => {
             url = item === "ヘルプ" ? "/help" :
               item === "注文履歴" ? "/history" :
                 item === "利用規約" ? "/terms" :
-                  item === "お問い合わせ" ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" :
-                    ""
+                  item === "プライバシー" ? "/privacy" :
+                    item === "お問い合わせ" ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" :
+                      ""
             window.location.href = url || "/";
           }} />
           <ResponsiveAppBar
