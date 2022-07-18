@@ -64,7 +64,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Tabs
           style={{
             backgroundColor: "#ffffff",
