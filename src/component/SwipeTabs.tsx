@@ -111,7 +111,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
       {props.menu.filter((item: any) => item.category === props.categoryMode && item.isStatus).map((menu: any, index: number) => {
         return (
           <Grid item key={index} style={{
-            margin: "3vw auto"
+            margin: "3% auto",
           }}>
             <FoodCard menu={menu} onClick={function (): void {
               menu.isBigSize === true && props.setChosenMenu({

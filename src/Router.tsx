@@ -49,6 +49,7 @@ const Router = () => {
               setIsMenu(!isMenu);
             }} />
           {isLogin && (
+            <div style={{maxWidth:"900px", margin:"0 auto"}}>
             <Routes>
               <Route path="/" element={<Menu />} />
               <Route path="/register" element={<Register />} />
@@ -89,6 +90,7 @@ const Router = () => {
                 }
               />
             </Routes>
+            </div>
           )}
         </div>
       </BrowserRouter>

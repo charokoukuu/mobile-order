@@ -29,8 +29,8 @@ export const History = () => {
   }, []);
 
   return (
-    <div style={{ marginTop: "2vw" }}>
-      <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "92vw", margin: "0 auto" }}>
+    <div style={{ marginTop: "3%" }}>
+      <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", margin: "0 auto" }}>
         <h2 className="japanese_L" style={{ textAlign: "center", color: "#707070" }}>注文履歴</h2>
         {isGetHistoryData ? (
           !oneOrderData?.length ? (
@@ -45,7 +45,7 @@ export const History = () => {
                     }}
                     to={`/order/${e.id}`}
                   >
-                    <Card style={{ borderRadius: "8px", boxShadow: "0px 3px 6px rgba(0,0,0,0.2)" }} sx={{ width: "89vw", margin: "0 auto" }} >
+                    <Card style={{ borderRadius: "8px", boxShadow: "0px 3px 6px rgba(0,0,0,0.2)" }} sx={{ width: "90%", margin: "0 auto" }} >
                       <CardContent>
                         <div color="text.secondary">
                           <div className="japanese_L" style={{ textAlign: "right", color: "#707070" }}>
