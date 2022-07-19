@@ -129,9 +129,10 @@ export const OrderCompleted = () => {
                     <div style={{ textAlign: "center", marginTop: "10vw" }}>
                       <Button variant="contained" onClick={() => {
                         orderData.payment === "paypay" ? window.location.href = `/check/${orderData.id}/${orderData.payment}` : window.location.href = `/check/${orderData.checkoutId}/${orderData.payment}`;
-                      }}>決済情報の更新</Button>
+                      }}>決済情報の再取得</Button>
                     </div>
                   )}
+                  {orderData?.checkoutId}
                   {orderData?.isStatus === "決済完了" && (
                     <div style={{ margin: "10% 0" }}>
                       <h2 style={{ textAlign: "center", color: "#000000" }}>

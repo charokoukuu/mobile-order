@@ -7,7 +7,7 @@ export const PrivacyPolicy = (props: { width?: string }) => {
           backgroundColor: "#ffffff",
           padding: "2vw",
           borderRadius: "8px",
-          width: props.width ? props.width : "92vw",
+          width: props.width ? props.width : "90%",
           margin: "0 auto",
         }}
       >
@@ -22,7 +22,7 @@ export const PrivacyPolicy = (props: { width?: string }) => {
           プライバシーポリシー
         </h1>
         <div
-          style={{ width: props.width ? props.width : "80vw", margin: "auto" }}
+          style={{ width: props.width ? props.width : "90%", margin: "auto" }}
         >
           <p>
             当方は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。

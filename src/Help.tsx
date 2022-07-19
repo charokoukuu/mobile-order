@@ -1,7 +1,7 @@
 export const Help = () => {
     return (
         <div style={{ margin: "auto", textAlign: "center" }}>
-            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "92vw", margin: "2vw auto" }}>
+            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "90%", margin: "2vw auto" }}>
                 <h2 className="themeFontColor">STEP 1</h2>
                 <p>メニューを選択します</p>
                 <img src="/help/home.png" alt="menu" width={"70%"} />
