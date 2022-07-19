@@ -54,7 +54,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     payment: props.payment,
   };
 
-  console.log(props.menu);
+  // console.log(props.menu);
   await setDoc(doc(db, "order", id), orderData);
   return id;
 };
@@ -92,7 +92,7 @@ export const GetSpecificData: (
     const docSnap = await getDoc(docRef);
     return new Promise((resolve, reject) => {
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        // console.log("Document data:", docSnap.data());
       } else {
         console.log("No such document!");
       }
@@ -161,7 +161,7 @@ export const Payment = async (
         amount: totalPrice,
         orderDescription: orderDescription,
       });
-      console.log(data.data.BODY.data.url);
+      // console.log(data.data.BODY.data.url);
       window.location.href = data.data.BODY.data.url;
 
 
@@ -186,7 +186,7 @@ export const StripeGetStatus = async (checkoutId: string) => {
     const orderId = result.data.client_reference_id;
     // console.log(result)
     if (result.data.status === "complete") {
-      console.log(orderId);
+      // console.log(orderId);
       const washingtonRef = doc(db, "order", orderId);
       await updateDoc(washingtonRef, {
         isStatus: "決済完了",
