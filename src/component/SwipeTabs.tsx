@@ -64,7 +64,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Tabs
           style={{
             backgroundColor: "#ffffff",
@@ -111,7 +111,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
       {props.menu.filter((item: any) => item.category === props.categoryMode && item.isStatus).map((menu: any, index: number) => {
         return (
           <Grid item key={index} style={{
-            margin: "3vw auto"
+            margin: "3% auto",
           }}>
             <FoodCard menu={menu} onClick={function (): void {
               menu.isBigSize === true && props.setChosenMenu({

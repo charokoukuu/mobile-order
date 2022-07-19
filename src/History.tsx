@@ -41,7 +41,7 @@ export const History = () => {
         (isGetHistoryData && !oneOrderData?.length) ?
           <div style={{ textAlign: "center" }}>注文履歴はありません</div>
           : (isGetHistoryData && oneOrderData?.length) ?
-            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "92vw", margin: "0 auto" }}>
+            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "90%", margin: "0 auto" }}>
               <h2 className="japanese_L" style={{ textAlign: "center", color: "#707070" }}>注文履歴</h2>
 
               {oneOrderData?.map((e, i) => {

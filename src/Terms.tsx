@@ -2,9 +2,9 @@
 export const Terms = (props: { width?: string }) => {
     return (
         <div style={{ margin: "3vw auto" }}>
-            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: props.width ? props.width : "92vw", margin: "0 auto" }}>
+            <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: props.width ? props.width : "90%", margin: "0 auto" }}>
                 <h1 className="japanese_L" style={{ textAlign: "center", color: "#707070", margin: props.width && "auto" }}>利用規約</h1>
-                <div style={{ width: props.width ? props.width : "80vw", margin: "auto" }}>
+                <div style={{ width: props.width ? props.width : "80%", margin: "auto" }}>
                     <p>この本規約は、当方がこのウェブサイト上で提供する本サービスの利用条件を定めるものです。登録ユーザーの皆さまには，本規約に従って，本サービスをご利用いただきます。</p>
                     <h2>第1条（適用）</h2>
                     <p>
@@ -193,7 +193,7 @@ export const Terms = (props: { width?: string }) => {
                         第12条（個人情報の取扱い）
                     </h2>
                     <p>
-                        当方は，本サービスの利用によって取得する個人情報については，当方「プライバシーポリシー」に従い適切に取り扱うものとします。
+                        当方は，本サービスの利用によって取得する個人情報については，当方<a href="/privacy">「プライバシーポリシー」</a>に従い適切に取り扱うものとします。
                     </p>
                     <h2>
                         第13条（通知または連絡）

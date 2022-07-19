@@ -14,6 +14,7 @@ import { TestData } from "./TestData";
 import { Redirect } from "./component/Redirect";
 import DrawerLeft from "./component/DrawerLeft";
 import { Terms } from "./Terms";
+import { PrivacyPolicy } from "./PrivacyPolicy";
 import { Help } from "./Help";
 import { GetPaymentStatus } from "./GetPaymentStatus";
 const Router = () => {
@@ -38,8 +39,9 @@ const Router = () => {
             url = item === "ヘルプ" ? "/help" :
               item === "注文履歴" ? "/history" :
                 item === "利用規約" ? "/terms" :
-                  item === "お問い合わせ" ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" :
-                    ""
+                  item === "プライバシー" ? "/privacy" :
+                    item === "お問い合わせ" ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" :
+                      ""
             window.location.href = url || "/";
           }} />
           <ResponsiveAppBar
@@ -47,6 +49,7 @@ const Router = () => {
               setIsMenu(!isMenu);
             }} />
           {isLogin && (
+            <div style={{maxWidth:"900px", margin:"0 auto"}}>
             <Routes>
               <Route path="/" element={<Menu />} />
               <Route path="/register" element={<Register />} />
@@ -57,6 +60,7 @@ const Router = () => {
               <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
               <Route path="/history" element={<History />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/logout" element={<Redirect logout={true} />} />
               <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
               <Route path="/help" element={<Help />} />
@@ -86,6 +90,7 @@ const Router = () => {
                 }
               />
             </Routes>
+            </div>
           )}
         </div>
       </BrowserRouter>

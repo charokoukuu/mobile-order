@@ -16,7 +16,9 @@ export const FoodCard = (props: FoodCardProps) => {
                 style={{
                     borderRadius: "13px",
                     width: "45vw",
-                    height: "45vw"
+                    height: "45vw",
+                    maxWidth: "400px",
+                    maxHeight: "400px",
                 }}>
 
                 <CardActionArea>
@@ -24,7 +26,7 @@ export const FoodCard = (props: FoodCardProps) => {
                         component="img"
                         image={props.menu.image}
                         alt="menu image"
-                        style={{ position: "relative", height: "45vw", filter: props.menu.isSale ? "" : "brightness(35%)" }}
+                        style={{ position: "relative", height: "45vw", maxHeight:"400px", filter: props.menu.isSale ? "" : "brightness(35%)" }}
                     />
                     {props.menu.isSale === false &&
                         <div
@@ -33,7 +35,7 @@ export const FoodCard = (props: FoodCardProps) => {
                                 position: "absolute",
                                 top: "50%",
                                 left: "50%",
-                                fontSize: "5vw",
+                                fontSize: "clamp(0.5rem, 4.2vw, 2rem)",
                                 transform: "translate(-50%, -50%) rotate(-20deg)",
                                 color: "#FC3f46",
                                 textAlign: "center",
@@ -45,11 +47,11 @@ export const FoodCard = (props: FoodCardProps) => {
                             SOLD OUT
                         </div>
                     }
-                    <div style={{ position: "absolute", right: "0", bottom: "0", width: "90vw", height: "33%", backgroundColor: "rgba(0,0,0,0.7)", }}></div>
-                    <div className="japanese_R" style={{ position: "absolute", left: "4vw", top: "32vw", color: "#ffffff", fontSize: "4.2vw" }}>
+                    <div style={{ position: "absolute", right: "0", bottom: "0", width: "100%", height: "33%", backgroundColor: "rgba(0,0,0,0.7)", }}></div>
+                    <div className="japanese_R" style={{ position: "absolute", left: "8%", top: "70%", color: "#ffffff", fontSize: "clamp(0.5rem, 4.2vw, 2rem)" }}>
                         {props.menu.title}
                     </div>
-                    <div className="japanese_B" style={{ position: "absolute", right: "4vw", top: "36vw", color: "#ffffff", fontSize: "5vw" }}>
+                    <div className="japanese_B" style={{ position: "absolute", right: "8%", top: "80%", color: "#ffffff", fontSize: "clamp(0.5rem, 4.2vw, 2rem)" }}>
                         ¥{props.menu.price}
                     </div>
                 </CardActionArea>
