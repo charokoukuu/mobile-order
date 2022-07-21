@@ -131,10 +131,10 @@ export const History = () => {
                                 right: "5%",
                                 bottom: "8%",
                                 color: "#1FA7D0",
-                                fontSize: "1.5vw",
+                                fontSize: "75%",
                               }}
                             >
-                              ID:{e.id}
+                              ID: {e.id}
                             </div>
                             <div style={{
                               height: "1.5vw",
