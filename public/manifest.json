@@ -73,7 +73,7 @@
   "protocol_handlers": [
     {
       "protocol": "web+dino",
-      "url": "/%s"
+      "url": "/%"
     }
   ],
   "start_url": ".",
