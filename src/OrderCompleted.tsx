@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MenuData } from "./Interface";
 import { Link, useParams } from "react-router-dom";
-import { GetSpecificData, hostUrl } from "./SubmitGet";
+import { GetSpecificData } from "./SubmitGet";
 import { DocumentData } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card } from "@mui/material";
@@ -29,7 +29,7 @@ export const OrderCompleted = () => {
       {params.status === "success" ?
         <IntegrationNotistack message="決済が完了しました" variant="success" />
         : params.status === "faild" &&
-        <IntegrationNotistack message="決済が失敗しました" variant="error" />
+        <IntegrationNotistack message="決済情報が見つかりません" variant="error" />
       }
       <div style={{ margin: "10px 0" }}>
         {isGetOrderData ? (
@@ -128,10 +128,11 @@ export const OrderCompleted = () => {
                   {orderData?.isStatus === "注文済み" && (
                     <div style={{ textAlign: "center", marginTop: "10vw" }}>
                       <Button variant="contained" onClick={() => {
-                        window.location.href = `${hostUrl}/check/${orderData.id}/${orderData.payment}`;
-                      }}>決済情報の更新</Button>
+                        orderData.payment === "paypay" ? window.location.href = `/check/${orderData.id}/${orderData.payment}` : window.location.href = `/check/${orderData.checkoutId}/${orderData.payment}`;
+                      }}>決済情報の再取得</Button>
                     </div>
                   )}
+                  {orderData?.checkoutId}
                   {orderData?.isStatus === "決済完了" && (
                     <div style={{ margin: "10% 0" }}>
                       <h2 style={{ textAlign: "center", color: "#000000" }}>

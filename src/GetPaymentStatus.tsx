@@ -18,7 +18,7 @@ export const GetPaymentStatus = () => {
 
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>決済を確認中です...</h2>
+      <h2 style={{ textAlign: "center" }}>決済を確認中です</h2>
       <LoadingAnimation type={"orbit"} top="70%" />
     </>
   );
