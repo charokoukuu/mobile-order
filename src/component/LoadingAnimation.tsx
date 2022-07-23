@@ -8,7 +8,7 @@ interface LoadingAnimationProps {
 export const LoadingAnimation = (props: LoadingAnimationProps) => {
     return (
         <>
-            {props.type === "jelly" && <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
+            {props.type === "jelly" && <div style={{ position: "relative", width: "100%", height: "100vh" }}>
                 <div style={{ position: "absolute", top: props.top ? props.top : "35%", right: props.right ? props.right : "50%", transform: "translate(50%,50%)" }}>
                     {props.type === "jelly" && <Jelly
                         size={100}
