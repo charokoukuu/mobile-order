@@ -57,14 +57,14 @@ export const Order = (props: OrderProps) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Box style={{ marginTop: "3vw" }} />
-        <div className="japanese_L" style={{ margin: "7vw 0", textAlign: "center" }}>選択されたメニュー</div>
+        <Box style={{ maxWidth:"900px",margin:"0 auto" }} />
+        {/* <div className="japanese_L" style={{ margin: "7% 0", textAlign: "center" }}>選択されたメニュー</div> */}
         <div>
-          <div className="box" style={{ display: "flex", padding: "5vw 0", marginBottom: "5vw", backgroundColor: "#EEECE4" }}>
+          <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4" }}>
             <Box style={{ marginLeft: (window.innerWidth / 2 - 105) + "px" }} />
             {props.orderData.map((menu, index) => {
               return (
-                <div key={index} style={{ margin: "0 4vw" }}>
+                <div key={index} style={{ margin: "0 4%" }}>
                   <FoodCard menu={menu} onClick={function (): void {
                     setChoosedMenu(menu);
                     setIsDelete(true);
@@ -81,16 +81,16 @@ export const Order = (props: OrderProps) => {
         }} OnCancel={function (): void {
           setIsDelete(false);
         }} title={"注文を削除"} content={choosedMenu?.title + "をカートから削除しますか？" || ""} color={"error"} yesText={"削除"} noText={"いいえ"} />
-        <div style={{ textAlign: "center", margin: "4vw 0" }}>
-          <div style={{ fontSize: "12vw", color: "#006C9B" }}><span style={{ fontSize: "8vw" }}>{props.orderData.length}点</span> ¥{props.totalPrice}</div>
+        <div style={{ textAlign: "center", margin: "4% 0" }}>
+          <div style={{ fontSize: "3rem", color: "#006C9B" }}><span style={{ fontSize: "2rem" }}>{props.orderData.length}点</span> ¥{props.totalPrice}</div>
         </div>
         <Divider />
         <ControlledRadioButtonsGroup payment={payment} setPayment={setPayment} />
         <Divider />
-        <div style={{ margin: "7vw auto" }}>
+        <div style={{ margin: "3% 10%" }}>
           <div >
             {!isLoad && <Button
-              style={{ width: "90vw", marginTop: "3vw", backgroundColor: payment === "" ? "#848484" : "#006C9B", color: "white", borderRadius: "7px", fontSize: "5vw" }}
+              style={{ width: "100%", marginTop: "3%", backgroundColor: payment === "" ? "#848484" : "#006C9B", color: "white", borderRadius: "7px", fontSize: "1rem" }}
               onClick={() => {
                 setIsLoad(true);
                 props.onNext(payment, setIsLoad);
@@ -105,7 +105,7 @@ export const Order = (props: OrderProps) => {
           </div>
           <div >
             <Button
-              style={{ width: "90vw", marginTop: "3vw", borderColor: "#006C9B", color: "#006C9B", borderRadius: "7px", fontSize: "5vw" }}
+              style={{ width: "100%", marginTop: "3%", borderColor: "#006C9B", color: "#006C9B", borderRadius: "7px", fontSize: "1rem" }}
               onClick={props.onPrev}
               variant="outlined"
             >
