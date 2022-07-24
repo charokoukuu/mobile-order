@@ -40,7 +40,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
     return (
         <AppBar position="static" style={{ backgroundColor: "#006C9B" }} elevation={0}>
             <Container maxWidth="xl">
-                <Toolbar disableGutters style={{maxWidth:"800px",margin:"0 auto"}}>
+                <Toolbar disableGutters style={{ maxWidth: "800px", margin: "0 auto" }}>
                     {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
@@ -103,7 +103,8 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                     <Button onClick={() => {
                         window.location.href = "/";
                     }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "200%", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
-                        <div className='japanese_L' style={{ color: "#ffffff" }}>RunTicket</div></Button>
+                        <img src="image/runticket.png" alt="RunTicket" style={{ width: "100%" }} />
+                    </Button>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {/* {pages.map((page) => (
                             <Button

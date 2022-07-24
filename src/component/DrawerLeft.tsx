@@ -75,13 +75,13 @@ export default function TemporaryDrawer(props: TemporaryDrawerProps) {
             </List>
             <Divider />
             <List>
-                {["ヘルプ", "利用規約","プライバシー","お問い合わせ"].map((text, index) => (
+                {["ヘルプ", "利用規約", "プライバシーポリシー", "お問い合わせ"].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 {text === "ヘルプ" && <HelpOutlineIcon />}
                                 {text === "利用規約" && <InboxIcon />}
-                                {text === "プライバシー" && <PrivacyTipIcon />}
+                                {text === "プライバシーポリシー" && <PrivacyTipIcon />}
                                 {text === "お問い合わせ" && <ContactPageIcon />}
                             </ListItemIcon>
                             <ListItemText primary={text} onClick={() => {
