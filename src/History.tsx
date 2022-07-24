@@ -1,5 +1,5 @@
 import { DocumentData } from "firebase/firestore";
-import { CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import { SearchCollectionDataGet } from "./SubmitGet";
 import { Link } from "react-router-dom";
