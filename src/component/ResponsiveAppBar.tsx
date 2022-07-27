@@ -103,7 +103,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                     <Button onClick={() => {
                         window.location.href = "/";
                     }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "200%", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
-                        <img src="image/runticket.png" alt="RunTicket" style={{ width: "100%" }} />
+                        <img src="https://firebasestorage.googleapis.com/v0/b/mobile-order-4d383.appspot.com/o/runticket.png?alt=media&token=f27edb3e-3806-43bf-b1fb-2179dcc23f07" alt="RunTicket" style={{ width: "100%" }} />
                     </Button>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {/* {pages.map((page) => (
