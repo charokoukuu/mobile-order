@@ -105,3 +105,12 @@ div {
   border-radius: 17px;
   border: none;
 }
+
+.over {
+  color: #006C9B;
+  text-decoration: underline;
+}
+
+.over:hover {
+  color: #e76d27;
+}
