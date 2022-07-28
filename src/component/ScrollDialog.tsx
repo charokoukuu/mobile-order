@@ -5,6 +5,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Terms } from '../Terms';
+import { PrivacyPolicy } from '../PrivacyPolicy';
+import { useState } from 'react';
 
 interface ScrollDialogProps {
     open: boolean;
@@ -14,7 +16,7 @@ interface ScrollDialogProps {
 
 
 export default function ScrollDialog(props: ScrollDialogProps) {
-
+    const [mode, setMode] = useState<'terms' | 'privacy'>('terms');
 
     const handleClose = () => {
         props.setIsClose(false);
@@ -32,7 +34,13 @@ export default function ScrollDialog(props: ScrollDialogProps) {
                 <DialogTitle id="scroll-dialog-title">利用規約</DialogTitle>
                 <DialogContent dividers={true}>
 
-                    <Terms width='90%' />
+                    {mode === "terms" && <Terms width='90%' onClick={() => {
+                        setMode('privacy')
+                    }} />
+                    }
+                    {mode === "privacy" && <PrivacyPolicy width='90%' onClick={() => {
+                        setMode('terms');
+                    }} />}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} >同意しない</Button>

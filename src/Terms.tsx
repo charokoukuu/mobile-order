@@ -1,5 +1,5 @@
 
-export const Terms = (props: { width?: string }) => {
+export const Terms = (props: { width?: string, onClick?: () => void }) => {
     return (
         <div style={{ margin: "3vw auto" }}>
             <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: props.width ? props.width : "90%", margin: "0 auto" }}>
@@ -193,7 +193,9 @@ export const Terms = (props: { width?: string }) => {
                         第12条（個人情報の取扱い）
                     </h2>
                     <p>
-                        当方は，本サービスの利用によって取得する個人情報については，当方<a href="/privacy">「プライバシーポリシー」</a>に従い適切に取り扱うものとします。
+                        当方は，本サービスの利用によって取得する個人情報については，当方<span className="japanese_L over" onClick={() => {
+                            props.onClick ? props.onClick() : window.location.href = "/privacy";
+                        }}> プライバシーポリシー </span>に従い適切に取り扱うものとします。
                     </p>
                     <h2>
                         第13条（通知または連絡）

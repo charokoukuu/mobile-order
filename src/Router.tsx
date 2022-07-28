@@ -39,7 +39,7 @@ const Router = () => {
             url = item === "ヘルプ" ? "/help" :
               item === "注文履歴" ? "/history" :
                 item === "利用規約" ? "/terms" :
-                  item === "プライバシー" ? "/privacy" :
+                  item === "プライバシーポリシー" ? "/privacy" :
                     item === "お問い合わせ" ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" :
                       ""
             window.location.href = url || "/";
@@ -49,47 +49,47 @@ const Router = () => {
               setIsMenu(!isMenu);
             }} />
           {isLogin && (
-            <div style={{maxWidth:"900px", margin:"0 auto"}}>
-            <Routes>
-              <Route path="/" element={<Menu />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/test" element={<TestData />} />
-              <Route path="/status:id" element={<Status />} />
-              <Route path="/order/:id" element={<OrderCompleted />} />
-              <Route path="/order/:id/:status" element={<OrderCompleted />} />
-              <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/logout" element={<Redirect logout={true} />} />
-              <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
-              <Route path="/help" element={<Help />} />
-              <Route
-                path="*"
-                element={
-                  <ErrorPage
-                    text={"お探しのページは見つかりませんでした"}
-                    onClick={() => {
-                      window.location.href = "/";
-                    }}
-                    buttonText={"ホームに戻る"}
-                  />
-                }
-              />
+            <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+              <Routes>
+                <Route path="/" element={<Menu />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/test" element={<TestData />} />
+                <Route path="/status:id" element={<Status />} />
+                <Route path="/order/:id" element={<OrderCompleted />} />
+                <Route path="/order/:id/:status" element={<OrderCompleted />} />
+                <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
+                <Route path="/history" element={<History />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<PrivacyPolicy />} />
+                <Route path="/logout" element={<Redirect logout={true} />} />
+                <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
+                <Route path="/help" element={<Help />} />
+                <Route
+                  path="*"
+                  element={
+                    <ErrorPage
+                      text={"お探しのページは見つかりませんでした"}
+                      onClick={() => {
+                        window.location.href = "/";
+                      }}
+                      buttonText={"ホームに戻る"}
+                    />
+                  }
+                />
 
-              <Route
-                path="*"
-                element={
-                  <ErrorPage
-                    text={"お探しのページは見つかりませんでした"}
-                    onClick={() => {
-                      window.location.href = "/";
-                    }}
-                    buttonText={"ホームに戻る"}
-                  />
-                }
-              />
-            </Routes>
+                <Route
+                  path="*"
+                  element={
+                    <ErrorPage
+                      text={"お探しのページは見つかりませんでした"}
+                      onClick={() => {
+                        window.location.href = "/";
+                      }}
+                      buttonText={"ホームに戻る"}
+                    />
+                  }
+                />
+              </Routes>
             </div>
           )}
         </div>

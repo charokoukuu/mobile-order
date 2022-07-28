@@ -7,7 +7,7 @@ export const TestData = () => {
     const Pay = () => {
         const paypay = httpsCallable(
             functions,
-            "naruki"
+            "test"
         );
         (async () => {
             const data: any = await paypay({ orderId: "ljnvkjdnjdfnjklsf", redirectUrl: "https://mobile-order-4d383.web.app", amount: 300, orderDescription: "test" });
