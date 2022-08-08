@@ -111,7 +111,7 @@ export const History = () => {
                                 fontSize: "clamp(0.5rem, 3vw, 1.5rem)"
                               }}
                             >
-                              ID:{e.id}
+                              ID: {e.id}
                             </div>
                             </Grid>
                             <div style={{

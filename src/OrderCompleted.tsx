@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { MenuData } from "./Interface";
 import { Link, useParams } from "react-router-dom";
 import { GetSpecificData } from "./SubmitGet";
-import { DocumentData } from "firebase/firestore";
+import { DocumentData, onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card } from "@mui/material";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import Slide from "./component/Slide";
 import { auth } from "./Firebase";
 import IntegrationNotistack from "./component/IntegrationNotistack";
-
-
+import { db } from "./Firebase";
+let isChecked = false;
 export const OrderCompleted = () => {
   const [orderData, setOrderData] = useState<DocumentData>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
@@ -22,8 +22,14 @@ export const OrderCompleted = () => {
       setIsGetOrderData(true);
       // console.log(params.id);
     })();
+    onSnapshot(doc(db, "order", params.id || ""), (doc) => {
+      console.log("Current data: ", doc.data());
+      if (isChecked) {
+        doc.data()?.isStatus === "注文完了" && setOrderData(doc.data());
+      }
+      isChecked = true;
+    });
   }, [params.id]);
-
   return (
     <>
       {params.status === "success" ?
@@ -83,7 +89,10 @@ export const OrderCompleted = () => {
                     </h2>
                   </div>
                 )}
-
+                {orderData?.isStatus === "注文完了" && <div className="japanese_L" style={{ textAlign: "center", fontSize: "120%", margin: "3% 0" }}>
+                  ご注文ありがとうございました
+                </div>}
+                {orderData?.isStatus === "注文完了" && <IntegrationNotistack message="注文完了" variant="success" />}
                 <h2
                   style={{
                     textAlign: "center",
