@@ -37,8 +37,8 @@ export const DetailDialog = (props: DetailDialogProps) => {
                     <div>
                         <MaterialMenuCard />
                         {props.menu?.isBigSize && <MaterialSizeSelectCard />}
-                        <div className="center themeFontColor" style={{ margin: "1% 0", fontSize: "2rem" }}>{value.menu?.price}<span style={{ fontSize: "7%" }}> 円</span></div>
-                        <div className="center">  <Button style={{ width: "70%", backgroundColor: "#006C9B", height: "10%", borderRadius: "11px" }} variant="contained" onClick={() => {
+                        <div className="center themeFontColor" style={{ margin: "1% 0", fontSize: "3.5rem" }}>{value.menu?.price}<span style={{ fontSize: "1.5rem" }}> 円</span></div>
+                        <div className="center">  <Button style={{ width: "80%", backgroundColor: "#006C9B", height: "10%", borderRadius: "11px" }} variant="contained" onClick={() => {
                             props.onNext(value.menu);
                         }} >
                             カートに追加
@@ -59,7 +59,7 @@ const MaterialMenuCard = () => {
     return (
         <div style={{ backgroundColor: "#ffffff", margin: "3% 3%", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
             <div style={{ textAlign: "center", margin: "2% 0", fontSize: "2rem" }}>
-                <div className="japanese_R" style={{ padding: "5% 0" }}>{menu?.title}</div>
+                <div className="japanese_R" style={{ padding: "5% 0",fontSize:"1.5rem" }}>{menu?.title}</div>
                 <div><img style={{ width: "80%",maxWidth:"500px", borderRadius: "13px", margin: "1% 0" }} src={menu?.image || ""} alt="menu" /></div>
                 <div className="japanese_L" style={{ textAlign: "center", fontSize: "0.8rem", width: "50%", margin: "auto", paddingBottom: "7%" }}>{menu?.description}</div>
 
