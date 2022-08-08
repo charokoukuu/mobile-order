@@ -24,13 +24,13 @@ export const Cart = (props: CartProps) => {
                 <Grid item xs={3} style={{margin:"auto",textAlign:"start"}} >
                     <IconButton aria-label="cart">
                         <StyledBadge badgeContent={props.totalOrderItemsCount} color={"primary"}>
-                            <ShoppingCartIcon sx={{ fontSize: "clamp(1rem, 8vw, 4rem)"  }} />
+                            <ShoppingCartIcon sx={{ fontSize: "clamp(1rem, 10vw, 4rem)"  }} />
                         </StyledBadge>
                     </IconButton>
                 </Grid>
-                <Grid item xs={3} className="japanese_B themeFontColor" style={{margin:"auto",textAlign:"end", right: props.totalPrice.toString().length === 3 ? "45%" : "40%", fontSize: "clamp(1rem, 8vw, 4rem)" }}>¥{props.totalPrice}</Grid>
+                <Grid item xs={3} className="japanese_B themeFontColor" style={{margin:"auto",textAlign:"end", right: props.totalPrice.toString().length === 3 ? "45%" : "40%", fontSize: "clamp(1rem, 10vw, 4rem)" }}>¥{props.totalPrice}</Grid>
                 <Grid item xs={5} style={{margin: "auto",textAlign:"end"}}>
-                    <Button style={{ backgroundColor: "#006C9B", fontSize: "clamp(0.5rem, 4vw, 2rem)", borderRadius: "clamp(0.2rem, 0.6vw, 2rem)" }} variant="contained" onClick={() => {props.onClick()}}>
+                    <Button style={{ backgroundColor: "#006C9B", fontSize: "clamp(0.5rem, 4vw, 2rem)", borderRadius: "8px" }} variant="contained" onClick={() => {props.onClick()}}>
                         カートを見る
                     </Button>
                 </Grid>
