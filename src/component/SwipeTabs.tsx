@@ -113,7 +113,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
           <Grid item key={index} style={{
             margin: "3% auto",
           }}>
-            <FoodCard menu={menu} onClick={function (): void {
+            <FoodCard menu={menu} deleteButton={false} onClick={function (): void {
               menu.isBigSize === true && props.setChosenMenu({
                 title: menu.title,
                 description: menu.description,

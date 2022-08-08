@@ -58,14 +58,13 @@ export const Order = (props: OrderProps) => {
           </Toolbar>
         </AppBar>
         <Box style={{ maxWidth:"900px",margin:"0 auto" }} />
-        {/* <div className="japanese_L" style={{ margin: "7% 0", textAlign: "center" }}>選択されたメニュー</div> */}
         <div>
           <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4" }}>
-            <Box style={{ marginLeft: (window.innerWidth / 2 - 105) + "px" }} />
+            <Box style={{ marginLeft: window.innerWidth / 4 + "px" }} />
             {props.orderData.map((menu, index) => {
               return (
                 <div key={index} style={{ margin: "0 4%" }}>
-                  <FoodCard menu={menu} onClick={function (): void {
+                  <FoodCard menu={menu} deleteButton={true} onClick={function (): void {
                     setChoosedMenu(menu);
                     setIsDelete(true);
                   }} />

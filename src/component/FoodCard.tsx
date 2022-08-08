@@ -1,9 +1,11 @@
 import { Card, CardActionArea, CardMedia } from "@mui/material";
 import { DocumentData } from "firebase/firestore";
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 interface FoodCardProps {
     menu: DocumentData;
     onClick: () => void;
+    deleteButton: boolean;
 }
 export const FoodCard = (props: FoodCardProps) => {
     return (
@@ -28,6 +30,11 @@ export const FoodCard = (props: FoodCardProps) => {
                         alt="menu image"
                         style={{ position: "relative", height: "45vw", maxHeight:"400px", filter: props.menu.isSale ? "" : "brightness(35%)" }}
                     />
+                    {props.deleteButton && (
+                    <div style={{display: "flex",position:"absolute",right:"5%",top:"5%",zIndex:"1", backgroundColor:'rgba(255,255,255,0.9)', borderRadius:"100%"}}>
+                        <HighlightOffIcon style={{color:"black",fontSize:"clamp(1.5rem, 4.2vw, 2rem)"}}/>
+                    </div>
+                    )}
                     {props.menu.isSale === false &&
                         <div
                             className="japanese_B"
