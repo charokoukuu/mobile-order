@@ -47,7 +47,7 @@ export const History = () => {
                       }}
                       to={`/order/${e.id}`}
                     >
-                      <Card style={{ borderRadius: "8px", boxShadow: "0px 3px 6px rgba(0,0,0,0.2)" }} sx={{ width: "90%", margin: "0 auto", position: "relative" }} >
+                      <Card style={{ borderRadius: "8px", boxShadow: "0px 3px 6px rgba(0,0,0,0.2)" }} sx={{ width: "95%", margin: "0 auto", position: "relative" }} >
                         <CardContent>
                           <div color="text.secondary">
                             <div className="japanese_L" style={{ textAlign: "right", color: "#000000" }}>
@@ -80,7 +80,7 @@ export const History = () => {
                               <Grid item xs={0} style={{margin:"auto 0",color: "#01AD4A",}}>
                               <ErrorOutlineIcon style={{fontSize: "clamp(0.5rem, 3vw, 1.5rem)"}} />
                               </Grid>
-                              <Grid item xs={3} className="japanese_L" style={{textAlign:"start",margin:"auto 0", color: "#01AD4A",fontSize: "clamp(0.5rem, 2vw, 1.5rem)"}}>
+                              <Grid item xs={3} className="japanese_L" style={{textAlign:"start",margin:"auto 0", color: "#01AD4A",fontSize: "clamp(0.7rem, 3vw, 1rem)"}}>
                                 注文受け取り済み
                               </Grid>
                             </>}
@@ -88,7 +88,7 @@ export const History = () => {
                               <Grid item xs={0} style={{margin:"auto 0",color: "#DB8D00"}}>
                               <ErrorOutlineIcon style={{fontSize: "clamp(0.5rem, 3vw, 1.5rem)"}} />
                               </Grid>
-                              <Grid item xs={3} className="japanese_L" style={{textAlign:"start",margin:"auto 0", color: "#DB8D00",fontSize: "clamp(0.5rem, 2vw, 1.5rem)"}}>
+                              <Grid item xs={3} className="japanese_L" style={{textAlign:"start",margin:"auto 0", color: "#DB8D00",fontSize: "clamp(0.7rem, 3vw, 1rem)"}}>
                                 未受け取り
                               </Grid>
                             </>}
@@ -96,7 +96,7 @@ export const History = () => {
                               <Grid item xs={0} style={{margin:"auto 0",color: "#D11F00",}}>
                               <ErrorOutlineIcon style={{fontSize: "clamp(0.5rem, 3vw, 1.5rem)"}} />
                               </Grid>
-                              <Grid item xs={5} className="japanese_L" style={{textAlign:"start",margin:"auto 0", color: "#D11F00",fontSize: "clamp(0.5rem, 2vw, 1.5rem)"}}>
+                              <Grid item xs={5} className="japanese_L" style={{textAlign:"start",margin:"auto 0", color: "#D11F00",fontSize: "clamp(0.7rem, 3vw, 1rem)"}}>
                               決済情報がありません
                               </Grid>
                             </>}
@@ -104,20 +104,13 @@ export const History = () => {
                             <div
                               className="japanese_R"
                               style={{
-                                // position: "absolute",
-                                right: "5%",
-                                bottom: "8%",
                                 color: "#1FA7D0",
-                                fontSize: "clamp(0.5rem, 3vw, 1.5rem)"
+                                fontSize: "clamp(0.7rem, 2vw, 1.5rem)"
                               }}
                             >
                               ID: {e.id}
                             </div>
                             </Grid>
-                            <div style={{
-                              height: "1.5vw",
-                            }}>
-                            </div>
                           </Grid>
                         </CardContent>
                       </Card>
