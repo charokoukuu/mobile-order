@@ -76,19 +76,6 @@ const Router = () => {
                     />
                   }
                 />
-
-                <Route
-                  path="*"
-                  element={
-                    <ErrorPage
-                      text={"お探しのページは見つかりませんでした"}
-                      onClick={() => {
-                        window.location.href = "/";
-                      }}
-                      buttonText={"ホームに戻る"}
-                    />
-                  }
-                />
               </Routes>
             </div>
           )}
