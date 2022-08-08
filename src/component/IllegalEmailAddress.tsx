@@ -19,9 +19,9 @@ export const IllegalEmailAddress = (props: IllegalEmailAddressProps) => {
     console.log(auth.currentUser);
   }, []);
   return (
-    <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "92vw", margin: "2vw auto" }}>
-      <div style={{ textAlign: "left", margin: "5vw auto", width: "80vw" }}>
-        <h2 style={{ fontSize: "5vw" }}>
+    <div style={{  padding: "2vw", borderRadius: "8px", width: "90%", margin: "2% auto" }}>
+      <div style={{ textAlign: "left", margin: "5% auto", width: "80%" }}>
+        <h2 style={{ fontSize: "2rem" }}>
           本サービスは個人用アカウントでのご利用を許可しておりません。
           <br />
           申し訳ございませんが、組織内アカウント(@oit.ac.jp)で
