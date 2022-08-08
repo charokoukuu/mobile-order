@@ -30,10 +30,11 @@ export const DetailDialog = (props: DetailDialogProps) => {
                         style: {
                             backgroundColor: '#EFEFEF',
                             borderRadius: '13px',
+                            width: '90%',
                         },
                     }}
                 >
-                    <div style={{ width: "100%" }}>
+                    <div>
                         <MaterialMenuCard />
                         {props.menu?.isBigSize && <MaterialSizeSelectCard />}
                         <div className="center themeFontColor" style={{ margin: "1% 0", fontSize: "2rem" }}>{value.menu?.price}<span style={{ fontSize: "7%" }}> 円</span></div>
@@ -59,7 +60,7 @@ const MaterialMenuCard = () => {
         <div style={{ backgroundColor: "#ffffff", margin: "3% 3%", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
             <div style={{ textAlign: "center", margin: "2% 0", fontSize: "2rem" }}>
                 <div className="japanese_R" style={{ padding: "5% 0" }}>{menu?.title}</div>
-                <div><img style={{ width: "60%", borderRadius: "13px", margin: "1% 0" }} src={menu?.image || ""} alt="menu" /></div>
+                <div><img style={{ width: "80%",maxWidth:"500px", borderRadius: "13px", margin: "1% 0" }} src={menu?.image || ""} alt="menu" /></div>
                 <div className="japanese_L" style={{ textAlign: "center", fontSize: "0.8rem", width: "50%", margin: "auto", paddingBottom: "7%" }}>{menu?.description}</div>
 
             </div>
@@ -71,7 +72,7 @@ const MaterialSizeSelectCard = () => {
 
     return (
         <div style={{ backgroundColor: "#ffffff", margin: "0% 3%", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
-            <div style={{ textAlign: "center", margin: "0% 0", fontSize: "7%" }}>
+            <div style={{ textAlign: "center", margin: "0% 0", fontSize: "2rem" }}>
                 <div style={{ padding: "5% 0" }}>
                     {menu !== undefined && <SelectedCard price={menu.price} />}
                 </div>
@@ -91,12 +92,13 @@ const SelectedCard = (props: { price: number }) => {
     }, [isChecked, setMenu])
     const defaultButton = {
         background: "#006C9B 0% 0% no-repeat padding-box",
-        width: "31%",
-        height: "14%",
         boxShadow: "inset 5px 5px 5px #00000029",
         color: "#ffffff",
+        width: "85%",
+        height: "100%",
         borderRadius: "17px",
-        border: "none"
+        border: "none",
+        fontSize: "1rem",
     }
     const selectedButton = {
         ...defaultButton,
@@ -110,15 +112,15 @@ const SelectedCard = (props: { price: number }) => {
             <Grid item xs={6}>
                 <Button onClick={() => {
                     setIsChecked(false)
-                }} style={!isChecked ? { ...defaultButton, marginLeft: "3%" } : { ...selectedButton, marginLeft: "3%" }} variant="contained">
-                    <div className="japanese_R" style={{ fontSize: "5%", color: "#ffffff" }}>並</div>
+                }} style={!isChecked ? { ...defaultButton } : { ...selectedButton }} variant="contained">
+                    <div className="japanese_R" style={{ color: "#ffffff" }}>並</div>
                 </Button>
             </Grid>
             <Grid item xs={6}>
                 <Button onClick={() => {
                     setIsChecked(true)
-                }} style={isChecked ? { ...defaultButton, marginRight: "3%" } : { ...selectedButton, marginRight: "3%" }} variant="contained">
-                    <div className="japanese_R" style={{ fontSize: "4%", color: "#ffffff" }}>大 (+{baseMenuData.bigSizeDiffPrice}円)</div>
+                }} style={isChecked ? { ...defaultButton } : { ...selectedButton }} variant="contained">
+                    <div className="japanese_R" style={{  color: "#ffffff" }}>大 +{baseMenuData.bigSizeDiffPrice}円</div>
                 </Button>
             </Grid>
         </Grid>
