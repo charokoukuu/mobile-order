@@ -4,7 +4,7 @@ import { DocumentData } from "firebase/firestore";
 
 const Admin = () => {
     const [toDayOrder, setToDayOrder] = useState<DocumentData[]>([]);
-    const [isGetToDayOrder, setIsGetToDayOrder] = useState<boolean>(false);
+    // const [isGetToDayOrder, setIsGetToDayOrder] = useState<boolean>(false);
     useEffect(() => {
         const today = new Date(Date.now());
         // const today:Date = `${year}/${month}/${day}`;
@@ -16,7 +16,7 @@ const Admin = () => {
             today,
           );
           setToDayOrder(order);
-          setIsGetToDayOrder(true);
+        //   setIsGetToDayOrder(true);
           console.log(order);
         })();
     }, []);
