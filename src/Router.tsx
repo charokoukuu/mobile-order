@@ -17,6 +17,8 @@ import { Terms } from "./Terms";
 import { PrivacyPolicy } from "./PrivacyPolicy";
 import { Help } from "./Help";
 import { GetPaymentStatus } from "./GetPaymentStatus";
+import Admin from "./Admin";
+import Footer from "./component/Footer";
 const Router = () => {
   const [isMenu, setIsMenu] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<User>();
@@ -64,6 +66,7 @@ const Router = () => {
                 <Route path="/logout" element={<Redirect logout={true} />} />
                 <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
                 <Route path="/help" element={<Help />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route
                   path="*"
                   element={
@@ -81,6 +84,7 @@ const Router = () => {
           )}
         </div>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 };

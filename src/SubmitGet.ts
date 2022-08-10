@@ -1,5 +1,5 @@
 import { MenuData, OrderData, UserData } from "./Interface";
-import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy, updateDoc } from "firebase/firestore";
+import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy, updateDoc, startAt, endAt } from "firebase/firestore";
 import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
@@ -70,6 +70,30 @@ export const SearchCollectionDataGet = async (
     collection(db, docId),
     where(collectionId, "==", seachId),
     orderBy("date", "desc"),
+    limit(maxValue)
+  );
+  const querySnapshot = await getDocs(q);
+  return new Promise<DocumentData[]>((resolve, reject) => {
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    resolve(data);
+  });
+};
+
+export const TodayOrderGet = async (
+  docId: string,
+  maxValue: number,
+  today: Date,
+) => {
+  let data: DocumentData[] = [];
+  // let yesterday = new Date(today.getTime() - 1000 * 60 * 60 * 24);
+  let yesterday = today.setDate(today.getDate() - 1);
+  const q = query(
+    collection(db, docId),
+    orderBy("orderCount", "desc"),
+    startAt(today),
+    endAt(yesterday),
     limit(maxValue)
   );
   const querySnapshot = await getDocs(q);
