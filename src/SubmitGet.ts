@@ -87,13 +87,11 @@ export const TodayOrderGet = async (
   today: Date,
 ) => {
   let data: DocumentData[] = [];
-  // let yesterday = new Date(today.getTime() - 1000 * 60 * 60 * 24);
-  let yesterday = today.setDate(today.getDate() - 1);
+  let yesterday = new Date(today.getTime() - 1000 * 60 * 60 * 24);
   const q = query(
     collection(db, docId),
-    orderBy("orderCount", "desc"),
-    startAt(today),
-    endAt(yesterday),
+    orderBy("date", "desc"),
+    where("date", ">", yesterday),
     limit(maxValue)
   );
   const querySnapshot = await getDocs(q);

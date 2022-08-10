@@ -28,7 +28,9 @@ const Admin = () => {
                 return (
                     <div key={i}>
                         <div>{e.date.toDate().toLocaleString()}</div>
+                        <div>{e.isStatus}</div>
                         <div>{e.id}</div>
+                        <div>{e.user.studentName}</div>
                     </div>
                 );
             }
