@@ -8,7 +8,6 @@ const Admin = () => {
   const [resetOrder, setResetOrder] = useState<string[]>([]);
   const [OrderTitle, setOrderTitle] = useState<string[]>([]);
   const [OrderCount, setOrderCount] = useState<number[]>([]);
-  const [isGetToDayOrder, setIsGetToDayOrder] = useState<boolean>(false);
   useEffect(() => {
     const today = new Date(Date.now());
     // const today:Date = `${year}/${month}/${day}`;
@@ -25,8 +24,8 @@ const Admin = () => {
   useEffect(() => {
     toDayOrder.map((order) => {
       //   setResetOrder((resetOrder) => [...resetOrder, order.id]);
-      order.menu.map((menu: DocumentData) => {
-        setResetOrder((resetOrder) => [...resetOrder, menu.title]);
+      return order.menu.map((menu: DocumentData) => {
+        return setResetOrder((resetOrder) => [...resetOrder, menu.title]);
       });
     });
   }, [toDayOrder]);
