@@ -47,10 +47,14 @@ const Router = () => {
                       ""
             window.location.href = url || "/";
           }} />
-          <ResponsiveAppBar
-            photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
-              setIsMenu(!isMenu);
-            }} />
+          <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
+            <Grid item xs={12} md={4} >
+              <ResponsiveAppBar
+                photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
+                  setIsMenu(!isMenu);
+                }} />
+            </Grid>
+          </Grid>
           {isLogin && (
             <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
               <Grid item xs={12} md={4}>
@@ -86,9 +90,9 @@ const Router = () => {
             </Grid>
           )}
         </div>
-      </BrowserRouter>
+      </BrowserRouter >
       <Footer />
-    </div>
+    </div >
   );
 };
 
