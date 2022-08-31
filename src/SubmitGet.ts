@@ -81,6 +81,28 @@ export const SearchCollectionDataGet = async (
   });
 };
 
+export const TodayOrderGet = async (
+  docId: string,
+  maxValue: number,
+  today: Date,
+) => {
+  let data: DocumentData[] = [];
+  let yesterday = new Date(today.getTime() - 1000 * 60 * 60 * 24);
+  const q = query(
+    collection(db, docId),
+    orderBy("date", "desc"),
+    where("date", ">", yesterday),
+    limit(maxValue)
+  );
+  const querySnapshot = await getDocs(q);
+  return new Promise<DocumentData[]>((resolve, reject) => {
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    resolve(data);
+  });
+};
+
 export const GetSpecificData: (
   docId: string,
   collectionId: string

@@ -11,10 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-// import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 
-// const pages = ['メニュー'];
 const settings = ["ログアウト"];
 const toLink = ["/logout"];
 
@@ -24,42 +22,15 @@ interface ResponsiveAppBarProps {
     onClick: () => void;
 }
 const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
-    // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    // const handleCloseNavMenu = () => {
-
-    //     setAnchorElNav(null);
-    // };
-
-
-
     return (
         <AppBar position="static" style={{ backgroundColor: "#006C9B" }} elevation={0}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters style={{ maxWidth: "800px", margin: "0 auto" }}>
-                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            textAlign: 'center',
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        RunTicket
-                    </Typography> */}
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -72,49 +43,13 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                         >
                             <MenuIcon style={{ color: "#ffffff" }} />
                         </IconButton>
-                        {/* <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorElNav}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
-                            sx={{
-                                display: { xs: 'block', md: 'none' },
-                            }}
-                        >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={() => {
-                                    window.location.href = "/";
-                                }}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu> */}
                     </Box>
-                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
                     <Button onClick={() => {
                         window.location.href = "/";
                     }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "200%", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
                         <img src="https://firebasestorage.googleapis.com/v0/b/mobile-order-4d383.appspot.com/o/runticket.png?alt=media&token=f27edb3e-3806-43bf-b1fb-2179dcc23f07" alt="RunTicket" style={{ width: "100%" }} />
                     </Button>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {/* {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                {page}
-                            </Button>
-                        ))} */}
                         <IconButton
                             size="large"
                             aria-label="account of current user"

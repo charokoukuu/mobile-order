@@ -1,6 +1,7 @@
-import { Badge, BadgeProps, Button, IconButton, styled } from "@mui/material"
+import { Badge, BadgeProps, Button, Grid, IconButton, Paper, styled } from "@mui/material"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { isIOS } from "../SubmitGet";
+
 interface CartProps {
     onClick: () => void
     totalOrderItemsCount: number,
@@ -12,26 +13,29 @@ export const Cart = (props: CartProps) => {
             right: 3,
             top: 8,
             border: `2px solid ${theme.palette.background.paper}`,
-            padding: '0 4px',
         },
     }));
     return (
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} style={{boxShadow: "0px -3px 6px #00000029"}}>
         <div onClick={() => {
             props.onClick()
-        }} style={{ width: "100vw", position: "fixed", bottom: "0", left: "0", backgroundColor: "#FFFFFF", boxShadow: "0px -3px 6px #00000029", margin: "auto 0", padding: "4vw 0" }}>
-            <div style={{ padding: isIOS ? "7vw 0" : "5vw 0", position: "relative" }}>
-                <div style={{ margin: "auto 3vw", textAlign: "left", color: "#707070", position: "absolute", bottom: isIOS ? "70%" : "50%", left: 0, transform: "translate(0,50%)" }}>
+        }} style={{maxWidth: "900px", margin:"auto", paddingBottom: isIOS ? "1rem" : "0"}}>
+            <Grid container spacing={2}>
+                <Grid item xs={3} style={{margin:"auto",textAlign:"start"}} >
                     <IconButton aria-label="cart">
                         <StyledBadge badgeContent={props.totalOrderItemsCount} color={"primary"}>
-                            <ShoppingCartIcon sx={{ fontSize: "11vw" }} />
+                            <ShoppingCartIcon sx={{ fontSize: "clamp(1rem, 10vw, 4rem)"  }} />
                         </StyledBadge>
                     </IconButton>
-                </div>
-                <div className="japanese_B themeFontColor" style={{ position: "absolute", bottom: isIOS ? "70%" : "50%", right: props.totalPrice.toString().length === 3 ? "45%" : "40%", transform: "translate(0%,50%)", fontSize: "11vw" }}>¥{props.totalPrice}</div>
-                <div style={{ textAlign: "right", margin: "auto 3vw", position: "absolute", bottom: isIOS ? "70%" : "50%", right: 0, transform: "translate(0%,50%)" }}><Button style={{ backgroundColor: "#006C9B", height: "11vw", borderRadius: "2vw" }} variant="contained" onClick={() => {
-                    props.onClick()
-                }}>カートを見る</Button></div>
-            </div>
+                </Grid>
+                <Grid item xs={3} className="japanese_B themeFontColor" style={{margin:"auto",textAlign:"end", right: props.totalPrice.toString().length === 3 ? "45%" : "40%", fontSize: "clamp(1rem, 10vw, 4rem)" }}>¥{props.totalPrice}</Grid>
+                <Grid item xs={5} style={{margin: "auto",textAlign:"end"}}>
+                    <Button style={{ backgroundColor: "#006C9B", fontSize: "clamp(0.5rem, 4vw, 2rem)", borderRadius: "8px" }} variant="contained" onClick={() => {props.onClick()}}>
+                        カートを見る
+                    </Button>
+                </Grid>
+            </Grid>
         </div >
+        </Paper>
     )
 }

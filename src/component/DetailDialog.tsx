@@ -2,7 +2,6 @@ import { Button, Dialog, Grid } from "@mui/material";
 import { MenuData } from "../Interface";
 import "../App.css"
 import { createContext, useContext, useEffect, useState } from "react";
-import React from "react";
 const menuData = createContext<any>(null);
 let baseMenuData: any;
 interface DetailDialogProps {
@@ -31,19 +30,20 @@ export const DetailDialog = (props: DetailDialogProps) => {
                         style: {
                             backgroundColor: '#EFEFEF',
                             borderRadius: '13px',
+                            width: '900px',
                         },
                     }}
                 >
-                    <div style={{ width: "80vw" }}>
+                    <div>
                         <MaterialMenuCard />
                         {props.menu?.isBigSize && <MaterialSizeSelectCard />}
-                        <div className="center themeFontColor" style={{ margin: "1vw 0", fontSize: "15vw" }}>{value.menu?.price}<span style={{ fontSize: "7vw" }}> 円</span></div>
-                        <div className="center">  <Button style={{ width: "70vw", backgroundColor: "#006C9B", height: "10vw", borderRadius: "11px" }} variant="contained" onClick={() => {
+                        <div className="center themeFontColor" style={{ margin: "1% 0", fontSize: "3.5rem" }}>{value.menu?.price}<span style={{ fontSize: "1.5rem" }}> 円</span></div>
+                        <div className="center">  <Button style={{ width: "90%", backgroundColor: "#006C9B", height: "5vh", borderRadius: "11px" }} variant="contained" onClick={() => {
                             props.onNext(value.menu);
                         }} >
                             カートに追加
                         </Button></div>
-                        <div className="center" style={{ textDecoration: "underline #006C9B", margin: "2vw 0" }}><Button style={{ color: "#006C9B" }} onClick={props.onPrev}>閉じる</Button></div>
+                        <div className="center" style={{ textDecoration: "underline #006C9B", margin: "2% 0" }}><Button style={{ color: "#006C9B" }} onClick={props.onPrev}>閉じる</Button></div>
                     </div>
                 </Dialog>
 
@@ -57,11 +57,11 @@ const MaterialMenuCard = () => {
     const { menu } = useContext(menuData);
 
     return (
-        <div style={{ backgroundColor: "#ffffff", margin: "3vw 3vw", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
-            <div style={{ textAlign: "center", margin: "2vw 0", fontSize: "7vw" }}>
-                <div className="japanese_R" style={{ padding: "3vw 0" }}>{menu?.title}</div>
-                <div><img style={{ width: "50vw", borderRadius: "13px", margin: "1vw 0" }} src={menu?.image || ""} alt="menu" /></div>
-                <div className="japanese_L" style={{ textAlign: "center", fontSize: "3vw", width: "50vw", margin: "auto", paddingBottom: "7vw" }}>{menu?.description}</div>
+        <div style={{ backgroundColor: "#ffffff", margin: "3% 3%", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
+            <div style={{ textAlign: "center", margin: "2% 0", fontSize: "2rem" }}>
+                <div className="japanese_R" style={{ padding: "5% 0", fontSize: "30px" }}>{menu?.title}</div>
+                <div><img style={{ width: "300px", borderRadius: "10px", margin: "1% 0" }} src={menu?.image || ""} alt="menu" /></div>
+                <div className="japanese_L" style={{ textAlign: "center", fontSize: "15px", width: "80%", margin: "auto", paddingBottom: "7%" }}>{menu?.description}</div>
 
             </div>
         </div>
@@ -71,9 +71,9 @@ const MaterialSizeSelectCard = () => {
     const { menu } = useContext(menuData);
 
     return (
-        <div style={{ backgroundColor: "#ffffff", margin: "0vw 3vw", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
-            <div style={{ textAlign: "center", margin: "0vw 0", fontSize: "7vw" }}>
-                <div style={{ padding: "5vw 0" }}>
+        <div style={{ backgroundColor: "#ffffff", margin: "0% 3%", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
+            <div style={{ textAlign: "center", margin: "0% 0", fontSize: "2rem" }}>
+                <div style={{ padding: "5% 0" }}>
                     {menu !== undefined && <SelectedCard price={menu.price} />}
                 </div>
             </div>
@@ -92,12 +92,13 @@ const SelectedCard = (props: { price: number }) => {
     }, [isChecked, setMenu])
     const defaultButton = {
         background: "#006C9B 0% 0% no-repeat padding-box",
-        width: "31vw",
-        height: "14vw",
         boxShadow: "inset 5px 5px 5px #00000029",
         color: "#ffffff",
+        width: "135px",
+        height: "57px",
         borderRadius: "17px",
-        border: "none"
+        border: "none",
+        fontSize: "1rem",
     }
     const selectedButton = {
         ...defaultButton,
@@ -111,15 +112,15 @@ const SelectedCard = (props: { price: number }) => {
             <Grid item xs={6}>
                 <Button onClick={() => {
                     setIsChecked(false)
-                }} style={!isChecked ? { ...defaultButton, marginLeft: "3vw" } : { ...selectedButton, marginLeft: "3vw" }} variant="contained">
-                    <div className="japanese_R" style={{ fontSize: "5vw", color: "#ffffff" }}>並</div>
+                }} style={!isChecked ? { ...defaultButton } : { ...selectedButton }} variant="contained">
+                    <div className="japanese_R" style={{ color: "#ffffff" }}>並</div>
                 </Button>
             </Grid>
             <Grid item xs={6}>
                 <Button onClick={() => {
                     setIsChecked(true)
-                }} style={isChecked ? { ...defaultButton, marginRight: "3vw" } : { ...selectedButton, marginRight: "3vw" }} variant="contained">
-                    <div className="japanese_R" style={{ fontSize: "4vw", color: "#ffffff" }}>大 (+{baseMenuData.bigSizeDiffPrice}円)</div>
+                }} style={isChecked ? { ...defaultButton } : { ...selectedButton }} variant="contained">
+                    <div className="japanese_R" style={{ color: "#ffffff" }}>大 (+{baseMenuData.bigSizeDiffPrice}円)</div>
                 </Button>
             </Grid>
         </Grid>
