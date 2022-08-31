@@ -11,56 +11,38 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-// import AdbIcon from '@mui/icons-material/Adb';
-import { Link } from 'react-router-dom';
+import AdbIcon from '@mui/icons-material/Adb';
 
-// const pages = ['メニュー'];
+const pages = ['メニュー', '注文履歴', 'お問い合わせ'];
 const settings = ["ログアウト"];
-const toLink = ["/logout"];
-
 
 interface ResponsiveAppBarProps {
     photoURL: string;
     onClick: () => void;
 }
 const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
-    // const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElNav(event.currentTarget);
+    };
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    // const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
 
-    //     setAnchorElNav(null);
-    // };
-
-
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     return (
-        <AppBar position="static" style={{ backgroundColor: "#006C9B" }} elevation={0}>
+        <AppBar position="static" style={{ backgroundColor: "#006C9B" }}>
             <Container maxWidth="xl">
-                <Toolbar disableGutters style={{ maxWidth: "800px", margin: "0 auto" }}>
-                    {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            textAlign: 'center',
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        RunTicket
-                    </Typography> */}
-
+                <Toolbar disableGutters>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -68,11 +50,11 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={props.onClick}
-                            color="default"
+                            color="inherit"
                         >
-                            <MenuIcon style={{ color: "#ffffff" }} />
+                            <MenuIcon />
                         </IconButton>
-                        {/* <Menu
+                        <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
                             anchorOrigin={{
@@ -91,22 +73,19 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={() => {
-                                    window.location.href = "/";
-                                }}>
+                                <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
-                        </Menu> */}
+                        </Menu>
                     </Box>
-                    {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
                     <Button onClick={() => {
                         window.location.href = "/";
-                    }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "200%", position: "absolute", left: "50%", transform: "translate(-50%,0)" }}>
+                    }} style={{ color: "#ffffff", textTransform: 'none', fontSize: "100px", position: "absolute", left: "50%", transform: "translate(-50%,0)", width: "200px" }}>
                         <img src="https://firebasestorage.googleapis.com/v0/b/mobile-order-4d383.appspot.com/o/runticket.png?alt=media&token=f27edb3e-3806-43bf-b1fb-2179dcc23f07" alt="RunTicket" style={{ width: "100%" }} />
                     </Button>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {/* {pages.map((page) => (
+                        {pages.map((page) => (
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
@@ -114,17 +93,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                             >
                                 {page}
                             </Button>
-                        ))} */}
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={props.onClick}
-                            color="default"
-                        >
-                            <MenuIcon style={{ color: "#ffffff" }} />
-                        </IconButton>
+                        ))}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
@@ -147,14 +116,10 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={() => {
-                                setAnchorElUser(null);
-                            }}
+                            onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting, index: number) => (
-                                <MenuItem key={setting} component={Link} to={toLink[index]} onClick={() => {
-                                    setAnchorElUser(null);
-                                }}>
+                            {settings.map((setting) => (
+                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
