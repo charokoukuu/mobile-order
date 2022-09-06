@@ -61,7 +61,7 @@ export const Order = (props: OrderProps) => {
         </AppBar>
         <Box style={{ maxWidth: "900px", margin: "0 auto" }} />
         <div>
-          <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4", justifyContent: "center" }}>
+          <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4", justifyContent: props.orderData.length === 1 ? "center" : "left" }}>
             <Box />
             {props.orderData.map((menu, index) => {
               return (
