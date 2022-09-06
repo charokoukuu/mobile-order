@@ -81,7 +81,7 @@ export const Menu = () => {
                     setDetailDialogOpen(false);
                 }} onPrev={() => {
                     setDetailDialogOpen(false);
-                }} />
+                }} isAddCart={true} />
                 {orderData.length !== 0 && <Cart onClick={() => {
                     setOrderDialog(true);
                 }} totalOrderItemsCount={orderData.length} totalPrice={totalPrice} />

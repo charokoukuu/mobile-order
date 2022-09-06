@@ -1,38 +1,35 @@
 import { Card, CardActionArea, CardMedia } from "@mui/material";
 import { DocumentData } from "firebase/firestore";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 interface FoodCardProps {
     menu: DocumentData;
     onClick: () => void;
+    onDelete?: () => void;
     deleteButton: boolean;
 }
 export const FoodCard = (props: FoodCardProps) => {
     return (
         <div >
             <Card
-                onClick={() => {
-                    props.menu.isSale &&
-                        props.onClick();
-                }}
                 style={{
+                    position: "relative",
                     borderRadius: "13px",
                     width: "180px",
-                    height: "180px",
+                    height: "180px"
                 }}>
 
-                <CardActionArea>
+                <CardActionArea onClick={() => {
+                    props.menu.isSale &&
+                        props.onClick();
+                }}>
                     <CardMedia
                         component="img"
                         image={props.menu.image}
                         alt="menu image"
-                        style={{ position: "relative", height: "180px", filter: props.menu.isSale ? "" : "brightness(35%)" }}
+                        style={{ height: "180px", filter: props.menu.isSale ? "" : "brightness(35%)" }}
                     />
-                    {props.deleteButton && (
-                        <div style={{ display: "flex", position: "absolute", right: "5%", top: "5%", zIndex: "1", backgroundColor: 'rgba(255,255,255,0.9)', borderRadius: "100%" }}>
-                            <HighlightOffIcon style={{ color: "black", fontSize: "clamp(1.5rem, 4.2vw, 2rem)" }} />
-                        </div>
-                    )}
+
                     {props.menu.isSale === false &&
                         <div
                             className="japanese_B"
@@ -60,6 +57,11 @@ export const FoodCard = (props: FoodCardProps) => {
                         ¥{props.menu.price}
                     </div>
                 </CardActionArea>
+                {props.deleteButton && (
+                    <div style={{ display: "flex", position: "absolute", right: "5%", top: "5%", zIndex: "1", backgroundColor: 'rgba(255,255,255,1)', borderRadius: "100%" }} onClick={props.onDelete}>
+                        <CancelIcon style={{ color: "rgba(0,0,0,0.8)", fontSize: "25px" }} />
+                    </div>
+                )}
             </Card>
         </div>
     );
