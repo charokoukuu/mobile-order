@@ -8,7 +8,9 @@ interface DetailDialogProps {
     open: boolean;
     menu: MenuData | undefined;
     topping?: MenuData[];
-    onNext: (menu: MenuData | undefined) => void;
+    isAddCart: boolean;
+    onNext?: (menu: MenuData | undefined) => void;
+    onDelete?: () => void;
     onPrev: () => void;
 }
 
@@ -36,13 +38,18 @@ export const DetailDialog = (props: DetailDialogProps) => {
                 >
                     <div>
                         <MaterialMenuCard />
-                        {props.menu?.isBigSize && <MaterialSizeSelectCard />}
+                        {props.menu?.isBigSize && props.isAddCart && <MaterialSizeSelectCard />}
                         <div className="center themeFontColor" style={{ margin: "1% 0", fontSize: "3.5rem" }}>{value.menu?.price}<span style={{ fontSize: "1.5rem" }}> 円</span></div>
-                        <div className="center">  <Button style={{ width: "90%", backgroundColor: "#006C9B", height: "5vh", borderRadius: "11px" }} variant="contained" onClick={() => {
-                            props.onNext(value.menu);
+                        {props.isAddCart && <div className="center" >  <Button style={{ width: "90%", backgroundColor: "#006C9B", height: "5vh", borderRadius: "11px" }} variant="contained" onClick={() => {
+                            props.onNext && props.onNext(value.menu);
                         }} >
                             カートに追加
-                        </Button></div>
+                        </Button></div>}
+                        {!props.isAddCart && <div className="center" >  <Button style={{ width: "90%", backgroundColor: "#DB1812", height: "5vh", borderRadius: "11px" }} variant="contained" onClick={() => {
+                            props.onDelete && props.onDelete();
+                        }} >
+                            カートから削除
+                        </Button></div>}
                         <div className="center" style={{ textDecoration: "underline #006C9B", margin: "2% 0" }}><Button style={{ color: "#006C9B" }} onClick={props.onPrev}>閉じる</Button></div>
                     </div>
                 </Dialog>

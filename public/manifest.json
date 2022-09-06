@@ -18,7 +18,7 @@
       "name": "注文履歴",
       "short_name": "history",
       "description": "注文履歴を見る",
-      "url": "/history",
+      "url": "history",
       "icons": [
         {
           "src": "./shortcuts/ranking-256.png",
@@ -76,8 +76,8 @@
       "url": "/%s"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff"
 }

@@ -12,6 +12,7 @@ import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
 import ConfirmDialog from "./ConfirmDialog";
+import { DetailDialog } from "./DetailDialog";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,6 +36,7 @@ export const Order = (props: OrderProps) => {
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [isDelete, setIsDelete] = useState<boolean>(false);
   const [choosedMenu, setChoosedMenu] = useState<MenuData>();
+  const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   return (
     <div>
       <Dialog
@@ -57,17 +59,26 @@ export const Order = (props: OrderProps) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Box style={{ maxWidth:"900px",margin:"0 auto" }} />
+        <Box style={{ maxWidth: "900px", margin: "0 auto" }} />
         <div>
-          <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4" }}>
-            <Box style={{ marginLeft: window.innerWidth / 4 + "px" }} />
+          <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4", justifyContent: props.orderData.length === 1 ? "center" : "left" }}>
+            <Box />
             {props.orderData.map((menu, index) => {
               return (
                 <div key={index} style={{ margin: "0 4%" }}>
                   <FoodCard menu={menu} deleteButton={true} onClick={function (): void {
                     setChoosedMenu(menu);
+                    setDetailDialogOpen(true);
+                  }} onDelete={function (): void {
+                    setChoosedMenu(menu);
                     setIsDelete(true);
                   }} />
+                  <DetailDialog open={detailDialogOpen} menu={choosedMenu} onDelete={() => {
+                    setDetailDialogOpen(false);
+                    choosedMenu && props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
+                  }} onPrev={() => {
+                    setDetailDialogOpen(false);
+                  }} isAddCart={false} />
                 </div>
               )
             })
