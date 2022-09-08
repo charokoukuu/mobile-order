@@ -213,6 +213,7 @@ export const StripeGetStatus = async (checkoutId: string) => {
       await updateDoc(washingtonRef, {
         isStatus: "決済完了",
       });
+      await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/faild`;
@@ -235,6 +236,7 @@ export const PayPayGetStatus = async (orderId: string) => {
       await updateDoc(washingtonRef, {
         isStatus: "決済完了",
       });
+      await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/faild`;
@@ -242,5 +244,24 @@ export const PayPayGetStatus = async (orderId: string) => {
   } catch (error) {
     console.log(error);
   }
+
+}
+
+export const AssignOrderNumber = async (orderId: string) => {
+  return new Promise(async (resolve) => {
+    const currentNumber = await GetSpecificData("counter", "oneDateAllOrderCount");
+    console.log(currentNumber);
+    const orderNumber = currentNumber?.count + 1;
+    console.log(orderNumber);
+    const washingtonRef = doc(db, "counter", "oneDateAllOrderCount");
+    await updateDoc(washingtonRef, {
+      count: orderNumber,
+    });
+    const washingtonRef2 = doc(db, "order", orderId);
+    await updateDoc(washingtonRef2, {
+      orderNumber: orderNumber,
+    });
+    resolve(orderNumber);
+  });
 
 }
