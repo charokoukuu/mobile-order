@@ -1,4 +1,4 @@
-import { TodayOrderGet } from "./SubmitGet";
+import { TodayAllOrderGet } from "./SubmitGet";
 import { useEffect, useState } from "react";
 import { DocumentData } from "firebase/firestore";
 import TableComp from "./component/TableComp";
@@ -9,11 +9,9 @@ const Admin = () => {
   const [OrderTitle, setOrderTitle] = useState<string[]>([]);
   const [OrderCount, setOrderCount] = useState<number[]>([]);
   useEffect(() => {
-    const today = new Date(Date.now());
     // const today:Date = `${year}/${month}/${day}`;
-    console.log(today);
     (async () => {
-      let order = await TodayOrderGet("order", 10, today);
+      let order = await TodayAllOrderGet("order", 10);
       setToDayOrder(order);
       console.log(order);
       //   setIsGetToDayOrder(true);
