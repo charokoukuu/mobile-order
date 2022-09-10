@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { Order } from "./component/Order";
 import { DetailDialog } from "./component/DetailDialog";
 import { MenuData } from "./Interface";
-import { GetAllData, OrderSubmit, Payment } from "./SubmitGet";
+import { GetAllData, OrderSubmit, Payment, isTodayUserOrderGet } from "./SubmitGet";
 import { Cart } from "./component/Cart";
 import { LoadingAnimation } from "./component/LoadingAnimation";
 import { auth } from "./Firebase";
 import SwipeTabs from "./component/SwipeTabs";
 import IntegrationNotistack from "./component/IntegrationNotistack";
+
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
@@ -23,11 +24,13 @@ export const Menu = () => {
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [orderDialog, setOrderDialog] = useState<boolean>(false);
     const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
+    const [isTodayNotReceived, setIsTodayNotReceived] = useState<boolean>(false);
     useEffect(() => {
         // window.location.href = "/register";
         (async () => {
             try {
                 setMenu(await GetAllData("menu"));
+                setIsTodayNotReceived(await isTodayUserOrderGet(auth.currentUser?.uid || ""));
                 setIsGetMenu(true);
             } catch (e) {
                 alert("メニューの取得に失敗しました。申し訳ございませんが、再度お試しください。");
@@ -45,9 +48,11 @@ export const Menu = () => {
     return (
         <div style={{ position: "relative" }}>
             {isGetMenu ? <div>
-                <IntegrationNotistack message="未受け取りの注文があります" variant="warning" onClick={() => {
-                    window.location.href = "/history";
-                }} />
+                {
+                    isTodayNotReceived && <IntegrationNotistack message="未受け取りの注文があります" variant="warning" onClick={() => {
+                        window.location.href = "/history";
+                    }} />
+                }
                 <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
 
                 <div style={{ marginBottom: "13vw" }}>

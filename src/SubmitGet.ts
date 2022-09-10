@@ -13,7 +13,9 @@ export const RandomID = () => {
     .map((n) => S[n % S.length])
     .join("");
 };
-
+export const Yesterday = () => {
+  return new Date(new Date(Date.now()).getTime() - 1000 * 60 * 60 * 24);
+};
 export const CorrectEmail = (email: string) => {
   const regex = /([a-zA-Z0-9._-]+@oit.ac.jp$)|(^runticket21@gmail.com$)/;
   return regex.test(email);
@@ -81,17 +83,16 @@ export const SearchCollectionDataGet = async (
   });
 };
 
-export const TodayOrderGet = async (
+//当日の全ユーザのオーダーを取得
+export const TodayAllOrderGet = async (
   docId: string,
   maxValue: number,
-  today: Date,
 ) => {
   let data: DocumentData[] = [];
-  let yesterday = new Date(today.getTime() - 1000 * 60 * 60 * 24);
   const q = query(
     collection(db, docId),
     orderBy("date", "desc"),
-    where("date", ">", yesterday),
+    where("date", ">", Yesterday()),
     limit(maxValue)
   );
   const querySnapshot = await getDocs(q);
@@ -103,6 +104,24 @@ export const TodayOrderGet = async (
   });
 };
 
+export const isTodayUserOrderGet = async (userId: string) => {
+  return new Promise<boolean>(async (resolve, reject) => {
+    let isData = false;
+    const q = query(
+      collection(db, "order"),
+      orderBy("date", "desc"),
+      where("date", ">", Yesterday()),
+      where("user.uid", "==", userId),
+      where("isStatus", "==", "決済完了"),
+      limit(10)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      isData = true;
+    });
+    resolve(isData);
+  });
+};
 export const GetSpecificData: (
   docId: string,
   collectionId: string
@@ -121,7 +140,6 @@ export const GetSpecificData: (
       resolve(docSnap.data());
     });
   };
-
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
   return new Promise<any>((resolve) => {
