@@ -48,7 +48,7 @@ const Router = () => {
             window.location.href = url || "/";
           }} />
           <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
-            <Grid item xs={12} md={4} >
+            <Grid item xs={12} md={5} >
               <ResponsiveAppBar
                 photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
                   setIsMenu(!isMenu);
@@ -57,7 +57,7 @@ const Router = () => {
           </Grid>
           {isLogin && (
             <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={5}>
                 <Routes>
                   <Route path="/" element={<Menu />} />
                   <Route path="/register" element={<Register />} />
