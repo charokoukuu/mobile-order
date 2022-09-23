@@ -56,7 +56,6 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     payment: props.payment,
   };
 
-  // console.log(props.menu);
   await setDoc(doc(db, "order", id), orderData);
   return id;
 };

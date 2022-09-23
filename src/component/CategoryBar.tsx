@@ -1,6 +1,6 @@
 import { Button, Grid } from "@mui/material";
 import { useState } from "react";
-import { CategoryProp } from "../Menu";
+import { CategoryProp } from "../views/Menu";
 import "../App.css";
 interface CategoryBarProps {
   category: CategoryProp[];

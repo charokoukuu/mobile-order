@@ -2,8 +2,8 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import QrCodeMock from "../img/QRcode-mock.svg";
-import PhoneMock from "../img/Phone-mock.svg";
+import { QrCodeMock } from "./icons/QrCodeMock";
+import { PhoneMock } from "./icons/PhoneMock";
 
 export default function Slide() {
   // style
@@ -30,21 +30,21 @@ export default function Slide() {
   const Slides = [
     [
       "チケットの受け取りには、画面に表示されたQRコードを利用します",
-      QrCodeMock,
+      <QrCodeMock style={SlideStyle} />,
     ],
-    ["21階に設置したQRコードをリーダーにかざしてください", PhoneMock],
+    ["21階に設置したQRコードをリーダーにかざしてください", <PhoneMock style={SlideStyle} />],
   ];
 
   return (
     <Slider {...settings}>
-      {Slides.map((slide, i) => {
+      {Slides.map((slide, index) => {
         return (
-          <div key={i}>
-            <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0]}</p>
-            <img style={SlideStyle} src={slide[1]} alt="slide" />
+          <div key={index}>
+            <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0] as string}</p>
+            {slide[1]}
           </div>
         );
       })}
-    </Slider>
+    </Slider >
   );
 }
