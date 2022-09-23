@@ -14,14 +14,14 @@ const Footer = () => {
     <footer>
       <p
         style={{
-            textAlign: "center",
+          textAlign: "center",
         }}
         onClick={() => {
           countTopButton(count);
         }}
       >
-        © 2020-2021 
-        <br/>
+        © 2020-2021
+        <br />
         <img
           style={{
             width: "20%",

@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import { MenuData } from "../types";
+import { MenuData } from "../api/types";
 import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";

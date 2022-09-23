@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { MenuData } from "./types";
+import { MenuData } from "../api/types";
 import { Link, useParams } from "react-router-dom";
-import { GetSpecificData } from "./api/SubmitGet";
+import { GetSpecificData } from "../api/SubmitGet";
 import { DocumentData, onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card } from "@mui/material";
-import { LoadingAnimation } from "./component/LoadingAnimation";
-import Slide from "./component/Slide";
-import { auth } from "./Firebase";
-import IntegrationNotistack from "./component/IntegrationNotistack";
-import { db } from "./Firebase";
+import { LoadingAnimation } from "../component/LoadingAnimation";
+import Slide from "../component/Slide";
+import { auth } from "../api/Firebase";
+import IntegrationNotistack from "../component/IntegrationNotistack";
+import { db } from "../api/Firebase";
 
 let isChecked = false;
 export const OrderCompleted = () => {

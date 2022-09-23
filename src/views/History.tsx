@@ -1,11 +1,11 @@
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { LoadingAnimation } from "./component/LoadingAnimation";
-import { SearchCollectionDataGet } from "./api/SubmitGet";
+import { LoadingAnimation } from "../component/LoadingAnimation";
+import { SearchCollectionDataGet } from "../api/SubmitGet";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { auth } from "./Firebase";
+import { auth } from "../api/Firebase";
 import { Grid } from "@mui/material";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 // import { OrderCompleted } from "./OrderCompleted";

@@ -1,6 +1,6 @@
-import { MenuData, OrderData, UserData } from "../types";
+import { MenuData, OrderData, UserData } from "./types";
 import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy, updateDoc } from "firebase/firestore";
-import { auth, db, functions } from "../Firebase";
+import { auth, db, functions } from "../api/Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";

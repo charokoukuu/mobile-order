@@ -1,7 +1,7 @@
-import { TodayAllOrderGet } from "./api/SubmitGet";
+import { TodayAllOrderGet } from "../api/SubmitGet";
 import { useEffect, useState } from "react";
 import { DocumentData } from "firebase/firestore";
-import TableComp from "./component/TableComp";
+import TableComp from "../component/TableComp";
 
 const Admin = () => {
   const [toDayOrder, setToDayOrder] = useState<DocumentData[]>([]);

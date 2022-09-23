@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { httpsCallable } from "firebase/functions";
-import IntegrationNotistack from "./component/IntegrationNotistack";
-import { functions } from "./Firebase";
+import IntegrationNotistack from "../../component/IntegrationNotistack";
+import { functions } from "../../api/Firebase";
 
 export const TestData = () => {
     const Pay = () => {
