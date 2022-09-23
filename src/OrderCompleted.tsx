@@ -10,6 +10,7 @@ import Slide from "./component/Slide";
 import { auth } from "./Firebase";
 import IntegrationNotistack from "./component/IntegrationNotistack";
 import { db } from "./Firebase";
+
 let isChecked = false;
 export const OrderCompleted = () => {
   const [orderData, setOrderData] = useState<DocumentData>();
@@ -143,19 +144,19 @@ export const OrderCompleted = () => {
                   )}
                   {params.status === "faild" && (
                     <>
-                    <h2 style={{ textAlign: "center" }}>
-                      決済情報が見つかりませんでした。<br />
-                      以下に表示されたコードを問い合わせフォームに記載してください。
-                    </h2>
-                    {/* ここが改行されなくて困る */}
-                    <p >{orderData?.checkoutId}</p> 
-                    <div style={{textAlign:"center"}} >
-                    <Button variant="contained" 
-                      href="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" 
-                    >
-                      お問い合わせフォームへ
-                    </Button>
-                    </div>
+                      <h2 style={{ textAlign: "center" }}>
+                        決済情報が見つかりませんでした。<br />
+                        以下に表示されたコードを問い合わせフォームに記載してください。
+                      </h2>
+                      {/* ここが改行されなくて困る */}
+                      <p >{orderData?.checkoutId}</p>
+                      <div style={{ textAlign: "center" }} >
+                        <Button variant="contained"
+                          href="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform"
+                        >
+                          お問い合わせフォームへ
+                        </Button>
+                      </div>
                     </>
                   )}
                   {orderData?.isStatus === "決済完了" && (
