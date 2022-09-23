@@ -21,10 +21,8 @@ export const OrderCompleted = () => {
     (async () => {
       params.id && setOrderData(await GetSpecificData("order", params.id));
       setIsGetOrderData(true);
-      // console.log(params.id);
     })();
     onSnapshot(doc(db, "order", params.id || ""), (doc) => {
-      console.log("Current data: ", doc.data());
       if (isChecked) {
         doc.data()?.isStatus === "注文完了" && setOrderData(doc.data());
       }

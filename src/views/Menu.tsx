@@ -37,7 +37,6 @@ export const Menu = () => {
                 window.location.href = "/";
             }
         })();
-        console.log(navigator.userAgent);
 
     }, []);
 

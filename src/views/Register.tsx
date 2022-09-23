@@ -28,8 +28,6 @@ export const Register = () => {
       if (user) {
         setUserEmail(user.email || "");
         setUser(user);
-        // console.log(user);
-        // setIsLogin(true);
       } else {
       }
     });
@@ -40,11 +38,9 @@ export const Register = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        // console.log(user.email);
         setUserEmail(user.email || "");
         setIsLogin(true);
         window.location.reload();
-        // ...
       })
       .catch((error) => {
         console.log(error);

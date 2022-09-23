@@ -10,7 +10,7 @@ import ResponsiveAppBar from "../component/ResponsiveAppBar";
 import { User } from "firebase/auth";
 import { GetUserInfo } from "../api/SubmitGet";
 import { useEffect } from "react";
-import { TestData } from "../views/test/TestData";
+import { TestData } from "../test/TestData";
 import { Redirect } from "../component/Redirect";
 import DrawerLeft from "../component/DrawerLeft";
 import { Terms } from "../views/Terms";

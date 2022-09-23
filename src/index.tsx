@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './views/styles/index.css';
 import reportWebVitals from './reportWebVitals';
 import Router from './router';
 import * as serviceWorkerRegistration from './views/serviceWorkerRegistration';

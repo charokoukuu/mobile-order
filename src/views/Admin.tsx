@@ -9,12 +9,9 @@ const Admin = () => {
   const [OrderTitle, setOrderTitle] = useState<string[]>([]);
   const [OrderCount, setOrderCount] = useState<number[]>([]);
   useEffect(() => {
-    // const today:Date = `${year}/${month}/${day}`;
     (async () => {
       let order = await TodayAllOrderGet("order", 10);
       setToDayOrder(order);
-      console.log(order);
-      //   setIsGetToDayOrder(true);
     })();
   }, []);
 
@@ -30,12 +27,10 @@ const Admin = () => {
 
   // リスト内の重複をカウント
   useEffect(() => {
-    console.log(resetOrder);
     const counter: any = {};
     resetOrder.forEach((item) => {
       counter[item] = (counter[item] || 0) + 1;
     });
-    console.log(counter);
     setOrderCount(Object.values(counter));
     setOrderTitle(Object.keys(counter));
   }, [resetOrder]);
@@ -43,23 +38,6 @@ const Admin = () => {
   return (
     <div>
       <h1>注文管理画面</h1>
-      {/* {resetOrder.map((order, i: number) => {
-        return <p key={i}>{order}</p>;
-      })} */}
-      {/* {OrderTitle.map((order, i: number) => {
-        return (
-          <div key={i}>
-            <p>{order}</p>
-          </div>
-        );
-      })}
-      {OrderCount.map((count, i: number) => {
-        return (
-          <div key={i}>
-            <p>{count}</p>
-          </div>
-        );
-      })} */}
       <TableComp title={OrderTitle} count={OrderCount} />
     </div>
   );
