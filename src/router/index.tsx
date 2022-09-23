@@ -4,13 +4,11 @@ import { ErrorPage } from "../views/ErrorPage";
 import { Menu } from "../views/Menu";
 import { OrderCompleted } from "../views/OrderCompleted";
 import { Register } from "../views/Register";
-import { Status } from "../views/Status";
 import { History } from "../views/History";
 import ResponsiveAppBar from "../component/ResponsiveAppBar";
 import { User } from "firebase/auth";
 import { GetUserInfo } from "../api/SubmitGet";
 import { useEffect } from "react";
-import { TestData } from "../test/TestData";
 import { Redirect } from "../component/Redirect";
 import DrawerLeft from "../component/DrawerLeft";
 import { Terms } from "../views/Terms";
@@ -20,6 +18,7 @@ import { GetPaymentStatus } from "../views/GetPaymentStatus";
 import Admin from "../views/Admin";
 import Footer from "../component/Footer";
 import { Grid } from "@mui/material";
+// import { TestData } from "../test/TestData";
 const Router = () => {
   const [isMenu, setIsMenu] = React.useState<boolean>(false);
   const [user, setUser] = React.useState<User>();
@@ -61,8 +60,7 @@ const Router = () => {
                 <Routes>
                   <Route path="/" element={<Menu />} />
                   <Route path="/register" element={<Register />} />
-                  <Route path="/test" element={<TestData />} />
-                  <Route path="/status:id" element={<Status />} />
+                  {/* <Route path="/test" element={<TestData />} /> */}
                   <Route path="/order/:id" element={<OrderCompleted />} />
                   <Route path="/order/:id/:status" element={<OrderCompleted />} />
                   <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
