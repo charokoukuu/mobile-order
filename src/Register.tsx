@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import { CorrectEmail } from "./SubmitGet";
+import { CorrectEmail } from "./api/SubmitGet";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,

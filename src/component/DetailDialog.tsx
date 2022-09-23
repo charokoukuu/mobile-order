@@ -1,5 +1,5 @@
 import { Button, Dialog, Grid } from "@mui/material";
-import { MenuData } from "../Interface";
+import { MenuData } from "../types";
 import "../App.css"
 import { createContext, useContext, useEffect, useState } from "react";
 const menuData = createContext<any>(null);

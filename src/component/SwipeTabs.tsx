@@ -6,7 +6,7 @@ import Tab from '@mui/material/Tab';
 import { FoodCard } from './FoodCard';
 import { Grid } from '@mui/material';
 import { DocumentData } from 'firebase/firestore';
-import { MenuData } from '../Interface';
+import { MenuData } from '../types';
 import { CategoryProp } from '../Menu';
 
 interface TabPanelProps {

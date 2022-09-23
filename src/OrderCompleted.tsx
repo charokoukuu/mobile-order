@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { MenuData } from "./Interface";
+import { MenuData } from "./types";
 import { Link, useParams } from "react-router-dom";
-import { GetSpecificData } from "./SubmitGet";
+import { GetSpecificData } from "./api/SubmitGet";
 import { DocumentData, onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card } from "@mui/material";

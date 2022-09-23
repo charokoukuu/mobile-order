@@ -1,9 +1,9 @@
-import { MenuData, OrderData, UserData } from "./Interface";
+import { MenuData, OrderData, UserData } from "../types";
 import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy, updateDoc } from "firebase/firestore";
-import { auth, db, functions } from "./Firebase";
+import { auth, db, functions } from "../Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
-import { paymentType } from "./component/Order";
+import { paymentType } from "../component/Order";
 
 export const hostUrl = "https://mobile-order-4d383.web.app";
 export const RandomID = () => {
