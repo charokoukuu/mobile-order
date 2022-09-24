@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MenuData } from "../api/types";
+import { MenuData } from "../types";
 import { Link, useParams } from "react-router-dom";
 import { GetSpecificData } from "../api/SubmitGet";
 import { DocumentData, onSnapshot, doc } from "firebase/firestore";

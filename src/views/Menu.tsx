@@ -2,7 +2,7 @@ import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "../component/Order";
 import { DetailDialog } from "../component/DetailDialog";
-import { MenuData } from "../api/types";
+import { MenuData } from "../types";
 import { GetAllData, OrderSubmit, Payment, isTodayUserOrderGet } from "../api/SubmitGet";
 import { Cart } from "../component/Cart";
 import { LoadingAnimation } from "../component/LoadingAnimation";

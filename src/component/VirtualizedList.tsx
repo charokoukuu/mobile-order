@@ -3,7 +3,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { Button } from '@mui/material';
-import { MenuData } from '../api/types';
+import { MenuData } from '../types';
 
 
 interface VirtualizedListProps {
