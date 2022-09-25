@@ -1,13 +1,14 @@
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { LoadingAnimation } from "./component/LoadingAnimation";
-import { SearchCollectionDataGet } from "./SubmitGet";
+import { LoadingAnimation } from "../component/LoadingAnimation";
+import { SearchCollectionDataGet } from "../api/SubmitGet";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { auth } from "./Firebase";
+import { auth } from "../api/Firebase";
 import { Grid } from "@mui/material";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 // import { OrderCompleted } from "./OrderCompleted";
 // import dayjs from "dayjs";
 // import 'dayjs/locale/ja';
@@ -77,9 +78,9 @@ export const History = () => {
                           <Grid container color="text.secondary" >
                             {e.isStatus === "注文完了" && <>
                               <Grid item xs={0} style={{ margin: "auto 0", color: "#01AD4A", }}>
-                                <ErrorOutlineIcon style={{ fontSize: "20px", margin: "6px 3px 0 0" }} />
+                                <TaskAltIcon style={{ fontSize: "20px", margin: "6px 3px 0 0" }} />
                               </Grid>
-                              <Grid item xs={3} className="japanese_L" style={{ textAlign: "start", margin: "auto 0", color: "#01AD4A", fontSize: "15px" }}>
+                              <Grid item xs={5} className="japanese_L" style={{ textAlign: "start", margin: "auto 0", color: "#01AD4A", fontSize: "15px" }}>
                                 注文受け取り済み
                               </Grid>
                             </>}
@@ -87,7 +88,7 @@ export const History = () => {
                               <Grid item xs={0} style={{ margin: "auto 0", color: "#DB8D00" }}>
                                 <ErrorOutlineIcon style={{ fontSize: "20px", margin: "6px 3px 0 0" }} />
                               </Grid>
-                              <Grid item xs={3} className="japanese_L" style={{ textAlign: "start", margin: "auto 0", color: "#DB8D00", fontSize: "15px" }}>
+                              <Grid item xs={5} className="japanese_L" style={{ textAlign: "start", margin: "auto 0", color: "#DB8D00", fontSize: "15px" }}>
                                 未受け取り
                               </Grid>
                             </>}
@@ -104,7 +105,7 @@ export const History = () => {
                                 className="japanese_R"
                                 style={{
                                   color: "#1FA7D0",
-                                  fontSize: "15px"
+                                  fontSize: "13px"
                                 }}
                               >
                                 ID: {e.id}

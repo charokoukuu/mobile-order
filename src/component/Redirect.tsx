@@ -1,6 +1,6 @@
 import { signOut } from "firebase/auth";
 import { useEffect } from "react"
-import { auth } from "../Firebase";
+import { auth } from "../api/Firebase";
 import { LoadingAnimation } from "./LoadingAnimation"
 
 interface RedirectProps {

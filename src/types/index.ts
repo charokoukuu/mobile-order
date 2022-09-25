@@ -1,4 +1,4 @@
-import { paymentType } from "./component/Order"
+import { paymentType } from "../component/Order"
 
 export interface MenuData {
     title: string

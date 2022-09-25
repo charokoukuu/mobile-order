@@ -1,14 +1,14 @@
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { Order } from "./component/Order";
-import { DetailDialog } from "./component/DetailDialog";
-import { MenuData } from "./Interface";
-import { GetAllData, OrderSubmit, Payment, isTodayUserOrderGet } from "./SubmitGet";
-import { Cart } from "./component/Cart";
-import { LoadingAnimation } from "./component/LoadingAnimation";
-import { auth } from "./Firebase";
-import SwipeTabs from "./component/SwipeTabs";
-import IntegrationNotistack from "./component/IntegrationNotistack";
+import { Order } from "../component/Order";
+import { DetailDialog } from "../component/DetailDialog";
+import { MenuData } from "../types";
+import { GetAllData, OrderSubmit, Payment, isTodayUserOrderGet } from "../api/SubmitGet";
+import { Cart } from "../component/Cart";
+import { LoadingAnimation } from "../component/LoadingAnimation";
+import { auth } from "../api/Firebase";
+import SwipeTabs from "../component/SwipeTabs";
+import IntegrationNotistack from "../component/IntegrationNotistack";
 
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
@@ -37,7 +37,6 @@ export const Menu = () => {
                 window.location.href = "/";
             }
         })();
-        console.log(navigator.userAgent);
 
     }, []);
 

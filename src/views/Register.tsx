@@ -3,17 +3,17 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import { CorrectEmail } from "./SubmitGet";
+import { CorrectEmail } from "../api/SubmitGet";
 import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
   User,
 } from "firebase/auth";
-import { auth } from "./Firebase";
-import { IllegalEmailAddress } from "./component/IllegalEmailAddress";
+import { auth } from "../api/Firebase";
+import { IllegalEmailAddress } from "../component/IllegalEmailAddress";
 import App from "./App";
-import ScrollDialog from "./component/ScrollDialog";
+import ScrollDialog from "../component/ScrollDialog";
 
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
@@ -28,8 +28,6 @@ export const Register = () => {
       if (user) {
         setUserEmail(user.email || "");
         setUser(user);
-        // console.log(user);
-        // setIsLogin(true);
       } else {
       }
     });
@@ -40,11 +38,9 @@ export const Register = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        // console.log(user.email);
         setUserEmail(user.email || "");
         setIsLogin(true);
         window.location.reload();
-        // ...
       })
       .catch((error) => {
         console.log(error);

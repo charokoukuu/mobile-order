@@ -4,8 +4,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Terms } from '../Terms';
-import { PrivacyPolicy } from '../PrivacyPolicy';
+import { Terms } from '../views/Terms';
+import { PrivacyPolicy } from '../views/PrivacyPolicy';
 import { useState } from 'react';
 
 interface ScrollDialogProps {

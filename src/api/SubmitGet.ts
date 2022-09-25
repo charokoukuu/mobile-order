@@ -1,9 +1,9 @@
-import { MenuData, OrderData, UserData } from "./Interface";
+import { MenuData, OrderData, UserData } from "../types";
 import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy, updateDoc } from "firebase/firestore";
-import { auth, db, functions } from "./Firebase";
+import { auth, db, functions } from "../api/Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
-import { paymentType } from "./component/Order";
+import { paymentType } from "../component/Order";
 
 export const hostUrl = "https://mobile-order-4d383.web.app";
 export const RandomID = () => {
@@ -56,7 +56,6 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     payment: props.payment,
   };
 
-  // console.log(props.menu);
   await setDoc(doc(db, "order", id), orderData);
   return id;
 };
@@ -133,9 +132,8 @@ export const GetSpecificData: (
     const docSnap = await getDoc(docRef);
     return new Promise((resolve, reject) => {
       if (docSnap.exists()) {
-        // console.log("Document data:", docSnap.data());
       } else {
-        console.log("No such document!");
+        reject("No such document!");
       }
       resolve(docSnap.data());
     });
@@ -182,7 +180,6 @@ export const Payment = async (
       });
       const respons: any = resData.data;
       window.location.href = String(respons.url);
-      console.log(respons);
     } catch (err) {
       alert(
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
@@ -201,7 +198,6 @@ export const Payment = async (
         amount: totalPrice,
         orderDescription: orderDescription,
       });
-      // console.log(data.data.BODY.data.url);
       window.location.href = data.data.BODY.data.url;
 
 
@@ -224,9 +220,7 @@ export const StripeGetStatus = async (checkoutId: string) => {
       orderId: checkoutId,
     });
     const orderId = result.data.client_reference_id;
-    // console.log(result)
     if (result.data.status === "complete") {
-      // console.log(orderId);
       const washingtonRef = doc(db, "order", orderId);
       await updateDoc(washingtonRef, {
         isStatus: "決済完了",
@@ -268,9 +262,7 @@ export const PayPayGetStatus = async (orderId: string) => {
 export const AssignOrderNumber = async (orderId: string) => {
   return new Promise(async (resolve) => {
     const currentNumber = await GetSpecificData("counter", "oneDateAllOrderCount");
-    console.log(currentNumber);
     const orderNumber = currentNumber?.count + 1;
-    console.log(orderNumber);
     const washingtonRef = doc(db, "counter", "oneDateAllOrderCount");
     await updateDoc(washingtonRef, {
       count: orderNumber,

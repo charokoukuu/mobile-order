@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { LoadingAnimation } from "./component/LoadingAnimation";
-import { PayPayGetStatus, StripeGetStatus } from "./SubmitGet";
+import { LoadingAnimation } from "../component/LoadingAnimation";
+import { PayPayGetStatus, StripeGetStatus } from "../api/SubmitGet";
 export const GetPaymentStatus = () => {
   const params = useParams();
   useEffect(() => {

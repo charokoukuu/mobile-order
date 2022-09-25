@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { MenuData } from "./Interface";
+import { MenuData } from "../types";
 import { Link, useParams } from "react-router-dom";
-import { GetSpecificData } from "./SubmitGet";
+import { GetSpecificData } from "../api/SubmitGet";
 import { DocumentData, onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card } from "@mui/material";
-import { LoadingAnimation } from "./component/LoadingAnimation";
-import Slide from "./component/Slide";
-import { auth } from "./Firebase";
-import IntegrationNotistack from "./component/IntegrationNotistack";
-import { db } from "./Firebase";
+import { LoadingAnimation } from "../component/LoadingAnimation";
+import Slide from "../component/Slide";
+import { auth } from "../api/Firebase";
+import IntegrationNotistack from "../component/IntegrationNotistack";
+import { db } from "../api/Firebase";
+
 let isChecked = false;
 export const OrderCompleted = () => {
   const [orderData, setOrderData] = useState<DocumentData>();
@@ -20,10 +21,8 @@ export const OrderCompleted = () => {
     (async () => {
       params.id && setOrderData(await GetSpecificData("order", params.id));
       setIsGetOrderData(true);
-      // console.log(params.id);
     })();
     onSnapshot(doc(db, "order", params.id || ""), (doc) => {
-      console.log("Current data: ", doc.data());
       if (isChecked) {
         doc.data()?.isStatus === "注文完了" && setOrderData(doc.data());
       }
@@ -143,19 +142,19 @@ export const OrderCompleted = () => {
                   )}
                   {params.status === "faild" && (
                     <>
-                    <h2 style={{ textAlign: "center" }}>
-                      決済情報が見つかりませんでした。<br />
-                      以下に表示されたコードを問い合わせフォームに記載してください。
-                    </h2>
-                    {/* ここが改行されなくて困る */}
-                    <p >{orderData?.checkoutId}</p> 
-                    <div style={{textAlign:"center"}} >
-                    <Button variant="contained" 
-                      href="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" 
-                    >
-                      お問い合わせフォームへ
-                    </Button>
-                    </div>
+                      <h2 style={{ textAlign: "center" }}>
+                        決済情報が見つかりませんでした。<br />
+                        以下に表示されたコードを問い合わせフォームに記載してください。
+                      </h2>
+                      {/* ここが改行されなくて困る */}
+                      <p >{orderData?.checkoutId}</p>
+                      <div style={{ textAlign: "center" }} >
+                        <Button variant="contained"
+                          href="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform"
+                        >
+                          お問い合わせフォームへ
+                        </Button>
+                      </div>
                     </>
                   )}
                   {orderData?.isStatus === "決済完了" && (
