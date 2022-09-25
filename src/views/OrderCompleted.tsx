@@ -29,6 +29,10 @@ export const OrderCompleted = () => {
       isChecked = true;
     });
   }, [params.id]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       {params.status === "success" ?
@@ -141,21 +145,21 @@ export const OrderCompleted = () => {
                     </div>
                   )}
                   {params.status === "faild" && (
-                    <>
-                      <h2 style={{ textAlign: "center" }}>
-                        決済情報が見つかりませんでした。<br />
-                        以下に表示されたコードを問い合わせフォームに記載してください。
+                    <div style={{ margin: "30px 0" }}>
+                      <h2 style={{ textAlign: "center", fontSize: "20px", width: "80vw", margin: "auto" }}>
+                        決済情報が見つかりませんでした。以下に表示されたコードを問い合わせフォームに記載してください。
                       </h2>
-                      {/* ここが改行されなくて困る */}
-                      <p >{orderData?.checkoutId}</p>
-                      <div style={{ textAlign: "center" }} >
+                      <div style={{ backgroundColor: "rgba(0,0,0,0.8)" }}>
+                        <p style={{ textAlign: "left", fontSize: "20px", width: "80vw", margin: "30px auto", overflowWrap: "break-word", color: "#ffffff" }}>{orderData?.checkoutId}</p>
+                      </div>
+                      <div style={{ textAlign: "center" }}>
                         <Button variant="contained"
                           href="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform"
                         >
                           お問い合わせフォームへ
                         </Button>
                       </div>
-                    </>
+                    </div>
                   )}
                   {orderData?.isStatus === "決済完了" && (
                     <div style={{ margin: "10% 0" }}>
