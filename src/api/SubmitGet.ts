@@ -5,7 +5,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";
 
-export const hostUrl = "https://mobile-order-4d383.web.app";
+export const hostUrl = window.location.protocol + "//" + window.location.host;;
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var N = 16;
@@ -54,7 +54,6 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     date: date,
     isStatus: "注文済み",
     payment: props.payment,
-    orderNumber: 0,
   };
 
   await setDoc(doc(db, "order", id), orderData);
@@ -263,6 +262,7 @@ export const PayPayGetStatus = async (orderId: string) => {
 export const AssignOrderNumber = async (orderId: string) => {
   return new Promise(async (resolve) => {
     const currentNumber = await GetSpecificData("counter", "oneDateAllOrderCount");
+    console.log(currentNumber);
     const orderNumber = currentNumber?.count + 1;
     const washingtonRef = doc(db, "counter", "oneDateAllOrderCount");
     await updateDoc(washingtonRef, {
@@ -274,5 +274,4 @@ export const AssignOrderNumber = async (orderId: string) => {
     });
     resolve(orderNumber);
   });
-
 }
