@@ -28,5 +28,6 @@ export interface OrderData {
     isStatus: string
     date: Date
     payment: paymentType;
+    orderNumber: number;
 }
 
