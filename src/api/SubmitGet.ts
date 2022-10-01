@@ -54,6 +54,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     date: date,
     isStatus: "注文済み",
     payment: props.payment,
+    orderNumber: 0,
   };
 
   await setDoc(doc(db, "order", id), orderData);
