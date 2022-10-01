@@ -26,7 +26,6 @@ export const Menu = () => {
     const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
     const [isTodayNotReceived, setIsTodayNotReceived] = useState<boolean>(false);
     useEffect(() => {
-        // window.location.href = "/register";
         (async () => {
             try {
                 setMenu(await GetAllData("menu"));
