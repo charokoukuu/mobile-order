@@ -65,9 +65,14 @@ export const OrderCompleted = () => {
                           color: "#000000",
                         }}
                       >
-                        チケット発行QR
+                        食券発行用QR
                       </h2>
                     </div>
+                    <div style={{
+                      textAlign: "center",
+                      fontSize: "30px",
+                      padding: "10px 0",
+                    }}>{"M" + orderData?.orderNumber}</div>
                     <div style={{ position: "relative", width: "100%", height: "100%", padding: "80px 0" }}>
                       <QRCodeSVG
                         style={{
@@ -164,7 +169,7 @@ export const OrderCompleted = () => {
                   {orderData?.isStatus === "決済完了" && (
                     <div style={{ margin: "10% 0" }}>
                       <h2 style={{ textAlign: "center", color: "#000000" }}>
-                        チケット受け取り方法
+                        食券受け取り方法
                       </h2>
                       <Slide />
                     </div>
