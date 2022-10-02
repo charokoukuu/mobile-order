@@ -68,11 +68,6 @@ export const OrderCompleted = () => {
                         食券発行用QR
                       </h2>
                     </div>
-                    <div style={{
-                      textAlign: "center",
-                      fontSize: "30px",
-                      padding: "10px 0",
-                    }}>{"M" + orderData?.orderNumber}</div>
                     <div style={{ position: "relative", width: "100%", height: "100%", padding: "80px 0" }}>
                       <QRCodeSVG
                         style={{
