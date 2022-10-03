@@ -7,13 +7,13 @@ import { PhoneMock } from "./icons/PhoneMock";
 
 export default function Slide() {
   // style
-  // const SlideStyle = {
-  //   margin: "0 auto",
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   hight: "30%",
-  //   maxWidth: "90%",
-  // };
+  const SlideStyle = {
+    margin: "0 auto",
+    display: "flex",
+    justifyContent: "center",
+    hight: "30%",
+    maxWidth: "90%",
+  };
 
   // slideSetting
   var settings = {
@@ -30,9 +30,9 @@ export default function Slide() {
   const Slides = [
     [
       "チケットの受け取りには、画面に表示されたQRコードを利用します",
-      <QrCodeMock style={{margin:"0 auto",display:"flex",justifyContent:"center",height:"30%",maxWidth:"90%"}} />,
+      <QrCodeMock style={SlideStyle} />,
     ],
-    ["21階に設置したQRコードをリーダーにかざしてください", <PhoneMock style={{margin:"0 auto",display:"flex",justifyContent:"center",height:"30%",maxWidth:"90%"}}/>],
+    ["21階に設置したQRコードをリーダーにかざしてください", <PhoneMock style={SlideStyle}/>],
   ];
 
   return (
@@ -41,7 +41,9 @@ export default function Slide() {
         return (
           <div key={index} style={{margin:"0 auto",position:"absolute"}}>
             <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0] as string}</p>
-            {slide[1]}
+            <div style={{display:"flex", justifyContent: "center" , margin:"0 auto"}}>
+              {slide[1]}
+            </div>
           </div>
         );
       })}
