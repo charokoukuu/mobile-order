@@ -39,7 +39,7 @@ export default function Slide() {
     <Slider {...settings}>
       {Slides.map((slide, index) => {
         return (
-          <div key={index}>
+          <div key={index} style={{margin:"0 auto"}}>
             <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0] as string}</p>
             {slide[1]}
           </div>
