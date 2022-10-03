@@ -39,9 +39,9 @@ export default function Slide() {
     <Slider {...settings}>
       {Slides.map((slide, index) => {
         return (
-          <div key={index} style={{margin:"0 auto",position:"absolute"}}>
+          <div key={index} >
             <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0] as string}</p>
-            <div style={{display:"flex", justifyContent: "center" , margin:"0 auto"}}>
+            <div style={{display:"absolute",top:"0px",left:"50%"}}>
               {slide[1]}
             </div>
           </div>
