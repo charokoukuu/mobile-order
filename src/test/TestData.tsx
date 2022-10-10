@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { httpsCallable } from "firebase/functions";
 import IntegrationNotistack from "../component/IntegrationNotistack";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../api/Firebase";
@@ -7,7 +6,7 @@ import { db } from "../api/Firebase";
 export const TestData = () => {
     const prev = () => {
         (async () => {
-            const washingtonRef = doc(db, "order", "EHVbpJMAXe8XVl0r");
+            const washingtonRef = doc(db, "order", "NZsbzb6XbMQJErQY");
             await updateDoc(washingtonRef, {
                 isStatus: "決済完了",
             });
@@ -15,7 +14,7 @@ export const TestData = () => {
     }
     const next = () => {
         (async () => {
-            const washingtonRef = doc(db, "order", "EHVbpJMAXe8XVl0r");
+            const washingtonRef = doc(db, "order", "NZsbzb6XbMQJErQY");
             await updateDoc(washingtonRef, {
                 isStatus: "注文完了",
             });
