@@ -18,6 +18,7 @@ import { GetPaymentStatus } from "../views/GetPaymentStatus";
 import Admin from "../views/Admin";
 import Footer from "../component/Footer";
 import { Grid } from "@mui/material";
+import { TestData } from "../test/TestData";
 // import { TestData } from "../test/TestData";
 const Router = () => {
   const [isMenu, setIsMenu] = React.useState<boolean>(false);
@@ -59,6 +60,7 @@ const Router = () => {
               <Grid item xs={12} md={5}>
                 <Routes>
                   <Route path="/" element={<Menu />} />
+                  <Route path="/test" element={<TestData />} />
                   <Route path="/register" element={<Register />} />
                   {/* <Route path="/test" element={<TestData />} /> */}
                   <Route path="/order/:id" element={<OrderCompleted />} />

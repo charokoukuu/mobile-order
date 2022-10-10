@@ -1,12 +1,12 @@
-import { DocumentData } from "firebase/firestore";
+import { doc, DocumentData, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "../component/Order";
 import { DetailDialog } from "../component/DetailDialog";
 import { MenuData } from "../types";
-import { GetAllData, OrderSubmit, Payment, isTodayUserOrderGet } from "../api/SubmitGet";
+import { GetAllData, OrderSubmit, Payment, isTodayUserOrderGet, AssignOrderNumber } from "../api/SubmitGet";
 import { Cart } from "../component/Cart";
 import { LoadingAnimation } from "../component/LoadingAnimation";
-import { auth } from "../api/Firebase";
+import { auth, db } from "../api/Firebase";
 import SwipeTabs from "../component/SwipeTabs";
 import IntegrationNotistack from "../component/IntegrationNotistack";
 
@@ -75,7 +75,23 @@ export const Menu = () => {
                         });
 
                     }}
-
+                        onTest={async (payment, setIsLoad) => {
+                            const orderId = await OrderSubmit({
+                                user: {
+                                    uid: auth.currentUser?.uid || "",
+                                    studentName: auth.currentUser?.displayName || "",
+                                    mailAddress: auth.currentUser?.email || "",
+                                },
+                                totalPrice: totalPrice,
+                                menu: orderData,
+                                payment: payment,
+                            })
+                            const washingtonRef = doc(db, "order", orderId);
+                            await updateDoc(washingtonRef, {
+                                isStatus: "決済完了",
+                            });
+                            await AssignOrderNumber(orderId);
+                        }}
                     />
                 </div>
                 <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {

@@ -27,6 +27,7 @@ interface OrderProps {
   open: boolean;
   totalPrice: number;
   onNext: (payment: paymentType, setIsLoad: (load: boolean) => void) => void;
+  onTest: (payment: paymentType, setIsLoad: (load: boolean) => void) => void;
   onPrev: () => void;
   onDelete: (e: MenuData, i: number) => void;
   orderData: MenuData[];
@@ -109,6 +110,19 @@ export const Order = (props: OrderProps) => {
               disabled={payment === ""}
             >
               購入する
+            </Button>
+            }
+            {isLoad && <LoadingAnimation type={"orbit"} />}
+          </div>
+          <div >
+            {!isLoad && <Button
+              style={{ width: "100%", marginTop: "3%", backgroundColor: "red", color: "white", borderRadius: "7px", fontSize: "1rem" }}
+              onClick={() => {
+                props.onTest(payment, setIsLoad);
+              }}
+              variant="contained"
+            >
+              テスト購入
             </Button>
             }
             {isLoad && <LoadingAnimation type={"orbit"} />}
