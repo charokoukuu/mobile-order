@@ -8,6 +8,8 @@ import { PhoneMock } from "./icons/PhoneMock";
 export default function Slide() {
   // style
   const SlideStyle = {
+    margin: "0 auto",
+    display: "flex",
     justifyContent: "center",
     hight: "30%",
     maxWidth: "90%",
@@ -39,9 +41,7 @@ export default function Slide() {
         return (
           <div key={index} >
             <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0] as string}</p>
-            <div style={{display:"flex",margin:"0 auto"}}>
               {slide[1]}
-            </div>
           </div>
         );
       })}
