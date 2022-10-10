@@ -41,7 +41,7 @@ export default function Slide() {
         return (
           <div key={index} >
             <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0] as string}</p>
-            <div style={{top:"0px",left:"50%"}}>
+            <div style={{margin:"0 auto"}}>
               {slide[1]}
             </div>
           </div>
