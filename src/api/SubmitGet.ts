@@ -52,7 +52,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     totalPrice: props.totalPrice,
     menu: props.menu,
     date: date,
-    isStatus: "注文済み",
+    isStatus: "not_payed",
     payment: props.payment,
   };
 
@@ -111,7 +111,7 @@ export const isTodayUserOrderGet = async (userId: string) => {
       orderBy("date", "desc"),
       where("date", ">", Yesterday()),
       where("user.uid", "==", userId),
-      where("isStatus", "==", "決済完了"),
+      where("isStatus", "==", "ordered"),
       limit(10)
     );
     const querySnapshot = await getDocs(q);
@@ -223,7 +223,7 @@ export const StripeGetStatus = async (checkoutId: string) => {
     if (result.data.status === "complete") {
       const washingtonRef = doc(db, "order", orderId);
       await updateDoc(washingtonRef, {
-        isStatus: "決済完了",
+        isStatus: "ordered",
       });
       await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;
@@ -246,7 +246,7 @@ export const PayPayGetStatus = async (orderId: string) => {
     if (paymentStatus === "COMPLETED") {
       const washingtonRef = doc(db, "order", orderId);
       await updateDoc(washingtonRef, {
-        isStatus: "決済完了",
+        isStatus: "ordered",
       });
       await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;

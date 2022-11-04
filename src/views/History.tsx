@@ -76,7 +76,7 @@ export const History = () => {
                             </div>
                           </div>
                           <Grid container color="text.secondary" >
-                            {e.isStatus === "注文完了" && <>
+                            {e.isStatus === "complete" && <>
                               <Grid item xs={0} style={{ margin: "auto 0", color: "#01AD4A", }}>
                                 <TaskAltIcon style={{ fontSize: "20px", margin: "6px 3px 0 0" }} />
                               </Grid>
@@ -84,7 +84,7 @@ export const History = () => {
                                 注文受け取り済み
                               </Grid>
                             </>}
-                            {e.isStatus === "決済完了" && <>
+                            {e.isStatus === "ordered" && <>
                               <Grid item xs={0} style={{ margin: "auto 0", color: "#DB8D00" }}>
                                 <ErrorOutlineIcon style={{ fontSize: "20px", margin: "6px 3px 0 0" }} />
                               </Grid>
@@ -92,7 +92,7 @@ export const History = () => {
                                 未受け取り
                               </Grid>
                             </>}
-                            {e.isStatus === "注文済み" && <>
+                            {e.isStatus === "not_payed" && <>
                               <Grid item xs={0} style={{ margin: "auto 0", color: "#D11F00", }}>
                                 <ErrorOutlineIcon style={{ fontSize: "20px", margin: "6px 3px 0 0" }} />
                               </Grid>

@@ -33,6 +33,6 @@ sequenceDiagram
     User->>kiosk:QRコードを読み取り
     kiosk->>backend:ステータス書き換え
     backend-->>kiosk: 
-    Note right of backend:status:注文完了
+    Note right of backend:status:complete
     kiosk-->>User:食券発行
 ```
