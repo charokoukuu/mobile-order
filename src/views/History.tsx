@@ -9,9 +9,6 @@ import { auth } from "../api/Firebase";
 import { Grid } from "@mui/material";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-// import { OrderCompleted } from "./OrderCompleted";
-// import dayjs from "dayjs";
-// import 'dayjs/locale/ja';
 
 export const History = () => {
   const [oneOrderData, setOneOrderData] = useState<DocumentData[]>();
