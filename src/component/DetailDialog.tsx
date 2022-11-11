@@ -2,6 +2,7 @@ import { Button, Dialog, Grid } from "@mui/material";
 import { MenuData } from "../types";
 import "../views/styles/App.css"
 import { createContext, useContext, useEffect, useState } from "react";
+import { MultiplePurchase } from "./MultiplePurchase";
 const menuData = createContext<any>(null);
 let baseMenuData: any;
 interface DetailDialogProps {
@@ -9,19 +10,24 @@ interface DetailDialogProps {
     menu: MenuData | undefined;
     topping?: MenuData[];
     isAddCart: boolean;
-    onNext?: (menu: MenuData | undefined) => void;
+    onNext?: (menu: MenuData | undefined, purchaseCount: number) => void;
     onDelete?: () => void;
     onPrev: () => void;
+    initialPurchaseCount?: number;
 }
 
 
 export const DetailDialog = (props: DetailDialogProps) => {
     const [menu, setMenu] = useState<MenuData | undefined>(props.menu);
     const value = { menu, setMenu }
+    const [purchaseCount, setPurchaseCount] = useState<number>(1);
     useEffect(() => {
         setMenu(props.menu);
         baseMenuData = { ...props.menu };
     }, [props.menu])
+    useEffect(() => {
+        setPurchaseCount(props.initialPurchaseCount || 1);
+    }, [props.initialPurchaseCount])
     return (
         <div>
             <menuData.Provider value={value}>
@@ -39,9 +45,11 @@ export const DetailDialog = (props: DetailDialogProps) => {
                     <div>
                         <MaterialMenuCard />
                         {props.menu?.isBigSize && props.isAddCart && <MaterialSizeSelectCard />}
-                        <div className="center themeFontColor" style={{ margin: "1% 0", fontSize: "3.5rem" }}>{value.menu?.price}<span style={{ fontSize: "1.5rem" }}> 円</span></div>
+                        <MultiplePurchase initalValue={props.initialPurchaseCount} purchaseCount={purchaseCount} setPurchaseCount={setPurchaseCount} />
+                        <div className="center themeFontColor" style={{ margin: "1% 0", fontSize: "3.5rem" }}>{(value.menu?.price || 0) * purchaseCount}<span style={{ fontSize: "1.5rem" }}> 円</span></div>
                         {props.isAddCart && <div className="center" >  <Button style={{ width: "90%", backgroundColor: "#006C9B", height: "5vh", borderRadius: "11px" }} variant="contained" onClick={() => {
-                            props.onNext && props.onNext(value.menu);
+                            if (!props.initialPurchaseCount) setTimeout(() => setPurchaseCount(1), 200);
+                            props.onNext && props.onNext(value.menu, purchaseCount);
                         }} >
                             カートに追加
                         </Button></div>}
@@ -50,7 +58,10 @@ export const DetailDialog = (props: DetailDialogProps) => {
                         }} >
                             カートから削除
                         </Button></div>}
-                        <div className="center" style={{ textDecoration: "underline #006C9B", margin: "2% 0" }}><Button style={{ color: "#006C9B" }} onClick={props.onPrev}>閉じる</Button></div>
+                        <div className="center" style={{ textDecoration: "underline #006C9B", margin: "2% 0" }}><Button style={{ color: "#006C9B" }} onClick={() => {
+                            if (!props.initialPurchaseCount) setTimeout(() => setPurchaseCount(1), 200);
+                            props.onPrev();
+                        }}>閉じる</Button></div>
                     </div>
                 </Dialog>
 

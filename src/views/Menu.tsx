@@ -55,8 +55,12 @@ export const Menu = () => {
 
                 <div style={{ marginBottom: "13vw" }}>
                     <Order open={orderDialog} onDelete={(e, i) => {
-                        setOrderData(orderData.filter((_, index) => index !== i))
-                        setTotalPrice(totalPrice - e.price)
+                        let priceTimesCount = 0;
+                        setOrderData(orderData.filter((menu, index) => {
+                            if (menu.title === e.title) priceTimesCount++;
+                            return menu.title !== e.title
+                        }));
+                        setTotalPrice(totalPrice - e.price * priceTimesCount)
                     }} orderData={orderData} totalPrice={totalPrice} onPrev={() => {
                         setOrderDialog(false);
                     }} onNext={async (payment, setIsLoad) => {
@@ -78,9 +82,14 @@ export const Menu = () => {
 
                     />
                 </div>
-                <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {
-                    (e !== undefined) && setOrderData([...orderData, e]);
-                    (e !== undefined) && setTotalPrice(totalPrice + e.price);
+                <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(order, count) => {
+                    const currentOrderData = orderData;
+                    [...Array(count)].forEach(() => {
+                        order && currentOrderData.push(order);
+                    });
+
+                    (order !== undefined) && setOrderData(currentOrderData);
+                    (order !== undefined) && setTotalPrice(totalPrice + order.price * count);
                     setDetailDialogOpen(false);
                 }} onPrev={() => {
                     setDetailDialogOpen(false);
