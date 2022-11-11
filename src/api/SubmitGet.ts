@@ -228,7 +228,7 @@ export const StripeGetStatus = async (checkoutId: string) => {
       await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
-      window.location.href = `/order/${orderId}/faild`;
+      window.location.href = `/order/${orderId}/failed`;
     }
   } catch (error) {
     console.log(error);
@@ -251,7 +251,7 @@ export const PayPayGetStatus = async (orderId: string) => {
       await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
-      window.location.href = `/order/${orderId}/faild`;
+      window.location.href = `/order/${orderId}/failed`;
     }
   } catch (error) {
     console.log(error);
