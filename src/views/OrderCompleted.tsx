@@ -10,9 +10,13 @@ import Slide from "../component/Slide";
 import { auth } from "../api/Firebase";
 import IntegrationNotistack from "../component/IntegrationNotistack";
 import { db } from "../api/Firebase";
+import { Spacer } from "../component/SwipeTabs";
 
 let isChecked = false;
-export const OrderCompleted = () => {
+interface Props {
+  appBarHeight: number;
+}
+export const OrderCompleted = ({ appBarHeight }: Props) => {
   const [orderData, setOrderData] = useState<DocumentData>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
   const params = useParams();
@@ -35,6 +39,7 @@ export const OrderCompleted = () => {
   }, []);
   return (
     <>
+      <Spacer appBarHeight={appBarHeight} mode={"history"} />
       {params.status === "success" ?
         <IntegrationNotistack message="決済が完了しました" variant="success" />
         : params.status === "faild" &&

@@ -1,6 +1,8 @@
-export const Help = () => {
+import { Spacer } from "../component/SwipeTabs"
+export const Help = (props: { appBarHeight: number }) => {
     return (
         <div style={{ margin: "auto", textAlign: "center" }}>
+            <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
             <div style={{ backgroundColor: "#ffffff", padding: "2vw", borderRadius: "8px", width: "90%", margin: "2vw auto" }}>
                 <h2 className="themeFontColor">STEP 1</h2>
                 <p>メニューを選択します</p>

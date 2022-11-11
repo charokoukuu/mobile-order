@@ -65,15 +65,15 @@ const Router = () => {
                   <Route path="/" element={<Menu appBarHeight={appBarHeight} />} />
                   <Route path="/register" element={<Register />} />
                   {/* <Route path="/test" element={<TestData />} /> */}
-                  <Route path="/order/:id" element={<OrderCompleted />} />
-                  <Route path="/order/:id/:status" element={<OrderCompleted />} />
+                  <Route path="/order/:id" element={<OrderCompleted appBarHeight={appBarHeight} />} />
+                  <Route path="/order/:id/:status" element={<OrderCompleted appBarHeight={appBarHeight} />} />
                   <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
                   <Route path="/history" element={<History appBarHeight={appBarHeight} />} />
-                  <Route path="/terms" element={<Terms />} />
-                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/terms" element={<Terms appBarHeight={appBarHeight} />} />
+                  <Route path="/privacy" element={<PrivacyPolicy appBarHeight={appBarHeight} />} />
                   <Route path="/logout" element={<Redirect logout={true} />} />
                   <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
-                  <Route path="/help" element={<Help />} />
+                  <Route path="/help" element={<Help appBarHeight={appBarHeight} />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route
                     path="*"
