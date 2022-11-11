@@ -10,8 +10,13 @@ import { Grid } from "@mui/material";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { HistoryContent } from "../component/HistoryContent";
+import { Spacer } from "../component/SwipeTabs";
 
-export const History = () => {
+
+interface Props {
+  appBarHeight: number;
+}
+export const History = ({ appBarHeight }: Props) => {
   const [oneOrderData, setOneOrderData] = useState<DocumentData[]>();
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   useEffect(() => {
@@ -30,6 +35,7 @@ export const History = () => {
 
   return (
     <div style={{ marginTop: "10px" }}>
+      <Spacer appBarHeight={appBarHeight} mode={"history"} />
       {
         (isGetHistoryData && !oneOrderData?.length) ?
           <div style={{ textAlign: "center" }}>注文履歴はありません</div>

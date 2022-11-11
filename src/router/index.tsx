@@ -8,7 +8,7 @@ import { History } from "../views/History";
 import ResponsiveAppBar from "../component/ResponsiveAppBar";
 import { User } from "firebase/auth";
 import { GetUserInfo } from "../api/SubmitGet";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Redirect } from "../component/Redirect";
 import DrawerLeft from "../component/DrawerLeft";
 import { Terms } from "../views/Terms";
@@ -18,11 +18,13 @@ import { GetPaymentStatus } from "../views/GetPaymentStatus";
 import Admin from "../views/Admin";
 import Footer from "../component/Footer";
 import { Grid } from "@mui/material";
+import styled from "@emotion/styled";
 // import { TestData } from "../test/TestData";
 const Router = () => {
-  const [isMenu, setIsMenu] = React.useState<boolean>(false);
-  const [user, setUser] = React.useState<User>();
-  const [isLogin, setIsLogin] = React.useState<boolean>(false);
+  const [isMenu, setIsMenu] = useState<boolean>(false);
+  const [user, setUser] = useState<User>();
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [appBarHeight, setAppBarHeight] = useState<number>(0);
   useEffect(() => {
     window.document.title = "RunTicket";
     (async () => {
@@ -48,23 +50,25 @@ const Router = () => {
           }} />
           <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
             <Grid item xs={12} md={5} >
-              <ResponsiveAppBar
-                photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
-                  setIsMenu(!isMenu);
-                }} />
+              <AppBarWrapper>
+                <ResponsiveAppBar
+                  photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
+                    setIsMenu(!isMenu);
+                  }} setAppBarHeight={setAppBarHeight} />
+              </AppBarWrapper>
             </Grid>
           </Grid>
           {isLogin && (
             <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
               <Grid item xs={12} md={5}>
                 <Routes>
-                  <Route path="/" element={<Menu />} />
+                  <Route path="/" element={<Menu appBarHeight={appBarHeight} />} />
                   <Route path="/register" element={<Register />} />
                   {/* <Route path="/test" element={<TestData />} /> */}
                   <Route path="/order/:id" element={<OrderCompleted />} />
                   <Route path="/order/:id/:status" element={<OrderCompleted />} />
                   <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
-                  <Route path="/history" element={<History />} />
+                  <Route path="/history" element={<History appBarHeight={appBarHeight} />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/logout" element={<Redirect logout={true} />} />
@@ -94,4 +98,11 @@ const Router = () => {
   );
 };
 
+const AppBarWrapper = styled.div`
+ position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+`;
 export default Router;

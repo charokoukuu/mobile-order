@@ -8,6 +8,7 @@ import { Grid } from '@mui/material';
 import { DocumentData } from 'firebase/firestore';
 import { MenuData } from '../types';
 import { CategoryProp } from '../views/Menu';
+import styled from '@emotion/styled';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -21,6 +22,7 @@ interface SwipeTabsProps {
   category: CategoryProp[];
   setChosenMenu: (e: MenuData) => void;
   setDetailDialogOpen: (e: boolean) => void;
+  appBarHeight?: number;
 }
 
 interface FilterMenuDataProps extends SwipeTabsProps {
@@ -64,11 +66,12 @@ export default function SwipeTabs(props: SwipeTabsProps) {
 
   return (
     <div>
-      <AppBar position="static" elevation={0}>
+      <SwipeTabsWapper appBarHeight={props.appBarHeight || 56}>
         <Tabs
           style={{
             backgroundColor: "#ffffff",
             color: "white",
+            pointerEvents: "auto"
           }}
           value={value}
           onChange={handleChange}
@@ -77,6 +80,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
           aria-label="full width tabs example"
         >
           {
+
             menuCategoryArray.map((e, i) => {
               return <Tab key={e} label={e} {...a11yProps(i)} />;
             }
@@ -84,12 +88,13 @@ export default function SwipeTabs(props: SwipeTabsProps) {
           }
 
         </Tabs>
-      </AppBar>
+      </SwipeTabsWapper>
       <SwipeableViews
         index={value}
         onChangeIndex={handleChangeIndex}
       >
         {
+
           menuCategoryArray.map((category: string, index: number) => {
             return (
               <TabPanel value={value} index={index} key={index}>
@@ -101,13 +106,14 @@ export default function SwipeTabs(props: SwipeTabsProps) {
         }
 
       </SwipeableViews>
-    </div>
+    </div >
   );
 }
 
 const FilterMenuData = (props: FilterMenuDataProps) => {
   return (
     <Grid container >
+      <Spacer appBarHeight={props.appBarHeight || 56} mode={"menu"} />
       {props.menu.filter((item: any) => item.category === props.categoryMode && item.isStatus).map((menu: any, index: number) => {
         return (
           <Grid item key={index} style={{
@@ -137,3 +143,21 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
     </Grid>
   )
 }
+
+const SwipeTabsWapper = styled.div`
+    position: fixed;
+    top: ${(props: { appBarHeight: number }) => props.appBarHeight}px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+
+`;
+
+const Spacer = styled.div`
+    width: 100%;
+    height: ${(props: { appBarHeight: number, mode: "menu" | "history" }) => props.appBarHeight + (props.mode === "menu" ? 50 : 0)}px;
+`;
+
+export { Spacer };

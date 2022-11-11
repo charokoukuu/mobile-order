@@ -1,4 +1,3 @@
-import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "../component/Order";
 import { DetailDialog } from "../component/DetailDialog";
@@ -13,12 +12,14 @@ import IntegrationNotistack from "../component/IntegrationNotistack";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
-
+interface Props {
+    appBarHeight: number;
+}
 // type Mode = "menu" | "complete";
-export const Menu = () => {
+export const Menu = ({ appBarHeight }: Props) => {
     // const [mode, setMode] = useState<Mode>("menu");
     const [detailDialogOpen, setDetailDialogOpen] = useState(false);
-    const [menu, setMenu] = useState<DocumentData[]>([]);
+    const [menu, setMenu] = useState<MenuData[]>([]);
     const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
     const [orderData, setOrderData] = useState<MenuData[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -28,7 +29,7 @@ export const Menu = () => {
     useEffect(() => {
         (async () => {
             try {
-                setMenu(await GetAllData("menu"));
+                setMenu(await GetAllData("menu") as MenuData[]);
                 setIsTodayNotReceived(await isTodayUserOrderGet(auth.currentUser?.uid || ""));
                 setIsGetMenu(true);
             } catch (e) {
@@ -51,8 +52,7 @@ export const Menu = () => {
                         window.location.href = "/history";
                     }} />
                 }
-                <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
-
+                <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} appBarHeight={appBarHeight} />
                 <div style={{ marginBottom: "13vw" }}>
                     <Order open={orderDialog} onDelete={(e, i) => {
                         let priceTimesCount = 0;

@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 
 const settings = ["ログアウト"];
 const toLink = ["/logout"];
@@ -20,15 +21,22 @@ const toLink = ["/logout"];
 interface ResponsiveAppBarProps {
     photoURL: string;
     onClick: () => void;
+    setAppBarHeight: (height: number) => void;
 }
 const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
+    const appBar = useRef<any>(null);
 
+    React.useEffect(() => {
+        if (appBar.current) {
+            props.setAppBarHeight(appBar.current.clientHeight);
+        }
+    }, [appBar, props]);
     return (
-        <AppBar position="static" style={{ backgroundColor: "#006C9B" }} elevation={0}>
+        <AppBar ref={appBar} position="static" style={{ backgroundColor: "#006C9B" }} elevation={0}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters style={{ maxWidth: "800px", margin: "0 auto" }}>
 
