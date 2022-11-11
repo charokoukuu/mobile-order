@@ -1,6 +1,5 @@
 import * as React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { FoodCard } from './FoodCard';
