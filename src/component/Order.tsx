@@ -7,12 +7,13 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
 import ConfirmDialog from "./ConfirmDialog";
 import { DetailDialog } from "./DetailDialog";
+import { CountOrder } from "../api/SubmitGet";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -37,6 +38,13 @@ export const Order = (props: OrderProps) => {
   const [isDelete, setIsDelete] = useState<boolean>(false);
   const [choosedMenu, setChoosedMenu] = useState<MenuData>();
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
+  const [orderCount, setOrderCount] = useState<number[]>([]);
+  const [orderTitle, setOrderTitle] = useState<MenuData[]>();
+  const CountOrderData = useRef<CountOrder>(new CountOrder(setOrderCount, setOrderTitle));
+  const [initialValue, setInitialValue] = useState<number>();
+  useEffect(() => {
+    CountOrderData.current.menuCount(props.orderData);
+  }, [props])
   return (
     <div>
       <Dialog
@@ -63,17 +71,18 @@ export const Order = (props: OrderProps) => {
         <div>
           <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4", justifyContent: props.orderData.length === 1 ? "center" : "left" }}>
             <Box />
-            {props.orderData.map((menu, index) => {
+            {orderTitle?.map((menu, index) => {
               return (
                 <div key={index} style={{ margin: "0 4%" }}>
-                  <FoodCard menu={menu} deleteButton={true} onClick={function (): void {
+                  <FoodCard count={orderCount[index]} menu={menu} deleteButton={true} onClick={function (): void {
+                    setInitialValue(orderCount[index]);
                     setChoosedMenu(menu);
                     setDetailDialogOpen(true);
                   }} onDelete={function (): void {
                     setChoosedMenu(menu);
                     setIsDelete(true);
                   }} />
-                  <DetailDialog open={detailDialogOpen} menu={choosedMenu} onDelete={() => {
+                  <DetailDialog initialPurchaseCount={initialValue} open={detailDialogOpen} menu={choosedMenu} onDelete={() => {
                     setDetailDialogOpen(false);
                     choosedMenu && props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
                   }} onPrev={() => {
@@ -100,7 +109,7 @@ export const Order = (props: OrderProps) => {
         <div style={{ margin: "3% 10%" }}>
           <div >
             {!isLoad && <Button
-              style={{ width: "100%", marginTop: "3%", backgroundColor: payment === "" ? "#848484" : "#006C9B", color: "white", borderRadius: "7px", fontSize: "1rem" }}
+              style={{ width: "100%", marginTop: "3%", backgroundColor: payment === "" ? "#848484" : "#006C9B", color: "white", borderRadius: "7px", fontSize: "22px" }}
               onClick={() => {
                 setIsLoad(true);
                 props.onNext(payment, setIsLoad);
@@ -115,7 +124,8 @@ export const Order = (props: OrderProps) => {
           </div>
           <div >
             <Button
-              style={{ width: "100%", marginTop: "3%", borderColor: "#006C9B", color: "#006C9B", borderRadius: "7px", fontSize: "1rem" }}
+              disabled={isLoad}
+              style={{ width: "100%", marginTop: "3%", borderColor: isLoad ? "#707070" : "#006C9B", color: isLoad ? "#707070" : "#006C9B", borderRadius: "7px", fontSize: "22px", opacity: isLoad ? "0.5" : "1" }}
               onClick={props.onPrev}
               variant="outlined"
             >

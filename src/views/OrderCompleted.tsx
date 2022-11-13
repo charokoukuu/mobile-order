@@ -10,9 +10,13 @@ import Slide from "../component/Slide";
 import { auth } from "../api/Firebase";
 import IntegrationNotistack from "../component/IntegrationNotistack";
 import { db } from "../api/Firebase";
+import { Spacer } from "../component/SwipeTabs";
 
 let isChecked = false;
-export const OrderCompleted = () => {
+interface Props {
+  appBarHeight: number;
+}
+export const OrderCompleted = ({ appBarHeight }: Props) => {
   const [orderData, setOrderData] = useState<DocumentData>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
   const params = useParams();
@@ -35,9 +39,10 @@ export const OrderCompleted = () => {
   }, []);
   return (
     <>
+      <Spacer appBarHeight={appBarHeight} mode={"history"} />
       {params.status === "success" ?
         <IntegrationNotistack message="決済が完了しました" variant="success" />
-        : params.status === "faild" &&
+        : params.status === "failed" &&
         <IntegrationNotistack message="決済情報が見つかりません" variant="error" />
       }
       <div style={{ margin: "10px 0" }}>
@@ -144,7 +149,7 @@ export const OrderCompleted = () => {
                       }}>決済情報の再取得</Button>
                     </div>
                   )}
-                  {params.status === "faild" && (
+                  {params.status === "failed" && (
                     <div style={{ margin: "30px 0" }}>
                       <h2 style={{ textAlign: "center", fontSize: "20px", width: "80vw", margin: "auto" }}>
                         決済情報が見つかりませんでした。以下に表示されたコードを問い合わせフォームに記載してください。

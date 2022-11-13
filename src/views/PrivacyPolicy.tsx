@@ -1,7 +1,9 @@
+import { Spacer } from "../component/SwipeTabs"
 
-export const PrivacyPolicy = (props: { width?: string, onClick?: () => void }) => {
+export const PrivacyPolicy = (props: { width?: string, onClick?: () => void, appBarHeight?: number }) => {
   return (
     <div style={{ margin: "3vw auto" }}>
+      <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
       <div
         style={{
           backgroundColor: "#ffffff",

@@ -1,4 +1,3 @@
-import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Order } from "../component/Order";
 import { DetailDialog } from "../component/DetailDialog";
@@ -13,12 +12,14 @@ import IntegrationNotistack from "../component/IntegrationNotistack";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
-
+interface Props {
+    appBarHeight: number;
+}
 // type Mode = "menu" | "complete";
-export const Menu = () => {
+export const Menu = ({ appBarHeight }: Props) => {
     // const [mode, setMode] = useState<Mode>("menu");
     const [detailDialogOpen, setDetailDialogOpen] = useState(false);
-    const [menu, setMenu] = useState<DocumentData[]>([]);
+    const [menu, setMenu] = useState<MenuData[]>([]);
     const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
     const [orderData, setOrderData] = useState<MenuData[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -28,7 +29,7 @@ export const Menu = () => {
     useEffect(() => {
         (async () => {
             try {
-                setMenu(await GetAllData("menu"));
+                setMenu(await GetAllData("menu") as MenuData[]);
                 setIsTodayNotReceived(await isTodayUserOrderGet(auth.currentUser?.uid || ""));
                 setIsGetMenu(true);
             } catch (e) {
@@ -51,12 +52,15 @@ export const Menu = () => {
                         window.location.href = "/history";
                     }} />
                 }
-                <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} />
-
+                <SwipeTabs category={menuCategoryArray} menu={menu} setChosenMenu={setChosenMenu} setDetailDialogOpen={setDetailDialogOpen} appBarHeight={appBarHeight} />
                 <div style={{ marginBottom: "13vw" }}>
                     <Order open={orderDialog} onDelete={(e, i) => {
-                        setOrderData(orderData.filter((_, index) => index !== i))
-                        setTotalPrice(totalPrice - e.price)
+                        let priceTimesCount = 0;
+                        setOrderData(orderData.filter((menu, index) => {
+                            if (menu.title === e.title) priceTimesCount++;
+                            return menu.title !== e.title
+                        }));
+                        setTotalPrice(totalPrice - e.price * priceTimesCount)
                     }} orderData={orderData} totalPrice={totalPrice} onPrev={() => {
                         setOrderDialog(false);
                     }} onNext={async (payment, setIsLoad) => {
@@ -78,9 +82,14 @@ export const Menu = () => {
 
                     />
                 </div>
-                <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(e) => {
-                    (e !== undefined) && setOrderData([...orderData, e]);
-                    (e !== undefined) && setTotalPrice(totalPrice + e.price);
+                <DetailDialog open={detailDialogOpen} menu={chosenMenu} onNext={(order, count) => {
+                    const currentOrderData = orderData;
+                    [...Array(count)].forEach(() => {
+                        order && currentOrderData.push(order);
+                    });
+
+                    (order !== undefined) && setOrderData(currentOrderData);
+                    (order !== undefined) && setTotalPrice(totalPrice + order.price * count);
                     setDetailDialogOpen(false);
                 }} onPrev={() => {
                     setDetailDialogOpen(false);

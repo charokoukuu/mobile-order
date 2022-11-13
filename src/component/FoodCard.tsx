@@ -1,12 +1,14 @@
 import { Card, CardActionArea, CardMedia } from "@mui/material";
-import { DocumentData } from "firebase/firestore";
 import CancelIcon from '@mui/icons-material/Cancel';
+import { MenuData } from "../types";
+import styled from "@emotion/styled";
 
 interface FoodCardProps {
-    menu: DocumentData;
+    menu: MenuData;
     onClick: () => void;
     onDelete?: () => void;
     deleteButton: boolean;
+    count?: number;
 }
 export const FoodCard = (props: FoodCardProps) => {
     return (
@@ -27,10 +29,10 @@ export const FoodCard = (props: FoodCardProps) => {
                         component="img"
                         image={props.menu.image}
                         alt="menu image"
-                        style={{ height: "180px", filter: props.menu.isSale ? "" : "brightness(35%)" }}
+                        style={{ height: "180px", filter: (!props.menu.isSale || props.count) ? "brightness(35%)" : "" }}
                     />
 
-                    {props.menu.isSale === false &&
+                    {!props.menu.isSale &&
                         <div
                             className="japanese_B"
                             style={{
@@ -49,11 +51,14 @@ export const FoodCard = (props: FoodCardProps) => {
                             SOLD OUT
                         </div>
                     }
+                    {props.count &&
+                        <CountText> ×{props.count} </CountText>
+                    }
                     <div style={{ position: "absolute", right: "0", bottom: "0", width: "100%", height: "33%", background: "linear-gradient(to top, rgba(0,0,0,0.9), rgba(255,255,255,0.01))" }}></div>
-                    <div className="japanese_R" style={{ position: "absolute", left: "12px", bottom: "15px", color: "#ffffff", fontSize: "18px" }}>
+                    <div className="japanese_R" style={{ position: "absolute", left: "12px", bottom: "15px", color: "#ffffff", fontSize: "18px", width: "60%", filter: (!props.menu.isSale || props.count) ? "brightness(55%)" : "" }}>
                         {props.menu.title}
                     </div>
-                    <div className="japanese_B" style={{ position: "absolute", right: "12px", bottom: "15px", color: "#FA9534", fontSize: "18px" }}>
+                    <div className="japanese_B" style={{ position: "absolute", right: "12px", bottom: "15px", color: "#FA9534", fontSize: "18px", filter: (!props.menu.isSale || props.count) ? "brightness(35%)" : "" }}>
                         ¥{props.menu.price}
                     </div>
                 </CardActionArea>
@@ -66,3 +71,14 @@ export const FoodCard = (props: FoodCardProps) => {
         </div>
     );
 }
+
+const CountText = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    font-weight: bold;
+    color: #F25F1D;
+    z-index: 10 
+`

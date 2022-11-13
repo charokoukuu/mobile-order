@@ -28,7 +28,7 @@ export const Cart = (props: CartProps) => {
                             </StyledBadge>
                         </IconButton>
                     </Grid>
-                    <Grid item xs={3} className="japanese_B themeFontColor" style={{ margin: "auto", textAlign: "end", right: props.totalPrice.toString().length === 3 ? "45%" : "40%", fontSize: "clamp(1rem, 10vw, 4rem)" }}>¥{props.totalPrice}</Grid>
+                    <Grid item xs={3} className="japanese_B themeFontColor" style={{ margin: "auto", textAlign: "end", right: props.totalPrice.toString().length >= 3 ? "45%" : "40%", fontSize: "40px" }}>¥{props.totalPrice}</Grid>
                     <Grid item xs={5} style={{ margin: "auto", textAlign: "end" }}>
                         <Button style={{ backgroundColor: "#006C9B", fontSize: "clamp(0.5rem, 4vw, 2rem)", borderRadius: "8px" }} variant="contained" onClick={() => { props.onClick() }}>
                             カートを見る

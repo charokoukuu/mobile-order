@@ -228,7 +228,7 @@ export const StripeGetStatus = async (checkoutId: string) => {
       await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
-      window.location.href = `/order/${orderId}/faild`;
+      window.location.href = `/order/${orderId}/failed`;
     }
   } catch (error) {
     console.log(error);
@@ -251,7 +251,7 @@ export const PayPayGetStatus = async (orderId: string) => {
       await AssignOrderNumber(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
-      window.location.href = `/order/${orderId}/faild`;
+      window.location.href = `/order/${orderId}/failed`;
     }
   } catch (error) {
     console.log(error);
@@ -274,4 +274,76 @@ export const AssignOrderNumber = async (orderId: string) => {
     });
     resolve(orderNumber);
   });
+}
+
+export class CountOrder {
+  private oneTodayOrder: OrderData[] = [];
+  private oneOrderMenu: MenuData[] = [];
+  private titleList: MenuData[] = [];
+  words: any = [];
+  constructor(
+    private readonly setOrderCount: (count: number[]) => void,
+    private readonly setOrderTitle: (titles: any[]) => void
+  ) { }
+  TitleCountMethod = () => {
+    const titles = this.getTitle();
+    const count = this.getCount();
+    this.setOrderCount(count);
+    this.setOrderTitle(titles);
+    this.titleList = [];
+  };
+
+  oneOrderCount = () => {
+    this.oneOrderMenu.map((menu: MenuData) => {
+      return this.titleList.push(menu);
+    });
+    this.words = this.titleList;
+    const titles = this.getTitle();
+    const count = this.getCount();
+    this.setOrderCount(count);
+    this.setOrderTitle(titles);
+    this.titleList = [];
+  };
+
+  menuCount = (oneOrderCount: MenuData[]) => {
+    this.oneOrderMenu = oneOrderCount;
+    this.oneOrderCount();
+  };
+
+  titleCount = (oneOrderCount: string) => {
+    this.words.push(oneOrderCount);
+    this.TitleCountMethod();
+  };
+
+  ListDefault = (oneTodayOrder: OrderData[]) => {
+    this.oneTodayOrder = oneTodayOrder;
+    this.TitleCountMethod();
+  };
+
+  ListAdd = (oneTodayOrder: OrderData) => {
+    this.oneTodayOrder.push(oneTodayOrder);
+    this.TitleCountMethod();
+  };
+
+  ListRemove = (oneTodayOrder: OrderData) => {
+    this.oneTodayOrder = this.oneTodayOrder.filter(
+      (order) => order.id !== oneTodayOrder.id
+    );
+    this.TitleCountMethod();
+  };
+
+  //重複カウンター処理
+  private DuplicateReduce() {
+    return this.words.filter((x: any, i: any, self: any) => {
+      return self.indexOf(x) === i;
+    });
+  }
+  private getTitle(): MenuData[] {
+    return this.DuplicateReduce();
+  }
+  private getCount(): number[] {
+    return this.DuplicateReduce().map((name: any) => {
+      return this.words.filter((x: any) => x === name).length;
+    });
+  }
 }
