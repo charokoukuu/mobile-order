@@ -10,7 +10,7 @@ const Admin = () => {
   const [OrderCount, setOrderCount] = useState<number[]>([]);
   useEffect(() => {
     (async () => {
-      let order = await TodayAllOrderGet("order", 10);
+      const order = await TodayAllOrderGet("order", 10);
       setToDayOrder(order);
     })();
   }, []);
@@ -27,7 +27,7 @@ const Admin = () => {
 
   // リスト内の重複をカウント
   useEffect(() => {
-    const counter: any = {};
+    const counter: { [key: string]: number } = {};
     resetOrder.forEach((item) => {
       counter[item] = (counter[item] || 0) + 1;
     });

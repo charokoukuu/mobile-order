@@ -20,7 +20,7 @@ export const History = ({ appBarHeight }: Props) => {
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   useEffect(() => {
     (async () => {
-      let order = await SearchCollectionDataGet(
+      const order = await SearchCollectionDataGet(
         "order",
         "user.uid",
         auth.currentUser?.uid || "",

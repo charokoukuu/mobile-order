@@ -106,9 +106,10 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
       <Spacer appBarHeight={props.appBarHeight || 56} mode={"menu"} />
       {props.menu
         .filter(
-          (item: any) => item.category === props.categoryMode && item.isStatus
+          (item: DocumentData) =>
+            item.category === props.categoryMode && item.isStatus
         )
-        .map((menu: any, index: number) => {
+        .map((menu: DocumentData, index: number) => {
           return (
             <Grid
               item
@@ -118,7 +119,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
               }}
             >
               <FoodCard
-                menu={menu}
+                menu={menu as MenuData}
                 deleteButton={false}
                 onClick={function (): void {
                   menu.isBigSize === true &&
@@ -134,7 +135,8 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
                       isStatus: menu.isStatus,
                       isSale: menu.isSale,
                     });
-                  menu.isBigSize === false && props.setChosenMenu(menu);
+                  menu.isBigSize === false &&
+                    props.setChosenMenu(menu as MenuData);
                   props.setDetailDialogOpen(true);
                 }}
               />

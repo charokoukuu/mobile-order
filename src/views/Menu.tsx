@@ -74,10 +74,10 @@ export const Menu = ({ appBarHeight }: Props) => {
           <div style={{ marginBottom: "13vw" }}>
             <Order
               open={orderDialog}
-              onDelete={(e, i) => {
+              onDelete={(e) => {
                 let priceTimesCount = 0;
                 setOrderData(
-                  orderData.filter((menu, index) => {
+                  orderData.filter((menu) => {
                     if (menu.title === e.title) priceTimesCount++;
                     return menu.title !== e.title;
                   })

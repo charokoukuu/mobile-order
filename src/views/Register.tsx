@@ -29,6 +29,7 @@ export const Register = () => {
         setUserEmail(user.email || "");
         setUser(user);
       } else {
+        // No user is signed in.
       }
     });
   }, []);

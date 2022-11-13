@@ -58,7 +58,7 @@ export default function TemporaryDrawer(props: TemporaryDrawerProps) {
     >
       <List>
         {["メニュー", "注文履歴"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+          <ListItem key={index} disablePadding>
             <ListItemButton>
               <ListItemIcon
                 onClick={() => {
@@ -82,7 +82,7 @@ export default function TemporaryDrawer(props: TemporaryDrawerProps) {
       <List>
         {["ヘルプ", "利用規約", "プライバシーポリシー", "お問い合わせ"].map(
           (text, index) => (
-            <ListItem key={text} disablePadding>
+            <ListItem key={index} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   {text === "ヘルプ" && <HelpOutlineIcon />}
