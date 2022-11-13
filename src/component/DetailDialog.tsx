@@ -91,7 +91,7 @@ const MaterialSizeSelectCard = () => {
     return (
         <div style={{ backgroundColor: "#ffffff", margin: "0% 3%", boxShadow: "0px 3px 6px #00000029", borderRadius: "13px" }}>
             <div style={{ textAlign: "center", margin: "0% 0", fontSize: "2rem" }}>
-                <div style={{ padding: "5% 0" }}>
+                <div style={{ padding: "5% 0", margin: "5% 0" }}>
                     {menu !== undefined && <SelectedCard price={menu.price} />}
                 </div>
             </div>
