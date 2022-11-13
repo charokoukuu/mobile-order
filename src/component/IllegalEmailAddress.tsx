@@ -19,7 +19,14 @@ export const IllegalEmailAddress = (props: IllegalEmailAddressProps) => {
     console.log(auth.currentUser);
   }, []);
   return (
-    <div style={{ padding: "2vw", borderRadius: "8px", width: "90%", margin: "2% auto" }}>
+    <div
+      style={{
+        padding: "2vw",
+        borderRadius: "8px",
+        width: "90%",
+        margin: "2% auto",
+      }}
+    >
       <div style={{ textAlign: "left", margin: "5% auto", width: "80%" }}>
         <h2 style={{ fontSize: "2rem" }}>
           本サービスは個人用アカウントでのご利用を許可しておりません。

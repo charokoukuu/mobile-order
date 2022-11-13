@@ -40,11 +40,16 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
   return (
     <>
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
-      {params.status === "success" ?
+      {params.status === "success" ? (
         <IntegrationNotistack message="決済が完了しました" variant="success" />
-        : params.status === "failed" &&
-        <IntegrationNotistack message="決済情報が見つかりません" variant="error" />
-      }
+      ) : (
+        params.status === "failed" && (
+          <IntegrationNotistack
+            message="決済情報が見つかりません"
+            variant="error"
+          />
+        )
+      )}
       <div style={{ margin: "10px 0" }}>
         {isGetOrderData ? (
           <Card
@@ -73,7 +78,14 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                         食券発行用QR
                       </h2>
                     </div>
-                    <div style={{ position: "relative", width: "100%", height: "100%", padding: "80px 0" }}>
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "100%",
+                        height: "100%",
+                        padding: "80px 0",
+                      }}
+                    >
                       <QRCodeSVG
                         style={{
                           position: "absolute",
@@ -82,7 +94,8 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                           transform: "translate(50%, 0)",
                         }}
                         value={orderData?.id}
-                        size={150} />
+                        size={150}
+                      />
                     </div>
                     <h2
                       className="japanese_L"
@@ -97,10 +110,21 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     </h2>
                   </div>
                 )}
-                {orderData?.isStatus === "complete" && <div className="japanese_L" style={{ textAlign: "center", fontSize: "120%", margin: "3% 0" }}>
-                  ご注文ありがとうございました
-                </div>}
-                {orderData?.isStatus === "complete" && <IntegrationNotistack message="complete" variant="success" />}
+                {orderData?.isStatus === "complete" && (
+                  <div
+                    className="japanese_L"
+                    style={{
+                      textAlign: "center",
+                      fontSize: "120%",
+                      margin: "3% 0",
+                    }}
+                  >
+                    ご注文ありがとうございました
+                  </div>
+                )}
+                {orderData?.isStatus === "complete" && (
+                  <IntegrationNotistack message="complete" variant="success" />
+                )}
                 <h2
                   style={{
                     textAlign: "center",
@@ -144,21 +168,47 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                   })}
                   {orderData?.isStatus === "not_payed" && (
                     <div style={{ textAlign: "center", marginTop: "10vw" }}>
-                      <Button variant="contained" onClick={() => {
-                        orderData.payment === "paypay" ? window.location.href = `/check/${orderData.id}/${orderData.payment}` : window.location.href = `/check/${orderData.checkoutId}/${orderData.payment}`;
-                      }}>決済情報の再取得</Button>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          orderData.payment === "paypay"
+                            ? (window.location.href = `/check/${orderData.id}/${orderData.payment}`)
+                            : (window.location.href = `/check/${orderData.checkoutId}/${orderData.payment}`);
+                        }}
+                      >
+                        決済情報の再取得
+                      </Button>
                     </div>
                   )}
                   {params.status === "failed" && (
                     <div style={{ margin: "30px 0" }}>
-                      <h2 style={{ textAlign: "center", fontSize: "20px", width: "80vw", margin: "auto" }}>
+                      <h2
+                        style={{
+                          textAlign: "center",
+                          fontSize: "20px",
+                          width: "80vw",
+                          margin: "auto",
+                        }}
+                      >
                         決済情報が見つかりませんでした。以下に表示されたコードを問い合わせフォームに記載してください。
                       </h2>
                       <div style={{ backgroundColor: "rgba(0,0,0,0.8)" }}>
-                        <p style={{ textAlign: "left", fontSize: "20px", width: "80vw", margin: "30px auto", overflowWrap: "break-word", color: "#ffffff" }}>{orderData?.checkoutId}</p>
+                        <p
+                          style={{
+                            textAlign: "left",
+                            fontSize: "20px",
+                            width: "80vw",
+                            margin: "30px auto",
+                            overflowWrap: "break-word",
+                            color: "#ffffff",
+                          }}
+                        >
+                          {orderData?.checkoutId}
+                        </p>
                       </div>
                       <div style={{ textAlign: "center" }}>
-                        <Button variant="contained"
+                        <Button
+                          variant="contained"
                           href="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform"
                         >
                           お問い合わせフォームへ
@@ -210,6 +260,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
         ) : (
           <LoadingAnimation type={"jelly"} />
         )}
-      </div></>
+      </div>
+    </>
   );
 };

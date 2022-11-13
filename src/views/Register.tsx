@@ -48,9 +48,7 @@ export const Register = () => {
   };
 
   const DeleteUserRedirect = () => {
-
     LoginPopup();
-
   };
 
   return (
@@ -117,9 +115,13 @@ export const Register = () => {
               </Button>
             </>
           )}
-          <ScrollDialog open={open} onClick={function (): void {
-            LoginPopup()
-          }} setIsClose={setOpen} />
+          <ScrollDialog
+            open={open}
+            onClick={function (): void {
+              LoginPopup();
+            }}
+            setIsClose={setOpen}
+          />
         </Box>
       ) : CorrectEmail(userEmail) && isLogin ? (
         <App />

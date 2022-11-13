@@ -1,5 +1,5 @@
 html {
-  background-color: #EEECE4;
+  background-color: #eeece4;
 }
 
 .box {
@@ -14,26 +14,25 @@ html {
 }
 
 p {
-  font-family: 'japan_l';
+  font-family: "japan_l";
 }
 
 h2 {
-  font-family: 'japan_l';
+  font-family: "japan_l";
   color: #707070;
 }
 
 @font-face {
-  font-family: 'thin';
+  font-family: "thin";
   src: url(./font/NotoSansJP-Thin.otf);
 }
-
 
 .japanese_thin {
   font-family: thin;
 }
 
 @font-face {
-  font-family: 'japan_l';
+  font-family: "japan_l";
   src: url(./font/Koruri-Light.ttf);
 }
 
@@ -43,12 +42,12 @@ h2 {
 }
 
 @font-face {
-  font-family: 'japan_b';
+  font-family: "japan_b";
   src: url(./font/Koruri-Bold.ttf);
 }
 
 @font-face {
-  font-family: 'japan_r';
+  font-family: "japan_r";
   src: url(./font/Koruri-Regular.ttf);
 }
 
@@ -64,7 +63,7 @@ h2 {
 
 .defaultButton {
   background-color: "#E6E6E6";
-  box-shadow: "none"
+  box-shadow: "none";
 }
 
 .plessButton {
@@ -77,11 +76,11 @@ h2 {
 }
 
 .themeFontColor {
-  color: #006C9B
+  color: #006c9b;
 }
 
 .themeBackgroundColor {
-  background-color: #006C9B
+  background-color: #006c9b;
 }
 
 div {
@@ -90,7 +89,7 @@ div {
 }
 
 .defaultButton {
-  background-color: #006C9B 0% 0% no-repeat padding-box;
+  background-color: #006c9b 0% 0% no-repeat padding-box;
   width: 23vw;
   height: 10vw;
   box-shadow: inset 5px 5px 5px #00000029;
@@ -107,7 +106,7 @@ div {
 }
 
 .over {
-  color: #006C9B;
+  color: #006c9b;
   text-decoration: underline;
 }
 

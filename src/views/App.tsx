@@ -1,12 +1,10 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
     window.location.href = "/";
-  }, [])
-  return (
-    <div></div>
-  )
+  }, []);
+  return <div></div>;
 }
 
-export default App
+export default App;
