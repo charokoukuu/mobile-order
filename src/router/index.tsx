@@ -38,42 +38,94 @@ const Router = () => {
     <div>
       <BrowserRouter>
         <div>
-          <DrawerLeft open={isMenu} setIsmenu={setIsMenu} onClick={function (item: string): void {
-            let url: string = "";
-            url = item === "ヘルプ" ? "/help" :
-              item === "注文履歴" ? "/history" :
-                item === "利用規約" ? "/terms" :
-                  item === "プライバシーポリシー" ? "/privacy" :
-                    item === "お問い合わせ" ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" :
-                      ""
-            window.location.href = url || "/";
-          }} />
-          <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
-            <Grid item xs={12} md={5} >
+          <DrawerLeft
+            open={isMenu}
+            setIsmenu={setIsMenu}
+            onClick={function (item: string): void {
+              let url: string = "";
+              url =
+                item === "ヘルプ"
+                  ? "/help"
+                  : item === "注文履歴"
+                  ? "/history"
+                  : item === "利用規約"
+                  ? "/terms"
+                  : item === "プライバシーポリシー"
+                  ? "/privacy"
+                  : item === "お問い合わせ"
+                  ? "https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform"
+                  : "";
+              window.location.href = url || "/";
+            }}
+          />
+          <Grid
+            container
+            alignItems="center"
+            justifyItems="center"
+            justifyContent={"center"}
+          >
+            <Grid item xs={12} md={5}>
               <AppBarWrapper>
                 <ResponsiveAppBar
-                  photoURL={user?.photoURL || "/static/images/avatar/2.jpg"} onClick={function (): void {
+                  photoURL={user?.photoURL || "/static/images/avatar/2.jpg"}
+                  onClick={function (): void {
                     setIsMenu(!isMenu);
-                  }} setAppBarHeight={setAppBarHeight} />
+                  }}
+                  setAppBarHeight={setAppBarHeight}
+                />
               </AppBarWrapper>
             </Grid>
           </Grid>
           {isLogin && (
-            <Grid container alignItems="center" justifyItems="center" justifyContent={"center"}>
+            <Grid
+              container
+              alignItems="center"
+              justifyItems="center"
+              justifyContent={"center"}
+            >
               <Grid item xs={12} md={5}>
                 <Routes>
-                  <Route path="/" element={<Menu appBarHeight={appBarHeight} />} />
+                  <Route
+                    path="/"
+                    element={<Menu appBarHeight={appBarHeight} />}
+                  />
                   <Route path="/register" element={<Register />} />
                   {/* <Route path="/test" element={<TestData />} /> */}
-                  <Route path="/order/:id" element={<OrderCompleted appBarHeight={appBarHeight} />} />
-                  <Route path="/order/:id/:status" element={<OrderCompleted appBarHeight={appBarHeight} />} />
-                  <Route path="/check/:id/:paymentType" element={<GetPaymentStatus />} />
-                  <Route path="/history" element={<History appBarHeight={appBarHeight} />} />
-                  <Route path="/terms" element={<Terms appBarHeight={appBarHeight} />} />
-                  <Route path="/privacy" element={<PrivacyPolicy appBarHeight={appBarHeight} />} />
+                  <Route
+                    path="/order/:id"
+                    element={<OrderCompleted appBarHeight={appBarHeight} />}
+                  />
+                  <Route
+                    path="/order/:id/:status"
+                    element={<OrderCompleted appBarHeight={appBarHeight} />}
+                  />
+                  <Route
+                    path="/check/:id/:paymentType"
+                    element={<GetPaymentStatus appBarHeight={appBarHeight} />}
+                  />
+                  <Route
+                    path="/history"
+                    element={<History appBarHeight={appBarHeight} />}
+                  />
+                  <Route
+                    path="/terms"
+                    element={<Terms appBarHeight={appBarHeight} />}
+                  />
+                  <Route
+                    path="/privacy"
+                    element={<PrivacyPolicy appBarHeight={appBarHeight} />}
+                  />
                   <Route path="/logout" element={<Redirect logout={true} />} />
-                  <Route path="/contact" element={<Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />} />
-                  <Route path="/help" element={<Help appBarHeight={appBarHeight} />} />
+                  <Route
+                    path="/contact"
+                    element={
+                      <Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />
+                    }
+                  />
+                  <Route
+                    path="/help"
+                    element={<Help appBarHeight={appBarHeight} />}
+                  />
                   <Route path="/admin" element={<Admin />} />
                   <Route
                     path="*"
@@ -92,14 +144,14 @@ const Router = () => {
             </Grid>
           )}
         </div>
-      </BrowserRouter >
+      </BrowserRouter>
       <Footer />
-    </div >
+    </div>
   );
 };
 
 const AppBarWrapper = styled.div`
- position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
