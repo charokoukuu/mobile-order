@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LoadingAnimation } from "../component/LoadingAnimation";
 import { PayPayGetStatus, StripeGetStatus } from "../api/SubmitGet";
-export const GetPaymentStatus = () => {
+import { Spacer } from "../component/SwipeTabs";
+interface Props {
+  appBarHeight: number;
+}
+export const GetPaymentStatus = ({ appBarHeight }: Props) => {
   const params = useParams();
   useEffect(() => {
     (async () => {
@@ -18,6 +22,7 @@ export const GetPaymentStatus = () => {
 
   return (
     <>
+      <Spacer appBarHeight={appBarHeight} mode={"history"} />
       <h2 style={{ textAlign: "center" }}>決済を確認中です</h2>
       <LoadingAnimation type={"orbit"} top="70%" />
     </>

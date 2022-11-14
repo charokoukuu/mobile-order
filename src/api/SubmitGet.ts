@@ -1,11 +1,23 @@
 import { MenuData, OrderData, UserData } from "../types";
-import { doc, getDocs, setDoc, collection, DocumentData, query, where, getDoc, limit, orderBy, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDocs,
+  setDoc,
+  collection,
+  DocumentData,
+  query,
+  where,
+  getDoc,
+  limit,
+  orderBy,
+  updateDoc,
+} from "firebase/firestore";
 import { auth, db, functions } from "../api/Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";
 
-export const hostUrl = window.location.protocol + "//" + window.location.host;;
+export const hostUrl = window.location.protocol + "//" + window.location.host;
 export const RandomID = () => {
   var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   var N = 16;
@@ -83,10 +95,7 @@ export const SearchCollectionDataGet = async (
 };
 
 //当日の全ユーザのオーダーを取得
-export const TodayAllOrderGet = async (
-  docId: string,
-  maxValue: number,
-) => {
+export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
   let data: DocumentData[] = [];
   const q = query(
     collection(db, docId),
@@ -128,16 +137,16 @@ export const GetSpecificData: (
   docId: string,
   collectionId: string
 ) => {
-    const docRef = doc(db, docId, collectionId);
-    const docSnap = await getDoc(docRef);
-    return new Promise((resolve, reject) => {
-      if (docSnap.exists()) {
-      } else {
-        reject("No such document!");
-      }
-      resolve(docSnap.data());
-    });
-  };
+  const docRef = doc(db, docId, collectionId);
+  const docSnap = await getDoc(docRef);
+  return new Promise((resolve, reject) => {
+    if (docSnap.exists()) {
+    } else {
+      reject("No such document!");
+    }
+    resolve(docSnap.data());
+  });
+};
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
   return new Promise<any>((resolve) => {
@@ -188,10 +197,7 @@ export const Payment = async (
     }
   } else if (type === "paypay") {
     try {
-      const paypay = httpsCallable(
-        functions,
-        "PayPayAPI"
-      );
+      const paypay = httpsCallable(functions, "PayPayAPI");
       const data: any = await paypay({
         orderId: orderId,
         redirectUrl: hostUrl,
@@ -199,8 +205,6 @@ export const Payment = async (
         orderDescription: orderDescription,
       });
       window.location.href = data.data.BODY.data.url;
-
-
     } catch (err) {
       alert(
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
@@ -213,7 +217,6 @@ export const Payment = async (
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
 export const StripeGetStatus = async (checkoutId: string) => {
-
   const CheckStatusPayment = httpsCallable(functions, "CheckStripePayment");
   try {
     const result: any = await CheckStatusPayment({
@@ -233,10 +236,8 @@ export const StripeGetStatus = async (checkoutId: string) => {
   } catch (error) {
     console.log(error);
   }
-
-}
+};
 export const PayPayGetStatus = async (orderId: string) => {
-
   const CheckStatusPayment = httpsCallable(functions, "PayPayGetStatus");
   try {
     const result: any = await CheckStatusPayment({
@@ -256,25 +257,20 @@ export const PayPayGetStatus = async (orderId: string) => {
   } catch (error) {
     console.log(error);
   }
-
-}
+};
 
 export const AssignOrderNumber = async (orderId: string) => {
-  return new Promise(async (resolve) => {
-    const currentNumber = await GetSpecificData("counter", "oneDateAllOrderCount");
-    console.log(currentNumber);
-    const orderNumber = currentNumber?.count + 1;
-    const washingtonRef = doc(db, "counter", "oneDateAllOrderCount");
-    await updateDoc(washingtonRef, {
-      count: orderNumber,
+  const addCount = httpsCallable(functions, "addCount");
+  try {
+    const result: any = await addCount();
+    const docId = doc(db, "order", orderId);
+    await updateDoc(docId, {
+      orderNumber: result.data,
     });
-    const washingtonRef2 = doc(db, "order", orderId);
-    await updateDoc(washingtonRef2, {
-      orderNumber: orderNumber,
-    });
-    resolve(orderNumber);
-  });
-}
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export class CountOrder {
   private oneTodayOrder: OrderData[] = [];
@@ -284,7 +280,7 @@ export class CountOrder {
   constructor(
     private readonly setOrderCount: (count: number[]) => void,
     private readonly setOrderTitle: (titles: any[]) => void
-  ) { }
+  ) {}
   TitleCountMethod = () => {
     const titles = this.getTitle();
     const count = this.getCount();
