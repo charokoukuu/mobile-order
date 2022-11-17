@@ -29,6 +29,8 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
+  // aapBerの高さを取得, これを使ってスペーサーを設定するためのdisable
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const appBar = useRef<any>(null);
 
   React.useEffect(() => {

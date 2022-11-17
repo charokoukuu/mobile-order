@@ -7,7 +7,7 @@ import FormLabel from "@mui/material/FormLabel";
 
 interface ControlledRadioButtonsGroupProps {
   payment: string;
-  setPayment: (payment: any) => void;
+  setPayment: (payment: unknown) => void;
 }
 export default function ControlledRadioButtonsGroup(
   props: ControlledRadioButtonsGroupProps
