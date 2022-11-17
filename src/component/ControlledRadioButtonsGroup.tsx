@@ -7,7 +7,9 @@ import FormLabel from "@mui/material/FormLabel";
 
 interface ControlledRadioButtonsGroupProps {
   payment: string;
-  setPayment: (payment: unknown) => void;
+  // Paymentの型が不明なので一旦disable
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setPayment: (payment: any) => void;
 }
 export default function ControlledRadioButtonsGroup(
   props: ControlledRadioButtonsGroupProps
