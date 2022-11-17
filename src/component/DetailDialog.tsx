@@ -1,9 +1,11 @@
+// anyを許容するdisable,後でPayPayやStripeのAPIのデータ構造調べて型定義する
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Dialog, Grid } from "@mui/material";
 import { MenuData } from "../types";
 import "../views/styles/App.css";
 import { createContext, useContext, useEffect, useState } from "react";
 import { MultiplePurchase } from "./MultiplePurchase";
-const menuData = createContext<MenuData>;
+const menuData = createContext<any>(null);
 let baseMenuData: MenuData;
 interface DetailDialogProps {
   open: boolean;
@@ -22,8 +24,8 @@ export const DetailDialog = (props: DetailDialogProps) => {
   const [purchaseCount, setPurchaseCount] = useState<number>(1);
   useEffect(() => {
     setMenu(props.menu);
-    setPurchaseCount(props.initialPurchaseCount || 1);
-  }, [props.menu, props.initialPurchaseCount]);
+    baseMenuData = { ...(props.menu as MenuData) };
+  }, [props.menu]);
   useEffect(() => {
     setPurchaseCount(props.initialPurchaseCount || 1);
   }, [props.initialPurchaseCount]);
@@ -176,7 +178,7 @@ const MaterialSizeSelectCard = () => {
     >
       <div style={{ textAlign: "center", margin: "0% 0", fontSize: "2rem" }}>
         <div style={{ padding: "5% 0", margin: "5% 0" }}>
-          {menu !== undefined && <SelectedCard price={menu.price} />}
+          {menu !== undefined && <SelectedCard />}
         </div>
       </div>
     </div>
@@ -185,7 +187,7 @@ const MaterialSizeSelectCard = () => {
 
 const SelectedCard = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const setMenu = useContext(menuData);
+  const { setMenu } = useContext(menuData);
   useEffect(() => {
     setMenu((prevState: any) => ({
       ...prevState,

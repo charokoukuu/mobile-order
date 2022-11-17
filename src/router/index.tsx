@@ -101,7 +101,7 @@ const Router = () => {
                   />
                   <Route
                     path="/check/:id/:paymentType"
-                    element={<GetPaymentStatus />}
+                    element={<GetPaymentStatus appBarHeight={appBarHeight} />}
                   />
                   <Route
                     path="/history"
