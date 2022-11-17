@@ -1,28 +1,14 @@
-import { Button } from "@mui/material";
-import { httpsCallable } from "firebase/functions";
-import IntegrationNotistack from "../component/IntegrationNotistack";
-import { functions } from "../api/Firebase";
+import { RedirectModal } from "../component/RedirectModal";
+import { Spacer } from "../component/SwipeTabs";
+interface Props {
+  appBarHeight: number;
+}
 
-export const TestData = () => {
-  const Pay = () => {
-    const paypay = httpsCallable(functions, "test");
-    (async () => {
-      // PayPayの型がわからないので一旦disable
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data: any = await paypay({
-        orderId: "ljnvkjdnjdfnjklsf",
-        redirectUrl: "https://mobile-order-4d383.web.app",
-        amount: 300,
-        orderDescription: "test",
-      });
-      console.log(data);
-    })();
-  };
+export const TestData = ({ appBarHeight }: Props) => {
   return (
     <div>
-      <h1>TestData</h1>
-      <Button onClick={Pay}>Pay</Button>
-      <IntegrationNotistack message={"支払い完了"} variant={"success"} />
+      <Spacer appBarHeight={appBarHeight} mode={"history"} />
+      <RedirectModal />
     </div>
   );
 };
