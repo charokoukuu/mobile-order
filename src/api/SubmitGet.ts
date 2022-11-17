@@ -263,20 +263,16 @@ export const PayPayGetStatus = async (orderId: string) => {
 };
 
 export const AssignOrderNumber = async (orderId: string) => {
-  const currentNumber = await GetSpecificData(
-    "counter",
-    "oneDateAllOrderCount"
-  );
-  console.log(currentNumber);
-  const orderNumber = currentNumber?.count + 1;
-  const washingtonRef = doc(db, "counter", "oneDateAllOrderCount");
-  await updateDoc(washingtonRef, {
-    count: orderNumber,
-  });
-  const washingtonRef2 = doc(db, "order", orderId);
-  await updateDoc(washingtonRef2, {
-    orderNumber: orderNumber,
-  });
+  const addCount = httpsCallable(functions, "addCount");
+  try {
+    const result: any = await addCount();
+    const docId = doc(db, "order", orderId);
+    await updateDoc(docId, {
+      orderNumber: result.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export class CountOrder {
