@@ -3,8 +3,8 @@ import { MenuData } from "../types";
 import "../views/styles/App.css";
 import { createContext, useContext, useEffect, useState } from "react";
 import { MultiplePurchase } from "./MultiplePurchase";
-const menuData = createContext<any>(null);
-let baseMenuData: any;
+const menuData = createContext<MenuData>;
+let baseMenuData: MenuData;
 interface DetailDialogProps {
   open: boolean;
   menu: MenuData | undefined;
@@ -22,8 +22,8 @@ export const DetailDialog = (props: DetailDialogProps) => {
   const [purchaseCount, setPurchaseCount] = useState<number>(1);
   useEffect(() => {
     setMenu(props.menu);
-    baseMenuData = { ...props.menu };
-  }, [props.menu]);
+    setPurchaseCount(props.initialPurchaseCount || 1);
+  }, [props.menu, props.initialPurchaseCount]);
   useEffect(() => {
     setPurchaseCount(props.initialPurchaseCount || 1);
   }, [props.initialPurchaseCount]);
@@ -183,9 +183,9 @@ const MaterialSizeSelectCard = () => {
   );
 };
 
-const SelectedCard = (props: { price: number }) => {
+const SelectedCard = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const { setMenu } = useContext(menuData);
+  const setMenu = useContext(menuData);
   useEffect(() => {
     setMenu((prevState: any) => ({
       ...prevState,
