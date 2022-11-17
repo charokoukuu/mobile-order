@@ -7,6 +7,8 @@ export const TestData = () => {
   const Pay = () => {
     const paypay = httpsCallable(functions, "test");
     (async () => {
+      // PayPayの型がわからないので一旦disable
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const data: any = await paypay({
         orderId: "ljnvkjdnjdfnjklsf",
         redirectUrl: "https://mobile-order-4d383.web.app",
