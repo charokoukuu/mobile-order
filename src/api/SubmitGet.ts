@@ -107,13 +107,10 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
     limit(maxValue)
   );
   const querySnapshot = await getDocs(q);
-  return new Promise<DocumentData[]>((resolve, reject) => {
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data());
-    });
-    resolve(data);
-    reject("error");
+  querySnapshot.forEach((doc) => {
+    data.push(doc.data());
   });
+  return data;
 };
 
 export const isTodayUserOrderGet = async (userId: string) => {
@@ -346,3 +343,22 @@ export class CountOrder {
     });
   }
 }
+
+export const Timer = (time: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("");
+    }, time);
+  });
+};
+
+export const afterToPage = async (setTimeNumber: (num: number) => void) => {
+  let timer = 10;
+  setInterval(() => {
+    timer--;
+    setTimeNumber(timer);
+  }, 1000);
+  Timer(10000).then(() => {
+    window.location.href = "/register";
+  });
+};

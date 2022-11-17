@@ -8,7 +8,7 @@ export const TestData = ({ appBarHeight }: Props) => {
   return (
     <div>
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
-      <RedirectModal />
+      {/* <RedirectModal /> */}
     </div>
   );
 };
