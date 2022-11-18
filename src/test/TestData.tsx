@@ -6,11 +6,12 @@ interface Props {
 }
 
 export const TestData = ({ appBarHeight }: Props) => {
-  const [isModal, setIsModal] = useState<boolean>(true);
+  const [isModal, setIsModal] = useState<boolean>(false);
   return (
     <div>
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
       <RedirectModal isModal={isModal} countTimer={10} toURL="/register" />
+      <button onClick={() => setIsModal(true)}>モーダルを開く</button>
     </div>
   );
 };
