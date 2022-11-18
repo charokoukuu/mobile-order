@@ -1,6 +1,6 @@
 import { Modal } from "@mui/material";
-import { useState, useEffect } from "react";
-import { afterToPage } from "../api/SubmitGet";
+import { useState, useEffect, useRef } from "react";
+import { NewTimer } from "../api/SubmitGet";
 
 interface RedirectModalProps {
   isModal: boolean;
@@ -9,15 +9,18 @@ interface RedirectModalProps {
 }
 
 export const RedirectModal = (props: RedirectModalProps) => {
-  const [timeNumber, setTimeNumber] = useState<number>(props.countTimer);
+  const [timeNumber, setTimeNumber] = useState<number>(props.countTimer / 1000);
+  const countTimer = useRef(
+    new NewTimer(props.countTimer, setTimeNumber, "/register")
+  );
 
   useEffect(() => {
     if (props.isModal === true) {
-      (async () => {
-        afterToPage(timeNumber, setTimeNumber, props.toURL);
+      (() => {
+        countTimer.current.clearTimer();
       })();
     }
-  }, [timeNumber, props.isModal, props.toURL]);
+  }, [props.isModal, props.toURL]);
 
   return (
     <>
@@ -79,7 +82,8 @@ export const RedirectModal = (props: RedirectModalProps) => {
                 }}
                 onClick={() => {
                   // メニューに戻る
-                  window.location.href = props.toURL;
+                  // window.location.href = props.toURL;
+                  countTimer.current.clearTimer();
                 }}
               >
                 メニュー画面に戻る

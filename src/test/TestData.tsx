@@ -10,7 +10,7 @@ export const TestData = ({ appBarHeight }: Props) => {
   return (
     <div>
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
-      <RedirectModal isModal={isModal} countTimer={10} toURL="/register" />
+      <RedirectModal isModal={isModal} countTimer={5000} toURL="/register" />
       <button onClick={() => setIsModal(true)}>モーダルを開く</button>
     </div>
   );

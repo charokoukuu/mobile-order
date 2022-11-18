@@ -367,34 +367,44 @@ export const afterToPage = async (
   });
 };
 
-// class NewTimer {
-//   public timer: number;
-//   private setTimeNumber: (time: number) => void;
-//   constructor(timeNumber: number) {
-//     this.timer = timeNumber;
-//   }
+export class NewTimer {
+  private countTimer: any;
 
-//   startTimer = () => {
-//     setTimeout(() => {
-//       return;
-//     }, this.timer);
-//   };
-//   stopTimer = () => {
-//     clearTimeout(this.timer);
-//   };
+  constructor(
+    private readonly msSecWaitTime: number,
+    private readonly setTimeNumber: (time: number) => void,
+    private readonly toUrl: string
+  ) {
+    this.msSecWaitTime = msSecWaitTime;
+    this.setTimeNumber = setTimeNumber;
+    this.toUrl = toUrl;
+    this.countTimer = null;
+  }
 
-//   afterToPage = async (
-//     countDownNumber: number,
-//     setTimeNumber: (num: number) => void,
-//     toUrl: string
-//   ) => {
-//     let timer = countDownNumber;
-//     setInterval(() => {
-//       timer--;
-//       setTimeNumber(timer);
-//     }, 1000);
-//     Timer(10000).then(() => {
-//       window.location.href = toUrl;
-//     });
-//   };
-// }
+  startTimer = () => {
+    if (this.countTimer !== null) {
+      this.clearTimer();
+    }
+    return new Promise((resolve) => {
+      this.countTimer = setTimeout(() => {
+        resolve("");
+      }, this.msSecWaitTime);
+    });
+  };
+
+  clearTimer = () => {
+    clearTimeout(this.countTimer);
+    this.countTimer = null;
+  };
+
+  afterToPage = async () => {
+    let time = this.msSecWaitTime / 1000;
+    setInterval(() => {
+      time--;
+      this.setTimeNumber(time);
+    }, 1000);
+    await this.startTimer();
+    console.log("after");
+    window.location.href = this.toUrl;
+  };
+}
