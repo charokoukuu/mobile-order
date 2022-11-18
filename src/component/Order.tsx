@@ -13,7 +13,7 @@ import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
 import ConfirmDialog from "./ConfirmDialog";
 import { DetailDialog } from "./DetailDialog";
-import { afterToPage, CountOrder, Timer } from "../api/SubmitGet";
+import { afterToPage, CountOrder } from "../api/SubmitGet";
 import { RedirectModal } from "./RedirectModal";
 
 const Transition = forwardRef(function Transition(
