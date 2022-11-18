@@ -352,13 +352,49 @@ export const Timer = (time: number) => {
   });
 };
 
-export const afterToPage = async (setTimeNumber: (num: number) => void) => {
-  let timer = 10;
+export const afterToPage = async (
+  countDownNumber: number,
+  setTimeNumber: (num: number) => void,
+  toUrl: string
+) => {
+  let timer = countDownNumber;
   setInterval(() => {
     timer--;
     setTimeNumber(timer);
   }, 1000);
   Timer(10000).then(() => {
-    window.location.href = "/register";
+    window.location.href = toUrl;
   });
 };
+
+// class NewTimer {
+//   public timer: number;
+//   private setTimeNumber: (time: number) => void;
+//   constructor(timeNumber: number) {
+//     this.timer = timeNumber;
+//   }
+
+//   startTimer = () => {
+//     setTimeout(() => {
+//       return;
+//     }, this.timer);
+//   };
+//   stopTimer = () => {
+//     clearTimeout(this.timer);
+//   };
+
+//   afterToPage = async (
+//     countDownNumber: number,
+//     setTimeNumber: (num: number) => void,
+//     toUrl: string
+//   ) => {
+//     let timer = countDownNumber;
+//     setInterval(() => {
+//       timer--;
+//       setTimeNumber(timer);
+//     }, 1000);
+//     Timer(10000).then(() => {
+//       window.location.href = toUrl;
+//     });
+//   };
+// }
