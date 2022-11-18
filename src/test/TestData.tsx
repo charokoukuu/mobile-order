@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RedirectModal } from "../component/RedirectModal";
 import { Spacer } from "../component/SwipeTabs";
 interface Props {
@@ -5,10 +6,11 @@ interface Props {
 }
 
 export const TestData = ({ appBarHeight }: Props) => {
+  const [isModal, setIsModal] = useState<boolean>(true);
   return (
     <div>
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
-      <RedirectModal isModal={true} countTimer={3000} />
+      <RedirectModal isModal={isModal} countTimer={10} toURL="/register" />
     </div>
   );
 };

@@ -1,20 +1,28 @@
 import { Modal } from "@mui/material";
+import { useState, useEffect } from "react";
+import { afterToPage } from "../api/SubmitGet";
 
 interface RedirectModalProps {
   isModal: boolean;
   countTimer: number;
+  toURL: string;
 }
 
 export const RedirectModal = (props: RedirectModalProps) => {
+  const [timeNumber, setTimeNumber] = useState<number>(props.countTimer);
+
+  useEffect(() => {
+    if (props.isModal === true) {
+      (async () => {
+        afterToPage(timeNumber, setTimeNumber, props.toURL);
+      })();
+    }
+  }, [timeNumber, props.isModal, props.toURL]);
+
   return (
     <>
       {props.isModal ? (
-        <Modal
-          open={props.isModal}
-          onClose={() => {
-            // props.setIsModal(false);
-          }}
-        >
+        <Modal open={props.isModal}>
           <div
             style={{
               backgroundColor: "#EFEFEF",
@@ -47,10 +55,17 @@ export const RedirectModal = (props: RedirectModalProps) => {
               選択された商品の中に在庫切れの商品があります。
               商品をご確認の上もう一度ご注文ください
               <br />
-              {props.countTimer}
+              {timeNumber}
               秒後に自動的に閉じます。
             </p>
-            <div style={{ textAlign: "center" }}>
+            <div
+              style={{
+                display: "inline-grid",
+                alignItems: "center",
+                width: "100%",
+                margin: "0 auto",
+              }}
+            >
               <button
                 style={{
                   backgroundColor: "#FF0000",
@@ -64,7 +79,7 @@ export const RedirectModal = (props: RedirectModalProps) => {
                 }}
                 onClick={() => {
                   // メニューに戻る
-                  window.location.href = "/register";
+                  window.location.href = props.toURL;
                 }}
               >
                 メニュー画面に戻る
