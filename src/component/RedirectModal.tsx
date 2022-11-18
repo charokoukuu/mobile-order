@@ -46,7 +46,9 @@ export const RedirectModal = (props: RedirectModalProps) => {
             >
               選択された商品の中に在庫切れの商品があります。
               商品をご確認の上もう一度ご注文ください
-              {props.countTimer} 秒後に自動的に閉じます。
+              <br />
+              {props.countTimer}
+              秒後に自動的に閉じます。
             </p>
             <div style={{ textAlign: "center" }}>
               <button

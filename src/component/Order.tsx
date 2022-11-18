@@ -166,8 +166,9 @@ export const Order = (props: OrderProps) => {
                 }}
                 onClick={() => {
                   setIsLoad(true);
-                  // props.onNext(payment, setIsLoad);
-                  setIsModal(true);
+                  // ここは非同期処理で売り切れチェックしてから次のページに遷移
+                  // setIsModal(true);
+                  props.onNext(payment, setIsLoad);
                   (async () => {
                     afterToPage(setCountTimer);
                   })();
