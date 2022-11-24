@@ -20,6 +20,7 @@
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.3",
+    "eslint-plugin-prettier": "^4.2.1",
     "firebase": "^9.8.3",
     "notistack": "^2.0.5",
     "promise": "^8.1.0",
@@ -79,6 +80,12 @@
   "devDependencies": {
     "@types/react-slick": "^0.23.9",
     "@types/react-swipeable-views": "^0.13.1",
-    "@types/react-window": "^1.8.5"
+    "@types/react-window": "^1.8.5",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

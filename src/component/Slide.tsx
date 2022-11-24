@@ -13,7 +13,7 @@ export default function Slide() {
   };
 
   // slideSetting
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -27,23 +27,34 @@ export default function Slide() {
   const Slides = [
     [
       "チケットの受け取りには、画面に表示されたQRコードを利用します",
-      <QrCodeMock style={SlideStyle} />,
+      <QrCodeMock style={SlideStyle} key="0" />,
     ],
-    ["21階に設置したQRコードをリーダーにかざしてください", <PhoneMock style={SlideStyle}/>],
+    [
+      "21階に設置したQRコードをリーダーにかざしてください",
+      <PhoneMock style={SlideStyle} key="1" />,
+    ],
   ];
 
   return (
     <Slider {...settings}>
       {Slides.map((slide, index) => {
         return (
-          <div key={index} >
-            <p style={{ margin: "5% 10%", color: "#000000" }}>{slide[0] as string}</p>
-            <div style={{display:"flex", justifyContent: "center" , margin:"0 auto"}}>
+          <div key={index}>
+            <p style={{ margin: "5% 10%", color: "#000000" }}>
+              {slide[0] as string}
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                margin: "0 auto",
+              }}
+            >
               {slide[1]}
             </div>
           </div>
         );
       })}
-    </Slider >
+    </Slider>
   );
 }

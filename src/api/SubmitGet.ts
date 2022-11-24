@@ -1,3 +1,5 @@
+// anyを許容するdisable,後でPayPayやStripeのAPIのデータ構造調べて型定義する
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MenuData, OrderData, UserData } from "../types";
 import {
   doc,
@@ -19,8 +21,8 @@ import { paymentType } from "../component/Order";
 
 export const hostUrl = window.location.protocol + "//" + window.location.host;
 export const RandomID = () => {
-  var S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  var N = 16;
+  const S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const N = 16;
   return Array.from(crypto.getRandomValues(new Uint8Array(N)))
     .map((n) => S[n % S.length])
     .join("");
@@ -34,7 +36,7 @@ export const CorrectEmail = (email: string) => {
 };
 
 export const GetAllData = async (collectionName: string) => {
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
   const querySnapshot = await getDocs(collection(db, collectionName));
   return new Promise<DocumentData[]>((resolve, reject) => {
     try {
@@ -78,7 +80,7 @@ export const SearchCollectionDataGet = async (
   seachId: string,
   maxValue: number
 ) => {
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
   const q = query(
     collection(db, docId),
     where(collectionId, "==", seachId),
@@ -91,12 +93,13 @@ export const SearchCollectionDataGet = async (
       data.push(doc.data());
     });
     resolve(data);
+    reject("error");
   });
 };
 
 //当日の全ユーザのオーダーを取得
 export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
-  let data: DocumentData[] = [];
+  const data: DocumentData[] = [];
   const q = query(
     collection(db, docId),
     orderBy("date", "desc"),
@@ -109,26 +112,25 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
       data.push(doc.data());
     });
     resolve(data);
+    reject("error");
   });
 };
 
 export const isTodayUserOrderGet = async (userId: string) => {
-  return new Promise<boolean>(async (resolve, reject) => {
-    let isData = false;
-    const q = query(
-      collection(db, "order"),
-      orderBy("date", "desc"),
-      where("date", ">", Yesterday()),
-      where("user.uid", "==", userId),
-      where("isStatus", "==", "ordered"),
-      limit(10)
-    );
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      isData = true;
-    });
-    resolve(isData);
+  let isData = false;
+  const q = query(
+    collection(db, "order"),
+    orderBy("date", "desc"),
+    where("date", ">", Yesterday()),
+    where("user.uid", "==", userId),
+    where("isStatus", "==", "ordered"),
+    limit(10)
+  );
+  const querySnapshot = await getDocs(q);
+  await querySnapshot.forEach(() => {
+    isData = true;
   });
+  return isData;
 };
 export const GetSpecificData: (
   docId: string,
@@ -141,6 +143,7 @@ export const GetSpecificData: (
   const docSnap = await getDoc(docRef);
   return new Promise((resolve, reject) => {
     if (docSnap.exists()) {
+      // truthy
     } else {
       reject("No such document!");
     }
@@ -170,12 +173,12 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
 
 export const Payment = async (
   type: paymentType,
-  orderId: String,
+  orderId: string,
   totalPrice: number,
   orderData: MenuData[],
   callback: (e: boolean) => void
 ) => {
-  const orderDescription: String = orderData
+  const orderDescription: string = orderData
     .map((menu) => menu.title)
     .join(",");
   if (type === "stripe") {

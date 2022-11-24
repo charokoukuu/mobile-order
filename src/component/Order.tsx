@@ -40,11 +40,13 @@ export const Order = (props: OrderProps) => {
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   const [orderCount, setOrderCount] = useState<number[]>([]);
   const [orderTitle, setOrderTitle] = useState<MenuData[]>();
-  const CountOrderData = useRef<CountOrder>(new CountOrder(setOrderCount, setOrderTitle));
+  const CountOrderData = useRef<CountOrder>(
+    new CountOrder(setOrderCount, setOrderTitle)
+  );
   const [initialValue, setInitialValue] = useState<number>();
   useEffect(() => {
     CountOrderData.current.menuCount(props.orderData);
-  }, [props])
+  }, [props]);
   return (
     <div>
       <Dialog
@@ -69,63 +71,120 @@ export const Order = (props: OrderProps) => {
         </AppBar>
         <Box style={{ maxWidth: "900px", margin: "0 auto" }} />
         <div>
-          <div className="box" style={{ display: "flex", padding: "5% 0", marginBottom: "5%", backgroundColor: "#EEECE4", justifyContent: props.orderData.length === 1 ? "center" : "left" }}>
+          <div
+            className="box"
+            style={{
+              display: "flex",
+              padding: "5% 0",
+              marginBottom: "5%",
+              backgroundColor: "#EEECE4",
+              justifyContent: props.orderData.length === 1 ? "center" : "left",
+            }}
+          >
             <Box />
             {orderTitle?.map((menu, index) => {
               return (
                 <div key={index} style={{ margin: "0 4%" }}>
-                  <FoodCard count={orderCount[index]} menu={menu} deleteButton={true} onClick={function (): void {
-                    setInitialValue(orderCount[index]);
-                    setChoosedMenu(menu);
-                    setDetailDialogOpen(true);
-                  }} onDelete={function (): void {
-                    setChoosedMenu(menu);
-                    setIsDelete(true);
-                  }} />
-                  <DetailDialog initialPurchaseCount={initialValue} open={detailDialogOpen} menu={choosedMenu} onDelete={() => {
-                    setDetailDialogOpen(false);
-                    choosedMenu && props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
-                  }} onPrev={() => {
-                    setDetailDialogOpen(false);
-                  }} isAddCart={false} />
+                  <FoodCard
+                    count={orderCount[index]}
+                    menu={menu}
+                    deleteButton={true}
+                    onClick={function (): void {
+                      setInitialValue(orderCount[index]);
+                      setChoosedMenu(menu);
+                      setDetailDialogOpen(true);
+                    }}
+                    onDelete={function (): void {
+                      setChoosedMenu(menu);
+                      setIsDelete(true);
+                    }}
+                  />
+                  <DetailDialog
+                    initialPurchaseCount={initialValue}
+                    open={detailDialogOpen}
+                    menu={choosedMenu}
+                    onDelete={() => {
+                      setDetailDialogOpen(false);
+                      choosedMenu &&
+                        props.onDelete(
+                          choosedMenu,
+                          props.orderData.indexOf(choosedMenu)
+                        );
+                    }}
+                    onPrev={() => {
+                      setDetailDialogOpen(false);
+                    }}
+                    isAddCart={false}
+                  />
                 </div>
-              )
-            })
-            }
+              );
+            })}
           </div>
         </div>
-        <ConfirmDialog open={isDelete} OnConfirm={function (): void {
-          choosedMenu && props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
-          setIsDelete(false);
-        }} OnCancel={function (): void {
-          setIsDelete(false);
-        }} title={"注文を削除"} content={choosedMenu?.title + "をカートから削除しますか？" || ""} color={"error"} yesText={"削除"} noText={"いいえ"} />
+        <ConfirmDialog
+          open={isDelete}
+          OnConfirm={function (): void {
+            choosedMenu &&
+              props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
+            setIsDelete(false);
+          }}
+          OnCancel={function (): void {
+            setIsDelete(false);
+          }}
+          title={"注文を削除"}
+          content={choosedMenu?.title + "をカートから削除しますか？" || ""}
+          color={"error"}
+          yesText={"削除"}
+          noText={"いいえ"}
+        />
         <div style={{ textAlign: "center", margin: "4% 0" }}>
-          <div style={{ fontSize: "3rem", color: "#006C9B" }}><span style={{ fontSize: "2rem" }}>{props.orderData.length}点</span> ¥{props.totalPrice}</div>
+          <div style={{ fontSize: "3rem", color: "#006C9B" }}>
+            <span style={{ fontSize: "2rem" }}>{props.orderData.length}点</span>{" "}
+            ¥{props.totalPrice}
+          </div>
         </div>
         <Divider />
-        <ControlledRadioButtonsGroup payment={payment} setPayment={setPayment} />
+        <ControlledRadioButtonsGroup
+          payment={payment}
+          setPayment={setPayment}
+        />
         <Divider />
         <div style={{ margin: "3% 10%" }}>
-          <div >
-            {!isLoad && <Button
-              style={{ width: "100%", marginTop: "3%", backgroundColor: payment === "" ? "#848484" : "#006C9B", color: "white", borderRadius: "7px", fontSize: "22px" }}
-              onClick={() => {
-                setIsLoad(true);
-                props.onNext(payment, setIsLoad);
-              }}
-              variant="contained"
-              disabled={payment === ""}
-            >
-              購入する
-            </Button>
-            }
+          <div>
+            {!isLoad && (
+              <Button
+                style={{
+                  width: "100%",
+                  marginTop: "3%",
+                  backgroundColor: payment === "" ? "#848484" : "#006C9B",
+                  color: "white",
+                  borderRadius: "7px",
+                  fontSize: "22px",
+                }}
+                onClick={() => {
+                  setIsLoad(true);
+                  props.onNext(payment, setIsLoad);
+                }}
+                variant="contained"
+                disabled={payment === ""}
+              >
+                購入する
+              </Button>
+            )}
             {isLoad && <LoadingAnimation type={"orbit"} />}
           </div>
-          <div >
+          <div>
             <Button
               disabled={isLoad}
-              style={{ width: "100%", marginTop: "3%", borderColor: isLoad ? "#707070" : "#006C9B", color: isLoad ? "#707070" : "#006C9B", borderRadius: "7px", fontSize: "22px", opacity: isLoad ? "0.5" : "1" }}
+              style={{
+                width: "100%",
+                marginTop: "3%",
+                borderColor: isLoad ? "#707070" : "#006C9B",
+                color: isLoad ? "#707070" : "#006C9B",
+                borderRadius: "7px",
+                fontSize: "22px",
+                opacity: isLoad ? "0.5" : "1",
+              }}
               onClick={props.onPrev}
               variant="outlined"
             >

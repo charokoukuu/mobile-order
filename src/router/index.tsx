@@ -42,7 +42,7 @@ const Router = () => {
             open={isMenu}
             setIsmenu={setIsMenu}
             onClick={function (item: string): void {
-              let url: string = "";
+              let url = "";
               url =
                 item === "ヘルプ"
                   ? "/help"
