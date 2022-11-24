@@ -163,7 +163,6 @@ export const Order = (props: OrderProps) => {
                 }}
                 onClick={() => {
                   setIsLoad(true);
-                  // ここは非同期処理で売り切れチェックしてから次のページに遷移
                   props.onNext(payment, setIsLoad);
                 }}
                 variant="contained"
