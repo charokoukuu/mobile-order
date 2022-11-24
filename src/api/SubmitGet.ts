@@ -107,10 +107,13 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
     limit(maxValue)
   );
   const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    data.push(doc.data());
+  return new Promise<DocumentData[]>((resolve, reject) => {
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
+    resolve(data);
+    reject("error");
   });
-  return data;
 };
 
 export const isTodayUserOrderGet = async (userId: string) => {
@@ -342,69 +345,4 @@ export class CountOrder {
       return this.words.filter((x: any) => x === name).length;
     });
   }
-}
-
-export const Timer = (time: number) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("");
-    }, time);
-  });
-};
-
-export const afterToPage = async (
-  countDownNumber: number,
-  setTimeNumber: (num: number) => void,
-  toUrl: string
-) => {
-  let timer = countDownNumber;
-  setInterval(() => {
-    timer--;
-    setTimeNumber(timer);
-  }, 1000);
-  Timer(10000).then(() => {
-    window.location.href = toUrl;
-  });
-};
-
-export class NewTimer {
-  private countTimer: any;
-
-  constructor(
-    private readonly msSecWaitTime: number,
-    private readonly setTimeNumber: (time: number) => void,
-    private readonly toUrl: string
-  ) {
-    this.msSecWaitTime = msSecWaitTime;
-    this.setTimeNumber = setTimeNumber;
-    this.toUrl = toUrl;
-    this.countTimer = null;
-  }
-
-  startTimer = () => {
-    if (this.countTimer !== null) {
-      this.clearTimer();
-    }
-    return new Promise((resolve) => {
-      this.countTimer = setTimeout(() => {
-        resolve("");
-      }, this.msSecWaitTime);
-    });
-  };
-
-  clearTimer = () => {
-    clearTimeout(this.countTimer);
-    this.countTimer = null;
-  };
-
-  afterToPage = async () => {
-    let time = this.msSecWaitTime / 1000;
-    setInterval(() => {
-      time--;
-      this.setTimeNumber(time);
-    }, 1000);
-    await this.startTimer();
-    console.log("after");
-    window.location.href = this.toUrl;
-  };
 }
