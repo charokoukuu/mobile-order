@@ -126,7 +126,10 @@ const Router = () => {
                     path="/help"
                     element={<Help appBarHeight={appBarHeight} />}
                   />
-                  <Route path="/admin" element={<Admin />} />
+                  <Route
+                    path="/admin"
+                    element={<Admin appBarHeight={appBarHeight} />}
+                  />
                   <Route
                     path="*"
                     element={
