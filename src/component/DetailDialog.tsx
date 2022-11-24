@@ -172,6 +172,7 @@ const MaterialMenuCard = () => {
               }}
             >
               △ 残りわずか
+              {/* {menu?.quantity} */}
             </p>
           )}
         </div>
