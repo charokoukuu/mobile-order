@@ -13,6 +13,8 @@ import { LoadingAnimation } from "../component/LoadingAnimation";
 import { auth } from "../api/Firebase";
 import SwipeTabs from "../component/SwipeTabs";
 import IntegrationNotistack from "../component/IntegrationNotistack";
+import axios from "axios";
+import { RedirectModal } from "../component/RedirectModal";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
@@ -30,6 +32,8 @@ export const Menu = ({ appBarHeight }: Props) => {
   const [orderDialog, setOrderDialog] = useState<boolean>(false);
   const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
   const [isTodayNotReceived, setIsTodayNotReceived] = useState<boolean>(false);
+  const [isModal, setIsModal] = useState<boolean>(false);
+
   useEffect(() => {
     (async () => {
       try {
@@ -100,9 +104,29 @@ export const Menu = ({ appBarHeight }: Props) => {
                   menu: orderData,
                   payment: payment,
                 });
-                Payment(payment, orderId, totalPrice, orderData, (e) => {
-                  setIsLoad(e);
-                });
+                const checkQuantity = await axios.post(
+                  "https://us-central1-mobile-order-4d383.cloudfunctions.net/reduceQuantity",
+                  {
+                    // orderDataのそれぞれのidの重複カウントして個数を[{id,quantity},{id,quantity},{id,quantity}]の形で送る
+                    data: orderData.reduce((acc, cur) => {
+                      const isExist = acc.find((e) => e.id === cur.id);
+                      if (isExist) {
+                        isExist.quantity++;
+                      } else {
+                        acc.push({ id: cur.id, quantity: 1 });
+                      }
+                      return acc;
+                    }, [] as { id: string; quantity: number }[]),
+                  }
+                );
+                console.log(checkQuantity);
+                if (checkQuantity.data.result === true) {
+                  Payment(payment, orderId, totalPrice, orderData, (e) => {
+                    setIsLoad(e);
+                  });
+                } else {
+                  setIsModal(true);
+                }
               }}
             />
           </div>
@@ -134,6 +158,11 @@ export const Menu = ({ appBarHeight }: Props) => {
               totalPrice={totalPrice}
             />
           )}
+          <RedirectModal
+            isModal={isModal}
+            countTimer={5000}
+            toURL="/register"
+          />
         </div>
       ) : (
         <LoadingAnimation type={"jelly"} />
