@@ -6,6 +6,7 @@ interface RedirectModalProps {
   isModal: boolean;
   countTimer: number;
   toURL: string;
+  noPaymentTitle?: string[];
 }
 
 export const RedirectModal = (props: RedirectModalProps) => {
@@ -58,6 +59,14 @@ export const RedirectModal = (props: RedirectModalProps) => {
               選択された商品の中に在庫切れの商品があります。
               商品をご確認の上もう一度ご注文ください
               <br />
+              {props.noPaymentTitle?.map((title, index: number) => (
+                <span style={{ color: "red" }} key={index}>
+                  {title}
+                  {", "}
+                </span>
+              ))}
+              の購入に失敗しました。
+              <br />
               {timeNumber}
               秒後に自動的に閉じます。
             </p>
@@ -82,8 +91,8 @@ export const RedirectModal = (props: RedirectModalProps) => {
                 }}
                 onClick={() => {
                   // メニューに戻る
-                  // window.location.href = props.toURL;
                   countTimer.current.clearTimer();
+                  window.location.href = props.toURL;
                 }}
               >
                 メニュー画面に戻る

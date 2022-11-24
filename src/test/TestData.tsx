@@ -20,9 +20,14 @@ export const TestData = () => {
   };
   return (
     <div>
-      <h1>TestData</h1>
-      <Button onClick={Pay}>Pay</Button>
-      <IntegrationNotistack message={"支払い完了"} variant={"success"} />
+      <Spacer appBarHeight={appBarHeight} mode={"history"} />
+      <RedirectModal
+        isModal={isModal}
+        countTimer={50000}
+        toURL="/register"
+        noPaymentTitle={["なるき", "じゅんじゅん"]}
+      />
+      <button onClick={() => setIsModal(true)}>モーダルを開く</button>
     </div>
   );
 };

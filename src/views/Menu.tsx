@@ -33,6 +33,7 @@ export const Menu = ({ appBarHeight }: Props) => {
   const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
   const [isTodayNotReceived, setIsTodayNotReceived] = useState<boolean>(false);
   const [isModal, setIsModal] = useState<boolean>(false);
+  const [noPaymentTitle, setNoPaymentTitle] = useState<string[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -126,6 +127,7 @@ export const Menu = ({ appBarHeight }: Props) => {
                   });
                 } else {
                   setIsModal(true);
+                  setNoPaymentTitle(checkQuantity.data.title);
                 }
               }}
             />
@@ -162,6 +164,7 @@ export const Menu = ({ appBarHeight }: Props) => {
             isModal={isModal}
             countTimer={5000}
             toURL="/register"
+            noPaymentTitle={noPaymentTitle}
           />
         </div>
       ) : (
