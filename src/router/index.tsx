@@ -19,7 +19,7 @@ import Admin from "../views/Admin";
 import Footer from "../component/Footer";
 import { Grid } from "@mui/material";
 import styled from "@emotion/styled";
-// import { TestData } from "../test/TestData";
+import { TestData } from "../test/TestData";
 const Router = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const [user, setUser] = useState<User>();
@@ -90,7 +90,10 @@ const Router = () => {
                     element={<Menu appBarHeight={appBarHeight} />}
                   />
                   <Route path="/register" element={<Register />} />
-                  {/* <Route path="/test" element={<TestData />} /> */}
+                  <Route
+                    path="/test"
+                    element={<TestData appBarHeight={appBarHeight} />}
+                  />
                   <Route
                     path="/order/:id"
                     element={<OrderCompleted appBarHeight={appBarHeight} />}

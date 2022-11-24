@@ -14,6 +14,7 @@ import { FoodCard } from "./FoodCard";
 import ConfirmDialog from "./ConfirmDialog";
 import { DetailDialog } from "./DetailDialog";
 import { CountOrder } from "../api/SubmitGet";
+import { RedirectModal } from "./RedirectModal";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -40,6 +41,7 @@ export const Order = (props: OrderProps) => {
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   const [orderCount, setOrderCount] = useState<number[]>([]);
   const [orderTitle, setOrderTitle] = useState<MenuData[]>();
+  const [isModal, setIsModal] = useState<boolean>(false);
   const CountOrderData = useRef<CountOrder>(
     new CountOrder(setOrderCount, setOrderTitle)
   );
@@ -163,7 +165,9 @@ export const Order = (props: OrderProps) => {
                 }}
                 onClick={() => {
                   setIsLoad(true);
-                  props.onNext(payment, setIsLoad);
+                  // ここは非同期処理で売り切れチェックしてから次のページに遷移
+                  setIsModal(true);
+                  // props.onNext(payment, setIsLoad);
                 }}
                 variant="contained"
                 disabled={payment === ""}
@@ -193,6 +197,7 @@ export const Order = (props: OrderProps) => {
           </div>
         </div>
       </Dialog>
+      <RedirectModal isModal={isModal} countTimer={10} toURL="/register" />
     </div>
   );
 };
