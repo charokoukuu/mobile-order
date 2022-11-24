@@ -12,6 +12,7 @@ export interface MenuData {
   bigSizeDiffPrice: number;
   isStatus: boolean;
   isSale: boolean;
+  quantity: number;
 }
 
 export interface UserData {

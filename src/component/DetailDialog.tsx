@@ -159,6 +159,21 @@ const MaterialMenuCard = () => {
           }}
         >
           {menu?.description}
+          {menu.quantity < 10 && (
+            <p
+              className="japanese_L"
+              style={{
+                color: "rgb(242, 95, 29",
+                fontSize: "12px",
+                fontWeight: "bold",
+                opacity: "0.6",
+                margin: "0",
+                textAlign: "right",
+              }}
+            >
+              △ 残りわずか
+            </p>
+          )}
         </div>
       </div>
     </div>
