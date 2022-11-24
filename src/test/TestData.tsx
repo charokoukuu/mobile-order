@@ -1,17 +1,28 @@
-import { useState } from "react";
-import { RedirectModal } from "../component/RedirectModal";
-import { Spacer } from "../component/SwipeTabs";
-interface Props {
-  appBarHeight: number;
-}
+import { Button } from "@mui/material";
+import { httpsCallable } from "firebase/functions";
+import IntegrationNotistack from "../component/IntegrationNotistack";
+import { functions } from "../api/Firebase";
 
-export const TestData = ({ appBarHeight }: Props) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
+export const TestData = () => {
+  const Pay = () => {
+    const paypay = httpsCallable(functions, "test");
+    (async () => {
+      // PayPayの型がわからないので一旦disable
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data: any = await paypay({
+        orderId: "ljnvkjdnjdfnjklsf",
+        redirectUrl: "https://mobile-order-4d383.web.app",
+        amount: 300,
+        orderDescription: "test",
+      });
+      console.log(data);
+    })();
+  };
   return (
     <div>
-      <Spacer appBarHeight={appBarHeight} mode={"history"} />
-      <RedirectModal isModal={isModal} countTimer={5000} toURL="/register" />
-      <button onClick={() => setIsModal(true)}>モーダルを開く</button>
+      <h1>TestData</h1>
+      <Button onClick={Pay}>Pay</Button>
+      <IntegrationNotistack message={"支払い完了"} variant={"success"} />
     </div>
   );
 };
