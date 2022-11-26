@@ -125,10 +125,6 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     ご注文ありがとうございました
                   </div>
                 )}
-                {/* {(orderData?.isStatus === "complete" ||
-                  orderData?.isStatus === "cooked") && (
-                  <IntegrationNotistack message="complete" variant="success" />
-                )} */}
                 <h2
                   style={{
                     textAlign: "center",
@@ -230,6 +226,9 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     </div>
                   )}
                 </div>
+                {orderData?.isStatus === "complete" && (
+                  <IntegrationNotistack message="complete" variant="success" />
+                )}
               </>
             ) : (
               <>
