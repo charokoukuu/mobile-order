@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { paymentType } from "../component/Order";
 
 export interface MenuData {
@@ -24,8 +25,9 @@ export interface OrderData {
   user: UserData;
   totalPrice: number;
   menu: MenuData[];
-  isStatus: string;
-  date: Date;
+  isStatus: "not_payed" | "ordered" | "cooked" | "complete";
+  date: Timestamp;
   payment: paymentType;
   orderNumber?: number;
+  checkoutId?: string;
 }
