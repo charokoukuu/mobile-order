@@ -113,8 +113,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     </h2>
                   </div>
                 )}
-                {(orderData?.isStatus === "complete" ||
-                  orderData?.isStatus === "cooked") && (
+                {orderData?.isStatus === "complete" && (
                   <div
                     className="japanese_L"
                     style={{
