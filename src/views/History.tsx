@@ -125,8 +125,7 @@ export const History = ({ appBarHeight }: Props) => {
                           </Grid>
                         </>
                       )}
-                      {(e.isStatus === "ordered" ||
-                        e.isStatus === "cooked") && (
+                      {e.isStatus === "ordered" && (
                         <>
                           <Grid
                             item
@@ -148,6 +147,35 @@ export const History = ({ appBarHeight }: Props) => {
                               textAlign: "start",
                               margin: "auto 0",
                               color: "#DB8D00",
+                              fontSize: "15px",
+                            }}
+                          >
+                            未発券
+                          </Grid>
+                        </>
+                      )}
+                      {e.isStatus === "cooked" && (
+                        <>
+                          <Grid
+                            item
+                            xs={0}
+                            style={{ margin: "auto 0", color: "#006c9b" }}
+                          >
+                            <ErrorOutlineIcon
+                              style={{
+                                fontSize: "20px",
+                                margin: "6px 3px 0 0",
+                              }}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            xs={5}
+                            className="japanese_L"
+                            style={{
+                              textAlign: "start",
+                              margin: "auto 0",
+                              color: "#006c9b",
                               fontSize: "15px",
                             }}
                           >
