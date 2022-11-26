@@ -1,4 +1,3 @@
-import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { LoadingAnimation } from "../component/LoadingAnimation";
 import { SearchCollectionDataGet } from "../api/SubmitGet";
@@ -11,12 +10,12 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { HistoryContent } from "../component/HistoryContent";
 import { Spacer } from "../component/SwipeTabs";
-
+import { OrderData } from "../types";
 interface Props {
   appBarHeight: number;
 }
 export const History = ({ appBarHeight }: Props) => {
-  const [oneOrderData, setOneOrderData] = useState<DocumentData[]>();
+  const [oneOrderData, setOneOrderData] = useState<OrderData[]>();
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   useEffect(() => {
     (async () => {
@@ -27,7 +26,7 @@ export const History = ({ appBarHeight }: Props) => {
         10
       );
 
-      setOneOrderData(order);
+      setOneOrderData(order as OrderData[]);
       setIsGetHistoryData(true);
     })();
   }, []);
@@ -54,159 +53,158 @@ export const History = ({ appBarHeight }: Props) => {
             注文履歴
           </h2>
 
-          {oneOrderData?.map((e, i) => {
-            return (
-              <div key={i} style={{ margin: "5% 0" }}>
-                <Link
+          {oneOrderData?.map((e, i) => (
+            <div key={i} style={{ margin: "5% 0" }}>
+              <Link
+                style={{
+                  textDecoration: "none",
+                }}
+                to={`/order/${e.id}`}
+              >
+                <Card
                   style={{
-                    textDecoration: "none",
+                    borderRadius: "8px",
+                    boxShadow: "0px 3px 6px rgba(0,0,0,0.2)",
                   }}
-                  to={`/order/${e.id}`}
+                  sx={{
+                    width: "95%",
+                    margin: "0 auto",
+                    position: "relative",
+                  }}
                 >
-                  <Card
-                    style={{
-                      borderRadius: "8px",
-                      boxShadow: "0px 3px 6px rgba(0,0,0,0.2)",
-                    }}
-                    sx={{
-                      width: "95%",
-                      margin: "0 auto",
-                      position: "relative",
-                    }}
-                  >
-                    <CardContent>
-                      <div color="text.secondary">
-                        <div
-                          className="japanese_L"
-                          style={{ textAlign: "right", color: "#000000" }}
-                        >
-                          {e.date.toDate().toLocaleString()}
-                        </div>
-                      </div>
+                  <CardContent>
+                    <div color="text.secondary">
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
+                        className="japanese_L"
+                        style={{ textAlign: "right", color: "#000000" }}
                       >
-                        <HistoryContent menu={e.menu} />
-                        <div
-                          className="japanese_B themeFontColor"
-                          style={{ fontSize: "30px", margin: "auto 0" }}
-                        >
-                          ¥{e.totalPrice}
-                        </div>
+                        {e.date.toDate().toLocaleString()}
                       </div>
-                      <Grid container color="text.secondary">
-                        {e.isStatus === "complete" && (
-                          <>
-                            <Grid
-                              item
-                              xs={0}
-                              style={{ margin: "auto 0", color: "#01AD4A" }}
-                            >
-                              <TaskAltIcon
-                                style={{
-                                  fontSize: "20px",
-                                  margin: "6px 3px 0 0",
-                                }}
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              xs={5}
-                              className="japanese_L"
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <HistoryContent menu={e.menu} />
+                      <div
+                        className="japanese_B themeFontColor"
+                        style={{ fontSize: "30px", margin: "auto 0" }}
+                      >
+                        ¥{e.totalPrice}
+                      </div>
+                    </div>
+                    <Grid container color="text.secondary">
+                      {e.isStatus === "complete" && (
+                        <>
+                          <Grid
+                            item
+                            xs={0}
+                            style={{ margin: "auto 0", color: "#01AD4A" }}
+                          >
+                            <TaskAltIcon
                               style={{
-                                textAlign: "start",
-                                margin: "auto 0",
-                                color: "#01AD4A",
-                                fontSize: "15px",
+                                fontSize: "20px",
+                                margin: "6px 3px 0 0",
                               }}
-                            >
-                              注文受け取り済み
-                            </Grid>
-                          </>
-                        )}
-                        {e.isStatus === "ordered" && (
-                          <>
-                            <Grid
-                              item
-                              xs={0}
-                              style={{ margin: "auto 0", color: "#DB8D00" }}
-                            >
-                              <ErrorOutlineIcon
-                                style={{
-                                  fontSize: "20px",
-                                  margin: "6px 3px 0 0",
-                                }}
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              xs={5}
-                              className="japanese_L"
-                              style={{
-                                textAlign: "start",
-                                margin: "auto 0",
-                                color: "#DB8D00",
-                                fontSize: "15px",
-                              }}
-                            >
-                              未受け取り
-                            </Grid>
-                          </>
-                        )}
-                        {e.isStatus === "not_payed" && (
-                          <>
-                            <Grid
-                              item
-                              xs={0}
-                              style={{ margin: "auto 0", color: "#D11F00" }}
-                            >
-                              <ErrorOutlineIcon
-                                style={{
-                                  fontSize: "20px",
-                                  margin: "6px 3px 0 0",
-                                }}
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              xs={5}
-                              className="japanese_L"
-                              style={{
-                                textAlign: "start",
-                                margin: "auto 0",
-                                color: "#D11F00",
-                                fontSize: "15px",
-                              }}
-                            >
-                              決済情報なし
-                            </Grid>
-                          </>
-                        )}
-                        <Grid
-                          item
-                          xs
-                          style={{ margin: "auto", textAlign: "end" }}
-                        >
-                          <div
-                            className="japanese_R"
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            xs={5}
+                            className="japanese_L"
                             style={{
-                              color: "#1FA7D0",
-                              fontSize: "13px",
+                              textAlign: "start",
+                              margin: "auto 0",
+                              color: "#01AD4A",
+                              fontSize: "15px",
                             }}
                           >
-                            ID: {e.id}
-                          </div>
-                        </Grid>
+                            注文受け取り済み
+                          </Grid>
+                        </>
+                      )}
+                      {(e.isStatus === "ordered" ||
+                        e.isStatus === "cooked") && (
+                        <>
+                          <Grid
+                            item
+                            xs={0}
+                            style={{ margin: "auto 0", color: "#DB8D00" }}
+                          >
+                            <ErrorOutlineIcon
+                              style={{
+                                fontSize: "20px",
+                                margin: "6px 3px 0 0",
+                              }}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            xs={5}
+                            className="japanese_L"
+                            style={{
+                              textAlign: "start",
+                              margin: "auto 0",
+                              color: "#DB8D00",
+                              fontSize: "15px",
+                            }}
+                          >
+                            未受け取り
+                          </Grid>
+                        </>
+                      )}
+                      {e.isStatus === "not_payed" && (
+                        <>
+                          <Grid
+                            item
+                            xs={0}
+                            style={{ margin: "auto 0", color: "#D11F00" }}
+                          >
+                            <ErrorOutlineIcon
+                              style={{
+                                fontSize: "20px",
+                                margin: "6px 3px 0 0",
+                              }}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            xs={5}
+                            className="japanese_L"
+                            style={{
+                              textAlign: "start",
+                              margin: "auto 0",
+                              color: "#D11F00",
+                              fontSize: "15px",
+                            }}
+                          >
+                            決済情報なし
+                          </Grid>
+                        </>
+                      )}
+                      <Grid
+                        item
+                        xs
+                        style={{ margin: "auto", textAlign: "end" }}
+                      >
+                        <div
+                          className="japanese_R"
+                          style={{
+                            color: "#1FA7D0",
+                            fontSize: "13px",
+                          }}
+                        >
+                          ID: {e.id}
+                        </div>
                       </Grid>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </div>
-            );
-          })}
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Link>
+            </div>
+          ))}
         </div>
       ) : (
         <LoadingAnimation type={"jelly"} />
