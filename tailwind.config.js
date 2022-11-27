@@ -4,7 +4,14 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        textGray: "#707070",
+        runticketBlue: "#006C9B",
+        runticketGray: "#434343",
+        adminBackColor: "#000000",
+      },
+    },
   },
   plugins: [],
 }
