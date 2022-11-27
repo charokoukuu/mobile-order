@@ -179,11 +179,7 @@ export const Order = (props: OrderProps) => {
             <Button
               disabled={isLoad}
               className={classNames(
-                "mt-[3%] w-full rounded-[7px] text-[22px] text-runticketBlue",
-                {
-                  "bg-[#707070] text-[#707070] opacity-50": isLoad,
-                  "bg-runticketBlue text-runticketBlue": !isLoad,
-                }
+                "mt-[3%] w-full rounded-[7px] border-runticketBlue text-[22px] text-runticketBlue"
               )}
               onClick={props.onPrev}
               variant="outlined"
