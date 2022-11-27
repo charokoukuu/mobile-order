@@ -35,7 +35,7 @@ export const Cart = (props: CartProps) => {
         })}
       >
         <Grid container spacing={2}>
-          <Grid item xs={3} style={{ margin: "auto", textAlign: "start" }}>
+          <Grid item xs={3} className="mr-auto text-center">
             <IconButton aria-label="cart">
               <StyledBadge
                 badgeContent={props.totalOrderItemsCount}
@@ -60,7 +60,7 @@ export const Cart = (props: CartProps) => {
           >
             ¥{props.totalPrice}
           </Grid>
-          <Grid item xs={5} style={{ margin: "auto", textAlign: "end" }}>
+          <Grid item xs={5} className="m-auto text-center">
             <Button
               className="rounded-lg bg-runticketBlue text-[clamp(0.5rem_4vw_2rem)]"
               variant="contained"
