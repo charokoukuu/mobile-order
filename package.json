@@ -18,6 +18,7 @@
     "@types/react-dom": "^18.0.5",
     "@uiball/loaders": "^1.2.6",
     "axios": "^0.27.2",
+    "classnames": "^2.3.2",
     "cors": "^2.8.5",
     "dayjs": "^1.11.3",
     "eslint-plugin-prettier": "^4.2.1",
