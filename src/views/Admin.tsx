@@ -1,10 +1,10 @@
 import { TodayAllOrderGet } from "../api/SubmitGet";
 import { useEffect, useState } from "react";
-import { DocumentData } from "firebase/firestore";
 import TableComp from "../component/TableComp";
+import { OrderData } from "../types";
 
 const Admin = () => {
-  const [toDayOrder, setToDayOrder] = useState<DocumentData[]>([]);
+  const [toDayOrder, setToDayOrder] = useState<OrderData[]>([]);
   const [resetOrder, setResetOrder] = useState<string[]>([]);
   const [OrderTitle, setOrderTitle] = useState<string[]>([]);
   const [OrderCount, setOrderCount] = useState<number[]>([]);
@@ -19,7 +19,7 @@ const Admin = () => {
   useEffect(() => {
     toDayOrder.map((order) => {
       //   setResetOrder((resetOrder) => [...resetOrder, order.id]);
-      return order.menu.map((menu: DocumentData) => {
+      return order.menu.map((menu) => {
         return setResetOrder((resetOrder) => [...resetOrder, menu.title]);
       });
     });

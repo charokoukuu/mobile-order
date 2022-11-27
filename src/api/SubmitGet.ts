@@ -6,7 +6,6 @@ import {
   getDocs,
   setDoc,
   collection,
-  DocumentData,
   query,
   where,
   getDoc,
@@ -36,12 +35,12 @@ export const CorrectEmail = (email: string) => {
 };
 
 export const GetAllData = async (collectionName: string) => {
-  const data: DocumentData[] = [];
+  const data: MenuData[] = [];
   const querySnapshot = await getDocs(collection(db, collectionName));
-  return new Promise<DocumentData[]>((resolve, reject) => {
+  return new Promise<MenuData[]>((resolve, reject) => {
     try {
       querySnapshot.forEach((doc) => {
-        data.push(doc.data());
+        data.push(doc.data() as MenuData);
       });
       resolve(data);
     } catch (e) {
@@ -80,7 +79,7 @@ export const SearchCollectionDataGet = async (
   seachId: string,
   maxValue: number
 ) => {
-  const data: DocumentData[] = [];
+  const data: OrderData[] = [];
   const q = query(
     collection(db, docId),
     where(collectionId, "==", seachId),
@@ -88,9 +87,9 @@ export const SearchCollectionDataGet = async (
     limit(maxValue)
   );
   const querySnapshot = await getDocs(q);
-  return new Promise<DocumentData[]>((resolve, reject) => {
+  return new Promise<OrderData[]>((resolve, reject) => {
     querySnapshot.forEach((doc) => {
-      data.push(doc.data());
+      data.push(doc.data() as OrderData);
     });
     resolve(data);
     reject("error");
@@ -99,7 +98,7 @@ export const SearchCollectionDataGet = async (
 
 //当日の全ユーザのオーダーを取得
 export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
-  const data: DocumentData[] = [];
+  const data: OrderData[] = [];
   const q = query(
     collection(db, docId),
     orderBy("date", "desc"),
@@ -107,9 +106,9 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
     limit(maxValue)
   );
   const querySnapshot = await getDocs(q);
-  return new Promise<DocumentData[]>((resolve, reject) => {
+  return new Promise<OrderData[]>((resolve, reject) => {
     querySnapshot.forEach((doc) => {
-      data.push(doc.data());
+      data.push(doc.data() as OrderData);
     });
     resolve(data);
     reject("error");
@@ -135,7 +134,7 @@ export const isTodayUserOrderGet = async (userId: string) => {
 export const GetSpecificData: (
   docId: string,
   collectionId: string
-) => Promise<DocumentData | undefined> = async (
+) => Promise<OrderData | undefined> = async (
   docId: string,
   collectionId: string
 ) => {
@@ -147,7 +146,7 @@ export const GetSpecificData: (
     } else {
       reject("No such document!");
     }
-    resolve(docSnap.data());
+    resolve(docSnap.data() as OrderData);
   });
 };
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
