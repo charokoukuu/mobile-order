@@ -9,6 +9,8 @@ module.exports = {
         textGray: "#707070",
         runticketBlue: "#006C9B",
         runticketGray: "#434343",
+        runticketLightGray: "#848484",
+        runticketRed: "#DB1812",
         adminBackColor: "#000000",
       },
     },
