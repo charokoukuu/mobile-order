@@ -2,6 +2,7 @@ import { Card, CardActionArea, CardMedia } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { MenuData } from "../types";
 import styled from "@emotion/styled";
+import classNames from "classnames";
 
 interface FoodCardProps {
   menu: MenuData;
@@ -14,14 +15,7 @@ export const FoodCard = (props: FoodCardProps) => {
   const isSale: boolean = props.menu.quantity > 0;
   return (
     <div>
-      <Card
-        style={{
-          position: "relative",
-          borderRadius: "13px",
-          width: "180px",
-          height: "180px",
-        }}
-      >
+      <Card className="relative h-[180px] w-[180px] rounded-xl">
         <CardActionArea
           onClick={() => {
             isSale && props.onClick();
@@ -31,10 +25,9 @@ export const FoodCard = (props: FoodCardProps) => {
             component="img"
             image={props.menu.image}
             alt="menu image"
-            style={{
-              height: "180px",
-              filter: !isSale || props.count ? "brightness(35%)" : "",
-            }}
+            className={classNames("h-[180px]", {
+              "brightness-[35%]": !isSale || props.count,
+            })}
           />
 
           {!isSale && (
@@ -45,61 +38,35 @@ export const FoodCard = (props: FoodCardProps) => {
             </div>
           )}
           {props.count && <CountText> ×{props.count} </CountText>}
-          <div
-            style={{
-              position: "absolute",
-              right: "0",
-              bottom: "0",
-              width: "100%",
-              height: "33%",
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.9), rgba(255,255,255,0.01))",
-            }}
-          ></div>
-          <div
-            className="japanese_R"
-            style={{
-              position: "absolute",
-              left: "12px",
-              bottom: "15px",
-              color: "#ffffff",
-              fontSize: "18px",
-              width: "60%",
-              filter: !isSale || props.count ? "brightness(55%)" : "",
-            }}
-          >
-            {props.menu.title}
+          <div className="absolute right-0 bottom-0 h-[33%] w-full bg-gradient-to-t from-[rgba(0,0,0,0.9)] to-[rgba(0,0,0,0.01)]">
+            <div
+              className={classNames(
+                "japanese_R absolute left-[12px] bottom-[15px] w-[60%] text-lg text-white",
+                {
+                  "brightness-[55%]": !isSale || props.count,
+                }
+              )}
+            >
+              {props.menu.title}
+            </div>
           </div>
           <div
-            className="japanese_B"
-            style={{
-              position: "absolute",
-              right: "12px",
-              bottom: "15px",
-              color: "#FA9534",
-              fontSize: "18px",
-              filter: !isSale || props.count ? "brightness(35%)" : "",
-            }}
+            className={classNames(
+              "japanese_B absolute right-[12px] top-[15px] text-lg text-[#FA9534]",
+              {
+                "brightness-[35%]": !isSale || props.count,
+              }
+            )}
           >
             ¥{props.menu.price}
           </div>
         </CardActionArea>
         {props.deleteButton && (
           <div
-            style={{
-              display: "flex",
-              position: "absolute",
-              right: "5%",
-              top: "5%",
-              zIndex: "1",
-              backgroundColor: "rgba(255,255,255,1)",
-              borderRadius: "100%",
-            }}
+            className="z-1 absolute top-[5%] right-[5%] flex rounded-full bg-white"
             onClick={props.onDelete}
           >
-            <CancelIcon
-              style={{ color: "rgba(0,0,0,0.8)", fontSize: "25px" }}
-            />
+            <CancelIcon className="text-{rgba(0,0,0,0.8)} text-[25px]" />
           </div>
         )}
       </Card>
