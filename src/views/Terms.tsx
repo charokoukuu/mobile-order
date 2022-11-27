@@ -1,35 +1,18 @@
 import { Spacer } from "../component/SwipeTabs";
 
 export const Terms = (props: {
-  width?: string;
   onClick?: () => void;
   appBarHeight?: number;
+  isDialog?: boolean;
 }) => {
   return (
-    <div style={{ margin: "3vw auto" }}>
-      <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
-      <div
-        style={{
-          backgroundColor: "#ffffff",
-          padding: "2vw",
-          borderRadius: "8px",
-          width: props.width ? props.width : "90%",
-          margin: "0 auto",
-        }}
-      >
-        <h1
-          className="japanese_L"
-          style={{
-            textAlign: "center",
-            color: "#707070",
-            margin: props.width && "auto",
-          }}
-        >
-          利用規約
-        </h1>
-        <div
-          style={{ width: props.width ? props.width : "80%", margin: "auto" }}
-        >
+    <div style={{ margin: "3%" }}>
+      {!props.isDialog ? (
+        <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
+      ) : null}
+      <div className="mx-auto rounded-lg bg-white p-[2%] [&_h1]:mb-[0.83em] [&_h1]:text-[2em] [&_h1]:font-bold [&_h2]:my-[0.83em] [&_h2]:text-[1.5em] [&_h2]:font-bold">
+        <h1 className="japanese_L text-center text-[#707070]">利用規約</h1>
+        <div className="m-auto w-[90%]">
           <p>
             この本規約は、当方がこのウェブサイト上で提供する本サービスの利用条件を定めるものです。登録ユーザーの皆さまには，本規約に従って，本サービスをご利用いただきます。
           </p>

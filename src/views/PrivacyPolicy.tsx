@@ -4,32 +4,18 @@ export const PrivacyPolicy = (props: {
   width?: string;
   onClick?: () => void;
   appBarHeight?: number;
+  isDialog?: boolean;
 }) => {
   return (
-    <div style={{ margin: "3vw auto" }}>
-      <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
-      <div
-        style={{
-          backgroundColor: "#ffffff",
-          padding: "2vw",
-          borderRadius: "8px",
-          width: props.width ? props.width : "90%",
-          margin: "0 auto",
-        }}
-      >
-        <h1
-          className="japanese_L"
-          style={{
-            textAlign: "center",
-            color: "#707070",
-            margin: props.width && "auto",
-          }}
-        >
+    <div style={{ margin: "3%" }}>
+      {!props.isDialog ? (
+        <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
+      ) : null}
+      <div className="mx-auto rounded-lg bg-white p-[2%] [&_h1]:mb-[0.83em] [&_h1]:text-[2em] [&_h1]:font-bold [&_h2]:my-[0.83em] [&_h2]:text-[1.5em] [&_h2]:font-bold">
+        <h1 className="japanese_L my-[0.67em] text-center text-[#707070]">
           プライバシーポリシー
         </h1>
-        <div
-          style={{ width: props.width ? props.width : "80%", margin: "auto" }}
-        >
+        <div className="m-auto w-[90%]">
           <p>
             当方は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。
           </p>
@@ -69,7 +55,7 @@ export const PrivacyPolicy = (props: {
           <p>
             1.当方は，次に掲げる場合を除いて，あらかじめユーザーの同意を得ることなく，第三者に個人情報を提供することはありません。ただし，個人情報保護法その他の法令で認められる場合を除きます。
           </p>
-          <div style={{ padding: "0 5%" }}>
+          <div className="px-[5%]">
             <p>
               一.
               人の生命，身体または財産の保護のために必要がある場合であって，本人の同意を得ることが困難であるとき
@@ -86,7 +72,7 @@ export const PrivacyPolicy = (props: {
               四.
               予め次の事項を告知あるいは公表し，かつ当方が個人情報保護委員会に届出をしたとき
             </p>
-            <div style={{ padding: "0 5%" }}>
+            <div className="px-[5%]">
               <p>イ. 利用目的に第三者への提供を含むこと </p>
               <p>ロ. 第三者に提供されるデータの項目 </p>
               <p>ハ. 第三者への提供の手段または方法 </p>
@@ -99,7 +85,7 @@ export const PrivacyPolicy = (props: {
           <p>
             2.前項の定めにかかわらず，次に掲げる場合には，当該情報の提供先は第三者に該当しないものとします。
           </p>
-          <div style={{ padding: "0 5%" }}>
+          <div className="px-[5%]">
             <p>
               一.当方が利用目的の達成に必要な範囲内において個人情報の取扱いの全部または一部を委託する場合
             </p>
@@ -114,7 +100,7 @@ export const PrivacyPolicy = (props: {
           <p>
             1.当方は，本人から個人情報の開示を求められたときは，本人に対し，遅滞なくこれを開示します。ただし，開示することにより次のいずれかに該当する場合は，その全部または一部を開示しないこともあり，開示しない決定をした場合には，その旨を遅滞なく通知します。
           </p>
-          <div style={{ padding: "0 5%" }}>
+          <div className="px-[5%]">
             <p>
               一.本人または第三者の生命，身体，財産その他の権利利益を害するおそれがある場合
             </p>
@@ -161,19 +147,15 @@ export const PrivacyPolicy = (props: {
           <p>
             本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。
           </p>
-          <p style={{ textAlign: "center" }}>
+          <p className="text-center">
             メールアドレス
             <br />
             runticket21@gmail.com{" "}
           </p>
-          <p style={{ textAlign: "right" }}>以上</p>
+          <p className="text-end">以上</p>
         </div>
         {props.onClick && (
-          <div
-            className="japanese_L over"
-            style={{ textAlign: "center" }}
-            onClick={props.onClick}
-          >
+          <div className="japanese_L over text-center" onClick={props.onClick}>
             利用規約に戻る
           </div>
         )}
