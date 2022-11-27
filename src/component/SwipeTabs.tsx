@@ -4,7 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { FoodCard } from "./FoodCard";
 import { Grid } from "@mui/material";
-import { DocumentData } from "firebase/firestore";
 import { MenuData } from "../types";
 import { CategoryProp } from "../views/Menu";
 import styled from "@emotion/styled";
@@ -17,7 +16,7 @@ interface TabPanelProps {
 }
 
 interface SwipeTabsProps {
-  menu: DocumentData[];
+  menu: MenuData[];
   category: CategoryProp[];
   setChosenMenu: (e: MenuData) => void;
   setDetailDialogOpen: (e: boolean) => void;
@@ -106,10 +105,10 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
       <Spacer appBarHeight={props.appBarHeight || 56} mode={"menu"} />
       {props.menu
         .filter(
-          (item: DocumentData) =>
+          (item: MenuData) =>
             item.category === props.categoryMode && item.isStatus
         )
-        .map((menu: DocumentData, index: number) => {
+        .map((menu: MenuData, index: number) => {
           return (
             <Grid
               item
