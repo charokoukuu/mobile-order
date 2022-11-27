@@ -143,7 +143,7 @@ const MaterialMenuCard = () => {
         </div>
         <div>
           <img
-            style={{ width: "300px", borderRadius: "10px", margin: "1% 0" }}
+            className="w-[300px] rounded-[10px] my-[1%] mx-auto"
             src={menu?.image || ""}
             alt="menu"
           />

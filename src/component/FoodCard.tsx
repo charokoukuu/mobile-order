@@ -38,23 +38,10 @@ export const FoodCard = (props: FoodCardProps) => {
           />
 
           {!isSale && (
-            <div
-              className="japanese_B"
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                fontSize: "clamp(0.5rem, 4.2vw, 2rem)",
-                transform: "translate(-50%, -50%) rotate(-20deg)",
-                color: "#FC3f46",
-                textAlign: "center",
-                width: "80%",
-                borderStyle: "solid",
-                borderWidth: "3px",
-                zIndex: 1,
-              }}
-            >
-              SOLD OUT
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] border-solid border-[3px] border-[#FC3f46] text-center w-[80%] z-1">
+              <span className="text-[#FC3f46] font-[clamp(0.5rem_4.2vw_2rem)]">
+                SOLD OUT
+              </span>
             </div>
           )}
           {props.count && <CountText> ×{props.count} </CountText>}
