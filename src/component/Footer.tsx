@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <footer>
       <div className="w-full">
-        <p className="flex flex-col justify-center items-center">
+        <p className="flex flex-col items-center justify-center">
           © 2020-2021
           <br />
           <img

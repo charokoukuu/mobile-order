@@ -38,8 +38,8 @@ export const FoodCard = (props: FoodCardProps) => {
           />
 
           {!isSale && (
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] border-solid border-[3px] border-[#FC3f46] text-center w-[80%] z-1">
-              <span className="text-[#FC3f46] font-[clamp(0.5rem_4.2vw_2rem)]">
+            <div className="z-1 absolute top-1/2 left-1/2 w-[80%] -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] transform border-[3px] border-solid border-[#FC3f46] text-center">
+              <span className="font-[clamp(0.5rem_4.2vw_2rem)] text-[#FC3f46]">
                 SOLD OUT
               </span>
             </div>
