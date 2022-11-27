@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { isIOS } from "../api/SubmitGet";
-import classnames from "classnames";
+import classNames from "classnames";
 
 interface CartProps {
   onClick: () => void;
@@ -30,7 +30,7 @@ export const Cart = (props: CartProps) => {
         onClick={() => {
           props.onClick();
         }}
-        className={classnames("m-auto max-w-[900px]", {
+        className={classNames("m-auto max-w-[900px]", {
           "pb-4": isIOS,
         })}
       >
@@ -50,7 +50,7 @@ export const Cart = (props: CartProps) => {
           <Grid
             item
             xs={3}
-            className={classnames(
+            className={classNames(
               "japanese_B right-[40%] m-auto text-end text-[40px] text-runticketBlue",
               {
                 // props.totalPrice.toString().length >= 3 ? "45%" : "40%"
