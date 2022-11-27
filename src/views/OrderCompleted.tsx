@@ -19,6 +19,7 @@ interface Props {
 export const OrderCompleted = ({ appBarHeight }: Props) => {
   const [orderData, setOrderData] = useState<OrderData>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
+  const [isChangeStatus, setIsChangeStatus] = useState<boolean>(false);
   const params = useParams();
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
       if (isChecked) {
         doc.data()?.isStatus === "complete" &&
           setOrderData(doc.data() as OrderData);
+        setIsChangeStatus(true);
       }
       isChecked = true;
     });
@@ -226,8 +228,8 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     </div>
                   )}
                 </div>
-                {orderData?.isStatus === "complete" && (
-                  <IntegrationNotistack message="complete" variant="success" />
+                {orderData?.isStatus === "complete" && isChangeStatus && (
+                  <IntegrationNotistack message="注文完了" variant="success" />
                 )}
               </>
             ) : (
