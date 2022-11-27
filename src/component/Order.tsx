@@ -12,8 +12,8 @@ import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
 import { DetailDialog } from "./DetailDialog";
 import { CountOrder } from "../api/SubmitGet";
-import classNames from "classnames";
 import { PaymentSelectButton } from "./PaymentSelectButton";
+import classNames from "classnames";
 import ConfirmDialog from "./ConfirmDialog";
 
 const Transition = forwardRef(function Transition(
@@ -40,6 +40,7 @@ export const Order = (props: OrderProps) => {
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   const [orderCount, setOrderCount] = useState<number[]>([]);
   const [orderTitle, setOrderTitle] = useState<MenuData[]>();
+  const [isDelete, setIsDelete] = useState<boolean>(false);
   const CountOrderData = useRef<CountOrder>(
     new CountOrder(setOrderCount, setOrderTitle)
   );
@@ -122,6 +123,22 @@ export const Order = (props: OrderProps) => {
             })}
           </div>
         </div>
+        <ConfirmDialog
+          open={isDelete}
+          OnConfirm={function (): void {
+            choosedMenu &&
+              props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
+            setIsDelete(false);
+          }}
+          OnCancel={function (): void {
+            setIsDelete(false);
+          }}
+          title={"注文を削除"}
+          content={choosedMenu?.title + "をカートから削除しますか？" || ""}
+          color={"error"}
+          yesText={"削除"}
+          noText={"いいえ"}
+        />
         <div className="my-[4%] text-center">
           <div className="text-[3rem] text-runticketBlue">
             <span className=" text-[2rem]">{props.orderData.length}点</span> ¥
@@ -157,7 +174,11 @@ export const Order = (props: OrderProps) => {
             <Button
               disabled={isLoad}
               className={classNames(
-                "mt-[3%] w-full rounded-[7px] border-runticketBlue text-[22px] text-runticketBlue"
+                "mt-[3%] w-full rounded-[7px] text-[22px] text-runticketBlue",
+                {
+                  "bg-[#707070] text-[#707070] opacity-50": isLoad,
+                  "bg-runticketBlue text-runticketBlue": !isLoad,
+                }
               )}
               onClick={props.onPrev}
               variant="outlined"
