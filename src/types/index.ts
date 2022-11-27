@@ -7,7 +7,7 @@ export interface MenuData {
   id: string;
   image: string;
   category: string;
-  isBigSize: string;
+  isBigSize: boolean;
   bigSizeDiffPrice: number;
   isStatus: boolean;
   isSale: boolean;
