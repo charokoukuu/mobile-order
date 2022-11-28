@@ -20,7 +20,7 @@ sequenceDiagram
     client-->>User: 決済画面の提供
     User->>payapp: 支払い情報の入力
     payapp->>payback: 支払い情報の取得
-    payback-->>payapp:
+    payback-->>payapp: 
     payapp->>payback: 決済処理
     payback-->>payapp:
     payapp-->>client:RunTicketAppへリダイレクト
