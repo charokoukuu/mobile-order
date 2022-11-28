@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { MenuData } from "../types";
+import { MenuData, OrderData } from "../types";
 import { Link, useParams } from "react-router-dom";
 import { GetSpecificData } from "../api/SubmitGet";
-import { DocumentData, onSnapshot, doc } from "firebase/firestore";
+import { onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card } from "@mui/material";
 import { LoadingAnimation } from "../component/LoadingAnimation";
@@ -17,18 +17,22 @@ interface Props {
   appBarHeight: number;
 }
 export const OrderCompleted = ({ appBarHeight }: Props) => {
-  const [orderData, setOrderData] = useState<DocumentData>();
+  const [orderData, setOrderData] = useState<OrderData>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
+  const [isChangeStatus, setIsChangeStatus] = useState<boolean>(false);
   const params = useParams();
 
   useEffect(() => {
     (async () => {
-      params.id && setOrderData(await GetSpecificData("order", params.id));
+      params.id &&
+        setOrderData((await GetSpecificData("order", params.id)) as OrderData);
       setIsGetOrderData(true);
     })();
     onSnapshot(doc(db, "order", params.id || ""), (doc) => {
       if (isChecked) {
-        doc.data()?.isStatus === "complete" && setOrderData(doc.data());
+        doc.data()?.isStatus === "complete" &&
+          setOrderData(doc.data() as OrderData);
+        setIsChangeStatus(true);
       }
       isChecked = true;
     });
@@ -64,7 +68,8 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
             {auth.currentUser?.uid === orderData?.user.uid ? (
               <>
                 {/* <p>{orderData?.id}</p> */}
-                {orderData?.isStatus === "ordered" && (
+                {(orderData?.isStatus === "ordered" ||
+                  orderData?.isStatus === "cooked") && (
                   <div>
                     <div style={{ display: "flex", height: "10vh" }}>
                       <h2
@@ -121,9 +126,6 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                   >
                     ご注文ありがとうございました
                   </div>
-                )}
-                {orderData?.isStatus === "complete" && (
-                  <IntegrationNotistack message="complete" variant="success" />
                 )}
                 <h2
                   style={{
@@ -216,7 +218,8 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                       </div>
                     </div>
                   )}
-                  {orderData?.isStatus === "ordered" && (
+                  {(orderData?.isStatus === "ordered" ||
+                    orderData?.isStatus === "cooked") && (
                     <div style={{ margin: "10% 0" }}>
                       <h2 style={{ textAlign: "center", color: "#000000" }}>
                         食券受け取り方法
@@ -225,6 +228,9 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     </div>
                   )}
                 </div>
+                {orderData?.isStatus === "complete" && isChangeStatus && (
+                  <IntegrationNotistack message="注文完了" variant="success" />
+                )}
               </>
             ) : (
               <>

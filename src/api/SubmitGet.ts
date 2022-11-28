@@ -13,6 +13,7 @@ import {
   limit,
   orderBy,
   updateDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { auth, db, functions } from "../api/Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
@@ -59,13 +60,13 @@ interface OrderSubmitProps {
 
 export const OrderSubmit = async (props: OrderSubmitProps) => {
   const id = RandomID();
-  const date = new Date();
+  const timeStamp = Timestamp.now();
   const orderData: OrderData = {
     id: id,
     user: props.user,
     totalPrice: props.totalPrice,
     menu: props.menu,
-    date: date,
+    date: timeStamp,
     isStatus: "not_payed",
     payment: props.payment,
   };
@@ -77,13 +78,13 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
 export const SearchCollectionDataGet = async (
   docId: string,
   collectionId: string,
-  seachId: string,
+  searchId: string,
   maxValue: number
 ) => {
   const data: DocumentData[] = [];
   const q = query(
     collection(db, docId),
-    where(collectionId, "==", seachId),
+    where(collectionId, "==", searchId),
     orderBy("date", "desc"),
     limit(maxValue)
   );
