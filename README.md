@@ -22,17 +22,17 @@ sequenceDiagram
     payapp->>payback: 支払い情報の取得
     payback-->>payapp: 
     payapp->>payback: 決済処理
-    payback-->>payapp:
+    payback-->>payapp: 
     payapp-->>client:RunTicketAppへリダイレクト
     client->>payback:決済ステータスの取得
-    payback-->>client:
+    payback-->>client: 
     client->>backend:完了ステータス
     Note left of backend:status:決済済み
     backend-->>client:QRコードを生成
     client-->>User:QRコードを表示
     User->>kiosk:QRコードを読み取り
     kiosk->>backend:ステータス書き換え
-    backend-->>kiosk:
+    backend-->>kiosk: 
     Note right of backend:status:complete
     kiosk-->>User:食券発行
 ```
