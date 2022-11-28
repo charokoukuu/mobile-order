@@ -20,19 +20,19 @@ sequenceDiagram
     client-->>User: 決済画面の提供
     User->>payapp: 支払い情報の入力
     payapp->>payback: 支払い情報の取得
-    payback-->>payapp:
+    payback-->>payapp:&nbsp;
     payapp->>payback: 決済処理
-    payback-->>payapp:
+    payback-->>payapp:&nbsp;
     payapp-->>client:RunTicketAppへリダイレクト
     client->>payback:決済ステータスの取得
-    payback-->>client:
+    payback-->>client:&nbsp;
     client->>backend:完了ステータス
     Note left of backend:status:決済済み
     backend-->>client:QRコードを生成
     client-->>User:QRコードを表示
     User->>kiosk:QRコードを読み取り
     kiosk->>backend:ステータス書き換え
-    backend-->>kiosk:
+    backend-->>kiosk:&nbsp;
     Note right of backend:status:complete
     kiosk-->>User:食券発行
 ```
