@@ -205,8 +205,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                             color: "#ffffff",
                           }}
                         >
-                          {orderData?.checkoutId && orderData?.checkoutId}
-                          {!orderData?.checkoutId && params.id}
+                          {params.id}
                         </p>
                       </div>
                       <div style={{ textAlign: "center" }}>
