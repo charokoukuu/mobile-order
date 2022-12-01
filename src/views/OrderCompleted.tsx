@@ -211,7 +211,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                       <div style={{ textAlign: "center" }}>
                         <Button
                           variant="contained"
-                          href="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform"
+                          href={`https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform?usp=pp_url&entry.951689160=${params.id}`}
                         >
                           お問い合わせフォームへ
                         </Button>
