@@ -1,9 +1,11 @@
-import { Button } from "@mui/material";
 import { httpsCallable } from "firebase/functions";
-import IntegrationNotistack from "../component/IntegrationNotistack";
+import { useState } from "react";
 import { functions } from "../api/Firebase";
+import { RedirectModal } from "../component/RedirectModal";
+import { Spacer } from "../component/SwipeTabs";
 
-export const TestData = () => {
+export const TestData = (props: { appBarHeight: number }) => {
+  const [isModal, setIsModal] = useState<boolean>(false);
   const Pay = () => {
     const paypay = httpsCallable(functions, "test");
     (async () => {
@@ -20,7 +22,7 @@ export const TestData = () => {
   };
   return (
     <div>
-      <Spacer appBarHeight={appBarHeight} mode={"history"} />
+      <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
       <RedirectModal
         isModal={isModal}
         countTimer={50000}
