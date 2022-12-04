@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import TableComp from "../component/TableComp";
 import { OrderData } from "../types";
 import { Spacer } from "../component/SwipeTabs";
-import { OrderData } from "../types";
 
 const Admin = (props: { appBarHeight: number }) => {
   const [toDayOrder, setToDayOrder] = useState<OrderData[]>([]);
