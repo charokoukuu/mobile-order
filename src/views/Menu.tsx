@@ -21,6 +21,10 @@ const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッ�
 interface Props {
   appBarHeight: number;
 }
+
+interface CheckoutProps {
+  result: string[];
+}
 // type Mode = "menu" | "complete";
 export const Menu = ({ appBarHeight }: Props) => {
   // const [mode, setMode] = useState<Mode>("menu");
@@ -121,13 +125,14 @@ export const Menu = ({ appBarHeight }: Props) => {
                   }
                 );
                 console.log(checkQuantity);
-                if (checkQuantity.data.result === true) {
+                const cannotPayMenu: CheckoutProps = checkQuantity.data;
+                if (cannotPayMenu.result.length === 0) {
                   Payment(payment, orderId, totalPrice, orderData, (e) => {
                     setIsLoad(e);
                   });
                 } else {
                   setIsModal(true);
-                  setNoPaymentTitle(checkQuantity.data.title);
+                  setNoPaymentTitle(checkQuantity.data.result);
                 }
               }}
             />
