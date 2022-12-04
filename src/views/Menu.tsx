@@ -25,9 +25,7 @@ interface Props {
 interface CheckoutProps {
   result: string[];
 }
-// type Mode = "menu" | "complete";
 export const Menu = ({ appBarHeight }: Props) => {
-  // const [mode, setMode] = useState<Mode>("menu");
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [menu, setMenu] = useState<MenuData[]>([]);
   const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
@@ -112,7 +110,6 @@ export const Menu = ({ appBarHeight }: Props) => {
                 const checkQuantity = await axios.post(
                   "https://us-central1-mobile-order-4d383.cloudfunctions.net/reduceQuantity",
                   {
-                    // orderDataのそれぞれのidの重複カウントして個数を[{id,quantity},{id,quantity},{id,quantity}]の形で送る
                     data: orderData.reduce((acc, cur) => {
                       const isExist = acc.find((e) => e.id === cur.id);
                       if (isExist) {

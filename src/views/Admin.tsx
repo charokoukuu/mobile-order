@@ -19,7 +19,6 @@ const Admin = (props: { appBarHeight: number }) => {
   // Order.menu.titleをそれぞれリスト型へ
   useEffect(() => {
     toDayOrder.map((order) => {
-      //   setResetOrder((resetOrder) => [...resetOrder, order.id]);
       return order.menu.map((menu) => {
         return setResetOrder((resetOrder) => [...resetOrder, menu.title]);
       });
