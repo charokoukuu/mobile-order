@@ -32,23 +32,25 @@ export const PaymentSelectButton = (props: Props) => {
         <BaseButton
           text={"PayPay"}
           image={"/logo/paypay.png"}
-          isSelect={props.payment === "paypay"}
-          payment={"paypay"}
+          isSelect={true}
+          payment={props.payment}
           setPayment={props.setPayment}
-          textStyle={{
-            marginLeft: "10px",
-          }}
         />
         <BaseButton
-          text={"クレジット\nApple Pay\nGoogle Pay"}
+          text={"クレジットカード\nApple Pay\nGoogle Pay"}
           image={"/logo/stripe.png"}
+          imageStyle={{
+            borderRadius: "10px",
+            width: "40px",
+            height: "40px",
+          }}
           textStyle={{
-            fontSize: "0.9rem",
+            fontSize: "0.5rem",
             lineHeight: "1rem",
             marginLeft: "10px",
           }}
-          isSelect={props.payment === "stripe"}
-          payment={"stripe"}
+          isSelect={false}
+          payment={props.payment}
           setPayment={props.setPayment}
         />
       </div>
@@ -60,6 +62,7 @@ interface BaseButtonProps extends Props {
   isSelect: boolean;
   text: string;
   image: string;
+  imageStyle?: React.CSSProperties;
   textStyle?: React.CSSProperties;
 }
 const BaseButton = (props: BaseButtonProps) => {
@@ -71,16 +74,9 @@ const BaseButton = (props: BaseButtonProps) => {
           backgroundColor: props.isSelect ? "#FFECD8" : "#ffffff",
           boxShadow: props.isSelect ? "inset 0px 3px 6px #00000029" : "none",
         }}
-        onClick={() => {
-          props.setPayment(props.payment);
-        }}
       >
         <img
-          style={{
-            borderRadius: "7px",
-            width: "40px",
-            height: "40px",
-          }}
+          style={props.imageStyle}
           src={props.image}
           alt="payment_logo"
           width="50px"
@@ -101,8 +97,7 @@ const BaseButton = (props: BaseButtonProps) => {
 const BaseButtonStyles: React.CSSProperties = {
   border: "none",
   width: "170px",
-  padding: "0px 17px",
-  height: "70px",
+  padding: "13px 17px",
   borderRadius: "10px",
   fontSize: "1.5rem",
   display: "flex",

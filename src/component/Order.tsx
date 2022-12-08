@@ -14,7 +14,6 @@ import { DetailDialog } from "./DetailDialog";
 import { CountOrder } from "../api/SubmitGet";
 import classNames from "classnames";
 import { PaymentSelectButton } from "./PaymentSelectButton";
-import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
 import ConfirmDialog from "./ConfirmDialog";
 
 const Transition = forwardRef(function Transition(
@@ -147,11 +146,7 @@ export const Order = (props: OrderProps) => {
           </div>
         </div>
         <Divider />
-        <ControlledRadioButtonsGroup
-          payment={payment}
-          setPayment={setPayment}
-        />
-        <Divider />
+        <PaymentSelectButton payment={payment} setPayment={setPayment} />
         <div className="my-[3%] mx-[10%]">
           <div>
             {!isLoad && (
