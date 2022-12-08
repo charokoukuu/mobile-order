@@ -7,13 +7,13 @@ import {
   OrderSubmit,
   Payment,
   isTodayUserOrderGet,
+  CantOrderTitle,
 } from "../api/SubmitGet";
 import { Cart } from "../component/Cart";
 import { LoadingAnimation } from "../component/LoadingAnimation";
 import { auth } from "../api/Firebase";
 import SwipeTabs from "../component/SwipeTabs";
 import IntegrationNotistack from "../component/IntegrationNotistack";
-import axios from "axios";
 import { RedirectModal } from "../component/RedirectModal";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
@@ -22,9 +22,6 @@ interface Props {
   appBarHeight: number;
 }
 
-interface CheckoutProps {
-  result: string[];
-}
 export const Menu = ({ appBarHeight }: Props) => {
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [menu, setMenu] = useState<MenuData[]>([]);
@@ -107,29 +104,16 @@ export const Menu = ({ appBarHeight }: Props) => {
                   menu: orderData,
                   payment: payment,
                 });
-                const checkQuantity = await axios.post(
-                  "https://us-central1-mobile-order-4d383.cloudfunctions.net/reduceQuantity",
-                  {
-                    data: orderData.reduce((acc, cur) => {
-                      const isExist = acc.find((e) => e.id === cur.id);
-                      if (isExist) {
-                        isExist.quantity++;
-                      } else {
-                        acc.push({ id: cur.id, quantity: 1 });
-                      }
-                      return acc;
-                    }, [] as { id: string; quantity: number }[]),
-                  }
-                );
-                console.log(checkQuantity);
-                const cannotPayMenu: CheckoutProps = checkQuantity.data;
-                if (cannotPayMenu.result.length === 0) {
+                const cantOrderTitle = (await CantOrderTitle(
+                  orderData
+                )) as string[];
+                if (cantOrderTitle.length === 0) {
                   Payment(payment, orderId, totalPrice, orderData, (e) => {
                     setIsLoad(e);
                   });
                 } else {
                   setIsModal(true);
-                  setNoPaymentTitle(checkQuantity.data.result);
+                  setNoPaymentTitle(cantOrderTitle);
                 }
               }}
             />

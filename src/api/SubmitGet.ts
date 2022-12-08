@@ -275,6 +275,27 @@ export const AssignOrderNumber = async (orderId: string) => {
   }
 };
 
+export const CantOrderTitle = async (orderData: MenuData[]) => {
+  const data = orderData.reduce((acc, cur) => {
+    const isExist = acc.find((e) => e.id === cur.id);
+    if (isExist) {
+      isExist.quantity++;
+    } else {
+      acc.push({ id: cur.id, quantity: 1 });
+    }
+    return acc;
+  }, [] as { id: string; quantity: number }[]);
+
+  const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
+  console.log(data);
+  try {
+    const title = await cantOrderTitle(data);
+    return title.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export class CountOrder {
   private oneTodayOrder: OrderData[] = [];
   private oneOrderMenu: MenuData[] = [];
