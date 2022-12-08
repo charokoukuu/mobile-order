@@ -81,7 +81,7 @@ export const Order = (props: OrderProps) => {
               padding: "5% 0",
               marginBottom: "5%",
               backgroundColor: "#EEECE4",
-              justifyContent: props.orderData.length === 1 ? "center" : "left",
+              justifyContent: orderTitle?.length === 1 ? "center" : "left",
             }}
           >
             <Box />
