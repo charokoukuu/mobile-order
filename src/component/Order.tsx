@@ -36,7 +36,6 @@ interface OrderProps {
 export const Order = (props: OrderProps) => {
   const [payment, setPayment] = useState<paymentType>("");
   const [isLoad, setIsLoad] = useState<boolean>(false);
-  const [isDelete, setIsDelete] = useState<boolean>(false);
   const [choosedMenu, setChoosedMenu] = useState<MenuData>();
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   const [orderCount, setOrderCount] = useState<number[]>([]);
@@ -123,22 +122,6 @@ export const Order = (props: OrderProps) => {
             })}
           </div>
         </div>
-        <ConfirmDialog
-          open={isDelete}
-          OnConfirm={function (): void {
-            choosedMenu &&
-              props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
-            setIsDelete(false);
-          }}
-          OnCancel={function (): void {
-            setIsDelete(false);
-          }}
-          title={"注文を削除"}
-          content={choosedMenu?.title + "をカートから削除しますか？" || ""}
-          color={"error"}
-          yesText={"削除"}
-          noText={"いいえ"}
-        />
         <div className="my-[4%] text-center">
           <div className="text-[3rem] text-runticketBlue">
             <span className=" text-[2rem]">{props.orderData.length}点</span> ¥
