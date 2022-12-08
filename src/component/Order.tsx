@@ -14,6 +14,7 @@ import { FoodCard } from "./FoodCard";
 import ConfirmDialog from "./ConfirmDialog";
 import { DetailDialog } from "./DetailDialog";
 import { CountOrder } from "../api/SubmitGet";
+import { PaymentSelectButton } from "./PaymentSelectButton";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -54,6 +55,11 @@ export const Order = (props: OrderProps) => {
         open={props.open}
         onClose={props.onPrev}
         TransitionComponent={Transition}
+        PaperProps={{
+          style: {
+            backgroundColor: "#F2F2F2",
+          },
+        }}
       >
         <AppBar sx={{ position: "relative", backgroundColor: "#006C9B" }}>
           <Toolbar>
@@ -144,11 +150,7 @@ export const Order = (props: OrderProps) => {
           </div>
         </div>
         <Divider />
-        <ControlledRadioButtonsGroup
-          payment={payment}
-          setPayment={setPayment}
-        />
-        <Divider />
+        <PaymentSelectButton payment={payment} setPayment={setPayment} />
         <div style={{ margin: "3% 10%" }}>
           <div>
             {!isLoad && (
