@@ -182,9 +182,9 @@ export const Payment = async (
     .map((menu) => menu.title)
     .join(",");
   if (type === "stripe") {
-    const StripeWebhook = httpsCallable(functions, "StripeWebhook");
+    const StripeRequest = httpsCallable(functions, "StripeRequest");
     try {
-      const resData = await StripeWebhook({
+      const resData = await StripeRequest({
         orderData: orderData,
         orderId: orderId,
         uId: auth.currentUser?.uid,
@@ -200,8 +200,8 @@ export const Payment = async (
     }
   } else if (type === "paypay") {
     try {
-      const PayPayWebhook = httpsCallable(functions, "PayPayWebhook");
-      const data = await PayPayWebhook({
+      const PayPayRequest = httpsCallable(functions, "PayPayRequest");
+      const data = await PayPayRequest({
         orderId: orderId,
         hostUrl: hostUrl,
         amount: totalPrice,
