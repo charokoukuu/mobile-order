@@ -201,13 +201,14 @@ export const Payment = async (
   } else if (type === "paypay") {
     try {
       const PayPayWebhook = httpsCallable(functions, "PayPayWebhook");
-      const data: any = await PayPayWebhook({
+      const data = await PayPayWebhook({
         orderId: orderId,
-        redirectUrl: hostUrl,
+        hostUrl: hostUrl,
         amount: totalPrice,
         orderDescription: orderDescription,
       });
-      window.location.href = data.data.BODY.data.url;
+      const response: any = data.data;
+      window.location.href = String(response.BODY.data.url);
     } catch (err) {
       alert(
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
@@ -219,6 +220,24 @@ export const Payment = async (
 
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
+const GetPaymentStatus = async (orderId: string) => {
+  const washingtonRef = doc(db, "order", orderId);
+  // orderDataを取得してfunctionでmenuのquantityを減らす
+  const docSnap = await getDoc(washingtonRef);
+  const orderData = docSnap.data() as OrderData;
+  const setOrderIdQuantity = SetOrderIdQuantity(orderData.menu);
+  const reduceQuantity = httpsCallable(functions, "ReduceQuantity");
+  try {
+    await reduceQuantity(setOrderIdQuantity);
+    await updateDoc(washingtonRef, {
+      isStatus: "ordered",
+    });
+    await AssignOrderNumber(orderId);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const StripeGetStatus = async (checkoutId: string) => {
   const stripeGetStatus = httpsCallable(functions, "StripeGetStatus");
   try {
@@ -227,11 +246,7 @@ export const StripeGetStatus = async (checkoutId: string) => {
     });
     const orderId = result.data.client_reference_id;
     if (result.data.status === "complete") {
-      const washingtonRef = doc(db, "order", orderId);
-      await updateDoc(washingtonRef, {
-        isStatus: "ordered",
-      });
-      await AssignOrderNumber(orderId);
+      await GetPaymentStatus(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;
@@ -248,11 +263,7 @@ export const PayPayGetStatus = async (orderId: string) => {
     });
     const paymentStatus = result.data.BODY.data.status;
     if (paymentStatus === "COMPLETED") {
-      const washingtonRef = doc(db, "order", orderId);
-      await updateDoc(washingtonRef, {
-        isStatus: "ordered",
-      });
-      await AssignOrderNumber(orderId);
+      await GetPaymentStatus(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;
