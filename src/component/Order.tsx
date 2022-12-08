@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { forwardRef, useEffect, useRef, useState } from "react";
-import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
 import ConfirmDialog from "./ConfirmDialog";

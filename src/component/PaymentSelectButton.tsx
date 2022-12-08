@@ -32,8 +32,8 @@ export const PaymentSelectButton = (props: Props) => {
         <BaseButton
           text={"PayPay"}
           image={"/logo/paypay.png"}
-          isSelect={true}
-          payment={props.payment}
+          isSelect={props.payment === "paypay"}
+          payment={"paypay"}
           setPayment={props.setPayment}
         />
         <BaseButton
@@ -49,8 +49,8 @@ export const PaymentSelectButton = (props: Props) => {
             lineHeight: "1rem",
             marginLeft: "10px",
           }}
-          isSelect={false}
-          payment={props.payment}
+          isSelect={props.payment === "stripe"}
+          payment={"stripe"}
           setPayment={props.setPayment}
         />
       </div>
@@ -73,6 +73,9 @@ const BaseButton = (props: BaseButtonProps) => {
           ...BaseButtonStyles,
           backgroundColor: props.isSelect ? "#FFECD8" : "#ffffff",
           boxShadow: props.isSelect ? "inset 0px 3px 6px #00000029" : "none",
+        }}
+        onClick={() => {
+          props.setPayment(props.payment);
         }}
       >
         <img
