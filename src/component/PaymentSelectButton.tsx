@@ -40,10 +40,10 @@ export const PaymentSelectButton = (props: Props) => {
           }}
         />
         <BaseButton
-          text={"クレジットカード\nApple Pay\nGoogle Pay"}
+          text={"クレジット\nApple Pay\nGoogle Pay"}
           image={"/logo/stripe.png"}
           textStyle={{
-            fontSize: "0.5rem",
+            fontSize: "0.9rem",
             lineHeight: "1rem",
             marginLeft: "10px",
           }}
