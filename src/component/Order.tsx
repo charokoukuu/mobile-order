@@ -8,12 +8,11 @@ import IconButton from "@mui/material/IconButton";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { forwardRef, useEffect, useRef, useState } from "react";
-import ControlledRadioButtonsGroup from "./ControlledRadioButtonsGroup";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
-import ConfirmDialog from "./ConfirmDialog";
 import { DetailDialog } from "./DetailDialog";
 import { CountOrder } from "../api/SubmitGet";
+import { PaymentSelectButton } from "./PaymentSelectButton";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,7 +34,6 @@ interface OrderProps {
 export const Order = (props: OrderProps) => {
   const [payment, setPayment] = useState<paymentType>("");
   const [isLoad, setIsLoad] = useState<boolean>(false);
-  const [isDelete, setIsDelete] = useState<boolean>(false);
   const [choosedMenu, setChoosedMenu] = useState<MenuData>();
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   const [orderCount, setOrderCount] = useState<number[]>([]);
@@ -54,6 +52,11 @@ export const Order = (props: OrderProps) => {
         open={props.open}
         onClose={props.onPrev}
         TransitionComponent={Transition}
+        PaperProps={{
+          style: {
+            backgroundColor: "#F2F2F2",
+          },
+        }}
       >
         <AppBar sx={{ position: "relative", backgroundColor: "#006C9B" }}>
           <Toolbar>
@@ -95,8 +98,7 @@ export const Order = (props: OrderProps) => {
                       setDetailDialogOpen(true);
                     }}
                     onDelete={function (): void {
-                      setChoosedMenu(menu);
-                      setIsDelete(true);
+                      props.onDelete(menu, props.orderData.indexOf(menu));
                     }}
                   />
                   <DetailDialog
@@ -121,22 +123,6 @@ export const Order = (props: OrderProps) => {
             })}
           </div>
         </div>
-        <ConfirmDialog
-          open={isDelete}
-          OnConfirm={function (): void {
-            choosedMenu &&
-              props.onDelete(choosedMenu, props.orderData.indexOf(choosedMenu));
-            setIsDelete(false);
-          }}
-          OnCancel={function (): void {
-            setIsDelete(false);
-          }}
-          title={"注文を削除"}
-          content={choosedMenu?.title + "をカートから削除しますか？" || ""}
-          color={"error"}
-          yesText={"削除"}
-          noText={"いいえ"}
-        />
         <div style={{ textAlign: "center", margin: "4% 0" }}>
           <div style={{ fontSize: "3rem", color: "#006C9B" }}>
             <span style={{ fontSize: "2rem" }}>{props.orderData.length}点</span>{" "}
@@ -144,11 +130,7 @@ export const Order = (props: OrderProps) => {
           </div>
         </div>
         <Divider />
-        <ControlledRadioButtonsGroup
-          payment={payment}
-          setPayment={setPayment}
-        />
-        <Divider />
+        <PaymentSelectButton payment={payment} setPayment={setPayment} />
         <div style={{ margin: "3% 10%" }}>
           <div>
             {!isLoad && (
