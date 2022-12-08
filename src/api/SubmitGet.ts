@@ -200,8 +200,8 @@ export const Payment = async (
     }
   } else if (type === "paypay") {
     try {
-      const paypay = httpsCallable(functions, "PayPayAPI");
-      const data: any = await paypay({
+      const PayPayWebhook = httpsCallable(functions, "PayPayWebhook");
+      const data: any = await PayPayWebhook({
         orderId: orderId,
         redirectUrl: hostUrl,
         amount: totalPrice,
@@ -220,9 +220,9 @@ export const Payment = async (
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
 export const StripeGetStatus = async (checkoutId: string) => {
-  const CheckStatusPayment = httpsCallable(functions, "CheckStripePayment");
+  const stripeGetStatus = httpsCallable(functions, "StripeGetStatus");
   try {
-    const result: any = await CheckStatusPayment({
+    const result: any = await stripeGetStatus({
       orderId: checkoutId,
     });
     const orderId = result.data.client_reference_id;
@@ -241,9 +241,9 @@ export const StripeGetStatus = async (checkoutId: string) => {
   }
 };
 export const PayPayGetStatus = async (orderId: string) => {
-  const CheckStatusPayment = httpsCallable(functions, "PayPayGetStatus");
+  const paypayGetStatus = httpsCallable(functions, "PayPayGetStatus");
   try {
-    const result: any = await CheckStatusPayment({
+    const result: any = await paypayGetStatus({
       orderId: orderId,
     });
     const paymentStatus = result.data.BODY.data.status;
@@ -276,6 +276,18 @@ export const AssignOrderNumber = async (orderId: string) => {
 };
 
 export const CantOrderTitle = async (orderData: MenuData[]) => {
+  const data = SetOrderIdQuantity(orderData);
+  const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
+  console.log(data);
+  try {
+    const title = await cantOrderTitle(data);
+    return title.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const SetOrderIdQuantity = (orderData: MenuData[]) => {
   const data = orderData.reduce((acc, cur) => {
     const isExist = acc.find((e) => e.id === cur.id);
     if (isExist) {
@@ -285,15 +297,7 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
     }
     return acc;
   }, [] as { id: string; quantity: number }[]);
-
-  const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
-  console.log(data);
-  try {
-    const title = await cantOrderTitle(data);
-    return title.data;
-  } catch (error) {
-    console.log(error);
-  }
+  return data;
 };
 
 export class CountOrder {
