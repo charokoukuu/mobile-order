@@ -141,7 +141,7 @@ export const Order = (props: OrderProps) => {
         />
         <div className="my-[4%] text-center">
           <div className="text-[3rem] text-runticketBlue">
-            <span className=" text-[2rem]">{props.orderData.length}点</span> ¥
+            <span className="text-[2rem]">{props.orderData.length}点</span> ¥
             {props.totalPrice}
           </div>
         </div>
@@ -174,11 +174,7 @@ export const Order = (props: OrderProps) => {
             <Button
               disabled={isLoad}
               className={classNames(
-                "mt-[3%] w-full rounded-[7px] text-[22px] text-runticketBlue",
-                {
-                  "bg-[#707070] text-[#707070] opacity-50": isLoad,
-                  "bg-runticketBlue text-runticketBlue": !isLoad,
-                }
+                "mt-[3%] w-full rounded-[7px] bg-white text-[22px] text-runticketBlue"
               )}
               onClick={props.onPrev}
               variant="outlined"
