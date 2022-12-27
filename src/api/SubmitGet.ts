@@ -245,12 +245,12 @@ export const PaymentGetStatus = async (
   payment: paymentType,
   checkoutId: string
 ) => {
-  const stripeGetStatus = httpsCallable(
+  const getStatusFunction = httpsCallable(
     functions,
     payment === "paypay" ? "PayPayGetStatus" : "StripeGetStatus"
   );
   try {
-    const result: any = await stripeGetStatus({
+    const result: any = await getStatusFunction({
       orderId: checkoutId,
     });
     const orderId = payment === "paypay" ? checkoutId : result.data.id;
