@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LoadingAnimation } from "../component/LoadingAnimation";
-import { PayPayGetStatus, StripeGetStatus } from "../api/SubmitGet";
+import { PaymentGetStatus } from "../api/SubmitGet";
 import { Spacer } from "../component/SwipeTabs";
+import { paymentType } from "../component/Order";
 interface Props {
   appBarHeight: number;
 }
@@ -11,12 +12,8 @@ export const GetPaymentStatus = ({ appBarHeight }: Props) => {
   useEffect(() => {
     (async () => {
       const checkoutId = params.id;
-      const paymentType = params.paymentType;
-      if (paymentType === "stripe") {
-        await StripeGetStatus(checkoutId || "");
-      } else if (paymentType === "paypay") {
-        await PayPayGetStatus(checkoutId || "");
-      }
+      const paymentType = params.paymentType as paymentType;
+      await PaymentGetStatus(paymentType, checkoutId || "");
     })();
   }, [params.id, params.paymentType]);
 
