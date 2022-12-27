@@ -186,6 +186,7 @@ export const Payment = async (
     try {
       const resData = await StripeRequest({
         orderData: orderData,
+        hostUrl: hostUrl,
         orderId: orderId,
         uId: auth.currentUser?.uid,
         uMail: auth.currentUser?.email,
@@ -228,11 +229,13 @@ const GetPaymentStatus = async (orderId: string) => {
   const setOrderIdQuantity = SetOrderIdQuantity(orderData.menu);
   const reduceQuantity = httpsCallable(functions, "ReduceQuantity");
   try {
-    await reduceQuantity(setOrderIdQuantity);
-    await updateDoc(washingtonRef, {
-      isStatus: "ordered",
-    });
-    await AssignOrderNumber(orderId);
+    await Promise.all([
+      reduceQuantity(setOrderIdQuantity),
+      updateDoc(washingtonRef, {
+        isStatus: "ordered",
+      }),
+      AssignOrderNumber(orderId),
+    ]);
   } catch (error) {
     console.log(error);
   }
