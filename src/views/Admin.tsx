@@ -2,8 +2,9 @@ import { TodayAllOrderGet } from "../api/SubmitGet";
 import { useEffect, useState } from "react";
 import TableComp from "../component/TableComp";
 import { OrderData } from "../types";
+import { Spacer } from "../component/SwipeTabs";
 
-const Admin = () => {
+const Admin = (props: { appBarHeight: number }) => {
   const [toDayOrder, setToDayOrder] = useState<OrderData[]>([]);
   const [resetOrder, setResetOrder] = useState<string[]>([]);
   const [OrderTitle, setOrderTitle] = useState<string[]>([]);
@@ -18,7 +19,6 @@ const Admin = () => {
   // Order.menu.titleをそれぞれリスト型へ
   useEffect(() => {
     toDayOrder.map((order) => {
-      //   setResetOrder((resetOrder) => [...resetOrder, order.id]);
       return order.menu.map((menu) => {
         return setResetOrder((resetOrder) => [...resetOrder, menu.title]);
       });
@@ -37,6 +37,7 @@ const Admin = () => {
 
   return (
     <div>
+      <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
       <h1>注文管理画面</h1>
       <TableComp title={OrderTitle} count={OrderCount} />
     </div>

@@ -7,21 +7,22 @@ import {
   OrderSubmit,
   Payment,
   isTodayUserOrderGet,
+  CantOrderTitle,
 } from "../api/SubmitGet";
 import { Cart } from "../component/Cart";
 import { LoadingAnimation } from "../component/LoadingAnimation";
 import { auth } from "../api/Firebase";
 import SwipeTabs from "../component/SwipeTabs";
 import IntegrationNotistack from "../component/IntegrationNotistack";
+import { RedirectModal } from "../component/RedirectModal";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
 interface Props {
   appBarHeight: number;
 }
-// type Mode = "menu" | "complete";
+
 export const Menu = ({ appBarHeight }: Props) => {
-  // const [mode, setMode] = useState<Mode>("menu");
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [menu, setMenu] = useState<MenuData[]>([]);
   const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
@@ -30,6 +31,9 @@ export const Menu = ({ appBarHeight }: Props) => {
   const [orderDialog, setOrderDialog] = useState<boolean>(false);
   const [isGetMenu, setIsGetMenu] = useState<boolean>(false);
   const [isTodayNotReceived, setIsTodayNotReceived] = useState<boolean>(false);
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const [noPaymentTitle, setNoPaymentTitle] = useState<string[]>([]);
+
   useEffect(() => {
     (async () => {
       try {
@@ -100,9 +104,17 @@ export const Menu = ({ appBarHeight }: Props) => {
                   menu: orderData,
                   payment: payment,
                 });
-                Payment(payment, orderId, totalPrice, orderData, (e) => {
-                  setIsLoad(e);
-                });
+                const cantOrderTitle = (await CantOrderTitle(
+                  orderData
+                )) as string[];
+                if (cantOrderTitle.length === 0) {
+                  Payment(payment, orderId, totalPrice, orderData, (e) => {
+                    setIsLoad(e);
+                  });
+                } else {
+                  setIsModal(true);
+                  setNoPaymentTitle(cantOrderTitle);
+                }
               }}
             />
           </div>
@@ -134,6 +146,12 @@ export const Menu = ({ appBarHeight }: Props) => {
               totalPrice={totalPrice}
             />
           )}
+          <RedirectModal
+            isModal={isModal}
+            countTimer={5000}
+            toURL="/register"
+            noPaymentTitle={noPaymentTitle}
+          />
         </div>
       ) : (
         <LoadingAnimation type={"jelly"} />

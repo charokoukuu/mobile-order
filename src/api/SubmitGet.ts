@@ -182,9 +182,9 @@ export const Payment = async (
     .map((menu) => menu.title)
     .join(",");
   if (type === "stripe") {
-    const StripeWebhook = httpsCallable(functions, "StripeWebhook");
+    const StripeRequest = httpsCallable(functions, "StripeRequest");
     try {
-      const resData = await StripeWebhook({
+      const resData = await StripeRequest({
         orderData: orderData,
         orderId: orderId,
         uId: auth.currentUser?.uid,
@@ -200,14 +200,15 @@ export const Payment = async (
     }
   } else if (type === "paypay") {
     try {
-      const paypay = httpsCallable(functions, "PayPayAPI");
-      const data: any = await paypay({
+      const PayPayRequest = httpsCallable(functions, "PayPayRequest");
+      const data = await PayPayRequest({
         orderId: orderId,
-        redirectUrl: hostUrl,
+        hostUrl: hostUrl,
         amount: totalPrice,
         orderDescription: orderDescription,
       });
-      window.location.href = data.data.BODY.data.url;
+      const response: any = data.data;
+      window.location.href = String(response.BODY.data.url);
     } catch (err) {
       alert(
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
@@ -219,19 +220,33 @@ export const Payment = async (
 
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
-export const StripeGetStatus = async (checkoutId: string) => {
-  const CheckStatusPayment = httpsCallable(functions, "CheckStripePayment");
+const GetPaymentStatus = async (orderId: string) => {
+  const washingtonRef = doc(db, "order", orderId);
+  // orderDataを取得してfunctionでmenuのquantityを減らす
+  const docSnap = await getDoc(washingtonRef);
+  const orderData = docSnap.data() as OrderData;
+  const setOrderIdQuantity = SetOrderIdQuantity(orderData.menu);
+  const reduceQuantity = httpsCallable(functions, "ReduceQuantity");
   try {
-    const result: any = await CheckStatusPayment({
+    await reduceQuantity(setOrderIdQuantity);
+    await updateDoc(washingtonRef, {
+      isStatus: "ordered",
+    });
+    await AssignOrderNumber(orderId);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const StripeGetStatus = async (checkoutId: string) => {
+  const stripeGetStatus = httpsCallable(functions, "StripeGetStatus");
+  try {
+    const result: any = await stripeGetStatus({
       orderId: checkoutId,
     });
     const orderId = result.data.client_reference_id;
     if (result.data.status === "complete") {
-      const washingtonRef = doc(db, "order", orderId);
-      await updateDoc(washingtonRef, {
-        isStatus: "ordered",
-      });
-      await AssignOrderNumber(orderId);
+      await GetPaymentStatus(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;
@@ -241,18 +256,14 @@ export const StripeGetStatus = async (checkoutId: string) => {
   }
 };
 export const PayPayGetStatus = async (orderId: string) => {
-  const CheckStatusPayment = httpsCallable(functions, "PayPayGetStatus");
+  const paypayGetStatus = httpsCallable(functions, "PayPayGetStatus");
   try {
-    const result: any = await CheckStatusPayment({
+    const result: any = await paypayGetStatus({
       orderId: orderId,
     });
     const paymentStatus = result.data.BODY.data.status;
     if (paymentStatus === "COMPLETED") {
-      const washingtonRef = doc(db, "order", orderId);
-      await updateDoc(washingtonRef, {
-        isStatus: "ordered",
-      });
-      await AssignOrderNumber(orderId);
+      await GetPaymentStatus(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;
@@ -273,6 +284,31 @@ export const AssignOrderNumber = async (orderId: string) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const CantOrderTitle = async (orderData: MenuData[]) => {
+  const data = SetOrderIdQuantity(orderData);
+  const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
+  console.log(data);
+  try {
+    const title = await cantOrderTitle(data);
+    return title.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const SetOrderIdQuantity = (orderData: MenuData[]) => {
+  const data = orderData.reduce((acc, cur) => {
+    const isExist = acc.find((e) => e.id === cur.id);
+    if (isExist) {
+      isExist.quantity++;
+    } else {
+      acc.push({ id: cur.id, quantity: 1 });
+    }
+    return acc;
+  }, [] as { id: string; quantity: number }[]);
+  return data;
 };
 
 export class CountOrder {
@@ -345,4 +381,69 @@ export class CountOrder {
       return this.words.filter((x: any) => x === name).length;
     });
   }
+}
+
+export const Timer = (time: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("");
+    }, time);
+  });
+};
+
+export const afterToPage = async (
+  countDownNumber: number,
+  setTimeNumber: (num: number) => void,
+  toUrl: string
+) => {
+  let timer = countDownNumber;
+  setInterval(() => {
+    timer--;
+    setTimeNumber(timer);
+  }, 1000);
+  Timer(10000).then(() => {
+    window.location.href = toUrl;
+  });
+};
+
+export class NewTimer {
+  private countTimer: any;
+
+  constructor(
+    private readonly msSecWaitTime: number,
+    private readonly setTimeNumber: (time: number) => void,
+    private readonly toUrl: string
+  ) {
+    this.msSecWaitTime = msSecWaitTime;
+    this.setTimeNumber = setTimeNumber;
+    this.toUrl = toUrl;
+    this.countTimer = null;
+  }
+
+  startTimer = () => {
+    if (this.countTimer !== null) {
+      this.clearTimer();
+    }
+    return new Promise((resolve) => {
+      this.countTimer = setTimeout(() => {
+        resolve("");
+      }, this.msSecWaitTime);
+    });
+  };
+
+  clearTimer = () => {
+    clearTimeout(this.countTimer);
+    this.countTimer = null;
+  };
+
+  afterToPage = async () => {
+    let time = this.msSecWaitTime / 1000;
+    setInterval(() => {
+      time--;
+      this.setTimeNumber(time);
+    }, 1000);
+    await this.startTimer();
+    console.log("after");
+    window.location.href = this.toUrl;
+  };
 }

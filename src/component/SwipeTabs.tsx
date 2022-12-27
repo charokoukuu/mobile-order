@@ -122,18 +122,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
                 deleteButton={false}
                 onClick={function (): void {
                   menu.isBigSize === true &&
-                    props.setChosenMenu({
-                      title: menu.title,
-                      description: menu.description,
-                      price: menu.price,
-                      id: menu.id,
-                      image: menu.image,
-                      category: menu.category,
-                      isBigSize: menu.isBigSize,
-                      bigSizeDiffPrice: menu.bigSizeDiffPrice,
-                      isStatus: menu.isStatus,
-                      isSale: menu.isSale,
-                    });
+                    props.setChosenMenu(menu as MenuData);
                   menu.isBigSize === false &&
                     props.setChosenMenu(menu as MenuData);
                   props.setDetailDialogOpen(true);
