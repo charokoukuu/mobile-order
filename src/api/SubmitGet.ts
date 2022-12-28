@@ -186,6 +186,7 @@ export const Payment = async (
     try {
       const resData = await StripeRequest({
         orderData: orderData,
+        hostUrl: hostUrl,
         orderId: orderId,
         uId: auth.currentUser?.uid,
         uMail: auth.currentUser?.email,
@@ -228,24 +229,35 @@ const GetPaymentStatus = async (orderId: string) => {
   const setOrderIdQuantity = SetOrderIdQuantity(orderData.menu);
   const reduceQuantity = httpsCallable(functions, "ReduceQuantity");
   try {
-    await reduceQuantity(setOrderIdQuantity);
-    await updateDoc(washingtonRef, {
-      isStatus: "ordered",
-    });
-    await AssignOrderNumber(orderId);
+    await Promise.all([
+      reduceQuantity(setOrderIdQuantity),
+      updateDoc(washingtonRef, {
+        isStatus: "ordered",
+      }),
+      AssignOrderNumber(orderId),
+    ]);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const StripeGetStatus = async (checkoutId: string) => {
-  const stripeGetStatus = httpsCallable(functions, "StripeGetStatus");
+export const PaymentGetStatus = async (
+  payment: paymentType,
+  checkoutId: string
+) => {
+  const getStatusFunction = httpsCallable(
+    functions,
+    payment === "paypay" ? "PayPayGetStatus" : "StripeGetStatus"
+  );
   try {
-    const result: any = await stripeGetStatus({
+    const result: any = await getStatusFunction({
       orderId: checkoutId,
     });
-    const orderId = result.data.client_reference_id;
-    if (result.data.status === "complete") {
+    const orderId = payment === "paypay" ? checkoutId : result.data.id;
+    console.log(result);
+    if (
+      payment === "paypay" ? isPayPayEnabled(result.data) : result.data.status
+    ) {
       await GetPaymentStatus(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
@@ -255,22 +267,9 @@ export const StripeGetStatus = async (checkoutId: string) => {
     console.log(error);
   }
 };
-export const PayPayGetStatus = async (orderId: string) => {
-  const paypayGetStatus = httpsCallable(functions, "PayPayGetStatus");
-  try {
-    const result: any = await paypayGetStatus({
-      orderId: orderId,
-    });
-    const paymentStatus = result.data.BODY.data.status;
-    if (paymentStatus === "COMPLETED") {
-      await GetPaymentStatus(orderId);
-      window.location.href = `/order/${orderId}/success`;
-    } else {
-      window.location.href = `/order/${orderId}/failed`;
-    }
-  } catch (error) {
-    console.log(error);
-  }
+
+const isPayPayEnabled = (res: any) => {
+  return res.BODY.data.status === "COMPLETED";
 };
 
 export const AssignOrderNumber = async (orderId: string) => {
