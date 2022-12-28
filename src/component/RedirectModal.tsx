@@ -60,7 +60,7 @@ export const RedirectModal = (props: RedirectModalProps) => {
               {props.noPaymentTitle?.map((title, index: number) => (
                 <span style={{ color: "red" }} key={index}>
                   {title}
-                  {index !== 0 && ", "}
+                  {props.noPaymentTitle?.length !== index + 1 && ", "}
                 </span>
               ))}
               の購入に失敗しました。
