@@ -6,7 +6,6 @@ const Footer = () => {
     counter++;
     setCount(counter);
     if (count === 7) {
-      console.log(count);
       window.location.href = "/admin";
     }
   };
