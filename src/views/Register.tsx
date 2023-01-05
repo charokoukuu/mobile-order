@@ -110,7 +110,7 @@ export const Register = ({ appBarHeight }: Props) => {
           ) : (
             <>
               <h2 style={{ textAlign: "center" }}>
-                Googleアカウントでサインインしてください
+                Googleアカウントでログインしてください
               </h2>
               <Button
                 fullWidth
@@ -120,7 +120,7 @@ export const Register = ({ appBarHeight }: Props) => {
                   setOpen(true);
                 }}
               >
-                サインイン
+                ログイン
               </Button>
             </>
           )}
