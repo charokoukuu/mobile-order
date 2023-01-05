@@ -148,8 +148,8 @@ export const Menu = ({ appBarHeight }: Props) => {
           )}
           <RedirectModal
             isModal={isModal}
-            countTimer={5000}
-            toURL="/register"
+            countTimer={15000}
+            toURL="/"
             noPaymentTitle={noPaymentTitle}
           />
         </div>

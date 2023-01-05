@@ -159,7 +159,7 @@ const MaterialMenuCard = () => {
           }}
         >
           {menu?.description}
-          {menu?.quantity < 10 && (
+          {menu?.quantity < 5 && (
             <p
               className="japanese_L"
               style={{

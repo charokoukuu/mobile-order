@@ -254,7 +254,6 @@ export const PaymentGetStatus = async (
       orderId: checkoutId,
     });
     const orderId = payment === "paypay" ? checkoutId : result.data.id;
-    console.log(result);
     if (
       payment === "paypay" ? isPayPayEnabled(result.data) : result.data.status
     ) {
@@ -288,7 +287,6 @@ export const AssignOrderNumber = async (orderId: string) => {
 export const CantOrderTitle = async (orderData: MenuData[]) => {
   const data = SetOrderIdQuantity(orderData);
   const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
-  console.log(data);
   try {
     const title = await cantOrderTitle(data);
     return title.data;
@@ -442,7 +440,6 @@ export class NewTimer {
       this.setTimeNumber(time);
     }, 1000);
     await this.startTimer();
-    console.log("after");
     window.location.href = this.toUrl;
   };
 }

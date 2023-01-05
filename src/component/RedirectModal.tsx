@@ -11,9 +11,7 @@ interface RedirectModalProps {
 
 export const RedirectModal = (props: RedirectModalProps) => {
   const [timeNumber, setTimeNumber] = useState<number>(props.countTimer / 1000);
-  const countTimer = useRef(
-    new NewTimer(props.countTimer, setTimeNumber, "/register")
-  );
+  const countTimer = useRef(new NewTimer(props.countTimer, setTimeNumber, "/"));
 
   useEffect(() => {
     if (props.isModal === true) {
@@ -49,7 +47,7 @@ export const RedirectModal = (props: RedirectModalProps) => {
                 fontWeight: "bold",
               }}
             >
-              注文に失敗しました。
+              注文に失敗しました
             </h2>
             <p
               style={{
@@ -57,18 +55,18 @@ export const RedirectModal = (props: RedirectModalProps) => {
               }}
             >
               選択された商品の中に在庫切れの商品があります。
-              商品をご確認の上もう一度ご注文ください
+              商品をご確認の上、再度注文をお願いします。
               <br />
               {props.noPaymentTitle?.map((title, index: number) => (
                 <span style={{ color: "red" }} key={index}>
                   {title}
-                  {", "}
+                  {props.noPaymentTitle?.length !== index + 1 && ", "}
                 </span>
               ))}
               の購入に失敗しました。
               <br />
               {timeNumber}
-              秒後に自動的に閉じます。
+              秒後に自動的に戻ります。
             </p>
             <div
               style={{
