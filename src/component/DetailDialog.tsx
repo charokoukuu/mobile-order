@@ -44,62 +44,62 @@ export const DetailDialog = (props: DetailDialogProps) => {
             },
           }}
         >
-          <div>
+          <div className="p-[2%] text-center">
             <MaterialMenuCard />
             {props.menu?.isBigSize && props.isAddCart && (
               <MaterialSizeSelectCard />
             )}
-            <MultiplePurchase
-              initalValue={props.initialPurchaseCount}
-              purchaseCount={purchaseCount}
-              setPurchaseCount={setPurchaseCount}
-            />
-            <div className="my-[1%] text-center text-[3.5rem] text-runticketBlue">
+            <p className="text-[3.5rem] text-runticketBlue">
               {(value.menu?.price || 0) * purchaseCount}
               <span className="text-2xl"> 円</span>
+            </p>
+            <div className="rounded-xl bg-white px-[10%] py-[5%] shadow-md">
+              <MultiplePurchase
+                initialValue={props.initialPurchaseCount}
+                purchaseCount={purchaseCount}
+                setPurchaseCount={setPurchaseCount}
+              />
             </div>
-            {props.isAddCart && (
-              <div className="text-center">
-                {" "}
-                <Button
-                  className="h-11 w-[90%] rounded-xl bg-runticketBlue"
-                  variant="contained"
-                  onClick={() => {
-                    if (!props.initialPurchaseCount)
-                      setTimeout(() => setPurchaseCount(1), 200);
-                    props.onNext && props.onNext(value.menu, purchaseCount);
-                  }}
-                >
-                  カートに追加
-                </Button>
-              </div>
-            )}
-            {!props.isAddCart && (
-              <div className="text-center">
-                {" "}
-                <Button
-                  className="h-11 w-[90%] rounded-xl bg-runticketRed"
-                  variant="contained"
-                  onClick={() => {
-                    props.onDelete && props.onDelete();
-                  }}
-                >
-                  カートから削除
-                </Button>
-              </div>
-            )}
-            <div className="my-[2%] text-center underline ">
+          </div>
+          {props.isAddCart && (
+            <div className="z-10 text-center">
               <Button
-                className="text-runticketBlue"
+                className="h-11 w-[90%] rounded-xl bg-runticketBlue"
+                variant="contained"
                 onClick={() => {
                   if (!props.initialPurchaseCount)
                     setTimeout(() => setPurchaseCount(1), 200);
-                  props.onPrev();
+                  props.onNext && props.onNext(value.menu, purchaseCount);
                 }}
               >
-                閉じる
+                カートに追加
               </Button>
             </div>
+          )}
+          {!props.isAddCart && (
+            <div className="text-center">
+              <Button
+                className="h-11 w-[90%] rounded-xl bg-runticketRed"
+                variant="contained"
+                onClick={() => {
+                  props.onDelete && props.onDelete();
+                }}
+              >
+                カートから削除
+              </Button>
+            </div>
+          )}
+          <div className="my-[2%] text-center underline ">
+            <Button
+              className="text-runticketBlue"
+              onClick={() => {
+                if (!props.initialPurchaseCount)
+                  setTimeout(() => setPurchaseCount(1), 200);
+                props.onPrev();
+              }}
+            >
+              閉じる
+            </Button>
           </div>
         </Dialog>
       </menuData.Provider>
@@ -111,12 +111,12 @@ const MaterialMenuCard = () => {
   const { menu } = useContext(menuData);
 
   return (
-    <div className="m-[3px] rounded-xl bg-white shadow-md">
-      <div className="my-[2%] text-center text-[2rem]">
-        <div className="japanese_R py-[5%] text-[30px]">{menu?.title}</div>
+    <div className="rounded-xl bg-white shadow-md">
+      <div className="text-center text-[2rem]">
+        <div className="japanese_R py-[2%] text-[30px]">{menu?.title}</div>
         <div>
           <img
-            className="my-[1%] mx-auto w-[300px] rounded-[10px]"
+            className="my-[1%] mx-auto w-[70%] max-w-[250px] rounded-[10px]"
             src={menu?.image || ""}
             alt="menu"
           />
@@ -148,12 +148,8 @@ const MaterialSizeSelectCard = () => {
   const { menu } = useContext(menuData);
 
   return (
-    <div className="mx-[3%] rounded-xl bg-white shadow-sm">
-      <div className="text-center text-[2rem]">
-        <div className="my-[5%] py-[5%]">
-          {menu !== undefined && <SelectedCard />}
-        </div>
-      </div>
+    <div className="m-[2%] rounded-xl bg-white p-3 shadow-sm">
+      {menu !== undefined && <SelectedCard />}
     </div>
   );
 };
@@ -172,11 +168,11 @@ const SelectedCard = () => {
   }, [isChecked, setMenu]);
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={6}>
         <Button
           className={classNames(
-            "h-[57px] w-[135px] rounded-2xl bg-runticketBlue text-white shadow-sm",
+            "h-[50px] w-full rounded-2xl bg-runticketBlue text-white shadow-sm",
             { "bg-runticketLightGray shadow-none": isChecked }
           )}
           onClick={() => {
@@ -184,13 +180,13 @@ const SelectedCard = () => {
           }}
           variant="contained"
         >
-          <div className="japanese_R text-white">並</div>
+          <p className="japanese_R text-white">並</p>
         </Button>
       </Grid>
       <Grid item xs={6}>
         <Button
           className={classNames(
-            "h-[57px] w-[135px] rounded-2xl bg-runticketBlue text-white shadow-sm",
+            "h-[50px] w-full rounded-2xl bg-runticketBlue text-white shadow-sm",
             { "bg-runticketLightGray shadow-none": !isChecked }
           )}
           onClick={() => {
@@ -198,9 +194,9 @@ const SelectedCard = () => {
           }}
           variant="contained"
         >
-          <div className="japanese_R text-white">
+          <p className="japanese_R text-white">
             大 (+{baseMenuData.bigSizeDiffPrice}円)
-          </div>
+          </p>
         </Button>
       </Grid>
     </Grid>
