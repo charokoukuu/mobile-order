@@ -89,7 +89,10 @@ const Router = () => {
                     path="/"
                     element={<Menu appBarHeight={appBarHeight} />}
                   />
-                  <Route path="/register" element={<Register />} />
+                  <Route
+                    path="/register"
+                    element={<Register appBarHeight={appBarHeight} />}
+                  />
                   {/* <Route path="/test" element={<TestData />} /> */}
                   <Route
                     path="/order/:id"

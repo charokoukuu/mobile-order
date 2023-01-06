@@ -14,10 +14,11 @@ import { auth } from "../api/Firebase";
 import { IllegalEmailAddress } from "../component/IllegalEmailAddress";
 import App from "./App";
 import ScrollDialog from "../component/ScrollDialog";
+import { Spacer } from "../component/SwipeTabs";
 
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
-export const Register = () => {
+export const Register = (props: { appBarHeight: number }) => {
   const [userEmail, setUserEmail] = useState<string>("e1xxx@oit.ac.jp");
   const [user, setUser] = useState<User>();
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -127,12 +128,15 @@ export const Register = () => {
       ) : CorrectEmail(userEmail) && isLogin ? (
         <App />
       ) : (
-        <IllegalEmailAddress
-          email={""}
-          onClick={function (): void {
-            DeleteUserRedirect();
-          }}
-        />
+        <>
+          <Spacer appBarHeight={props.appBarHeight} mode={"menu"} />
+          <IllegalEmailAddress
+            email={""}
+            onClick={() => {
+              DeleteUserRedirect();
+            }}
+          />
+        </>
       )}
     </ThemeProvider>
   );
