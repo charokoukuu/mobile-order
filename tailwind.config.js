@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        runticketGrayText: "#7070707",
+        runticketGrayText: "#707070",
         runticketBlue: "#006C9B",
         runticketGray: "#434343",
         runticketLightGray: "#848484",
@@ -15,6 +15,9 @@ module.exports = {
         buttonBlue: "#1D98F2",
         buttonGray: "#707070",
         buttonRed: "#F25F1D",
+        indicatorGreen: "#01AD4A",
+        indicatorOrange: "#DB8D00",
+        indicatorRed: "#D11F00",
       },
     },
   },
