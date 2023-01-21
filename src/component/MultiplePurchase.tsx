@@ -1,6 +1,7 @@
 import { Fab, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import classNames from "classnames";
 interface Props {
   purchaseCount: number;
   setPurchaseCount: (quantity: number) => void;
@@ -23,12 +24,11 @@ export const MultiplePurchase = ({
                 setPurchaseCount(purchaseCount - 1);
               }
             }}
-            style={{
-              backgroundColor: purchaseCount > 1 ? "#1D98F2" : "#707070",
-              boxShadow: "none",
-            }}
+            className={classNames("bg-buttonGray shadow-none", {
+              "!bg-buttonBlue": purchaseCount > 1,
+            })}
           >
-            <RemoveIcon style={{ color: "white" }} />
+            <RemoveIcon className="text-white" />
           </Fab>
         </Grid>
       )}
@@ -42,12 +42,9 @@ export const MultiplePurchase = ({
             onClick={() => {
               setPurchaseCount(purchaseCount + 1);
             }}
-            style={{
-              backgroundColor: "#F25F1D",
-              boxShadow: "none",
-            }}
+            className="bg-buttonRed shadow-none"
           >
-            <AddIcon style={{ color: "white" }} />
+            <AddIcon className="text-white" />
           </Fab>
         </Grid>
       )}
