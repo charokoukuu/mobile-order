@@ -35,17 +35,15 @@ export const PaymentSelectButton = (props: Props) => {
           isSelect={props.payment === "paypay"}
           payment={"paypay"}
           setPayment={props.setPayment}
+          textStyle={{
+            marginLeft: "10px",
+          }}
         />
         <BaseButton
-          text={"クレジットカード\nApple Pay\nGoogle Pay"}
+          text={"クレジット\nApple Pay\nGoogle Pay"}
           image={"/logo/stripe.png"}
-          imageStyle={{
-            borderRadius: "10px",
-            width: "40px",
-            height: "40px",
-          }}
           textStyle={{
-            fontSize: "0.5rem",
+            fontSize: "0.9rem",
             lineHeight: "1rem",
             marginLeft: "10px",
           }}
@@ -62,7 +60,6 @@ interface BaseButtonProps extends Props {
   isSelect: boolean;
   text: string;
   image: string;
-  imageStyle?: React.CSSProperties;
   textStyle?: React.CSSProperties;
 }
 const BaseButton = (props: BaseButtonProps) => {
@@ -79,7 +76,11 @@ const BaseButton = (props: BaseButtonProps) => {
         }}
       >
         <img
-          style={props.imageStyle}
+          style={{
+            borderRadius: "7px",
+            width: "40px",
+            height: "40px",
+          }}
           src={props.image}
           alt="payment_logo"
           width="50px"
@@ -100,7 +101,8 @@ const BaseButton = (props: BaseButtonProps) => {
 const BaseButtonStyles: React.CSSProperties = {
   border: "none",
   width: "170px",
-  padding: "13px 17px",
+  padding: "0px 17px",
+  height: "70px",
   borderRadius: "10px",
   fontSize: "1.5rem",
   display: "flex",
