@@ -17,10 +17,10 @@ const TableComp = (rows: RowsProps) => {
       <Table sx={{ width: "100%" }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell style={{ fontSize: "1.5rem" }} align="left">
+            <TableCell className="text-2xl" align="left">
               Order Menu
             </TableCell>
-            <TableCell style={{ fontSize: "1.5rem" }} align="right">
+            <TableCell className="text-2xl" align="right">
               個数
             </TableCell>
           </TableRow>
@@ -28,10 +28,10 @@ const TableComp = (rows: RowsProps) => {
         <TableBody>
           {rows.title.map((title: string, i: number) => (
             <TableRow key={i}>
-              <TableCell style={{ fontSize: "1.5rem" }} align="left">
+              <TableCell className="text-2xl" align="left">
                 {title}
               </TableCell>
-              <TableCell style={{ fontSize: "1.5rem" }} align="right">
+              <TableCell className="text-2xl" align="right">
                 {rows.count[i]}
               </TableCell>
             </TableRow>
