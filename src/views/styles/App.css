@@ -22,6 +22,10 @@ h2 {
   color: #707070;
 }
 
+h3 {
+  font-family: japan_b;
+}
+
 @font-face {
   font-family: "thin";
   src: url(./font/NotoSansJP-Thin.otf);
@@ -53,12 +57,10 @@ h2 {
 
 .japanese_B {
   font-family: japan_b;
-  color: #707070;
 }
 
 .japanese_R {
   font-family: japan_r;
-  color: #707070;
 }
 
 .defaultButton {

@@ -113,7 +113,9 @@ const MaterialMenuCard = () => {
   return (
     <div className="rounded-xl bg-white shadow-md">
       <div className="text-center text-[2rem]">
-        <div className="japanese_R py-[2%] text-[30px]">{menu?.title}</div>
+        <div className="japanese_R py-[2%] text-[30px] text-runticketGrayText">
+          {menu?.title}
+        </div>
         <div>
           <img
             className="my-[1%] mx-auto w-[70%] max-w-[250px] rounded-[10px]"
