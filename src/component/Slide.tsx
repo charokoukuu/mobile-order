@@ -1,4 +1,3 @@
-import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,13 +5,11 @@ import { QrCodeMock } from "./icons/QrCodeMock";
 import { PhoneMock } from "./icons/PhoneMock";
 
 export default function Slide() {
-  // style
   const SlideStyle = {
     hight: "30%",
     maxWidth: "90%",
   };
 
-  // slideSetting
   const settings = {
     dots: true,
     infinite: true,
@@ -40,18 +37,8 @@ export default function Slide() {
       {Slides.map((slide, index) => {
         return (
           <div key={index}>
-            <p style={{ margin: "5% 10%", color: "#000000" }}>
-              {slide[0] as string}
-            </p>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "0 auto",
-              }}
-            >
-              {slide[1]}
-            </div>
+            <p className="my-[5%] mx-[10%] text-black">{slide[0] as string}</p>
+            <div className="mx-auto flex justify-center">{slide[1]}</div>
           </div>
         );
       })}
