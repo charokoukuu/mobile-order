@@ -77,7 +77,7 @@ export const Order = (props: OrderProps) => {
         <div>
           <div
             className={classNames(
-              "mb-[5%] flex overflow-y-scroll bg-[#eeece4] py-[5%]",
+              "flex overflow-y-scroll bg-[#eeece4] py-[5%]",
               {
                 "justify-center": orderTitle?.length === 1,
                 "justify-left": orderTitle?.length !== 1,
@@ -139,13 +139,19 @@ export const Order = (props: OrderProps) => {
           yesText={"削除"}
           noText={"いいえ"}
         />
-        <div className="my-[4%] text-center">
+        <div className="text-center">
           <div className="text-[3rem] text-runticketBlue">
             <span className="text-[2rem]">{props.orderData.length}点</span> ¥
             {props.totalPrice}
           </div>
         </div>
-        <Divider />
+        <div className="mx-auto w-[90%]">
+          <h2 className="text-runticketBlue">決済方法</h2>
+          <Divider />
+          <p className="text-xs text-runticketGrayText">
+            お支払い方法を選択してください。なお、RunTicketは現金決済に対応しておりません。ご了承ください。
+          </p>
+        </div>
         <PaymentSelectButton payment={payment} setPayment={setPayment} />
         <div className="my-[3%] mx-[10%]">
           <div>

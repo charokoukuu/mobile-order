@@ -11,33 +11,13 @@ interface Props {
 export const PaymentSelectButton = (props: Props) => {
   return (
     <div>
-      <Section>
-        <h2 className="themeFontColor">決済方法</h2>
-        <p
-          className="descriptionColor"
-          style={{
-            fontSize: "13px",
-          }}
-        >
-          お支払い方法を選択してください。なお、RunTicketは現金決済に対応しておりません。ご了承ください。
-        </p>
-      </Section>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "5%",
-        }}
-      >
+      <div className="flex justify-center">
         <BaseButton
           text={"PayPay"}
           image={"/logo/paypay.png"}
           isSelect={props.payment === "paypay"}
           payment={"paypay"}
           setPayment={props.setPayment}
-          textStyle={{
-            marginLeft: "10px",
-          }}
         />
         <BaseButton
           text={"クレジット\nApple Pay\nGoogle Pay"}
@@ -45,7 +25,6 @@ export const PaymentSelectButton = (props: Props) => {
           textStyle={{
             fontSize: "0.9rem",
             lineHeight: "1rem",
-            marginLeft: "10px",
           }}
           isSelect={props.payment === "stripe"}
           payment={"stripe"}
@@ -64,38 +43,30 @@ interface BaseButtonProps extends Props {
 }
 const BaseButton = (props: BaseButtonProps) => {
   return (
-    <div>
-      <Button
-        style={{
-          ...BaseButtonStyles,
-          backgroundColor: props.isSelect ? "#FFECD8" : "#ffffff",
-          boxShadow: props.isSelect ? "inset 0px 3px 6px #00000029" : "none",
-        }}
-        onClick={() => {
-          props.setPayment(props.payment);
-        }}
-      >
-        <img
-          style={{
-            borderRadius: "7px",
-            width: "40px",
-            height: "40px",
-          }}
-          src={props.image}
-          alt="payment_logo"
-          width="50px"
-          height="50px"
-        />
-        <ButtonText style={props.textStyle} className="japanese_L">
-          {props.text.split("\n").map((str, index) => (
-            <React.Fragment key={index}>
-              {str}
-              <br />
-            </React.Fragment>
-          ))}
-        </ButtonText>
-      </Button>
-    </div>
+    <Button
+      style={{
+        ...BaseButtonStyles,
+        backgroundColor: props.isSelect ? "#FFECD8" : "#ffffff",
+        boxShadow: props.isSelect ? "inset 0px 3px 6px #00000029" : "none",
+      }}
+      onClick={() => {
+        props.setPayment(props.payment);
+      }}
+    >
+      <img
+        className="h-10 w-10 rounded-lg"
+        src={props.image}
+        alt="payment_logo"
+      />
+      <ButtonText style={props.textStyle}>
+        {props.text.split("\n").map((str, index) => (
+          <React.Fragment key={index}>
+            {str}
+            <br />
+          </React.Fragment>
+        ))}
+      </ButtonText>
+    </Button>
   );
 };
 const BaseButtonStyles: React.CSSProperties = {
@@ -111,13 +82,9 @@ const BaseButtonStyles: React.CSSProperties = {
   textTransform: "none",
 };
 
-const ButtonText = styled.div`
+const ButtonText = styled.p`
   font-size: 1.5rem;
   color: #707070;
   text-align: left;
-`;
-
-const Section = styled.div`
-  width: 80%;
-  margin: 0 auto;
+  margin-left: 10px;
 `;
