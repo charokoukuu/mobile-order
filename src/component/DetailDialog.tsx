@@ -123,20 +123,9 @@ const MaterialMenuCard = () => {
         </div>
         <div className="japanese_L mx-auto w-[80%] py-3 text-center text-[15px]">
           {menu?.description}
-          {menu?.quantity < 5 && (
-            <p
-              className="japanese_L"
-              style={{
-                color: "rgb(242, 95, 29",
-                fontSize: "12px",
-                fontWeight: "bold",
-                opacity: "0.6",
-                margin: "0",
-                textAlign: "right",
-              }}
-            >
+          {menu?.quantity < 100 && (
+            <p className="japanese_L text-right text-xs font-bold text-runticketRed opacity-60">
               △ 残りわずか
-              {/* {menu?.quantity} */}
             </p>
           )}
         </div>
