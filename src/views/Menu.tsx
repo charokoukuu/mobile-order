@@ -158,8 +158,9 @@ export const Menu = ({ appBarHeight }: Props) => {
           )}
           <RedirectModal
             isModal={isModal}
-            countTimer={15000}
+            countTimer={150000}
             toURL="/"
+            buttonText="メニュー画面に戻る"
             noPaymentTitle={noPaymentTitle}
           />
         </div>

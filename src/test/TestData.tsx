@@ -27,6 +27,7 @@ export const TestData = (props: { appBarHeight: number }) => {
         isModal={isModal}
         countTimer={50000}
         toURL="/register"
+        buttonText="ログイン画面に戻る"
         noPaymentTitle={["なるき", "じゅんじゅん"]}
       />
       <button onClick={() => setIsModal(true)}>モーダルを開く</button>
