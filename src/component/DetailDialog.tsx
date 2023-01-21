@@ -123,7 +123,7 @@ const MaterialMenuCard = () => {
         </div>
         <div className="japanese_L mx-auto w-[80%] py-3 text-center text-[15px]">
           {menu?.description}
-          {menu?.quantity < 100 && (
+          {menu?.quantity < 5 && (
             <p className="japanese_L text-right text-xs font-bold text-runticketRed opacity-60">
               △ 残りわずか
             </p>
