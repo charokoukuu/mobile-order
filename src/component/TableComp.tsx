@@ -14,7 +14,7 @@ interface RowsProps {
 const TableComp = (rows: RowsProps) => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ width: "100%" }} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell className="text-2xl" align="left">
