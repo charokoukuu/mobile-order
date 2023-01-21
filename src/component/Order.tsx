@@ -168,7 +168,7 @@ export const Order = (props: OrderProps) => {
                 購入する
               </Button>
             )}
-            {isLoad && <LoadingAnimation type={"orbit"} />}
+            {isLoad && <LoadingAnimation type="orbit" />}
           </div>
           <div>
             <Button

@@ -264,7 +264,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
             )}
           </Card>
         ) : (
-          <LoadingAnimation type={"jelly"} />
+          <LoadingAnimation type="jelly" />
         )}
       </div>
     </>

@@ -207,7 +207,7 @@ export const History = ({ appBarHeight }: Props) => {
           ))}
         </div>
       ) : (
-        <LoadingAnimation type={"jelly"} />
+        <LoadingAnimation type="jelly" />
       )}
     </div>
   );

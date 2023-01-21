@@ -164,7 +164,7 @@ export const Menu = ({ appBarHeight }: Props) => {
           />
         </div>
       ) : (
-        <LoadingAnimation type={"jelly"} />
+        <LoadingAnimation type="jelly" />
       )}
     </div>
   );
