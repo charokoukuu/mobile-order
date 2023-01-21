@@ -1,7 +1,7 @@
 import { Spacer } from "../component/SwipeTabs";
 export const Help = (props: { appBarHeight: number }) => {
   return (
-    <div style={{ margin: "auto", textAlign: "center" }}>
+    <div className="m-auto text-center">
       <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
       <div className="m-[2%] rounded-b-lg bg-white p-[2%]">
         <h2 className="my-4 text-2xl font-bold text-runticketBlue">STEP 1</h2>
