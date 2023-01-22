@@ -71,7 +71,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                 {(orderData?.isStatus === "ordered" ||
                   orderData?.isStatus === "cooked") && (
                   <div>
-                    <h2 className="my-3 text-center font-sans text-xl text-black">
+                    <h2 className="my-8 text-center font-sans text-3xl text-black">
                       食券発行用QR
                     </h2>
                     <div className="relative h-full w-full py-20">
@@ -81,7 +81,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                         size={150}
                       />
                     </div>
-                    <p className="mt-1 text-center text-xl text-black">
+                    <p className=" japanese_R mt-1 text-center text-lg text-black">
                       {`注文ID: ${orderData?.id}`}
                     </p>
                   </div>
@@ -91,14 +91,14 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     ご注文ありがとうございました
                   </p>
                 )}
-                <h2 className="my-3 text-center text-3xl text-black">
+                <h2 className="my-3 text-center text-3xl font-bold text-black">
                   {`￥${orderData?.totalPrice}`}
                 </h2>
                 <div className="my-4">
                   {orderData?.menu.map((e: MenuData, i: number) => {
                     return (
                       <div
-                        className="grid grid-cols-2 gap-4 text-black opacity-[0.65]"
+                        className="grid grid-cols-2 gap-4 font-bold text-black opacity-[0.65]"
                         key={i}
                       >
                         <span className="grid justify-end">{e.title}</span>
@@ -142,9 +142,9 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                   )}
                   {(orderData?.isStatus === "ordered" ||
                     orderData?.isStatus === "cooked") && (
-                    <div className="my-4">
+                    <div className="mt-4">
                       <Divider />
-                      <h2 className="my-3 text-center font-sans text-xl text-black">
+                      <h2 className="my-8 text-center font-sans text-3xl text-black">
                         食券受け取り方法
                       </h2>
                       <Slide />
