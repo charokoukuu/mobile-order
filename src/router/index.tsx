@@ -17,7 +17,6 @@ import { Help } from "../views/Help";
 import { GetPaymentStatus } from "../views/GetPaymentStatus";
 import Admin from "../views/Admin";
 import Footer from "../component/Footer";
-import { Grid } from "@mui/material";
 import styled from "@emotion/styled";
 // import { TestData } from "../test/TestData";
 const Router = () => {
@@ -123,6 +122,7 @@ const Router = () => {
                       window.location.href = "/";
                     }}
                     buttonText={"ホームに戻る"}
+                    appBarHeight={appBarHeight}
                   />
                 }
               />
