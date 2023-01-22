@@ -61,23 +61,16 @@ export const Register = (props: { appBarHeight: number }) => {
           onSubmit={LoginPopup}
           noValidate
           sx={{ my: 12, mx: 5 }}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          className="flex flex-col items-center justify-center"
         >
           <Avatar src={user?.photoURL || ""} alt="logo" sx={{ mx: 17 }} />
           {user?.displayName ? (
             <>
-              <h2 style={{ textAlign: "center" }}>
+              <h2 className="text-center">
                 お帰りなさい{user?.displayName || ""}さん
               </h2>
               <Button
-                style={{
-                  backgroundColor: "#006C9B",
-                }}
+                className="bg-runticketBlue"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
@@ -102,7 +95,7 @@ export const Register = (props: { appBarHeight: number }) => {
             </>
           ) : (
             <>
-              <h2 style={{ textAlign: "center" }}>
+              <h2 className="text-center">
                 学生のGoogleアカウントでサインインしてください
               </h2>
               <Button

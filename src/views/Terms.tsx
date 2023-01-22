@@ -6,7 +6,7 @@ export const Terms = (props: {
   isDialog?: boolean;
 }) => {
   return (
-    <div style={{ margin: "3%" }}>
+    <div className="m-4">
       {!props.isDialog ? (
         <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
       ) : null}

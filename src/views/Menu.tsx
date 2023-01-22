@@ -57,7 +57,7 @@ export const Menu = ({ appBarHeight }: Props) => {
   }, [orderData.length]);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div className="relative">
       {isGetMenu ? (
         <div>
           {isTodayNotReceived && (
@@ -76,7 +76,7 @@ export const Menu = ({ appBarHeight }: Props) => {
             setDetailDialogOpen={setDetailDialogOpen}
             appBarHeight={appBarHeight}
           />
-          <div style={{ marginBottom: "13vw" }}>
+          <div className="mb-3">
             <Order
               open={orderDialog}
               onDelete={(e) => {
