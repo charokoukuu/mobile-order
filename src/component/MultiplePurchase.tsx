@@ -33,7 +33,9 @@ export const MultiplePurchase = ({
         </Grid>
       )}
       <Grid item xs={6}>
-        <p className="japanese_L text-2xl">{purchaseCount}個</p>
+        <p className="japanese_L text-2xl text-runticketGrayText">
+          {purchaseCount}個
+        </p>
       </Grid>
       {!initialValue && (
         <Grid item xs={3}>

@@ -12,7 +12,7 @@ export const PrivacyPolicy = (props: {
         <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
       ) : null}
       <div className="mx-auto rounded-lg bg-white p-[2%] [&_h1]:mb-[0.83em] [&_h1]:text-[2em] [&_h1]:font-bold [&_h2]:my-[0.83em] [&_h2]:text-[1.5em] [&_h2]:font-bold">
-        <h1 className="japanese_L my-[0.67em] text-center text-[#707070]">
+        <h1 className="japanese_L my-[0.67em] text-center text-runticketGrayText">
           プライバシーポリシー
         </h1>
         <div className="m-auto w-[90%]">
@@ -155,7 +155,10 @@ export const PrivacyPolicy = (props: {
           <p className="text-end">以上</p>
         </div>
         {props.onClick && (
-          <div className="japanese_L over text-center" onClick={props.onClick}>
+          <div
+            className="japanese_L text-center text-runticketBlue underline hover:text-runticketRed"
+            onClick={props.onClick}
+          >
             利用規約に戻る
           </div>
         )}

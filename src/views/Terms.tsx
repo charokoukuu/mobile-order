@@ -11,7 +11,9 @@ export const Terms = (props: {
         <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
       ) : null}
       <div className="mx-auto rounded-lg bg-white p-[2%] [&_h1]:mb-[0.83em] [&_h1]:text-[2em] [&_h1]:font-bold [&_h2]:my-[0.83em] [&_h2]:text-[1.5em] [&_h2]:font-bold">
-        <h1 className="japanese_L text-center text-[#707070]">利用規約</h1>
+        <h1 className="japanese_L text-center text-runticketGrayText">
+          利用規約
+        </h1>
         <div className="m-auto w-[90%]">
           <p>
             この本規約は、当方がこのウェブサイト上で提供する本サービスの利用条件を定めるものです。登録ユーザーの皆さまには，本規約に従って，本サービスをご利用いただきます。
@@ -144,7 +146,7 @@ export const Terms = (props: {
           <p>
             当方は，本サービスの利用によって取得する個人情報については，当方
             <span
-              className="japanese_L over"
+              className="japanese_L text-runticketBlue underline hover:text-runticketRed"
               onClick={() => {
                 props.onClick
                   ? props.onClick()

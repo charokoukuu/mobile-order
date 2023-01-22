@@ -42,7 +42,6 @@ h3 {
 
 .japanese_L {
   font-family: japan_l;
-  color: #707070;
 }
 
 @font-face {
@@ -61,61 +60,4 @@ h3 {
 
 .japanese_R {
   font-family: japan_r;
-}
-
-.defaultButton {
-  background-color: "#E6E6E6";
-  box-shadow: "none";
-}
-
-.plessButton {
-  background-color: "#65FFA062";
-  box-shadow: "inset 0px 3px 6px #00000029";
-}
-
-.center {
-  text-align: center;
-}
-
-.themeFontColor {
-  color: #006c9b;
-}
-
-.descriptionColor {
-  color: #707070;
-}
-
-.themeBackgroundColor {
-  background-color: #006c9b;
-}
-
-div {
-  font-family: japan_b;
-  color: #111111;
-}
-
-.defaultButton {
-  background-color: #006c9b 0% 0% no-repeat padding-box;
-  width: 23vw;
-  height: 10vw;
-  box-shadow: inset 5px 5px 5px #00000029;
-  color: #ffffff;
-  border-radius: 17px;
-  border: none;
-}
-
-.selectedButton {
-  background: #848484 0% 0% no-repeat padding-box;
-  color: #ffffff;
-  border-radius: 17px;
-  border: none;
-}
-
-.over {
-  color: #006c9b;
-  text-decoration: underline;
-}
-
-.over:hover {
-  color: #e76d27;
 }
