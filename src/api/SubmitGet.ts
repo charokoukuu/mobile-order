@@ -30,9 +30,8 @@ export const RandomID = () => {
 export const Yesterday = () => {
   return new Date(new Date(Date.now()).getTime() - 1000 * 60 * 60 * 24);
 };
-export const CorrectEmail = (email: string) => {
-  const regex = /([a-zA-Z0-9._-]+@oit.ac.jp$)|(^runticket21@gmail.com$)/;
-  return regex.test(email);
+export const CorrectEmail = () => {
+  return true;
 };
 
 export const GetAllData = async (collectionName: string) => {
@@ -155,10 +154,7 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
   return new Promise<any>((resolve) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        if (
-          !CorrectEmail(user?.email || "") &&
-          window.location.pathname !== pathName
-        )
+        if (!CorrectEmail() && window.location.pathname !== pathName)
           window.location.href = pathName;
         callback(user);
         resolve("");

@@ -69,7 +69,7 @@ const BaseButton = (props: BaseButtonProps) => {
         style={{
           ...BaseButtonStyles,
           backgroundColor: props.isSelect ? "#FFECD8" : "#ffffff",
-          boxShadow: props.isSelect ? "inset 0px 3px 6px #00000029" : "none",
+          boxShadow: props.isSelect ? "inset 0px 1px 6px #00000029" : "none",
         }}
         onClick={() => {
           props.setPayment(props.payment);
@@ -112,7 +112,7 @@ const BaseButtonStyles: React.CSSProperties = {
 };
 
 const ButtonText = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: #707070;
   text-align: left;
 `;
