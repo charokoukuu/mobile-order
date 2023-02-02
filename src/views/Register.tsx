@@ -47,7 +47,7 @@ export const Register = ({ appBarHeight }: Props) => {
         console.log(error);
       });
   };
-  //無意味な変更(staging URL延長のため)ver2
+  //無意味な変更(staging URL延長のため)ver3
   const DeleteUserRedirect = () => {
     LoginPopup();
   };
