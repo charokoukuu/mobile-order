@@ -6,7 +6,7 @@ import "../views/styles/App.css";
 import { createContext, useContext, useEffect, useState } from "react";
 import { MultiplePurchase } from "./MultiplePurchase";
 import classNames from "classnames";
-const menuData = createContext<any>(null);
+export const menuData = createContext<any>(null);
 let baseMenuData: MenuData;
 interface DetailDialogProps {
   open: boolean;
@@ -49,11 +49,7 @@ export const DetailDialog = (props: DetailDialogProps) => {
             {props.menu?.isBigSize && props.isAddCart && (
               <MaterialSizeSelectCard />
             )}
-            <p className="text-[3.5rem] text-runticketBlue">
-              {(value.menu?.price || 0) * purchaseCount}
-              <span className="text-2xl"> 円</span>
-            </p>
-            <div className="rounded-xl bg-white px-[10%] py-[5%] shadow-md">
+            <div className="my-3 rounded-xl">
               <MultiplePurchase
                 initialValue={props.initialPurchaseCount}
                 purchaseCount={purchaseCount}
@@ -123,7 +119,7 @@ const MaterialMenuCard = () => {
             alt="menu"
           />
         </div>
-        <div className="mx-auto w-[80%] py-3 text-center text-[15px]">
+        <div className="mx-auto w-[80%] py-3 text-center text-[15px] text-runticketGrayText">
           {menu?.description}
           {menu?.quantity < 5 && (
             <p className="japanese_L text-right text-xs font-bold text-runticketRed opacity-60">
