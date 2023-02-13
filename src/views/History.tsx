@@ -38,15 +38,17 @@ export const History = ({ appBarHeight }: Props) => {
         <div className="text-center">注文履歴はありません</div>
       ) : isGetHistoryData && oneOrderData?.length ? (
         <div className="mx-auto w-[97%] rounded-lg bg-white py-[10px]">
-          <p className="text-center text-runticketGrayText">注文履歴</p>
+          <p className="japanese_L text-center text-2xl font-bold text-runticketGrayText">
+            注文履歴
+          </p>
 
           {oneOrderData?.map((e, i) => (
             <div key={i} className="my-[5%]">
               <Link to={`/order/${e.id}`}>
-                <Card className="mx-auto w-[95%] rounded-lg shadow-xl">
+                <Card className="mx-auto w-[95%] rounded-lg shadow-[0px_3px_6px_rgba(0,0,0,0.2)]">
                   <CardContent>
                     <div color="text.secondary">
-                      <p className="text-center text-runticketGrayText">
+                      <p className="text-end text-runticketGrayText">
                         {e.date.toDate().toLocaleString()}
                       </p>
                     </div>

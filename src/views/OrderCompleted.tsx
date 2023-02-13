@@ -98,11 +98,11 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                   {orderData?.menu.map((e: MenuData, i: number) => {
                     return (
                       <div
-                        className="grid grid-cols-2 gap-4 font-bold text-black opacity-[0.65]"
+                        className="mx-auto grid w-1/2 grid-cols-2 gap-2 font-bold text-black opacity-[0.65]"
                         key={i}
                       >
                         <span className="grid justify-end">{e.title}</span>
-                        <span className="grid justify-start">{`￥${e.price}`}</span>
+                        <span className="grid justify-end">{`￥${e.price}`}</span>
                       </div>
                     );
                   })}

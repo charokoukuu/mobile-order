@@ -140,7 +140,7 @@ export const Order = (props: OrderProps) => {
           noText={"いいえ"}
         />
         <div className="text-center">
-          <div className="text-[3rem] text-runticketBlue">
+          <div className="japanese_B text-[3rem] text-runticketBlue">
             <span className="text-[2rem]">{props.orderData.length}点</span> ¥
             {props.totalPrice}
           </div>

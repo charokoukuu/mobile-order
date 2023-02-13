@@ -21,7 +21,7 @@ export const HistoryContent = ({ menu }: Props) => {
   return (
     <div className="my-auto">
       {CountTitle.map((e: string, i: number) => (
-        <div key={i} className="ml-2 text-xl text-runticketGrayText">
+        <div key={i} className="ml-2 text-xl font-bold text-runticketGrayText">
           {e} <CountText>×{CountNumber[i]}</CountText>
           <Divider />
         </div>
