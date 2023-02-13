@@ -101,7 +101,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
 
 const FilterMenuData = (props: FilterMenuDataProps) => {
   return (
-    <Grid container spacing={1} justifyContent="center">
+    <Grid padding={1.5} container spacing={1.5} justifyContent="center">
       <Spacer appBarHeight={props.appBarHeight || 56} mode={"menu"} />
       {props.menu
         .filter(
@@ -110,7 +110,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
         )
         .map((menu: MenuData, index: number) => {
           return (
-            <Grid item key={index}>
+            <Grid item key={index} xs={6} sm={4}>
               <FoodCard
                 menu={menu as MenuData}
                 deleteButton={false}
