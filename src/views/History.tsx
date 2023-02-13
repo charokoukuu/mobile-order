@@ -38,9 +38,9 @@ export const History = ({ appBarHeight }: Props) => {
         <div className="text-center">注文履歴はありません</div>
       ) : isGetHistoryData && oneOrderData?.length ? (
         <div className="mx-auto w-[97%] rounded-lg bg-white py-[10px]">
-          <p className="japanese_L text-center text-2xl font-bold text-runticketGrayText">
+          <h1 className="japanese_L my-5 text-center text-2xl font-bold text-runticketGrayText">
             注文履歴
-          </p>
+          </h1>
 
           {oneOrderData?.map((e, i) => (
             <div key={i} className="my-[5%]">

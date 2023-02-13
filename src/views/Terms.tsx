@@ -10,8 +10,8 @@ export const Terms = (props: {
       {!props.isDialog ? (
         <Spacer appBarHeight={props.appBarHeight || 56} mode={"history"} />
       ) : null}
-      <div className="mx-auto rounded-lg bg-white p-[2%] [&_h1]:mb-[0.83em] [&_h1]:text-[2em] [&_h1]:font-bold [&_h2]:my-[0.83em] [&_h2]:text-[1.5em] [&_h2]:font-bold">
-        <h1 className="japanese_L my-3 text-center text-runticketGrayText">
+      <div className="mx-auto rounded-lg bg-white p-[2%] [&_h2]:my-[0.83em] [&_h2]:text-[1.5em] [&_h2]:font-bold">
+        <h1 className="japanese_L my-5 text-center text-[2em] font-bold text-runticketGrayText">
           利用規約
         </h1>
         <div className="m-auto w-[90%]">

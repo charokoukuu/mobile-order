@@ -135,7 +135,7 @@ const MaterialSizeSelectCard = () => {
   const { menu } = useContext(menuData);
 
   return (
-    <div className="m-[2%] rounded-xl bg-white p-3 shadow-sm">
+    <div className="my-[2%] rounded-xl bg-white p-3 shadow-sm">
       {menu !== undefined && <SelectedCard />}
     </div>
   );
