@@ -71,7 +71,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
   };
 
   await setDoc(doc(db, "order", id), orderData);
-  return id;
+  return orderData;
 };
 
 export const SearchCollectionDataGet = async (
@@ -200,6 +200,7 @@ export const Payment = async (
       callback(false);
     }
   } else if (type === "paypay") {
+    // NOTE: paypayに関しては`~/api/Payment`のPayPaySessionCreateに移行したため以下の処理は使用していない
     try {
       const PayPayRequest = httpsCallable(functions, "PayPayRequest");
       const data = await PayPayRequest({
@@ -221,7 +222,7 @@ export const Payment = async (
 
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
-const GetPaymentStatus = async (orderId: string) => {
+export const GetPaymentStatus = async (orderId: string) => {
   const washingtonRef = doc(db, "order", orderId);
   // orderDataを取得してfunctionでmenuのquantityを減らす
   const docSnap = await getDoc(washingtonRef);
@@ -267,8 +268,8 @@ export const PaymentGetStatus = async (
   }
 };
 
-const isPayPayEnabled = (res: any) => {
-  return res.BODY.data.status === "COMPLETED";
+export const isPayPayEnabled = (result: any) => {
+  return result.data.status === "COMPLETED";
 };
 
 export const AssignOrderNumber = async (orderId: string) => {
