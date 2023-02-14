@@ -11,6 +11,7 @@ interface FoodCardProps {
   count?: number;
 }
 export const FoodCard = (props: FoodCardProps) => {
+  const isSale: boolean = props.menu.quantity > 0;
   return (
     <div>
       <Card
@@ -23,7 +24,7 @@ export const FoodCard = (props: FoodCardProps) => {
       >
         <CardActionArea
           onClick={() => {
-            props.menu.isSale && props.onClick();
+            isSale && props.onClick();
           }}
         >
           <CardMedia
@@ -32,12 +33,11 @@ export const FoodCard = (props: FoodCardProps) => {
             alt="menu image"
             style={{
               height: "180px",
-              filter:
-                !props.menu.isSale || props.count ? "brightness(35%)" : "",
+              filter: !isSale || props.count ? "brightness(35%)" : "",
             }}
           />
 
-          {!props.menu.isSale && (
+          {!isSale && (
             <div
               className="japanese_B"
               style={{
@@ -78,8 +78,7 @@ export const FoodCard = (props: FoodCardProps) => {
               color: "#ffffff",
               fontSize: "18px",
               width: "60%",
-              filter:
-                !props.menu.isSale || props.count ? "brightness(55%)" : "",
+              filter: !isSale || props.count ? "brightness(55%)" : "",
             }}
           >
             {props.menu.title}
@@ -92,8 +91,7 @@ export const FoodCard = (props: FoodCardProps) => {
               bottom: "15px",
               color: "#FA9534",
               fontSize: "18px",
-              filter:
-                !props.menu.isSale || props.count ? "brightness(35%)" : "",
+              filter: !isSale || props.count ? "brightness(35%)" : "",
             }}
           >
             ¥{props.menu.price}
