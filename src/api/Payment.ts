@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { OrderData } from "../types";
 import { auth } from "./Firebase";
-import { GetPaymentStatus, isPayPayEnabled } from "./SubmitGet";
-const url = "http://localhost:3000";
+import { GetPaymentStatus, hostUrl, isPayPayEnabled } from "./SubmitGet";
+const url = "https://payment.run-ticket.com";
 export const PayPaySessionCreate = async (order: OrderData) => {
   try {
     const token: { data: string } = await axios.post(`${url}/token`, {
@@ -13,7 +13,7 @@ export const PayPaySessionCreate = async (order: OrderData) => {
       `${url}/PayPayRequest`,
       {
         orderId: order.id,
-        hostUrl: "http://localhost:3001",
+        hostUrl: hostUrl,
         amount: order.totalPrice,
         orderDescription: order.menu.map((item) => item.title).join(","),
       },
