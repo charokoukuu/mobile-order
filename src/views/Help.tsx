@@ -2,7 +2,7 @@ import Divider from "@mui/material/Divider";
 import { Spacer } from "../component/SwipeTabs";
 export const Help = (props: { appBarHeight: number }) => {
   return (
-    <div className="m-auto text-center">
+    <div className="m-4 text-center">
       <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
       <div className="m-[2%] mx-auto max-w-3xl rounded-lg bg-white p-[2%]">
         <div className="my-4">
