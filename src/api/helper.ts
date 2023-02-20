@@ -121,16 +121,21 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
 };
 
 export const isTodayUserOrderGet = async (userId: string) => {
-  const q = query(
-    collection(db, "order"),
-    orderBy("date", "desc"),
-    where("date", ">", Yesterday()),
-    where("user.uid", "==", userId),
-    where("isStatus", "==", "ordered"),
-    limit(1)
-  );
-  const querySnapshot = await getDocs(q);
-  return !querySnapshot.empty;
+  try {
+    const q = query(
+      collection(db, "order"),
+      orderBy("date", "desc"),
+      where("date", ">", Yesterday()),
+      where("user.uid", "==", userId),
+      where("isStatus", "==", "ordered"),
+      limit(1)
+    );
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  } catch (e) {
+    console.error("Firestore読み取りエラー:", e);
+    throw new Error("データの読み取りに失敗しました。");
+  }
 };
 
 export const GetSpecificData: (
