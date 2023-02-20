@@ -18,6 +18,7 @@ import { auth } from "../api/Firebase";
 import SwipeTabs from "../component/SwipeTabs";
 import IntegrationNotistack from "../component/IntegrationNotistack";
 import { RedirectModal } from "../component/RedirectModal";
+import { ErrorPage } from "./ErrorPage";
 import { PayPaySessionCreate } from "../api/Payment";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";

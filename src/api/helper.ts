@@ -375,7 +375,7 @@ export const SetOrderIdQuantity = (orderData: MenuData[]) => {
       acc.push({ id: cur.id, quantity: 1 });
     }
     return acc;
-  }, [] as { id: string; quantity: number }[]);
+  }, [] as { id: string; quantity: number; }[]);
   return data;
 };
 
