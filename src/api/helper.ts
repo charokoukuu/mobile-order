@@ -127,14 +127,14 @@ export const isTodayUserOrderGet = async (userId: string) => {
       orderBy("date", "desc"),
       where("date", ">", Yesterday()),
       where("user.uid", "==", userId),
-      where("isStatus", "==", "ordered"),
+      where("isStatus", "in", ["ordered", "cooked"]),
       limit(1)
     );
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   } catch (e) {
-    console.error("Firestore読み取りエラー:", e);
-    throw new Error("データの読み取りに失敗しました。");
+    // 未受け取りのオーダーなしデス!
+    return false;
   }
 };
 
