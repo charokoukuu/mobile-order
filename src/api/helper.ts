@@ -121,21 +121,18 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
 };
 
 export const isTodayUserOrderGet = async (userId: string) => {
-  let isData = false;
   const q = query(
     collection(db, "order"),
     orderBy("date", "desc"),
     where("date", ">", Yesterday()),
     where("user.uid", "==", userId),
     where("isStatus", "==", "ordered"),
-    limit(10)
+    limit(1)
   );
   const querySnapshot = await getDocs(q);
-  await querySnapshot.forEach(() => {
-    isData = true;
-  });
-  return isData;
+  return !querySnapshot.empty;
 };
+
 export const GetSpecificData: (
   docId: string,
   collectionId: string
