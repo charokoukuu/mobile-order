@@ -38,19 +38,19 @@ export const CorrectEmail = (email: string) => {
   return regex.test(email);
 };
 
-export const GetAllData = async (collectionName: string) => {
-  const data: MenuData[] = [];
-  const querySnapshot = await getDocs(collection(db, collectionName));
-  return new Promise<MenuData[]>((resolve, reject) => {
-    try {
-      querySnapshot.forEach((doc) => {
-        data.push(doc.data() as MenuData);
-      });
-      resolve(data);
-    } catch (e) {
-      reject(e);
-    }
-  });
+export const GetAllData = async (
+  collectionName: string
+): Promise<MenuData[]> => {
+  try {
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    const data: MenuData[] = querySnapshot.docs.map(
+      (doc) => doc.data() as MenuData
+    );
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw "データの読み取りに失敗しました。";
+  }
 };
 
 interface OrderSubmitProps {
@@ -133,8 +133,8 @@ export const isTodayUserOrderGet = async (userId: string) => {
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   } catch (e) {
-    // 未受け取りのオーダーなしデス!
-    return false;
+    console.error(e);
+    throw "オーダーデータの取得に失敗しました。";
   }
 };
 

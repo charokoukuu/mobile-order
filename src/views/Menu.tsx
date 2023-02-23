@@ -57,11 +57,8 @@ export const Menu = ({ appBarHeight }: Props) => {
         );
         setIsGetMenu(true);
       } catch (e) {
-        console.error(e);
         setIsGetMenu(false);
-        setErrorMessage(
-          "メニューの取得に失敗しました。申し訳ございませんが、再度お試しください。"
-        );
+        setErrorMessage(`${e} 申し訳ございませんが、再度お試しください。`);
       }
     })();
   }, []);
