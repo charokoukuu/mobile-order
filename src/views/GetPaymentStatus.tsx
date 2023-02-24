@@ -26,7 +26,7 @@ export const GetPaymentStatus = ({ appBarHeight }: Props) => {
     <>
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
       <div className="my-4">
-        <h2 className="text-center text-2xl japanese_L font-bold py-5">
+        <h2 className="japanese_L py-5 text-center text-2xl font-bold">
           決済を確認中です
         </h2>
         <LoadingAnimation type="orbit" />
