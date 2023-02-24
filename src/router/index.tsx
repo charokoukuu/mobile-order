@@ -17,7 +17,6 @@ import { Help } from "../views/Help";
 import { GetPaymentStatus } from "../views/GetPaymentStatus";
 import Admin from "../views/Admin";
 import Footer from "../component/Footer";
-import { Grid } from "@mui/material";
 import styled from "@emotion/styled";
 // import { TestData } from "../test/TestData";
 const Router = () => {
@@ -58,93 +57,76 @@ const Router = () => {
               window.location.href = url || "/";
             }}
           />
-          <Grid
-            container
-            alignItems="center"
-            justifyItems="center"
-            justifyContent={"center"}
-          >
-            <Grid item xs={12} md={5}>
-              <AppBarWrapper>
-                <ResponsiveAppBar
-                  photoURL={user?.photoURL || "/static/images/avatar/2.jpg"}
-                  onClick={function (): void {
-                    setIsMenu(!isMenu);
-                  }}
-                  setAppBarHeight={setAppBarHeight}
-                />
-              </AppBarWrapper>
-            </Grid>
-          </Grid>
+          <AppBarWrapper>
+            <ResponsiveAppBar
+              photoURL={user?.photoURL || "/static/images/avatar/2.jpg"}
+              onClick={function (): void {
+                setIsMenu(!isMenu);
+              }}
+              setAppBarHeight={setAppBarHeight}
+            />
+          </AppBarWrapper>
           {isLogin && (
-            <Grid
-              container
-              alignItems="center"
-              justifyItems="center"
-              justifyContent={"center"}
-            >
-              <Grid item xs={12} md={5}>
-                <Routes>
-                  <Route
-                    path="/"
-                    element={<Menu appBarHeight={appBarHeight} />}
+            <Routes>
+              <Route path="/" element={<Menu appBarHeight={appBarHeight} />} />
+              <Route
+                path="/register"
+                element={<Register appBarHeight={appBarHeight} />}
+              />
+              {/* <Route path="/test" element={<TestData />} /> */}
+              <Route
+                path="/order/:id"
+                element={<OrderCompleted appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/order/:id/:status"
+                element={<OrderCompleted appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/check/:id/:paymentType"
+                element={<GetPaymentStatus appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/history"
+                element={<History appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/terms"
+                element={<Terms appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/privacy"
+                element={<PrivacyPolicy appBarHeight={appBarHeight} />}
+              />
+              <Route path="/logout" element={<Redirect logout={true} />} />
+              <Route
+                path="/contact"
+                element={
+                  <Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />
+                }
+              />
+              <Route
+                path="/help"
+                element={<Help appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/admin"
+                element={<Admin appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="*"
+                element={
+                  <ErrorPage
+                    text={"お探しのページは見つかりませんでした"}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                    appBarHeight={appBarHeight}
                   />
-                  <Route path="/register" element={<Register />} />
-                  {/* <Route path="/test" element={<TestData />} /> */}
-                  <Route
-                    path="/order/:id"
-                    element={<OrderCompleted appBarHeight={appBarHeight} />}
-                  />
-                  <Route
-                    path="/order/:id/:status"
-                    element={<OrderCompleted appBarHeight={appBarHeight} />}
-                  />
-                  <Route
-                    path="/check/:id/:paymentType"
-                    element={<GetPaymentStatus appBarHeight={appBarHeight} />}
-                  />
-                  <Route
-                    path="/history"
-                    element={<History appBarHeight={appBarHeight} />}
-                  />
-                  <Route
-                    path="/terms"
-                    element={<Terms appBarHeight={appBarHeight} />}
-                  />
-                  <Route
-                    path="/privacy"
-                    element={<PrivacyPolicy appBarHeight={appBarHeight} />}
-                  />
-                  <Route path="/logout" element={<Redirect logout={true} />} />
-                  <Route
-                    path="/contact"
-                    element={
-                      <Redirect url="https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform" />
-                    }
-                  />
-                  <Route
-                    path="/help"
-                    element={<Help appBarHeight={appBarHeight} />}
-                  />
-                  <Route
-                    path="/admin"
-                    element={<Admin appBarHeight={appBarHeight} />}
-                  />
-                  <Route
-                    path="*"
-                    element={
-                      <ErrorPage
-                        text={"お探しのページは見つかりませんでした"}
-                        onClick={() => {
-                          window.location.href = "/";
-                        }}
-                        buttonText={"ホームに戻る"}
-                      />
-                    }
-                  />
-                </Routes>
-              </Grid>
-            </Grid>
+                }
+              />
+            </Routes>
           )}
         </div>
       </BrowserRouter>

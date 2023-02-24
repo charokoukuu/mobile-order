@@ -57,7 +57,7 @@ export const Menu = ({ appBarHeight }: Props) => {
   }, [orderData.length]);
 
   return (
-    <div style={{ position: "relative" }}>
+    <div className="relative">
       {isGetMenu ? (
         <div>
           {isTodayNotReceived && (
@@ -76,7 +76,7 @@ export const Menu = ({ appBarHeight }: Props) => {
             setDetailDialogOpen={setDetailDialogOpen}
             appBarHeight={appBarHeight}
           />
-          <div style={{ marginBottom: "13vw" }}>
+          <div className="mb-3">
             <Order
               open={orderDialog}
               onDelete={(e) => {
@@ -158,13 +158,14 @@ export const Menu = ({ appBarHeight }: Props) => {
           )}
           <RedirectModal
             isModal={isModal}
-            countTimer={15000}
+            countTimer={150000}
             toURL="/"
+            buttonText="メニュー画面に戻る"
             noPaymentTitle={noPaymentTitle}
           />
         </div>
       ) : (
-        <LoadingAnimation type={"jelly"} />
+        <LoadingAnimation type="jelly" />
       )}
     </div>
   );

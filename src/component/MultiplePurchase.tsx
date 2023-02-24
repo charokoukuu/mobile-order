@@ -1,73 +1,72 @@
-import styled from "@emotion/styled";
-import { Fab } from "@mui/material";
+import { Fab, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import classNames from "classnames";
+import { useContext } from "react";
+import { menuData } from "./DetailDialog";
 interface Props {
   purchaseCount: number;
   setPurchaseCount: (quantity: number) => void;
-  initalValue?: number;
+  initialValue?: number;
 }
 
 export const MultiplePurchase = ({
   purchaseCount,
   setPurchaseCount,
-  initalValue,
+  initialValue: initialValue,
 }: Props) => {
+  const value = useContext(menuData);
   return (
-    <Wrapper>
-      {!initalValue && (
-        <Fab
-          size="small"
-          onClick={() => {
-            if (purchaseCount > 1) {
-              setPurchaseCount(purchaseCount - 1);
-            }
-          }}
-          style={{
-            backgroundColor: purchaseCount > 1 ? "#1D98F2" : "#707070",
-            boxShadow: "none",
-          }}
-        >
-          <RemoveIcon style={{ color: "white" }} />
-        </Fab>
-      )}
-      <Quantity className="japanese_L">{purchaseCount}個</Quantity>
+    <>
+      <p className="japanese_L text-2xl font-bold text-runticketGrayText">
+        {purchaseCount}個
+      </p>
+      <Grid container alignItems="center">
+        {!initialValue && (
+          <Grid item xs={3}>
+            <Fab
+              size="small"
+              onClick={() => {
+                if (purchaseCount > 1) {
+                  setPurchaseCount(purchaseCount - 1);
+                }
+              }}
+              className={classNames("bg-buttonGray shadow-none", {
+                "!bg-buttonBlue": purchaseCount > 1,
+              })}
+            >
+              <RemoveIcon className="text-white" />
+            </Fab>
+          </Grid>
+        )}
 
-      {!initalValue && (
-        <Fab
-          size={"small"}
-          onClick={() => {
-            setPurchaseCount(purchaseCount + 1);
-          }}
-          style={{
-            backgroundColor: "#F25F1D",
-            boxShadow: "none",
-          }}
-        >
-          <AddIcon style={{ color: "white" }} />
-        </Fab>
-      )}
-    </Wrapper>
+        <Grid item xs={!initialValue ? 6 : 12}>
+          <p
+            className={classNames(
+              "japanese_B text-[3rem] leading-[3rem] text-runticketBlue",
+              {
+                "text-[2.5rem]":
+                  (value.menu?.price * purchaseCount).toString().length > 4,
+              }
+            )}
+          >
+            {"¥" + (value.menu?.price || 0) * purchaseCount}
+          </p>
+        </Grid>
+        {!initialValue && (
+          <Grid item xs={3}>
+            <Fab
+              size={"small"}
+              onClick={() => {
+                setPurchaseCount(purchaseCount + 1);
+              }}
+              className="bg-buttonRed shadow-none"
+            >
+              <AddIcon className="text-white" />
+            </Fab>
+          </Grid>
+        )}
+      </Grid>
+    </>
   );
 };
-
-const Wrapper = styled.div`
-  margin-top: 10px;
-  display: flex;
-  overflow-x: scroll;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  width: 95%;
-  margin: 0 auto;
-  height: 70px;
-  background-color: #fff;
-`;
-
-const Quantity = styled.div`
-  font-size: 30px;
-  font-weight: bold;
-  color: #707070;
-  margin: 0px 20px 0px 20px;
-  padding: 0px 50px;
-`;

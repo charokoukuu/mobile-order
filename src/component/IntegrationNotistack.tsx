@@ -14,15 +14,7 @@ function MyApp(props: IntegrationNotistackProps) {
 
   useEffect(() => {
     enqueueSnackbar(
-      <div
-        className="japanese_R"
-        style={{
-          margin: "auto 0",
-          color: "white",
-        }}
-      >
-        {props.message}
-      </div>,
+      <div className="japanese_R mx-auto text-white">{props.message}</div>,
       { variant: props.variant, autoHideDuration: 2000 }
     );
     //eslint-disable-next-line

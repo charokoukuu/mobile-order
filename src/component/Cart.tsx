@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { isIOS } from "../api/SubmitGet";
+import classNames from "classnames";
 
 interface CartProps {
   onClick: () => void;
@@ -24,22 +25,17 @@ export const Cart = (props: CartProps) => {
     },
   }));
   return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-      style={{ boxShadow: "0px -3px 6px #00000029" }}
-    >
+    <Paper className="fixed bottom-0 left-0 z-10 w-full shadow-[0px_-3px_6px_#00000029]">
       <div
         onClick={() => {
           props.onClick();
         }}
-        style={{
-          maxWidth: "900px",
-          margin: "auto",
-          paddingBottom: isIOS ? "1rem" : "0",
-        }}
+        className={classNames("m-auto max-w-[900px]", {
+          "pb-4": isIOS,
+        })}
       >
         <Grid container spacing={2}>
-          <Grid item xs={3} style={{ margin: "auto", textAlign: "start" }}>
+          <Grid item xs={3} className="mr-auto text-center">
             <IconButton aria-label="cart">
               <StyledBadge
                 badgeContent={props.totalOrderItemsCount}
@@ -54,23 +50,19 @@ export const Cart = (props: CartProps) => {
           <Grid
             item
             xs={3}
-            className="japanese_B themeFontColor"
-            style={{
-              margin: "auto",
-              textAlign: "end",
-              right: props.totalPrice.toString().length >= 3 ? "45%" : "40%",
-              fontSize: "40px",
-            }}
+            className={classNames(
+              "japanese_B right-[40%] m-auto text-end text-[40px] text-runticketBlue",
+              {
+                // props.totalPrice.toString().length >= 3 ? "45%" : "40%"
+                "right-[45px]": props.totalPrice.toString().length >= 3,
+              }
+            )}
           >
             ¥{props.totalPrice}
           </Grid>
-          <Grid item xs={5} style={{ margin: "auto", textAlign: "end" }}>
+          <Grid item xs={5} className="m-auto text-center">
             <Button
-              style={{
-                backgroundColor: "#006C9B",
-                fontSize: "clamp(0.5rem, 4vw, 2rem)",
-                borderRadius: "8px",
-              }}
+              className="rounded-lg bg-runticketBlue text-[clamp(0.5rem_4vw_2rem)]"
               variant="contained"
               onClick={() => {
                 props.onClick();

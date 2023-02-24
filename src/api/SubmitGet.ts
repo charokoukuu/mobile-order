@@ -135,7 +135,7 @@ export const isTodayUserOrderGet = async (userId: string) => {
 export const GetSpecificData: (
   docId: string,
   collectionId: string
-) => Promise<OrderData | undefined> = async (
+) => Promise<OrderData | null> = async (
   docId: string,
   collectionId: string
 ) => {
@@ -145,6 +145,7 @@ export const GetSpecificData: (
     if (docSnap.exists()) {
       // truthy
     } else {
+      resolve(null);
       reject("No such document!");
     }
     resolve(docSnap.data() as OrderData);

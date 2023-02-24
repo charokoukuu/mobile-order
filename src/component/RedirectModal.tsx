@@ -6,6 +6,7 @@ interface RedirectModalProps {
   isModal: boolean;
   countTimer: number;
   toURL: string;
+  buttonText: string;
   noPaymentTitle?: string[];
 }
 
@@ -25,40 +26,16 @@ export const RedirectModal = (props: RedirectModalProps) => {
     <>
       {props.isModal ? (
         <Modal open={props.isModal}>
-          <div
-            style={{
-              backgroundColor: "#EFEFEF",
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              zIndex: "10",
-              height: "auto",
-              width: "80%",
-              maxWidth: "500px",
-              padding: "20px",
-              borderRadius: "1rem",
-            }}
-          >
-            <h2
-              style={{
-                textAlign: "center",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-              }}
-            >
+          <div className="fixed top-1/2 left-1/2 z-10 h-auto w-[80%] max-w-[500px] -translate-x-1/2 -translate-y-1/2 transform rounded-2xl bg-white p-5">
+            <h2 className="text-center text-2xl font-bold">
               注文に失敗しました
             </h2>
-            <p
-              style={{
-                textAlign: "center",
-              }}
-            >
+            <p className="text-center">
               選択された商品の中に在庫切れの商品があります。
               商品をご確認の上、再度注文をお願いします。
               <br />
               {props.noPaymentTitle?.map((title, index: number) => (
-                <span style={{ color: "red" }} key={index}>
+                <span className="text-[#f00]" key={index}>
                   {title}
                   {props.noPaymentTitle?.length !== index + 1 && ", "}
                 </span>
@@ -68,32 +45,15 @@ export const RedirectModal = (props: RedirectModalProps) => {
               {timeNumber}
               秒後に自動的に戻ります。
             </p>
-            <div
-              style={{
-                display: "inline-grid",
-                alignItems: "center",
-                width: "100%",
-                margin: "0 auto",
-              }}
-            >
+            <div className="mx-auto inline-grid w-full text-center">
               <button
-                style={{
-                  backgroundColor: "#FF0000",
-                  color: "#FFFFFF",
-                  border: "none",
-                  borderRadius: "0.5rem",
-                  padding: "0.5rem 1rem",
-                  margin: "0.5rem",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                }}
+                className="m-2 rounded-lg border-none bg-[#f00] py-2 px-4 text-base font-bold text-white"
                 onClick={() => {
-                  // メニューに戻る
                   countTimer.current.clearTimer();
                   window.location.href = props.toURL;
                 }}
               >
-                メニュー画面に戻る
+                {props.buttonText}
               </button>
             </div>
           </div>

@@ -5,7 +5,8 @@ import { MenuData } from "../types";
 import "../views/styles/App.css";
 import { createContext, useContext, useEffect, useState } from "react";
 import { MultiplePurchase } from "./MultiplePurchase";
-const menuData = createContext<any>(null);
+import classNames from "classnames";
+export const menuData = createContext<any>(null);
 let baseMenuData: MenuData;
 interface DetailDialogProps {
   open: boolean;
@@ -43,78 +44,58 @@ export const DetailDialog = (props: DetailDialogProps) => {
             },
           }}
         >
-          <div>
+          <div className="p-[2%] text-center">
             <MaterialMenuCard />
             {props.menu?.isBigSize && props.isAddCart && (
               <MaterialSizeSelectCard />
             )}
-            <MultiplePurchase
-              initalValue={props.initialPurchaseCount}
-              purchaseCount={purchaseCount}
-              setPurchaseCount={setPurchaseCount}
-            />
-            <div
-              className="center themeFontColor"
-              style={{ margin: "1% 0", fontSize: "3.5rem" }}
-            >
-              {(value.menu?.price || 0) * purchaseCount}
-              <span style={{ fontSize: "1.5rem" }}> 円</span>
+            <div className="my-3 rounded-xl">
+              <MultiplePurchase
+                initialValue={props.initialPurchaseCount}
+                purchaseCount={purchaseCount}
+                setPurchaseCount={setPurchaseCount}
+              />
             </div>
-            {props.isAddCart && (
-              <div className="center">
-                {" "}
-                <Button
-                  style={{
-                    width: "90%",
-                    backgroundColor: "#006C9B",
-                    height: "5vh",
-                    borderRadius: "11px",
-                  }}
-                  variant="contained"
-                  onClick={() => {
-                    if (!props.initialPurchaseCount)
-                      setTimeout(() => setPurchaseCount(1), 200);
-                    props.onNext && props.onNext(value.menu, purchaseCount);
-                  }}
-                >
-                  カートに追加
-                </Button>
-              </div>
-            )}
-            {!props.isAddCart && (
-              <div className="center">
-                {" "}
-                <Button
-                  style={{
-                    width: "90%",
-                    backgroundColor: "#DB1812",
-                    height: "5vh",
-                    borderRadius: "11px",
-                  }}
-                  variant="contained"
-                  onClick={() => {
-                    props.onDelete && props.onDelete();
-                  }}
-                >
-                  カートから削除
-                </Button>
-              </div>
-            )}
-            <div
-              className="center"
-              style={{ textDecoration: "underline #006C9B", margin: "2% 0" }}
-            >
+          </div>
+          {props.isAddCart && (
+            <div className="z-10 text-center">
               <Button
-                style={{ color: "#006C9B" }}
+                className="h-11 w-[90%] rounded-xl bg-runticketBlue"
+                variant="contained"
                 onClick={() => {
                   if (!props.initialPurchaseCount)
                     setTimeout(() => setPurchaseCount(1), 200);
-                  props.onPrev();
+                  props.onNext && props.onNext(value.menu, purchaseCount);
                 }}
               >
-                閉じる
+                カートに追加
               </Button>
             </div>
+          )}
+          {!props.isAddCart && (
+            <div className="text-center">
+              <Button
+                className="h-11 w-[90%] rounded-xl bg-runticketRed"
+                variant="contained"
+                onClick={() => {
+                  props.onDelete && props.onDelete();
+                }}
+              >
+                カートから削除
+              </Button>
+            </div>
+          )}
+          <div className="my-[2%] text-center underline ">
+            <Button
+              className="text-runticketBlue"
+              onClick={() => {
+                if (!props.initialPurchaseCount)
+                  setTimeout(() => setPurchaseCount(1), 200);
+                props.onPrev();
+              }}
+            >
+              閉じる
+            </Button>
           </div>
         </Dialog>
       </menuData.Provider>
@@ -126,53 +107,23 @@ const MaterialMenuCard = () => {
   const { menu } = useContext(menuData);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#ffffff",
-        margin: "3% 3%",
-        boxShadow: "0px 3px 6px #00000029",
-        borderRadius: "13px",
-      }}
-    >
-      <div style={{ textAlign: "center", margin: "2% 0", fontSize: "2rem" }}>
-        <div
-          className="japanese_R"
-          style={{ padding: "5% 0", fontSize: "30px" }}
-        >
+    <div className="rounded-xl bg-white shadow-md">
+      <div className="text-center text-[2rem]">
+        <div className="japanese_R py-[2%] text-[30px] text-runticketGrayText">
           {menu?.title}
         </div>
         <div>
           <img
-            style={{ width: "300px", borderRadius: "10px", margin: "1% 0" }}
+            className="my-[1%] mx-auto w-[70%] max-w-[250px] rounded-[10px]"
             src={menu?.image || ""}
             alt="menu"
           />
         </div>
-        <div
-          className="japanese_L"
-          style={{
-            textAlign: "center",
-            fontSize: "15px",
-            width: "80%",
-            margin: "auto",
-            paddingBottom: "7%",
-          }}
-        >
+        <div className="mx-auto w-[80%] py-3 text-center text-[15px] text-runticketGrayText">
           {menu?.description}
           {menu?.quantity < 5 && (
-            <p
-              className="japanese_L"
-              style={{
-                color: "rgb(242, 95, 29",
-                fontSize: "12px",
-                fontWeight: "bold",
-                opacity: "0.6",
-                margin: "0",
-                textAlign: "right",
-              }}
-            >
+            <p className="japanese_L text-right text-xs font-bold text-runticketRed opacity-60">
               △ 残りわずか
-              {/* {menu?.quantity} */}
             </p>
           )}
         </div>
@@ -184,19 +135,8 @@ const MaterialSizeSelectCard = () => {
   const { menu } = useContext(menuData);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#ffffff",
-        margin: "0% 3%",
-        boxShadow: "0px 3px 6px #00000029",
-        borderRadius: "13px",
-      }}
-    >
-      <div style={{ textAlign: "center", margin: "0% 0", fontSize: "2rem" }}>
-        <div style={{ padding: "5% 0", margin: "5% 0" }}>
-          {menu !== undefined && <SelectedCard />}
-        </div>
-      </div>
+    <div className="my-[2%] rounded-xl bg-white p-3 shadow-sm">
+      {menu !== undefined && <SelectedCard />}
     </div>
   );
 };
@@ -213,48 +153,37 @@ const SelectedCard = () => {
       title: isChecked ? baseMenuData.title + " (大)" : baseMenuData.title,
     }));
   }, [isChecked, setMenu]);
-  const defaultButton = {
-    background: "#006C9B 0% 0% no-repeat padding-box",
-    boxShadow: "inset 5px 5px 5px #00000029",
-    color: "#ffffff",
-    width: "135px",
-    height: "57px",
-    borderRadius: "17px",
-    border: "none",
-    fontSize: "1rem",
-  };
-  const selectedButton = {
-    ...defaultButton,
-    background: "#848484 0% 0% no-repeat padding-box",
-    boxShadow: "none",
-  };
 
   return (
-    <Grid container>
+    <Grid container spacing={2}>
       <Grid item xs={6}>
         <Button
+          className={classNames(
+            "h-[50px] w-full rounded-2xl bg-runticketBlue text-white shadow-sm",
+            { "bg-runticketLightGray shadow-none": isChecked }
+          )}
           onClick={() => {
             setIsChecked(false);
           }}
-          style={!isChecked ? { ...defaultButton } : { ...selectedButton }}
           variant="contained"
         >
-          <div className="japanese_R" style={{ color: "#ffffff" }}>
-            並
-          </div>
+          <p className="japanese_R text-white">並</p>
         </Button>
       </Grid>
       <Grid item xs={6}>
         <Button
+          className={classNames(
+            "h-[50px] w-full rounded-2xl bg-runticketBlue text-white shadow-sm",
+            { "bg-runticketLightGray shadow-none": !isChecked }
+          )}
           onClick={() => {
             setIsChecked(true);
           }}
-          style={isChecked ? { ...defaultButton } : { ...selectedButton }}
           variant="contained"
         >
-          <div className="japanese_R" style={{ color: "#ffffff" }}>
+          <p className="japanese_R text-white">
             大 (+{baseMenuData.bigSizeDiffPrice}円)
-          </div>
+          </p>
         </Button>
       </Grid>
     </Grid>

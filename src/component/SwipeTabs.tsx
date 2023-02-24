@@ -64,11 +64,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
     <div>
       <SwipeTabsWapper appBarHeight={props.appBarHeight || 56}>
         <Tabs
-          style={{
-            backgroundColor: "#ffffff",
-            color: "white",
-            pointerEvents: "auto",
-          }}
+          className="pointer-events-auto bg-white text-white"
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
@@ -80,7 +76,11 @@ export default function SwipeTabs(props: SwipeTabsProps) {
           })}
         </Tabs>
       </SwipeTabsWapper>
-      <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+      <SwipeableViews
+        className="mx-auto max-w-[730px] py-1"
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
         {menuCategoryArray.map((category: string, index: number) => {
           return (
             <TabPanel value={value} index={index} key={index}>
@@ -101,7 +101,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
 
 const FilterMenuData = (props: FilterMenuDataProps) => {
   return (
-    <Grid container>
+    <Grid padding={1.5} container spacing={1.5} justifyContent="center">
       <Spacer appBarHeight={props.appBarHeight || 56} mode={"menu"} />
       {props.menu
         .filter(
@@ -110,13 +110,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
         )
         .map((menu: MenuData, index: number) => {
           return (
-            <Grid
-              item
-              key={index}
-              style={{
-                margin: "3% auto",
-              }}
-            >
+            <Grid item key={index} xs={6} sm={4}>
               <FoodCard
                 menu={menu as MenuData}
                 deleteButton={false}

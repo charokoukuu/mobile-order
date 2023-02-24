@@ -34,7 +34,7 @@ export default function ScrollDialog(props: ScrollDialogProps) {
         <DialogContent dividers={true}>
           {mode === "terms" && (
             <Terms
-              width="90%"
+              isDialog
               onClick={() => {
                 setMode("privacy");
               }}
@@ -42,7 +42,7 @@ export default function ScrollDialog(props: ScrollDialogProps) {
           )}
           {mode === "privacy" && (
             <PrivacyPolicy
-              width="90%"
+              isDialog
               onClick={() => {
                 setMode("terms");
               }}

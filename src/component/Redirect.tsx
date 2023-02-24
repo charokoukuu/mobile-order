@@ -16,7 +16,7 @@ export const Redirect = (props: RedirectProps) => {
   }, []);
   return (
     <div>
-      <LoadingAnimation type={"jelly"} />
+      <LoadingAnimation type="jelly" />
     </div>
   );
 };

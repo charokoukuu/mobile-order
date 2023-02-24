@@ -14,10 +14,11 @@ import { auth } from "../api/Firebase";
 import { IllegalEmailAddress } from "../component/IllegalEmailAddress";
 import App from "./App";
 import ScrollDialog from "../component/ScrollDialog";
+import { Spacer } from "../component/SwipeTabs";
 
 const theme = createTheme();
 const provider = new GoogleAuthProvider();
-export const Register = () => {
+export const Register = (props: { appBarHeight: number }) => {
   const [userEmail, setUserEmail] = useState<string>("e1xxx@oit.ac.jp");
   const [user, setUser] = useState<User>();
   const [isLogin, setIsLogin] = useState<boolean>(false);
@@ -60,23 +61,16 @@ export const Register = () => {
           onSubmit={LoginPopup}
           noValidate
           sx={{ my: 12, mx: 5 }}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          className="flex flex-col items-center justify-center"
         >
           <Avatar src={user?.photoURL || ""} alt="logo" sx={{ mx: 17 }} />
           {user?.displayName ? (
             <>
-              <h2 style={{ textAlign: "center" }}>
+              <h2 className="text-center">
                 お帰りなさい{user?.displayName || ""}さん
               </h2>
               <Button
-                style={{
-                  backgroundColor: "#006C9B",
-                }}
+                className="bg-runticketBlue"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
@@ -101,7 +95,7 @@ export const Register = () => {
             </>
           ) : (
             <>
-              <h2 style={{ textAlign: "center" }}>
+              <h2 className="text-center">
                 学生のGoogleアカウントでサインインしてください
               </h2>
               <Button
@@ -127,12 +121,15 @@ export const Register = () => {
       ) : CorrectEmail(userEmail) && isLogin ? (
         <App />
       ) : (
-        <IllegalEmailAddress
-          email={""}
-          onClick={function (): void {
-            DeleteUserRedirect();
-          }}
-        />
+        <>
+          <Spacer appBarHeight={props.appBarHeight} mode={"menu"} />
+          <IllegalEmailAddress
+            email={""}
+            onClick={() => {
+              DeleteUserRedirect();
+            }}
+          />
+        </>
       )}
     </ThemeProvider>
   );

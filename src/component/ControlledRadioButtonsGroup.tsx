@@ -19,16 +19,9 @@ export default function ControlledRadioButtonsGroup(
   };
 
   return (
-    <FormControl style={{ margin: "5% auto" }}>
-      <FormLabel id="demo-controlled-radio-buttons-group">
-        決済方法 (現金非対応)
-      </FormLabel>
-      <RadioGroup
-        aria-labelledby="demo-controlled-radio-buttons-group"
-        name="controlled-radio-buttons-group"
-        value={props.payment}
-        onChange={handleChange}
-      >
+    <FormControl className="my-[5%] mx-auto">
+      <FormLabel>決済方法 (現金非対応)</FormLabel>
+      <RadioGroup value={props.payment} onChange={handleChange}>
         <FormControlLabel value="paypay" control={<Radio />} label="PayPay" />
         <FormControlLabel
           value="stripe"

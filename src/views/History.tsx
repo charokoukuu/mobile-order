@@ -32,68 +32,31 @@ export const History = ({ appBarHeight }: Props) => {
   }, []);
 
   return (
-    <div style={{ marginTop: "10px" }}>
+    <div className="mt-[10px]">
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
       {isGetHistoryData && !oneOrderData?.length ? (
-        <div style={{ textAlign: "center" }}>注文履歴はありません</div>
+        <div className="text-center">注文履歴はありません</div>
       ) : isGetHistoryData && oneOrderData?.length ? (
-        <div
-          style={{
-            backgroundColor: "#ffffff",
-            borderRadius: "8px",
-            width: "97%",
-            margin: "0 auto",
-            padding: "10px 0",
-          }}
-        >
-          <h2
-            className="japanese_L"
-            style={{ textAlign: "center", color: "#707070" }}
-          >
+        <div className="mx-auto w-[97%] rounded-lg bg-white py-[10px]">
+          <h1 className="japanese_L my-5 text-center text-2xl font-bold text-runticketGrayText">
             注文履歴
-          </h2>
+          </h1>
 
           {oneOrderData?.map((e, i) => (
-            <div key={i} style={{ margin: "5% 0" }}>
-              <Link
-                style={{
-                  textDecoration: "none",
-                }}
-                to={`/order/${e.id}`}
-              >
-                <Card
-                  style={{
-                    borderRadius: "8px",
-                    boxShadow: "0px 3px 6px rgba(0,0,0,0.2)",
-                  }}
-                  sx={{
-                    width: "95%",
-                    margin: "0 auto",
-                    position: "relative",
-                  }}
-                >
+            <div key={i} className="my-[5%]">
+              <Link to={`/order/${e.id}`}>
+                <Card className="mx-auto w-[95%] rounded-lg shadow-[0px_3px_6px_rgba(0,0,0,0.2)]">
                   <CardContent>
                     <div color="text.secondary">
-                      <div
-                        className="japanese_L"
-                        style={{ textAlign: "right", color: "#000000" }}
-                      >
+                      <p className="text-end text-runticketGrayText">
                         {e.date.toDate().toLocaleString()}
-                      </div>
+                      </p>
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
+                    <div className="flex justify-between">
                       <HistoryContent menu={e.menu} />
-                      <div
-                        className="japanese_B themeFontColor"
-                        style={{ fontSize: "30px", margin: "auto 0" }}
-                      >
+                      <h3 className="my-auto text-[30px] text-runticketBlue">
                         ¥{e.totalPrice}
-                      </div>
+                      </h3>
                     </div>
                     <Grid container color="text.secondary">
                       {e.isStatus === "complete" && (
@@ -101,27 +64,14 @@ export const History = ({ appBarHeight }: Props) => {
                           <Grid
                             item
                             xs={0}
-                            style={{ margin: "auto 0", color: "#01AD4A" }}
+                            className="flex items-center text-indicatorGreen"
                           >
-                            <TaskAltIcon
-                              style={{
-                                fontSize: "20px",
-                                margin: "6px 3px 0 0",
-                              }}
-                            />
+                            <TaskAltIcon className="text-xl" />
                           </Grid>
-                          <Grid
-                            item
-                            xs={5}
-                            className="japanese_L"
-                            style={{
-                              textAlign: "start",
-                              margin: "auto 0",
-                              color: "#01AD4A",
-                              fontSize: "15px",
-                            }}
-                          >
-                            注文受け取り済み
+                          <Grid item xs={5}>
+                            <p className="text-[15px] text-indicatorGreen">
+                              注文受け取り済み
+                            </p>
                           </Grid>
                         </>
                       )}
@@ -130,28 +80,15 @@ export const History = ({ appBarHeight }: Props) => {
                         <>
                           <Grid
                             item
-                            xs={0}
-                            style={{ margin: "auto 0", color: "#DB8D00" }}
+                            xs={1}
+                            className="flex items-center text-indicatorOrange"
                           >
-                            <ErrorOutlineIcon
-                              style={{
-                                fontSize: "20px",
-                                margin: "6px 3px 0 0",
-                              }}
-                            />
+                            <ErrorOutlineIcon className="text-xl" />
                           </Grid>
-                          <Grid
-                            item
-                            xs={5}
-                            className="japanese_L"
-                            style={{
-                              textAlign: "start",
-                              margin: "auto 0",
-                              color: "#DB8D00",
-                              fontSize: "15px",
-                            }}
-                          >
-                            未受け取り
+                          <Grid item xs={5} className="text-start">
+                            <p className="text-[15px] text-indicatorOrange">
+                              未受け取り
+                            </p>
                           </Grid>
                         </>
                       )}
@@ -159,43 +96,20 @@ export const History = ({ appBarHeight }: Props) => {
                         <>
                           <Grid
                             item
-                            xs={0}
-                            style={{ margin: "auto 0", color: "#D11F00" }}
+                            xs={1}
+                            className="flex items-center text-indicatorRed"
                           >
-                            <ErrorOutlineIcon
-                              style={{
-                                fontSize: "20px",
-                                margin: "6px 3px 0 0",
-                              }}
-                            />
+                            <ErrorOutlineIcon className="text-xl" />
                           </Grid>
-                          <Grid
-                            item
-                            xs={5}
-                            className="japanese_L"
-                            style={{
-                              textAlign: "start",
-                              margin: "auto 0",
-                              color: "#D11F00",
-                              fontSize: "15px",
-                            }}
-                          >
-                            決済情報なし
+                          <Grid item xs={5} className="text-start">
+                            <p className="text-[15px] text-indicatorRed">
+                              決済情報なし
+                            </p>
                           </Grid>
                         </>
                       )}
-                      <Grid
-                        item
-                        xs
-                        style={{ margin: "auto", textAlign: "end" }}
-                      >
-                        <div
-                          className="japanese_R"
-                          style={{
-                            color: "#1FA7D0",
-                            fontSize: "13px",
-                          }}
-                        >
+                      <Grid item xs className="my-auto text-end">
+                        <div className="japanese_R text-sm text-blue-400">
                           ID: {e.id}
                         </div>
                       </Grid>
@@ -207,7 +121,7 @@ export const History = ({ appBarHeight }: Props) => {
           ))}
         </div>
       ) : (
-        <LoadingAnimation type={"jelly"} />
+        <LoadingAnimation type="jelly" />
       )}
     </div>
   );

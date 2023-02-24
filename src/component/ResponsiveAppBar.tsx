@@ -42,11 +42,11 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
     <AppBar
       ref={appBar}
       position="static"
-      style={{ backgroundColor: "#006C9B" }}
+      className="bg-runticketBlue"
       elevation={0}
     >
       <Container maxWidth="xl">
-        <Toolbar disableGutters style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <Toolbar disableGutters className="mx-auto max-w-[800px]">
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -56,26 +56,18 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
               onClick={props.onClick}
               color="default"
             >
-              <MenuIcon style={{ color: "#ffffff" }} />
+              <MenuIcon className="text-white" />
             </IconButton>
           </Box>
           <Button
             onClick={() => {
               window.location.href = "/";
             }}
-            style={{
-              color: "#ffffff",
-              textTransform: "none",
-              fontSize: "200%",
-              position: "absolute",
-              left: "50%",
-              transform: "translate(-50%,0)",
-            }}
+            className="absolute left-1/2 max-w-[260px] -translate-x-1/2 transform text-2xl text-white"
           >
             <img
               src="https://firebasestorage.googleapis.com/v0/b/mobile-order-4d383.appspot.com/o/runticket.png?alt=media&token=f27edb3e-3806-43bf-b1fb-2179dcc23f07"
               alt="RunTicket"
-              style={{ width: "100%" }}
             />
           </Button>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -87,7 +79,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
               onClick={props.onClick}
               color="default"
             >
-              <MenuIcon style={{ color: "#ffffff" }} />
+              <MenuIcon className="text-white" />
             </IconButton>
           </Box>
 

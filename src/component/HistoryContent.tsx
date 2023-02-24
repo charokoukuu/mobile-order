@@ -19,12 +19,9 @@ export const HistoryContent = ({ menu }: Props) => {
   }, [menu]);
 
   return (
-    <div style={{ margin: "auto 0" }}>
+    <div className="my-auto">
       {CountTitle.map((e: string, i: number) => (
-        <div
-          key={i}
-          style={{ color: "#707070", marginLeft: "2vw", fontSize: "20px" }}
-        >
+        <div key={i} className="ml-2 text-xl font-bold text-runticketGrayText">
           {e} <CountText>×{CountNumber[i]}</CountText>
           <Divider />
         </div>
