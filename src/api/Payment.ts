@@ -37,7 +37,6 @@ export const PayPayStatusCheck = async (orderId: string) => {
     const result = await axios.post(`${url}/PayPayGetStatus`, {
       orderId: orderId,
     });
-    console.log(result.data.status);
     if (isPayPayEnabled(result)) {
       await GetPaymentStatus(orderId);
       window.location.href = `/order/${orderId}/success`;
