@@ -10,7 +10,7 @@ interface ErrorPageProps {
   buttonText: string;
 }
 export const ErrorPage = (props: ErrorPageProps) => {
-  const params = useParams();
+  const { errorText, errorName, errorCode } = useParams();
   return (
     <div>
       <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
@@ -18,11 +18,10 @@ export const ErrorPage = (props: ErrorPageProps) => {
         <ErrorOutlineIcon style={{ fontSize: "70px" }} />
       </IconWrapper>
       <Warning>
-        <p>{props.text}</p>
-        {params.errorText &&
-          params.errorText
-            .split("\n")
-            .map((line, index) => <p key={index}>{line}</p>)}
+        <p className="text-xl">{props.text}</p>
+        <p className="text-base">{errorText}</p>
+        <p className="text-left text-sm">{errorName}</p>
+        <p className="text-left text-sm">{errorCode}</p>
         <Button
           variant="text"
           LinkComponent={Link}
@@ -34,7 +33,9 @@ export const ErrorPage = (props: ErrorPageProps) => {
         <span>/</span>
         <Button
           variant="text"
-          href={`https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform?usp=pp_url&entry.951689160=${params.errorText}`}
+          href={`https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform?usp=pp_url&entry.951689160=${
+            errorCode ? errorCode : errorText
+          }`}
         >
           問い合わせる
         </Button>

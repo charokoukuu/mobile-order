@@ -114,7 +114,7 @@ const Router = () => {
                 element={<Admin appBarHeight={appBarHeight} />}
               />
               <Route
-                path="/error/:errorText"
+                path="/error/:errorText/:errorName/:errorCode"
                 element={
                   <ErrorPage
                     text={"エラーが発生しました。"}
