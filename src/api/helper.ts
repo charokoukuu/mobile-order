@@ -39,15 +39,15 @@ export const CorrectEmail = (email: string) => {
   return regex.test(email);
 };
 
-export const redirectToErrorPage = (errorText: string | unknown) => {
+export const RedirectToErrorPage = (errorText: string | unknown) => {
   window.location.href = `/error/${errorText}`;
 };
 
-const setFirebaseErrorMessage = (e: unknown) => {
+const SetFirebaseErrorMessage = (e: unknown, errorText: string) => {
   const errorMessage =
     e instanceof FirebaseError
-      ? `${e.code}:メニューデータの読み取りに失敗しました。<br>${e.message}`
-      : e;
+      ? `${errorText}/${e.name}/${e.code}`
+      : `${errorText}/${e}`;
   return errorMessage;
 };
 
@@ -58,11 +58,11 @@ export const GetAllData = async (collectionName: string) => {
       (doc) => doc.data() as MenuData
     );
     if (data.length === 0) {
-      throw "メニューデータが存在しません。\nあああ";
+      throw "メニューデータが存在しません。";
     }
     return data;
   } catch (e) {
-    throw setFirebaseErrorMessage(e);
+    throw SetFirebaseErrorMessage(e, "メニューデータの取得に失敗しました。");
   }
 };
 
@@ -85,9 +85,12 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     isStatus: "not_payed",
     payment: props.payment,
   };
-
-  await setDoc(doc(db, "order", id), orderData);
-  return orderData;
+  try {
+    await setDoc(doc(db, "order", id), orderData);
+    return orderData;
+  } catch (e) {
+    throw SetFirebaseErrorMessage(e, "オーダーデータの送信に失敗しました。");
+  }
 };
 
 export const SearchCollectionDataGet = async (
@@ -113,24 +116,31 @@ export const SearchCollectionDataGet = async (
       [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
   );
   lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+  try {
+    const querySnapshot = await getDocs(q);
+    setData(
+      (prev) =>
+        [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
+    );
+    lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+  } catch (e) {
+    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
+  }
 };
 //当日の全ユーザのオーダーを取得
 export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
-  const data: OrderData[] = [];
-  const q = query(
-    collection(db, docId),
-    orderBy("date", "desc"),
-    where("date", ">", Yesterday()),
-    limit(maxValue)
-  );
-  const querySnapshot = await getDocs(q);
-  return new Promise<OrderData[]>((resolve, reject) => {
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data() as OrderData);
-    });
-    resolve(data);
-    reject("error");
-  });
+  try {
+    const q = query(
+      collection(db, docId),
+      orderBy("date", "desc"),
+      where("date", ">", Yesterday()),
+      limit(maxValue)
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data() as OrderData);
+  } catch (e) {
+    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
+  }
 };
 
 export const isTodayUserOrderGet = async (userId: string) => {
@@ -146,22 +156,24 @@ export const isTodayUserOrderGet = async (userId: string) => {
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   } catch (e) {
-    console.error(e);
-    throw "オーダーデータの取得に失敗しました。";
+    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
   }
 };
 
-export const GetSpecificData: (
+export const GetSpecificData = async <T>(
   docId: string,
   collectionId: string
-) => Promise<OrderData> = async (docId: string, collectionId: string) => {
-  const docRef = doc(db, docId, collectionId);
-  const docSnap = await getDoc(docRef);
-  if (!docSnap.exists()) {
-    throw new Error("No such document!");
+) => {
+  try {
+    const docRef = doc(db, docId, collectionId);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      throw "オーダーデータが存在しません。";
+    }
+    return docSnap.data() as T;
+  } catch (e) {
+    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
   }
-
-  return docSnap.data() as OrderData;
 };
 
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
@@ -205,8 +217,8 @@ export const Payment = async (
         uId: auth.currentUser?.uid,
         uMail: auth.currentUser?.email,
       });
-      const respons: any = resData.data;
-      window.location.href = String(respons.url);
+      const response: any = resData.data;
+      window.location.href = String(response.url);
     } catch (err) {
       alert(
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
