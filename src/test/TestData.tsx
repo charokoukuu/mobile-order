@@ -1,12 +1,12 @@
 // import { httpsCallable } from "firebase/functions";
-import { useState } from "react";
+// import { useState } from "react";
 // import { functions } from "../api/Firebase";
 // import { RedirectModal } from "../component/RedirectModal";
 import { ErrorPage } from "../views/ErrorPage";
 // import { Spacer } from "../component/SwipeTabs";
 
 export const TestData = (props: { appBarHeight: number }) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
+  // const [isModal, setIsModal] = useState<boolean>(false);
   // const Pay = () => {
   //   const paypay = httpsCallable(functions, "test");
   //   (async () => {
