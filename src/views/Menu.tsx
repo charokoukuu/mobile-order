@@ -15,6 +15,7 @@ import { auth } from "../api/Firebase";
 import SwipeTabs from "../component/SwipeTabs";
 import IntegrationNotistack from "../component/IntegrationNotistack";
 import { RedirectModal } from "../component/RedirectModal";
+import { PayPaySessionCreate } from "../api/Payment";
 
 export type CategoryProp = "メイン" | "ドリンク" | "トッピング";
 const menuCategoryArray: CategoryProp[] = ["メイン", "ドリンク", "トッピング"];
@@ -94,7 +95,7 @@ export const Menu = ({ appBarHeight }: Props) => {
                 setOrderDialog(false);
               }}
               onNext={async (payment, setIsLoad) => {
-                const orderId = await OrderSubmit({
+                const order = await OrderSubmit({
                   user: {
                     uid: auth.currentUser?.uid || "",
                     studentName: auth.currentUser?.displayName || "",
@@ -108,9 +109,18 @@ export const Menu = ({ appBarHeight }: Props) => {
                   orderData
                 )) as string[];
                 if (cantOrderTitle.length === 0) {
-                  Payment(payment, orderId, totalPrice, orderData, (e) => {
-                    setIsLoad(e);
-                  });
+                  payment === "paypay" && (await PayPaySessionCreate(order));
+                  payment === "stripe" &&
+                    (await Payment(
+                      payment,
+                      order.id,
+                      totalPrice,
+                      orderData,
+                      (e) => {
+                        setIsLoad(e);
+                      }
+                    ));
+                  setIsLoad(false);
                 } else {
                   setIsModal(true);
                   setNoPaymentTitle(cantOrderTitle);

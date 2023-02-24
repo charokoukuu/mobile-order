@@ -4,6 +4,7 @@ import { LoadingAnimation } from "../component/LoadingAnimation";
 import { PaymentGetStatus } from "../api/SubmitGet";
 import { Spacer } from "../component/SwipeTabs";
 import { paymentType } from "../component/Order";
+import { PayPayStatusCheck } from "../api/Payment";
 interface Props {
   appBarHeight: number;
 }
@@ -13,7 +14,11 @@ export const GetPaymentStatus = ({ appBarHeight }: Props) => {
     (async () => {
       const checkoutId = params.id;
       const paymentType = params.paymentType as paymentType;
-      await PaymentGetStatus(paymentType, checkoutId || "");
+
+      checkoutId && paymentType === "paypay" && PayPayStatusCheck(checkoutId);
+      checkoutId &&
+        paymentType === "stripe" &&
+        (await PaymentGetStatus(paymentType, checkoutId));
     })();
   }, [params.id, params.paymentType]);
 
