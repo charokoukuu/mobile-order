@@ -7,7 +7,7 @@ import { Register } from "../views/Register";
 import { History } from "../views/History";
 import ResponsiveAppBar from "../component/ResponsiveAppBar";
 import { User } from "firebase/auth";
-import { GetUserInfo } from "../api/SubmitGet";
+import { GetUserInfo } from "../api/helper";
 import { useEffect, useState } from "react";
 import { Redirect } from "../component/Redirect";
 import DrawerLeft from "../component/DrawerLeft";

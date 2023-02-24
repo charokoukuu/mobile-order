@@ -1,6 +1,6 @@
 // anyを許容するdisable,後でPayPayやStripeのAPIのデータ構造調べて型定義する
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MenuData, OrderData, UserData } from "../types";
+import { MenuData, OrderData, OrderListTypes, UserData } from "../types";
 import {
   doc,
   getDocs,
@@ -14,7 +14,7 @@ import {
   updateDoc,
   Timestamp,
 } from "firebase/firestore";
-import { auth, db, functions } from "../api/Firebase";
+import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";
@@ -445,3 +445,15 @@ export class NewTimer {
     window.location.href = this.toUrl;
   };
 }
+
+export const convertToTitleCountFormat = (
+  dataArray: Array<string>,
+  priceList: Array<number>
+) => {
+  const uniqueArray = dataArray.filter((x, i, self) => self.indexOf(x) === i);
+  const priceArray = priceList.filter((x, i, self) => self.indexOf(x) === i);
+  return uniqueArray.map((title, index) => {
+    const count = dataArray.filter((x) => x === title).length;
+    return { title, count, price: priceArray[index] } as OrderListTypes;
+  });
+};

@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { OrderData } from "../types";
 import { auth } from "./Firebase";
-import { GetPaymentStatus, hostUrl, isPayPayEnabled } from "./SubmitGet";
+import { GetPaymentStatus, hostUrl, isPayPayEnabled } from "./helper";
 const url = "https://payment.run-ticket.com";
 export const PayPaySessionCreate = async (order: OrderData) => {
   try {

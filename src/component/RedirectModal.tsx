@@ -1,6 +1,6 @@
 import { Modal } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
-import { NewTimer } from "../api/SubmitGet";
+import { NewTimer } from "../api/helper";
 
 interface RedirectModalProps {
   isModal: boolean;

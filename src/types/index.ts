@@ -31,3 +31,9 @@ export interface OrderData {
   orderNumber?: number;
   checkoutId?: string;
 }
+
+export interface OrderListTypes {
+  title: string;
+  count: number;
+  price: number;
+}

@@ -1,4 +1,4 @@
-import { TodayAllOrderGet } from "../api/SubmitGet";
+import { TodayAllOrderGet } from "../api/helper";
 import { useEffect, useState } from "react";
 import TableComp from "../component/TableComp";
 import { OrderData } from "../types";

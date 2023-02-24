@@ -11,7 +11,7 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
 import { DetailDialog } from "./DetailDialog";
-import { CountOrder } from "../api/SubmitGet";
+import { CountOrder } from "../api/helper";
 import { PaymentSelectButton } from "./PaymentSelectButton";
 import classNames from "classnames";
 import ConfirmDialog from "./ConfirmDialog";

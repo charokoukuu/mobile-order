@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LoadingAnimation } from "../component/LoadingAnimation";
-import { SearchCollectionDataGet } from "../api/SubmitGet";
+import { SearchCollectionDataGet } from "../api/helper";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";

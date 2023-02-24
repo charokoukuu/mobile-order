@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Divider } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { CountOrder } from "../api/SubmitGet";
+import { CountOrder } from "../api/helper";
 import { MenuData } from "../types";
 
 interface Props {
