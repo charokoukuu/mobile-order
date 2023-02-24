@@ -115,35 +115,32 @@ export const Menu = ({ appBarHeight }: Props) => {
                 setOrderDialog(false);
               }}
               onNext={async (payment, setIsLoad) => {
-                const order = await OrderSubmit({
-                  user: {
-                    uid: auth.currentUser?.uid || "",
-                    studentName: auth.currentUser?.displayName || "",
-                    mailAddress: auth.currentUser?.email || "",
-                  },
-                  totalPrice: totalPrice,
-                  menu: orderData,
-                  payment: payment,
-                });
-                const cantOrderTitle = (await CantOrderTitle(
-                  orderData
-                )) as string[];
-                if (cantOrderTitle.length === 0) {
-                  payment === "paypay" && (await PayPaySessionCreate(order));
-                  payment === "stripe" &&
-                    (await Payment(
-                      payment,
-                      order.id,
-                      totalPrice,
-                      orderData,
-                      (e) => {
-                        setIsLoad(e);
-                      }
-                    ));
+                try {
+                  const order = await OrderSubmit({
+                    user: {
+                      uid: auth.currentUser?.uid || "",
+                      studentName: auth.currentUser?.displayName || "",
+                      mailAddress: auth.currentUser?.email || "",
+                    },
+                    totalPrice: totalPrice,
+                    menu: orderData,
+                    payment: payment,
+                  });
+                  const cantOrderTitle = (await CantOrderTitle(
+                    orderData
+                  )) as string[];
+                  if (cantOrderTitle.length === 0) {
+                    payment === "paypay" && (await PayPaySessionCreate(order));
+                    payment === "stripe" &&
+                      (await Payment(payment, "test", totalPrice, orderData));
+                  } else {
+                    setNoPaymentTitle(cantOrderTitle);
+                    setIsModal(true);
+                  }
+                } catch (e) {
+                  RedirectToErrorPage(e);
+                } finally {
                   setIsLoad(false);
-                } else {
-                  setIsModal(true);
-                  setNoPaymentTitle(cantOrderTitle);
                 }
                 const localSave: LocalStorageData = {
                   orderData: [],

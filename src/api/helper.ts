@@ -22,6 +22,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";
 import { FirebaseError } from "@firebase/util";
+import { AxiosError } from "axios";
 
 export const hostUrl = window.location.protocol + "//" + window.location.host;
 export const RandomID = () => {
@@ -43,10 +44,15 @@ export const RedirectToErrorPage = (errorText: string | unknown) => {
   window.location.href = `/error/${errorText}`;
 };
 
-const generateFirebaseErrorMessage = (e: unknown, errorText: string) => {
+export const generateErrorFirebaseAndAxiosErrors = (
+  e: unknown,
+  errorText: string
+) => {
   const errorMessage =
-    e instanceof FirebaseError
-      ? `${errorText}/${e.name}/${e.code}`
+    e instanceof FirebaseError || e instanceof AxiosError
+      ? e instanceof FirebaseError
+        ? `${errorText}/${e.name}/${e.code}`
+        : `${errorText}/${e.status}/${e.code}`
       : `${errorText}/${e}`;
   return errorMessage;
 };
@@ -62,7 +68,7 @@ export const GetAllData = async (collectionName: string) => {
     }
     return data;
   } catch (e) {
-    throw generateFirebaseErrorMessage(
+    throw generateErrorFirebaseAndAxiosErrors(
       e,
       "メニューデータの取得に失敗しました。"
     );
@@ -92,7 +98,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     await setDoc(doc(db, "order", id), orderData);
     return orderData;
   } catch (e) {
-    throw generateFirebaseErrorMessage(
+    throw generateErrorFirebaseAndAxiosErrors(
       e,
       "オーダーデータの送信に失敗しました。"
     );
@@ -130,7 +136,7 @@ export const SearchCollectionDataGet = async (
     );
     lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
   } catch (e) {
-    throw generateFirebaseErrorMessage(
+    throw generateErrorFirebaseAndAxiosErrors(
       e,
       "オーダーデータの取得に失敗しました。"
     );
@@ -148,7 +154,7 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data() as OrderData);
   } catch (e) {
-    throw generateFirebaseErrorMessage(
+    throw generateErrorFirebaseAndAxiosErrors(
       e,
       "オーダーデータの取得に失敗しました。"
     );
@@ -168,7 +174,7 @@ export const isTodayUserOrderGet = async (userId: string) => {
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   } catch (e) {
-    throw generateFirebaseErrorMessage(
+    throw generateErrorFirebaseAndAxiosErrors(
       e,
       "オーダーデータの取得に失敗しました。"
     );
@@ -184,7 +190,7 @@ export const FetchOneOrderDocument = async (collectionId: string) => {
     }
     return docSnap.data() as OrderData;
   } catch (e) {
-    throw generateFirebaseErrorMessage(
+    throw generateErrorFirebaseAndAxiosErrors(
       e,
       "オーダーデータの取得に失敗しました。"
     );
@@ -193,22 +199,35 @@ export const FetchOneOrderDocument = async (collectionId: string) => {
 
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
-  return new Promise<any>((resolve) => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (
-          !CorrectEmail(user?.email || "") &&
-          window.location.pathname !== pathName
-        )
-          window.location.href = pathName;
-        callback(user);
-        resolve("");
-      } else {
-        if (window.location.pathname !== pathName)
-          window.location.href = pathName;
-        resolve("");
-      }
-    });
+  return new Promise<void>((resolve, reject) => {
+    try {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          if (
+            !CorrectEmail(user?.email || "") &&
+            window.location.pathname !== pathName
+          ) {
+            window.location.href = pathName;
+            reject(new Error("Invalid email"));
+          } else {
+            callback(user);
+            resolve();
+          }
+        } else {
+          if (window.location.pathname !== pathName) {
+            window.location.href = pathName;
+            reject(new Error("User not logged in"));
+          } else {
+            resolve();
+          }
+        }
+      });
+    } catch (e) {
+      generateErrorFirebaseAndAxiosErrors(
+        e,
+        "ユーザーデータの取得に失敗しました。"
+      );
+    }
   });
 };
 
@@ -216,15 +235,11 @@ export const Payment = async (
   type: paymentType,
   orderId: string,
   totalPrice: number,
-  orderData: MenuData[],
-  callback: (e: boolean) => void
+  orderData: MenuData[]
 ) => {
-  const orderDescription: string = orderData
-    .map((menu) => menu.title)
-    .join(",");
   if (type === "stripe") {
-    const StripeRequest = httpsCallable(functions, "StripeRequest");
     try {
+      const StripeRequest = httpsCallable(functions, "StripeRequest");
       const resData = await StripeRequest({
         orderData: orderData,
         hostUrl: hostUrl,
@@ -234,30 +249,15 @@ export const Payment = async (
       });
       const response: any = resData.data;
       window.location.href = String(response.url);
-    } catch (err) {
-      alert(
+    } catch (e) {
+      // console.error(e);
+      generateErrorFirebaseAndAxiosErrors(
+        e,
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
       );
-      callback(false);
     }
   } else if (type === "paypay") {
     // NOTE: paypayに関しては`~/api/Payment`のPayPaySessionCreateに移行したため以下の処理は使用していない
-    try {
-      const PayPayRequest = httpsCallable(functions, "PayPayRequest");
-      const data = await PayPayRequest({
-        orderId: orderId,
-        hostUrl: hostUrl,
-        amount: totalPrice,
-        orderDescription: orderDescription,
-      });
-      const response: any = data.data;
-      window.location.href = String(response.BODY.data.url);
-    } catch (err) {
-      alert(
-        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
-      );
-      callback(false);
-    }
   }
 };
 
@@ -278,8 +278,9 @@ export const UpdateOrderAndReduceQuantity = async (orderId: string) => {
       }),
       AssignOrderNumber(orderId),
     ]);
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
+    generateErrorFirebaseAndAxiosErrors(e, "オーダーの更新に失敗しました。");
   }
 };
 
@@ -304,8 +305,9 @@ export const HandlePaymentStatus = async (
     } else {
       window.location.href = `/order/${orderId}/failed`;
     }
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
+    generateErrorFirebaseAndAxiosErrors(e, "決済の確認に失敗しました。");
   }
 };
 
@@ -321,8 +323,12 @@ export const AssignOrderNumber = async (orderId: string) => {
     await updateDoc(docId, {
       orderNumber: result.data,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
+    throw generateErrorFirebaseAndAxiosErrors(
+      e,
+      "注文番号の付与に失敗しました。"
+    );
   }
 };
 
@@ -332,8 +338,9 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
   try {
     const title = await cantOrderTitle(data);
     return title.data;
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
+    throw generateErrorFirebaseAndAxiosErrors(e, "在庫の確認に失敗しました。");
   }
 };
 

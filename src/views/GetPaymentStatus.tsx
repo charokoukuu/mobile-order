@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LoadingAnimation } from "../component/LoadingAnimation";
-import { HandlePaymentStatus } from "../api/helper";
+import { HandlePaymentStatus, RedirectToErrorPage } from "../api/helper";
 import { Spacer } from "../component/SwipeTabs";
 import { paymentType } from "../component/Order";
 import { PayPayStatusCheck } from "../api/Payment";
@@ -21,6 +21,7 @@ export const GetPaymentStatus = ({ appBarHeight }: Props) => {
           (await HandlePaymentStatus(paymentType, checkoutId));
       } catch (e) {
         console.error(e);
+        RedirectToErrorPage(e);
       }
     })();
   }, [params.id, params.paymentType]);
