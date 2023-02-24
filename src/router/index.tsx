@@ -27,10 +27,14 @@ const Router = () => {
   useEffect(() => {
     window.document.title = "RunTicket";
     (async () => {
-      await GetUserInfo((e) => {
-        setUser(e);
-      });
-      setIsLogin(true);
+      try {
+        await GetUserInfo((e) => {
+          setUser(e);
+        });
+        setIsLogin(true);
+      } catch (e) {
+        console.error(e);
+      }
     })();
   }, []);
   return (
