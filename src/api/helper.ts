@@ -21,6 +21,7 @@ import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";
+import { FirebaseError } from "@firebase/util";
 
 export const hostUrl = window.location.protocol + "//" + window.location.host;
 export const RandomID = () => {
@@ -38,18 +39,30 @@ export const CorrectEmail = (email: string) => {
   return regex.test(email);
 };
 
-export const GetAllData = async (
-  collectionName: string
-): Promise<MenuData[]> => {
+export const redirectToErrorPage = (errorText: string | unknown) => {
+  window.location.href = `/error/${errorText}`;
+};
+
+const setFirebaseErrorMessage = (e: unknown) => {
+  const errorMessage =
+    e instanceof FirebaseError
+      ? `${e.code}:メニューデータの読み取りに失敗しました。<br>${e.message}`
+      : e;
+  return errorMessage;
+};
+
+export const GetAllData = async (collectionName: string) => {
   try {
     const querySnapshot = await getDocs(collection(db, collectionName));
     const data: MenuData[] = querySnapshot.docs.map(
       (doc) => doc.data() as MenuData
     );
+    if (data.length === 0) {
+      throw "メニューデータが存在しません。\nあああ";
+    }
     return data;
   } catch (e) {
-    console.log(e);
-    throw "データの読み取りに失敗しました。";
+    throw setFirebaseErrorMessage(e);
   }
 };
 
@@ -141,22 +154,16 @@ export const isTodayUserOrderGet = async (userId: string) => {
 export const GetSpecificData: (
   docId: string,
   collectionId: string
-) => Promise<OrderData | null> = async (
-  docId: string,
-  collectionId: string
-) => {
+) => Promise<OrderData> = async (docId: string, collectionId: string) => {
   const docRef = doc(db, docId, collectionId);
   const docSnap = await getDoc(docRef);
-  return new Promise((resolve, reject) => {
-    if (docSnap.exists()) {
-      // truthy
-    } else {
-      resolve(null);
-      reject("No such document!");
-    }
-    resolve(docSnap.data() as OrderData);
-  });
+  if (!docSnap.exists()) {
+    throw new Error("No such document!");
+  }
+
+  return docSnap.data() as OrderData;
 };
+
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
   return new Promise<any>((resolve) => {
