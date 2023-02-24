@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import { Spacer } from "../component/SwipeTabs";
 import styled from "@emotion/styled";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-
+import { Link, useParams } from "react-router-dom";
 interface ErrorPageProps {
   appBarHeight: number;
   onClick: () => void;
@@ -10,6 +10,7 @@ interface ErrorPageProps {
   buttonText: string;
 }
 export const ErrorPage = (props: ErrorPageProps) => {
+  const params = useParams();
   return (
     <div>
       <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
@@ -18,8 +19,24 @@ export const ErrorPage = (props: ErrorPageProps) => {
       </IconWrapper>
       <Warning>
         <p>{props.text}</p>
-        <Button variant="outlined" color="primary" onClick={props.onClick}>
+        {params.errorText &&
+          params.errorText
+            .split("\n")
+            .map((line, index) => <p key={index}>{line}</p>)}
+        <Button
+          variant="text"
+          LinkComponent={Link}
+          color="primary"
+          onClick={props.onClick}
+        >
           {props.buttonText}
+        </Button>
+        <span>/</span>
+        <Button
+          variant="text"
+          href={`https://docs.google.com/forms/d/e/1FAIpQLSfRRIK0WBAoMt_WN3RAKbP598LZOQAhsOrIQu8O7eAZE81x1Q/viewform?usp=pp_url&entry.951689160=${params.errorText}`}
+        >
+          問い合わせる
         </Button>
       </Warning>
     </div>

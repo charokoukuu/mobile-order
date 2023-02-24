@@ -18,7 +18,7 @@ import { GetPaymentStatus } from "../views/GetPaymentStatus";
 import Admin from "../views/Admin";
 import Footer from "../component/Footer";
 import styled from "@emotion/styled";
-import { TestData } from "../test/TestData";
+
 const Router = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const [user, setUser] = useState<User>();
@@ -112,6 +112,19 @@ const Router = () => {
               <Route
                 path="/admin"
                 element={<Admin appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/error/:errorText"
+                element={
+                  <ErrorPage
+                    text={"エラーが発生しました。"}
+                    appBarHeight={appBarHeight}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                  />
+                }
               />
               <Route
                 path="*"
