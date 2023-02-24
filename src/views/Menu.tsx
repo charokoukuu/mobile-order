@@ -8,7 +8,7 @@ import {
   Payment,
   isTodayUserOrderGet,
   CantOrderTitle,
-  redirectToErrorPage,
+  RedirectToErrorPage,
   dateFormatter,
 } from "../api/helper";
 import { Cart } from "../component/Cart";
@@ -57,7 +57,7 @@ export const Menu = ({ appBarHeight }: Props) => {
         setIsGetMenu(true);
       } catch (e) {
         setIsGetMenu(false);
-        redirectToErrorPage(e);
+        RedirectToErrorPage(e);
       }
     })();
   }, []);

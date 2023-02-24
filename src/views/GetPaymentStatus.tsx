@@ -14,11 +14,14 @@ export const GetPaymentStatus = ({ appBarHeight }: Props) => {
     (async () => {
       const checkoutId = params.id;
       const paymentType = params.paymentType as paymentType;
-
-      checkoutId && paymentType === "paypay" && PayPayStatusCheck(checkoutId);
-      checkoutId &&
-        paymentType === "stripe" &&
-        (await PaymentGetStatus(paymentType, checkoutId));
+      try {
+        checkoutId && paymentType === "paypay" && PayPayStatusCheck(checkoutId);
+        checkoutId &&
+          paymentType === "stripe" &&
+          (await PaymentGetStatus(paymentType, checkoutId));
+      } catch (e) {
+        console.error(e);
+      }
     })();
   }, [params.id, params.paymentType]);
 
