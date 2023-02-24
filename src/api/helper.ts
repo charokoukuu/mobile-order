@@ -43,7 +43,7 @@ export const RedirectToErrorPage = (errorText: string | unknown) => {
   window.location.href = `/error/${errorText}`;
 };
 
-const SetFirebaseErrorMessage = (e: unknown, errorText: string) => {
+const generateFirebaseErrorMessage = (e: unknown, errorText: string) => {
   const errorMessage =
     e instanceof FirebaseError
       ? `${errorText}/${e.name}/${e.code}`
@@ -62,7 +62,10 @@ export const GetAllData = async (collectionName: string) => {
     }
     return data;
   } catch (e) {
-    throw SetFirebaseErrorMessage(e, "メニューデータの取得に失敗しました。");
+    throw generateFirebaseErrorMessage(
+      e,
+      "メニューデータの取得に失敗しました。"
+    );
   }
 };
 
@@ -89,7 +92,10 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     await setDoc(doc(db, "order", id), orderData);
     return orderData;
   } catch (e) {
-    throw SetFirebaseErrorMessage(e, "オーダーデータの送信に失敗しました。");
+    throw generateFirebaseErrorMessage(
+      e,
+      "オーダーデータの送信に失敗しました。"
+    );
   }
 };
 
@@ -124,7 +130,10 @@ export const SearchCollectionDataGet = async (
     );
     lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
   } catch (e) {
-    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
+    throw generateFirebaseErrorMessage(
+      e,
+      "オーダーデータの取得に失敗しました。"
+    );
   }
 };
 //当日の全ユーザのオーダーを取得
@@ -139,7 +148,10 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => doc.data() as OrderData);
   } catch (e) {
-    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
+    throw generateFirebaseErrorMessage(
+      e,
+      "オーダーデータの取得に失敗しました。"
+    );
   }
 };
 
@@ -156,7 +168,10 @@ export const isTodayUserOrderGet = async (userId: string) => {
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
   } catch (e) {
-    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
+    throw generateFirebaseErrorMessage(
+      e,
+      "オーダーデータの取得に失敗しました。"
+    );
   }
 };
 
@@ -172,7 +187,10 @@ export const GetSpecificData = async <T>(
     }
     return docSnap.data() as T;
   } catch (e) {
-    throw SetFirebaseErrorMessage(e, "オーダーデータの取得に失敗しました。");
+    throw generateFirebaseErrorMessage(
+      e,
+      "オーダーデータの取得に失敗しました。"
+    );
   }
 };
 
