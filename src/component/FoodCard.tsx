@@ -5,14 +5,14 @@ import styled from "@emotion/styled";
 import classNames from "classnames";
 
 interface FoodCardProps {
-  menu?: MenuData;
+  menu: MenuData;
   onClick: () => void;
   onDelete?: () => void;
   deleteButton: boolean;
   count?: number;
 }
 export const FoodCard = (props: FoodCardProps) => {
-  const isSale: boolean = props.menu ? props.menu.quantity > 0 : false;
+  const isSale: boolean = props.menu.quantity > 0;
   return (
     <Card className="relative mx-auto max-h-[180px] max-w-[180px] rounded-xl">
       <CardActionArea
@@ -22,7 +22,7 @@ export const FoodCard = (props: FoodCardProps) => {
       >
         <CardMedia
           component="img"
-          image={props.menu?.image}
+          image={props.menu.image}
           alt="menu image"
           className={classNames("h-[180px]", {
             "brightness-[35%]": !isSale || props.count,
@@ -46,7 +46,7 @@ export const FoodCard = (props: FoodCardProps) => {
               }
             )}
           >
-            {props.menu?.title}
+            {props.menu.title}
           </div>
         </div>
         <div
@@ -57,7 +57,7 @@ export const FoodCard = (props: FoodCardProps) => {
             }
           )}
         >
-          ¥{props.menu?.price}
+          ¥{props.menu.price}
         </div>
       </CardActionArea>
       {props.deleteButton && (
