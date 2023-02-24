@@ -40,7 +40,7 @@ export const MultiplePurchase = ({
           </Grid>
         )}
 
-        <Grid item xs={6}>
+        <Grid item xs={!initialValue ? 6 : 12}>
           <p
             className={classNames(
               "japanese_B text-[3rem] leading-[3rem] text-runticketBlue",
