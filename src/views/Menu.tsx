@@ -37,7 +37,6 @@ export const Menu = ({ appBarHeight }: Props) => {
   const [isTodayNotReceived, setIsTodayNotReceived] = useState<boolean>(false);
   const [isModal, setIsModal] = useState<boolean>(false);
   const [noPaymentTitle, setNoPaymentTitle] = useState<string[]>([]);
-  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     const localStorageOrderData = JSON.parse(
@@ -70,18 +69,6 @@ export const Menu = ({ appBarHeight }: Props) => {
       setOrderDialog(false);
     }
   }, [orderData.length]);
-
-  if (errorMessage !== "")
-    return (
-      <ErrorPage
-        text={errorMessage}
-        appBarHeight={appBarHeight}
-        onClick={() => {
-          window.location.href = "/";
-        }}
-        buttonText={"更新"}
-      />
-    );
 
   return (
     <div className="relative mx-auto max-w-3xl">
