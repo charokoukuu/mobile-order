@@ -1,7 +1,11 @@
 import axios, { AxiosError } from "axios";
 import { OrderData } from "../types";
 import { auth } from "./Firebase";
-import { GetPaymentStatus, hostUrl, isPayPayEnabled } from "./helper";
+import {
+  UpdateOrderAndReduceQuantity,
+  hostUrl,
+  isPayPayEnabled,
+} from "./helper";
 const url = "https://payment.run-ticket.com";
 export const PayPaySessionCreate = async (order: OrderData) => {
   try {
@@ -38,7 +42,7 @@ export const PayPayStatusCheck = async (orderId: string) => {
       orderId: orderId,
     });
     if (isPayPayEnabled(result)) {
-      await GetPaymentStatus(orderId);
+      await UpdateOrderAndReduceQuantity(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;

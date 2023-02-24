@@ -248,7 +248,7 @@ export const Payment = async (
 
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
-export const GetPaymentStatus = async (orderId: string) => {
+export const UpdateOrderAndReduceQuantity = async (orderId: string) => {
   const washingtonRef = doc(db, "order", orderId);
   // orderDataを取得してfunctionでmenuのquantityを減らす
   const docSnap = await getDoc(washingtonRef);
@@ -268,7 +268,7 @@ export const GetPaymentStatus = async (orderId: string) => {
   }
 };
 
-export const PaymentGetStatus = async (
+export const HandlePaymentStatus = async (
   payment: paymentType,
   checkoutId: string
 ) => {
@@ -284,7 +284,7 @@ export const PaymentGetStatus = async (
     if (
       payment === "paypay" ? isPayPayEnabled(result.data) : result.data.status
     ) {
-      await GetPaymentStatus(orderId);
+      await UpdateOrderAndReduceQuantity(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;
