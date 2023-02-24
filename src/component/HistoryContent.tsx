@@ -11,12 +11,7 @@ export const HistoryContent = ({ menu }: Props) => {
   const [CountTitle, setCountTitle] = useState<OrderListTypes[]>([]);
 
   useEffect(() => {
-    setCountTitle(
-      convertToTitleCountFormat(
-        menu.map((item) => item.title),
-        menu.map((item) => item.price)
-      )
-    );
+    setCountTitle(convertToTitleCountFormat(menu));
   }, [menu]);
 
   return (

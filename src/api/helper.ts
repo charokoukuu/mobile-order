@@ -310,78 +310,6 @@ export const SetOrderIdQuantity = (orderData: MenuData[]) => {
   return data;
 };
 
-export class CountOrder {
-  private oneTodayOrder: OrderData[] = [];
-  private oneOrderMenu: MenuData[] = [];
-  private titleList: MenuData[] = [];
-  words: any = [];
-  constructor(
-    private readonly setOrderCount: (count: number[]) => void,
-    private readonly setOrderTitle: (titles: any[]) => void
-  ) {}
-  TitleCountMethod = () => {
-    const titles = this.getTitle();
-    const count = this.getCount();
-    this.setOrderCount(count);
-    this.setOrderTitle(titles);
-    this.titleList = [];
-  };
-
-  oneOrderCount = () => {
-    this.oneOrderMenu.map((menu: MenuData) => {
-      return this.titleList.push(menu);
-    });
-    this.words = this.titleList;
-    const titles = this.getTitle();
-    const count = this.getCount();
-    this.setOrderCount(count);
-    this.setOrderTitle(titles);
-    this.titleList = [];
-  };
-
-  menuCount = (oneOrderCount: MenuData[]) => {
-    this.oneOrderMenu = oneOrderCount;
-    this.oneOrderCount();
-  };
-
-  titleCount = (oneOrderCount: string) => {
-    this.words.push(oneOrderCount);
-    this.TitleCountMethod();
-  };
-
-  ListDefault = (oneTodayOrder: OrderData[]) => {
-    this.oneTodayOrder = oneTodayOrder;
-    this.TitleCountMethod();
-  };
-
-  ListAdd = (oneTodayOrder: OrderData) => {
-    this.oneTodayOrder.push(oneTodayOrder);
-    this.TitleCountMethod();
-  };
-
-  ListRemove = (oneTodayOrder: OrderData) => {
-    this.oneTodayOrder = this.oneTodayOrder.filter(
-      (order) => order.id !== oneTodayOrder.id
-    );
-    this.TitleCountMethod();
-  };
-
-  //重複カウンター処理
-  private DuplicateReduce() {
-    return this.words.filter((x: any, i: any, self: any) => {
-      return self.indexOf(x) === i;
-    });
-  }
-  private getTitle(): MenuData[] {
-    return this.DuplicateReduce();
-  }
-  private getCount(): number[] {
-    return this.DuplicateReduce().map((name: any) => {
-      return this.words.filter((x: any) => x === name).length;
-    });
-  }
-}
-
 export const Timer = (time: number) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -446,14 +374,15 @@ export class NewTimer {
   };
 }
 
-export const convertToTitleCountFormat = (
-  dataArray: Array<string>,
-  priceList: Array<number>
-) => {
-  const uniqueArray = dataArray.filter((x, i, self) => self.indexOf(x) === i);
-  const priceArray = priceList.filter((x, i, self) => self.indexOf(x) === i);
+export const convertToTitleCountFormat = (dataArray: Array<MenuData>) => {
+  const uniqueArray = dataArray
+    .map((item) => item.title)
+    .filter((x, i, self) => self.indexOf(x) === i);
+  const priceArray = dataArray
+    .map((item) => item.price)
+    .filter((x, i, self) => self.indexOf(x) === i);
   return uniqueArray.map((title, index) => {
-    const count = dataArray.filter((x) => x === title).length;
+    const count = dataArray.filter((x) => x.title === title).length;
     return { title, count, price: priceArray[index] } as OrderListTypes;
   });
 };

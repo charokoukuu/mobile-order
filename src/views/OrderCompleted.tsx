@@ -30,12 +30,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
         const orderData = await GetSpecificData("order", params.id);
         if (orderData !== null) {
           setOrderData(orderData);
-          setOrderTitle(
-            convertToTitleCountFormat(
-              orderData.menu.map((menu) => menu.title),
-              orderData.menu.map((menu) => menu.price)
-            )
-          );
+          setOrderTitle(convertToTitleCountFormat(orderData.menu));
         } else {
           setIsPramsIdError(true);
         }
