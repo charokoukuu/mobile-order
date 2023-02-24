@@ -96,7 +96,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                 <h2 className="my-3 text-center text-3xl font-bold text-black">
                   {`￥${orderData?.totalPrice}`}
                 </h2>
-                <div className="my-4">
+                <div className="my-7">
                   {orderTitle?.map((e, i) => {
                     return (
                       <div
