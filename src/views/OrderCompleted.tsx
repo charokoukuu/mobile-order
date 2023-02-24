@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { OrderData, OrderListTypes } from "../types";
 import { Link, useParams } from "react-router-dom";
-import { convertToTitleCountFormat, GetSpecificData } from "../api/helper";
+import { convertToTitleCountFormat, FetchOneOrderDocument } from "../api/helper";
 import { onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card, Divider } from "@mui/material";
@@ -28,10 +28,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
     (async () => {
       if (params.id) {
         try {
-          const orderData = await GetSpecificData<OrderData>(
-            "order",
-            params.id
-          );
+          const orderData = await FetchOneOrderDocument(params.id);
           setOrderData(orderData);
           setIsGetOrderData(true);
           setOrderList(convertToTitleCountFormat(orderData.menu));

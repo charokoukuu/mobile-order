@@ -175,17 +175,14 @@ export const isTodayUserOrderGet = async (userId: string) => {
   }
 };
 
-export const GetSpecificData = async <T>(
-  docId: string,
-  collectionId: string
-) => {
+export const FetchOneOrderDocument = async (collectionId: string) => {
   try {
-    const docRef = doc(db, docId, collectionId);
+    const docRef = doc(db, "order", collectionId);
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) {
       throw "オーダーデータが存在しません。";
     }
-    return docSnap.data() as T;
+    return docSnap.data() as OrderData;
   } catch (e) {
     throw generateFirebaseErrorMessage(
       e,
