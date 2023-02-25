@@ -100,7 +100,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                   {orderTitle?.map((e, i) => {
                     return (
                       <div
-                        className="flex items-center justify-center h-full gap-4 font-bold text-black opacity-[0.65]"
+                        className="flex h-full items-center justify-center gap-4 font-bold text-black opacity-[0.65]"
                         key={i}
                       >
                         <div className="w-32">
