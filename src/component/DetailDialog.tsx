@@ -10,17 +10,17 @@ export const menuData = createContext<any>(null);
 let baseMenuData: MenuData;
 interface DetailDialogProps {
   open: boolean;
-  menu: MenuData | undefined;
+  menu: MenuData;
   topping?: MenuData[];
   isAddCart: boolean;
-  onNext?: (menu: MenuData | undefined, purchaseCount: number) => void;
+  onNext?: (menu: MenuData, purchaseCount: number) => void;
   onDelete?: () => void;
   onPrev: () => void;
   initialPurchaseCount?: number;
 }
 
 export const DetailDialog = (props: DetailDialogProps) => {
-  const [menu, setMenu] = useState<MenuData | undefined>(props.menu);
+  const [menu, setMenu] = useState<MenuData>(props.menu);
   const value = { menu, setMenu };
   const [purchaseCount, setPurchaseCount] = useState<number>(1);
   useEffect(() => {

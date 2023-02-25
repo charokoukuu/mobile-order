@@ -36,7 +36,7 @@ interface OrderProps {
 export const Order = (props: OrderProps) => {
   const [payment, setPayment] = useState<paymentType>("");
   const [isLoad, setIsLoad] = useState<boolean>(false);
-  const [choosedMenu, setChoosedMenu] = useState<MenuData>();
+  const [choosedMenu, setChoosedMenu] = useState<MenuData>({} as MenuData);
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
   const [orderCount, setOrderCount] = useState<number[]>([]);
   const [orderTitle, setOrderTitle] = useState<MenuData[]>();
