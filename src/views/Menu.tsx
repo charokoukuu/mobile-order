@@ -53,7 +53,10 @@ export const Menu = ({ appBarHeight }: Props) => {
   }, []);
 
   useEffect(() => {
-    orderData.length === 0 && setOrderDialog(false);
+    if (orderData.length === 0) {
+      setChosenMenu({} as MenuData);
+      setOrderDialog(false);
+    }
   }, [orderData.length]);
 
   return (
