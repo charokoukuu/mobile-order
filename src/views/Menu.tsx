@@ -26,7 +26,7 @@ interface Props {
 export const Menu = ({ appBarHeight }: Props) => {
   const [detailDialogOpen, setDetailDialogOpen] = useState(false);
   const [menu, setMenu] = useState<MenuData[]>([]);
-  const [chosenMenu, setChosenMenu] = useState<MenuData | undefined>();
+  const [chosenMenu, setChosenMenu] = useState<MenuData>({} as MenuData);
   const [orderData, setOrderData] = useState<MenuData[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [orderDialog, setOrderDialog] = useState<boolean>(false);
@@ -92,6 +92,7 @@ export const Menu = ({ appBarHeight }: Props) => {
               orderData={orderData}
               totalPrice={totalPrice}
               onPrev={() => {
+                setChosenMenu({} as MenuData);
                 setOrderDialog(false);
               }}
               onNext={async (payment, setIsLoad) => {
