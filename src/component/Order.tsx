@@ -86,6 +86,7 @@ export const Order = (props: OrderProps) => {
               const menuData = props.orderData.find(
                 (e) => e.title === menu.title
               );
+              if (!menuData) return <div key={index}></div>;
               return (
                 <div key={index} className="mx-[4%]">
                   <FoodCard
