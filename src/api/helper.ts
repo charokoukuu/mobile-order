@@ -375,11 +375,9 @@ export class NewTimer {
 }
 
 export const convertToTitleCountFormat = (dataArray: Array<MenuData>) => {
-  const uniqueArray = dataArray
-    .map((item) => item.title)
-    .filter((x, i, self) => self.indexOf(x) === i);
+  const uniqueSet = new Set(dataArray.map((item) => item.title));
   const priceMap = new Map(dataArray.map((item) => [item.title, item.price]));
-  return uniqueArray.map((title) => {
+  return Array.from(uniqueSet).map((title) => {
     const count = dataArray.filter((x) => x.title === title).length;
     return { title, count, price: priceMap.get(title) } as OrderListTypes;
   });
