@@ -200,6 +200,7 @@ const MaterialSizeSelectCard = () => {
     </div>
   );
 };
+//ver
 
 const SelectedCard = () => {
   const [isChecked, setIsChecked] = useState(false);
