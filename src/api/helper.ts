@@ -378,11 +378,9 @@ export const convertToTitleCountFormat = (dataArray: Array<MenuData>) => {
   const uniqueArray = dataArray
     .map((item) => item.title)
     .filter((x, i, self) => self.indexOf(x) === i);
-  const priceArray = dataArray
-    .map((item) => item.price)
-    .filter((x, i, self) => self.indexOf(x) === i);
-  return uniqueArray.map((title, index) => {
+  const priceMap = new Map(dataArray.map((item) => [item.title, item.price]));
+  return uniqueArray.map((title) => {
     const count = dataArray.filter((x) => x.title === title).length;
-    return { title, count, price: priceArray[index] } as OrderListTypes;
+    return { title, count, price: priceMap.get(title) } as OrderListTypes;
   });
 };
