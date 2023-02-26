@@ -8,15 +8,15 @@ interface Props {
   menu: MenuData[];
 }
 export const HistoryContent = ({ menu }: Props) => {
-  const [CountTitle, setCountTitle] = useState<OrderListTypes[]>([]);
+  const [orderList, setOrderList] = useState<OrderListTypes[]>([]);
 
   useEffect(() => {
-    setCountTitle(convertToTitleCountFormat(menu));
+    setOrderList(convertToTitleCountFormat(menu));
   }, [menu]);
 
   return (
     <div className="my-auto">
-      {CountTitle.map((e, i) => (
+      {orderList.map((e, i) => (
         <div key={i} className="ml-2 text-xl font-bold text-runticketGrayText">
           {e.title} <CountText>×{e.count}</CountText>
           <Divider />

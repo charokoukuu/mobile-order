@@ -18,7 +18,7 @@ interface Props {
 }
 export const OrderCompleted = ({ appBarHeight }: Props) => {
   const [orderData, setOrderData] = useState<OrderData>();
-  const [orderTitle, setOrderTitle] = useState<OrderListTypes[]>();
+  const [orderList, setOrderList] = useState<OrderListTypes[]>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
   const [isChangeStatus, setIsChangeStatus] = useState<boolean>(false);
   const [isPramsIdError, setIsPramsIdError] = useState<boolean>(false);
@@ -30,7 +30,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
         const orderData = await GetSpecificData("order", params.id);
         if (orderData !== null) {
           setOrderData(orderData);
-          setOrderTitle(convertToTitleCountFormat(orderData.menu));
+          setOrderList(convertToTitleCountFormat(orderData.menu));
         } else {
           setIsPramsIdError(true);
         }
@@ -97,7 +97,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                   {`￥${orderData?.totalPrice}`}
                 </h2>
                 <div className="my-7">
-                  {orderTitle?.map((e, i) => {
+                  {orderList?.map((e, i) => {
                     return (
                       <div
                         className="flex h-full items-center justify-center gap-4 font-bold text-black opacity-[0.65]"

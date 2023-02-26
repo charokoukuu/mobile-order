@@ -38,12 +38,12 @@ export const Order = (props: OrderProps) => {
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [choosedMenu, setChoosedMenu] = useState<MenuData>({} as MenuData);
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
-  const [orderTitle, setOrderTitle] = useState<OrderListTypes[]>();
+  const [orderList, setOrderList] = useState<OrderListTypes[]>();
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
   const [initialValue, setInitialValue] = useState<number>();
   useEffect(() => {
-    setOrderTitle(convertToTitleCountFormat(props.orderData));
+    setOrderList(convertToTitleCountFormat(props.orderData));
   }, [props]);
   return (
     <div>
@@ -76,13 +76,13 @@ export const Order = (props: OrderProps) => {
             className={classNames(
               "flex overflow-y-scroll bg-[#eeece4] py-[5%]",
               {
-                "justify-center": orderTitle?.length === 1,
-                "justify-left": orderTitle?.length !== 1,
+                "justify-center": orderList?.length === 1,
+                "justify-left": orderList?.length !== 1,
               }
             )}
           >
             <Box />
-            {orderTitle?.map((menu, index) => {
+            {orderList?.map((menu, index) => {
               const menuData = props.orderData.find(
                 (e) => e.title === menu.title
               );
