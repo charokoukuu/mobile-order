@@ -38,7 +38,9 @@ export const Order = (props: OrderProps) => {
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [choosedMenu, setChoosedMenu] = useState<MenuData>({} as MenuData);
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
-  const [orderList, setOrderList] = useState<OrderListTypes[]>();
+  const [orderList, setOrderList] = useState<OrderListTypes[]>(
+    [] as OrderListTypes[]
+  );
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
   const [initialValue, setInitialValue] = useState<number>();
@@ -74,7 +76,7 @@ export const Order = (props: OrderProps) => {
         <div className="w-full bg-[#eeece4]">
           <div
             className={classNames("box mx-auto flex overflow-x-auto py-5", {
-              "max-w-4xl": orderCount.length <= 4,
+              "max-w-4xl": orderList.length <= 4,
             })}
           >
             <Box />
