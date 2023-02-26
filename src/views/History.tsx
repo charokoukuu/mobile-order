@@ -43,7 +43,7 @@ export const History = ({ appBarHeight }: Props) => {
           {oneOrderData?.map((e, i) => (
             <div key={i} className="my-[3%]">
               <Link to={`/order/${e.id}`}>
-                <div className="mx-auto w-[95%] rounded-lg px-2 py-1 shadow-[0px_3px_6px_rgba(0,0,0,0.2)]">
+                <div className="mx-auto w-[95%] rounded-lg px-3 py-2 shadow-[0px_3px_6px_rgba(0,0,0,0.2)]">
                   <div color="text.secondary">
                     <p className="text-end text-runticketGrayText">
                       {e.date.toDate().toLocaleString()}
@@ -51,7 +51,7 @@ export const History = ({ appBarHeight }: Props) => {
                   </div>
                   <div className="flex justify-between">
                     <HistoryContent menu={e.menu} />
-                    <h3 className="my-auto text-[30px] text-runticketBlue">
+                    <h3 className="my-auto mr-2 text-[30px] text-runticketBlue">
                       ¥{e.totalPrice}
                     </h3>
                   </div>
