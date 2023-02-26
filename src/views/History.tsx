@@ -2,33 +2,62 @@ import { useEffect, useState } from "react";
 import { LoadingAnimation } from "../component/LoadingAnimation";
 import { SearchCollectionDataGet } from "../api/helper";
 import { Link } from "react-router-dom";
-import { auth } from "../api/Firebase";
 import { Grid } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { HistoryContent } from "../component/HistoryContent";
 import { Spacer } from "../component/SwipeTabs";
 import { OrderData } from "../types";
+import { DocumentSnapshot } from "firebase/firestore";
 interface Props {
   appBarHeight: number;
 }
 export const History = ({ appBarHeight }: Props) => {
-  const [oneOrderData, setOneOrderData] = useState<OrderData[]>();
+  const [oneOrderData, setOneOrderData] = useState<OrderData[]>(
+    [] as OrderData[]
+  );
+  const [lastDoc, setLastDoc] = useState<DocumentSnapshot | null>(null);
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   useEffect(() => {
     (async () => {
-      const order = await SearchCollectionDataGet(
-        "order",
-        "user.uid",
-        auth.currentUser?.uid || "",
-        10
+      await SearchCollectionDataGet(
+        oneOrderData,
+        setOneOrderData,
+        lastDoc,
+        setLastDoc
       );
 
-      setOneOrderData(order as OrderData[]);
       setIsGetHistoryData(true);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleScroll = async () => {
+    const scrollTop = Math.max(
+      window.pageYOffset,
+      document.documentElement.scrollTop,
+      document.body.scrollTop
+    );
+    const scrollHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    );
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 5 && oneOrderData.length) {
+      await SearchCollectionDataGet(
+        oneOrderData,
+        setOneOrderData,
+        lastDoc,
+        setLastDoc
+      );
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [oneOrderData]);
   return (
     <div className="mx-auto mt-[10px] max-w-3xl">
       <Spacer appBarHeight={appBarHeight} mode={"history"} />

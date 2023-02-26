@@ -13,11 +13,15 @@ import {
   orderBy,
   updateDoc,
   Timestamp,
+  startAfter,
+  DocumentSnapshot,
+  DocumentData,
 } from "firebase/firestore";
 import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";
+import { SetStateAction } from "react";
 
 export const hostUrl = window.location.protocol + "//" + window.location.host;
 export const RandomID = () => {
@@ -75,28 +79,31 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
 };
 
 export const SearchCollectionDataGet = async (
-  docId: string,
-  collectionId: string,
-  searchId: string,
-  maxValue: number
+  data: OrderData[],
+  setData: React.Dispatch<React.SetStateAction<OrderData[]>>,
+  lastDoc: any,
+  setLastDoc: React.Dispatch<
+    SetStateAction<DocumentSnapshot<DocumentData> | null>
+  >
 ) => {
-  const data: OrderData[] = [];
-  const q = query(
-    collection(db, docId),
-    where(collectionId, "==", searchId),
+  const baseQuery = query(
+    collection(db, "order"),
+    where("user.uid", "==", auth.currentUser?.uid),
     orderBy("date", "desc"),
-    limit(maxValue)
+    limit(10)
   );
+  const q =
+    data.length !== 0
+      ? query(baseQuery, ...(lastDoc ? [startAfter(lastDoc)] : []))
+      : baseQuery;
   const querySnapshot = await getDocs(q);
-  return new Promise<OrderData[]>((resolve, reject) => {
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data() as OrderData);
-    });
-    resolve(data);
-    reject("error");
-  });
-};
 
+  setData(
+    (prev) =>
+      [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
+  );
+  setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1] || null);
+};
 //当日の全ユーザのオーダーを取得
 export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
   const data: OrderData[] = [];
