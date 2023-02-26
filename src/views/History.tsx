@@ -20,17 +20,20 @@ export const History = ({ appBarHeight }: Props) => {
   const lastDoc = useRef<DocumentSnapshot | null>(null);
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
+  const [isTabChenged, setIsTabChenged] = useState(false);
   const filterStatusList = ["all", "complete", "ordered", "not_payed"];
 
   useEffect(() => {
     (async () => {
       setOneOrderData([]);
+      setIsTabChenged(false);
       await SearchCollectionDataGet(
         setOneOrderData,
         lastDoc.current,
         filterStatusList[filterStatusListNumber]
       );
       setIsGetHistoryData(true);
+      setIsTabChenged(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterStatusListNumber]);
@@ -73,8 +76,10 @@ export const History = ({ appBarHeight }: Props) => {
             value={filterStatusListNumber}
             setValue={setFilterStatusListNumber}
           />
-          {oneOrderData.length === 0 && (
-            <div className="text-center">注文履歴はありません</div>
+          {oneOrderData.length === 0 && isTabChenged && (
+            <div className="h-[100vh] text-center m-auto text-[1.5rem] mt-10 japanese_L text-black opacity-[0.65]">
+              該当するものがありません
+            </div>
           )}
           {oneOrderData.length !== 0 &&
             oneOrderData
