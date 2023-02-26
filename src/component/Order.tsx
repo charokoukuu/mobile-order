@@ -76,13 +76,13 @@ export const Order = (props: OrderProps) => {
         <Box />
         <div className="w-full bg-[#eeece4]">
           <div
-            className={classNames("mx-auto flex overflow-x-auto py-[5%]", {
+            className={classNames("mx-auto flex overflow-x-auto py-5", {
               "max-w-4xl": orderCount.length <= 4,
             })}
           >
             {orderTitle?.map((menu, index) => {
               return (
-                <div key={index} className="m-4 mx-auto px-4 text-center">
+                <div key={index} className="mx-auto px-4">
                   <FoodCard
                     count={orderCount[index]}
                     menu={menu}
