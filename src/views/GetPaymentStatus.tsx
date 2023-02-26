@@ -20,7 +20,6 @@ export const GetPaymentStatus = ({ appBarHeight }: Props) => {
           paymentType === "stripe" &&
           (await HandlePaymentStatus(paymentType, checkoutId));
       } catch (e) {
-        console.error(e);
         RedirectToErrorPage(e);
       }
     })();

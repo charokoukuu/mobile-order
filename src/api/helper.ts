@@ -48,6 +48,7 @@ export const generateErrorFirebaseAndAxiosErrors = (
   errorText: string,
   e: unknown
 ) => {
+  console.error(e);
   const errorMessage =
     e instanceof FirebaseError || e instanceof AxiosError
       ? `${errorText}/${e.message}/${e.name}/${e.code}`
@@ -248,7 +249,6 @@ export const Payment = async (
       const response: any = resData.data;
       window.location.href = String(response.url);
     } catch (e) {
-      // console.error(e);
       throw generateErrorFirebaseAndAxiosErrors(
         "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。",
         e
@@ -307,7 +307,6 @@ export const HandlePaymentStatus = async (
       window.location.href = `/order/${orderId}/failed`;
     }
   } catch (e) {
-    console.log(e);
     throw generateErrorFirebaseAndAxiosErrors("決済の確認に失敗しました。", e);
   }
 };
@@ -325,7 +324,6 @@ export const AssignOrderNumber = async (orderId: string) => {
       orderNumber: result.data,
     });
   } catch (e) {
-    console.log(e);
     throw generateErrorFirebaseAndAxiosErrors(
       "注文番号の付与に失敗しました。",
       e
@@ -340,7 +338,6 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
     const title = await cantOrderTitle(data);
     return title.data;
   } catch (e) {
-    console.log(e);
     throw generateErrorFirebaseAndAxiosErrors("在庫の確認に失敗しました。", e);
   }
 };
