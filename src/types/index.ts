@@ -19,13 +19,13 @@ export interface UserData {
   studentName: string;
   mailAddress: string;
 }
-
+export type paymentStatus = "not_payed" | "ordered" | "cooked" | "complete";
 export interface OrderData {
   id: string;
   user: UserData;
   totalPrice: number;
   menu: MenuData[];
-  isStatus: "not_payed" | "ordered" | "cooked" | "complete";
+  isStatus: paymentStatus;
   date: Timestamp;
   payment: paymentType;
   orderNumber?: number;
