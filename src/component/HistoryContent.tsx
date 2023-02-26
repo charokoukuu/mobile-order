@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { convertToTitleCountFormat } from "../api/helper";
 import { MenuData, OrderListTypes } from "../types";
@@ -17,9 +16,14 @@ export const HistoryContent = ({ menu }: Props) => {
   return (
     <div className="my-auto">
       {orderList.map((e, i) => (
-        <div key={i} className="ml-2 text-xl font-bold text-runticketGrayText">
-          {e.title} <CountText>×{e.count}</CountText>
-          <Divider />
+        <div
+          className="ml-2 flex h-full items-center justify-center gap-2 font-bold text-black opacity-[0.65]"
+          key={i}
+        >
+          <div className="w-40 text-left text-xl font-bold text-runticketGrayText">
+            {e.title}
+          </div>
+          <CountText>×{e.count}</CountText>
         </div>
       ))}
     </div>

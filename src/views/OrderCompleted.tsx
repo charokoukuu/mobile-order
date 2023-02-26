@@ -103,10 +103,11 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                         className="flex h-full items-center justify-center gap-4 font-bold text-black opacity-[0.65]"
                         key={i}
                       >
-                        <div className="w-32">
-                          {e.title} ×{e.count}
-                        </div>
-                        <div className="w-16">{`￥${e.count * e.price}`}</div>
+                        <div className="w-32 text-left">{e.title}</div>
+                        <div className="w-5 text-left">×{e.count}</div>
+                        <div className="w-16 text-right">{`￥${
+                          e.count * e.price
+                        }`}</div>
                       </div>
                     );
                   })}
