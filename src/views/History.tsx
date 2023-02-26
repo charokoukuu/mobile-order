@@ -21,7 +21,7 @@ export const History = ({ appBarHeight }: Props) => {
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
   const [isTabChenged, setIsTabChenged] = useState(false);
-  const filterStatusList = ["a", "complete", "ordered", "not_payed"];
+  const filterStatusList = ["all", "complete", "ordered", "not_payed"];
 
   useEffect(() => {
     (async () => {
