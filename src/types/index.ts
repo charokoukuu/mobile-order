@@ -37,3 +37,8 @@ export interface OrderListTypes {
   count: number;
   price: number;
 }
+
+export interface LocalStorageData {
+  orderData: MenuData[];
+  totalPrice: number;
+}

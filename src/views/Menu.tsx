@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Order } from "../component/Order";
 import { DetailDialog } from "../component/DetailDialog";
-import { MenuData } from "../types";
+import { LocalStorageData, MenuData } from "../types";
 import {
   GetAllData,
   OrderSubmit,
@@ -36,6 +36,13 @@ export const Menu = ({ appBarHeight }: Props) => {
   const [noPaymentTitle, setNoPaymentTitle] = useState<string[]>([]);
 
   useEffect(() => {
+    const localStorageOrderData = JSON.parse(
+      localStorage.getItem("order") || "[]"
+    ) as LocalStorageData;
+    if (localStorageOrderData.orderData) {
+      setOrderData(localStorageOrderData.orderData);
+      setTotalPrice(localStorageOrderData.totalPrice);
+    }
     (async () => {
       try {
         setMenu((await GetAllData("menu")) as MenuData[]);
@@ -84,13 +91,18 @@ export const Menu = ({ appBarHeight }: Props) => {
               open={orderDialog}
               onDelete={(e) => {
                 let priceTimesCount = 0;
-                setOrderData(
-                  orderData.filter((menu) => {
-                    if (menu.title === e.title) priceTimesCount++;
-                    return menu.title !== e.title;
-                  })
-                );
-                setTotalPrice(totalPrice - e.price * priceTimesCount);
+                const deleteOrder = orderData.filter((menu) => {
+                  if (menu.title === e.title) priceTimesCount++;
+                  return menu.title !== e.title;
+                });
+                const newTotalPrice = totalPrice - e.price * priceTimesCount;
+                setOrderData(deleteOrder);
+                setTotalPrice(newTotalPrice);
+                const localSave: LocalStorageData = {
+                  orderData: deleteOrder,
+                  totalPrice: newTotalPrice,
+                };
+                localStorage.setItem("order", JSON.stringify(localSave));
               }}
               orderData={orderData}
               totalPrice={totalPrice}
@@ -129,6 +141,11 @@ export const Menu = ({ appBarHeight }: Props) => {
                   setIsModal(true);
                   setNoPaymentTitle(cantOrderTitle);
                 }
+                const localSave: LocalStorageData = {
+                  orderData: [],
+                  totalPrice: 0,
+                };
+                localStorage.setItem("order", JSON.stringify(localSave));
               }}
             />
           </div>
@@ -136,14 +153,19 @@ export const Menu = ({ appBarHeight }: Props) => {
             open={detailDialogOpen}
             menu={chosenMenu}
             onNext={(order, count) => {
+              if (!order) return;
               const currentOrderData = orderData;
               [...Array(count)].forEach(() => {
-                order && currentOrderData.push(order);
+                currentOrderData.push(order);
               });
 
-              order !== undefined && setOrderData(currentOrderData);
-              order !== undefined &&
-                setTotalPrice(totalPrice + order.price * count);
+              setOrderData(currentOrderData);
+              setTotalPrice(totalPrice + order.price * count);
+              const localSave: LocalStorageData = {
+                orderData: currentOrderData,
+                totalPrice: totalPrice + order.price * count,
+              };
+              localStorage.setItem("order", JSON.stringify(localSave));
               setDetailDialogOpen(false);
             }}
             onPrev={() => {
