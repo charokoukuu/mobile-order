@@ -49,7 +49,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <>
+    <div className="mx-auto max-w-3xl">
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
       {params.id && params.status === "success" ? (
         <IntegrationNotistack message="決済が完了しました" variant="success" />
@@ -199,6 +199,6 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
           <LoadingAnimation type="jelly" />
         )}
       </div>
-    </>
+    </div>
   );
 };
