@@ -10,11 +10,17 @@ interface FoodCardProps {
   onDelete?: () => void;
   deleteButton: boolean;
   count?: number;
+  className?: string;
 }
 export const FoodCard = (props: FoodCardProps) => {
   const isSale: boolean = props.menu.quantity > 0;
   return (
-    <Card className="relative mx-auto max-h-[180px] max-w-[180px] rounded-xl">
+    <Card
+      className={classNames(
+        "relative mx-auto max-h-[180px] max-w-[180px] rounded-xl",
+        props.className
+      )}
+    >
       <CardActionArea
         onClick={() => {
           isSale && props.onClick();
