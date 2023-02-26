@@ -19,7 +19,8 @@ export const History = ({ appBarHeight }: Props) => {
   );
   const [lastDoc, setLastDoc] = useState<DocumentSnapshot | null>(null);
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
-  const [value, setValue] = useState(0);
+  const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
+  const filterStatusList = ["all", "complete", "ordered", "not_payed"];
 
   useEffect(() => {
     (async () => {
@@ -27,13 +28,14 @@ export const History = ({ appBarHeight }: Props) => {
         oneOrderData,
         setOneOrderData,
         lastDoc,
-        setLastDoc
+        setLastDoc,
+        filterStatusList[filterStatusListNumber]
       );
 
       setIsGetHistoryData(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [filterStatusListNumber]);
 
   const handleScroll = async () => {
     const scrollTop = Math.max(
@@ -52,11 +54,11 @@ export const History = ({ appBarHeight }: Props) => {
         oneOrderData,
         setOneOrderData,
         lastDoc,
-        setLastDoc
+        setLastDoc,
+        filterStatusList[filterStatusListNumber]
       );
     }
   };
-  const filterStatusList = ["all", "complete", "ordered", "not_payed"];
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -72,13 +74,16 @@ export const History = ({ appBarHeight }: Props) => {
           <h1 className="japanese_L my-5 text-center text-2xl font-bold text-runticketGrayText">
             注文履歴
           </h1>
-          <HistoryTabs value={value} setValue={setValue} />
+          <HistoryTabs
+            value={filterStatusListNumber}
+            setValue={setFilterStatusListNumber}
+          />
 
           {oneOrderData
             .filter((item) =>
-              filterStatusList[value] === "all"
+              filterStatusList[filterStatusListNumber] === "all"
                 ? true
-                : item.isStatus === filterStatusList[value]
+                : item.isStatus === filterStatusList[filterStatusListNumber]
             )
             .map((e, i) => (
               <div key={i} className="my-[3%]">

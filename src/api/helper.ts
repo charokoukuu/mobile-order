@@ -84,7 +84,8 @@ export const SearchCollectionDataGet = async (
   lastDoc: any,
   setLastDoc: React.Dispatch<
     SetStateAction<DocumentSnapshot<DocumentData> | null>
-  >
+  >,
+  isStatus: string
 ) => {
   const baseQuery = query(
     collection(db, "order"),
@@ -94,7 +95,11 @@ export const SearchCollectionDataGet = async (
   );
   const q =
     data.length !== 0
-      ? query(baseQuery, ...(lastDoc ? [startAfter(lastDoc)] : []))
+      ? query(
+          baseQuery,
+          ...(lastDoc ? [startAfter(lastDoc)] : []),
+          ...(isStatus !== "all" ? [where("isStatus", "==", isStatus)] : [])
+        )
       : baseQuery;
   const querySnapshot = await getDocs(q);
 

@@ -1,0 +1,70 @@
+[debug] [2023-02-26T12:21:22.600Z] ----------------------------------------------------------------------
+[debug] [2023-02-26T12:21:22.602Z] Command:       /opt/homebrew/Cellar/node/19.6.0/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2023-02-26T12:21:22.602Z] CLI Version:   11.19.0
+[debug] [2023-02-26T12:21:22.602Z] Platform:      darwin
+[debug] [2023-02-26T12:21:22.602Z] Node Version:  v19.6.0
+[debug] [2023-02-26T12:21:22.602Z] Time:          Sun Feb 26 2023 21:21:22 GMT+0900 (日本標準時)
+[debug] [2023-02-26T12:21:22.602Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-02-26T12:21:22.603Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-02-26T12:21:22.650Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-02-26T12:21:22.650Z] > authorizing via signed-in user (charokoukuu@gmail.com)
+[debug] [2023-02-26T12:21:22.650Z] [iam] checking project mobile-order-4d383 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-02-26T12:21:22.650Z] > refreshing access token with scopes: []
+[debug] [2023-02-26T12:21:22.651Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-02-26T12:21:22.651Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[warn] ⚠  Unable to fetch the CLI MOTD and remote config. 
+[debug] [2023-02-26T12:22:37.665Z] Failed to fetch MOTD FirebaseError: Failed to make request to https://firebase-public.firebaseio.com/cli.json
+[debug] [2023-02-26T12:22:37.709Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2023-02-26T12:22:37.709Z] > refreshing access token with scopes: []
+[debug] [2023-02-26T12:22:37.710Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-02-26T12:22:37.710Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-02-26T12:23:27.464Z] ----------------------------------------------------------------------
+[debug] [2023-02-26T12:23:27.466Z] Command:       /opt/homebrew/Cellar/node/19.6.0/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2023-02-26T12:23:27.466Z] CLI Version:   11.19.0
+[debug] [2023-02-26T12:23:27.466Z] Platform:      darwin
+[debug] [2023-02-26T12:23:27.466Z] Node Version:  v19.6.0
+[debug] [2023-02-26T12:23:27.466Z] Time:          Sun Feb 26 2023 21:23:27 GMT+0900 (日本標準時)
+[debug] [2023-02-26T12:23:27.466Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-02-26T12:23:27.467Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-02-26T12:23:27.511Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-02-26T12:23:27.511Z] > authorizing via signed-in user (charokoukuu@gmail.com)
+[debug] [2023-02-26T12:23:27.512Z] [iam] checking project mobile-order-4d383 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-02-26T12:23:27.512Z] > refreshing access token with scopes: []
+[debug] [2023-02-26T12:23:27.512Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-02-26T12:23:27.512Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-02-26T12:24:42.514Z] [iam] error while checking permissions, command may fail: FirebaseError: Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2023-02-26T12:24:42.515Z] > refreshing access token with scopes: []
+[debug] [2023-02-26T12:24:42.516Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-02-26T12:24:42.516Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[warn] ⚠  Unable to fetch the CLI MOTD and remote config. 
+[debug] [2023-02-26T12:24:42.519Z] Failed to fetch MOTD FirebaseError: Failed to make request to https://firebase-public.firebaseio.com/cli.json
+[debug] [2023-02-26T12:25:57.550Z] Authentication Error: Your credentials are no longer valid. Please run firebase login --reauth
+
+For CI servers and headless environments, generate a new token with firebase login:ci
+[debug] [2023-02-26T12:26:02.555Z] Error: Timed out.
+    at Timeout._onTimeout (/usr/local/lib/node_modules/firebase-tools/lib/utils.js:253:49)
+    at listOnTimeout (node:internal/timers:568:17)
+    at process.processTimers (node:internal/timers:511:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-02-26T12:26:42.837Z] ----------------------------------------------------------------------
+[debug] [2023-02-26T12:26:42.838Z] Command:       /opt/homebrew/Cellar/node/19.6.0/bin/node /usr/local/bin/firebase deploy --only hosting
+[debug] [2023-02-26T12:26:42.839Z] CLI Version:   11.19.0
+[debug] [2023-02-26T12:26:42.839Z] Platform:      darwin
+[debug] [2023-02-26T12:26:42.839Z] Node Version:  v19.6.0
+[debug] [2023-02-26T12:26:42.839Z] Time:          Sun Feb 26 2023 21:26:42 GMT+0900 (日本標準時)
+[debug] [2023-02-26T12:26:42.839Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-02-26T12:26:42.840Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-02-26T12:26:42.881Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-02-26T12:26:42.881Z] > authorizing via signed-in user (charokoukuu@gmail.com)
+[debug] [2023-02-26T12:26:42.881Z] [iam] checking project mobile-order-4d383 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-02-26T12:26:42.881Z] > refreshing access token with scopes: []
+[debug] [2023-02-26T12:26:42.882Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-02-26T12:26:42.882Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
