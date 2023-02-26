@@ -14,26 +14,24 @@ interface Props {
   appBarHeight: number;
 }
 export const History = ({ appBarHeight }: Props) => {
-  const [oneOrderData, setOneOrderData] = useState<OrderData[]>(
-    [] as OrderData[]
-  );
+  const [oneOrderData, setOneOrderData] = useState<OrderData[]>([]);
   const lastDoc = useRef<DocumentSnapshot | null>(null);
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
-  const [isTabChenged, setIsTabChenged] = useState(false);
+  const [isTabChanged, setIsTabChanged] = useState(false);
   const filterStatusList = ["all", "complete", "ordered", "not_payed"];
 
   useEffect(() => {
     (async () => {
       setOneOrderData([]);
-      setIsTabChenged(false);
+      setIsTabChanged(false);
       await SearchCollectionDataGet(
         setOneOrderData,
         lastDoc.current,
         filterStatusList[filterStatusListNumber]
       );
       setIsGetHistoryData(true);
-      setIsTabChenged(true);
+      setIsTabChanged(true);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterStatusListNumber]);
@@ -76,7 +74,7 @@ export const History = ({ appBarHeight }: Props) => {
             value={filterStatusListNumber}
             setValue={setFilterStatusListNumber}
           />
-          {oneOrderData.length === 0 && isTabChenged && (
+          {oneOrderData.length === 0 && isTabChanged && (
             <div className="japanese_L m-auto mt-10 h-[100vh] text-center text-[1.5rem] text-black opacity-[0.65]">
               該当するものがありません
             </div>
