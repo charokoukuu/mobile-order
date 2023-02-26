@@ -8,7 +8,7 @@ import {
   Payment,
   isTodayUserOrderGet,
   CantOrderTitle,
-} from "../api/SubmitGet";
+} from "../api/helper";
 import { Cart } from "../component/Cart";
 import { LoadingAnimation } from "../component/LoadingAnimation";
 import { auth } from "../api/Firebase";

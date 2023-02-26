@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { MenuData, OrderData } from "../types";
+import { OrderData, OrderListTypes } from "../types";
 import { Link, useParams } from "react-router-dom";
-import { GetSpecificData } from "../api/SubmitGet";
+import { convertToTitleCountFormat, GetSpecificData } from "../api/helper";
 import { onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card, Divider } from "@mui/material";
@@ -18,6 +18,7 @@ interface Props {
 }
 export const OrderCompleted = ({ appBarHeight }: Props) => {
   const [orderData, setOrderData] = useState<OrderData>();
+  const [orderList, setOrderList] = useState<OrderListTypes[]>();
   const [isGetOrderData, setIsGetOrderData] = useState<boolean>(false);
   const [isChangeStatus, setIsChangeStatus] = useState<boolean>(false);
   const [isPramsIdError, setIsPramsIdError] = useState<boolean>(false);
@@ -29,6 +30,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
         const orderData = await GetSpecificData("order", params.id);
         if (orderData !== null) {
           setOrderData(orderData);
+          setOrderList(convertToTitleCountFormat(orderData.menu));
         } else {
           setIsPramsIdError(true);
         }
@@ -94,15 +96,18 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                 <h2 className="my-3 text-center text-3xl font-bold text-black">
                   {`￥${orderData?.totalPrice}`}
                 </h2>
-                <div className="my-4">
-                  {orderData?.menu.map((e: MenuData, i: number) => {
+                <div className="my-7">
+                  {orderList?.map((e, i) => {
                     return (
                       <div
-                        className="mx-auto grid w-1/2 grid-cols-2 gap-2 font-bold text-black opacity-[0.65]"
+                        className="flex h-full items-center justify-center gap-4 font-bold text-black opacity-[0.65]"
                         key={i}
                       >
-                        <span className="grid justify-end">{e.title}</span>
-                        <span className="grid justify-end">{`￥${e.price}`}</span>
+                        <div className="w-32 text-left">{e.title}</div>
+                        <div className="w-5 text-left">×{e.count}</div>
+                        <div className="w-16 text-right">{`￥${
+                          e.count * e.price
+                        }`}</div>
                       </div>
                     );
                   })}
@@ -143,7 +148,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                   {(orderData?.isStatus === "ordered" ||
                     orderData?.isStatus === "cooked") && (
                     <div className="mt-4">
-                      <Divider />
+                      <Divider className="mt-10" />
                       <h2 className="my-8 text-center font-sans text-3xl text-black">
                         食券受け取り方法
                       </h2>

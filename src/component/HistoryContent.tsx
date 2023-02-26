@@ -1,29 +1,29 @@
 import styled from "@emotion/styled";
-import { Divider } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { CountOrder } from "../api/SubmitGet";
-import { MenuData } from "../types";
+import { useEffect, useState } from "react";
+import { convertToTitleCountFormat } from "../api/helper";
+import { MenuData, OrderListTypes } from "../types";
 
 interface Props {
   menu: MenuData[];
 }
 export const HistoryContent = ({ menu }: Props) => {
-  const [CountTitle, setCountTitle] = useState<string[]>([]);
-  const [CountNumber, setCountNumber] = useState<number[]>([]);
-  const GetCount = useRef(new CountOrder(setCountNumber, setCountTitle));
+  const [orderList, setOrderList] = useState<OrderListTypes[]>([]);
 
   useEffect(() => {
-    menu.forEach((data) => {
-      GetCount.current.titleCount(data.title);
-    });
+    setOrderList(convertToTitleCountFormat(menu));
   }, [menu]);
 
   return (
     <div className="my-auto">
-      {CountTitle.map((e: string, i: number) => (
-        <div key={i} className="ml-2 text-xl font-bold text-runticketGrayText">
-          {e} <CountText>×{CountNumber[i]}</CountText>
-          <Divider />
+      {orderList.map((e, i) => (
+        <div
+          className="ml-2 flex h-full items-center justify-center gap-2 font-bold text-black opacity-[0.65]"
+          key={i}
+        >
+          <div className="w-40 text-left text-xl font-bold text-runticketGrayText">
+            {e.title}
+          </div>
+          <CountText>×{e.count}</CountText>
         </div>
       ))}
     </div>

@@ -16,7 +16,6 @@ export const IllegalEmailAddress = (props: IllegalEmailAddressProps) => {
       }
     };
     DeleteUserRedirect();
-    console.log(auth.currentUser);
   }, []);
   return (
     <div className="my-[5%] mx-auto w-[80%] text-left">

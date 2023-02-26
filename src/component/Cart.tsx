@@ -8,7 +8,7 @@ import {
   styled,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { isIOS } from "../api/SubmitGet";
+import { isIOS } from "../api/helper";
 import classNames from "classnames";
 
 interface CartProps {

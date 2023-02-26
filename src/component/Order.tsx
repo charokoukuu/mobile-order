@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import { MenuData } from "../types";
+import { MenuData, OrderListTypes } from "../types";
 import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
@@ -7,11 +7,11 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { LoadingAnimation } from "./LoadingAnimation";
 import { FoodCard } from "./FoodCard";
 import { DetailDialog } from "./DetailDialog";
-import { CountOrder } from "../api/SubmitGet";
+import { convertToTitleCountFormat } from "../api/helper";
 import { PaymentSelectButton } from "./PaymentSelectButton";
 import classNames from "classnames";
 import ConfirmDialog from "./ConfirmDialog";
@@ -38,15 +38,14 @@ export const Order = (props: OrderProps) => {
   const [isLoad, setIsLoad] = useState<boolean>(false);
   const [choosedMenu, setChoosedMenu] = useState<MenuData>({} as MenuData);
   const [detailDialogOpen, setDetailDialogOpen] = useState<boolean>(false);
-  const [orderCount, setOrderCount] = useState<number[]>([]);
-  const [orderTitle, setOrderTitle] = useState<MenuData[]>();
-  const [isDelete, setIsDelete] = useState<boolean>(false);
-  const CountOrderData = useRef<CountOrder>(
-    new CountOrder(setOrderCount, setOrderTitle)
+  const [orderList, setOrderList] = useState<OrderListTypes[]>(
+    [] as OrderListTypes[]
   );
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+
   const [initialValue, setInitialValue] = useState<number>();
   useEffect(() => {
-    CountOrderData.current.menuCount(props.orderData);
+    setOrderList(convertToTitleCountFormat(props.orderData));
   }, [props]);
   return (
     <div>
@@ -77,23 +76,32 @@ export const Order = (props: OrderProps) => {
         <div className="w-full bg-[#eeece4]">
           <div
             className={classNames("box mx-auto flex overflow-x-auto py-5", {
-              "max-w-4xl": orderCount.length <= 4,
+              "max-w-4xl": orderList.length <= 4,
             })}
           >
-            {orderTitle?.map((menu, index) => {
+            <Box />
+            {orderList?.map((menu, index) => {
+              const menuData = props.orderData.find(
+                (e) => e.title === menu.title
+              );
+              if (!menuData) return <div key={index}></div>;
               return (
                 <div key={index} className="mx-auto px-4">
                   <FoodCard
-                    count={orderCount[index]}
-                    menu={menu}
+                    count={menu.count}
+                    menu={menuData}
                     deleteButton={true}
-                    onClick={function (): void {
-                      setInitialValue(orderCount[index]);
-                      setChoosedMenu(menu);
+                    onClick={() => {
+                      setInitialValue(menu.count);
+                      setChoosedMenu(menuData);
                       setDetailDialogOpen(true);
                     }}
-                    onDelete={function (): void {
-                      props.onDelete(menu, props.orderData.indexOf(menu));
+                    onDelete={() => {
+                      menuData &&
+                        props.onDelete(
+                          menuData,
+                          props.orderData.indexOf(menuData)
+                        );
                     }}
                     className="h-[180px] w-[180px]"
                   />
