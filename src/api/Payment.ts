@@ -33,8 +33,8 @@ export const PayPaySessionCreate = async (order: OrderData) => {
     window.location.href = createQR.data.BODY.data.url;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
+      "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。",
+      e
     );
   }
 };
@@ -52,8 +52,8 @@ export const PayPayStatusCheck = async (orderId: string) => {
     }
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "PayPay決済を確認できませんでした。"
+      "PayPay決済を確認できませんでした。",
+      e
     );
   }
 };

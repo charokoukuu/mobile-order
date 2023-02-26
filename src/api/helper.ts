@@ -45,8 +45,8 @@ export const RedirectToErrorPage = (errorText: string | unknown) => {
 };
 
 export const generateErrorFirebaseAndAxiosErrors = (
-  e: unknown,
-  errorText: string
+  errorText: string,
+  e: unknown
 ) => {
   const errorMessage =
     e instanceof FirebaseError || e instanceof AxiosError
@@ -69,8 +69,8 @@ export const GetAllData = async (collectionName: string) => {
     return data;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "メニューデータの取得に失敗しました。"
+      "メニューデータの取得に失敗しました。",
+      e
     );
   }
 };
@@ -99,8 +99,8 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     return orderData;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "オーダーデータの送信に失敗しました。"
+      "オーダーデータの送信に失敗しました。",
+      e
     );
   }
 };
@@ -137,8 +137,8 @@ export const SearchCollectionDataGet = async (
     lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "オーダーデータの取得に失敗しました。"
+      "オーダーデータの取得に失敗しました。",
+      e
     );
   }
 };
@@ -155,8 +155,8 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
     return querySnapshot.docs.map((doc) => doc.data() as OrderData);
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "オーダーデータの取得に失敗しました。"
+      "オーダーデータの取得に失敗しました。",
+      e
     );
   }
 };
@@ -175,8 +175,8 @@ export const isTodayUserOrderGet = async (userId: string) => {
     return !querySnapshot.empty;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "オーダーデータの取得に失敗しました。"
+      "オーダーデータの取得に失敗しました。",
+      e
     );
   }
 };
@@ -191,8 +191,8 @@ export const FetchOneOrderDocument = async (collectionId: string) => {
     return docSnap.data() as OrderData;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "オーダーデータの取得に失敗しました。"
+      "オーダーデータの取得に失敗しました。",
+      e
     );
   }
 };
@@ -223,9 +223,9 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
         }
       });
     } catch (e) {
-      generateErrorFirebaseAndAxiosErrors(
-        e,
-        "ユーザーデータの取得に失敗しました。"
+      throw generateErrorFirebaseAndAxiosErrors(
+        "ユーザーデータの取得に失敗しました。",
+        e
       );
     }
   });
@@ -251,9 +251,9 @@ export const Payment = async (
       window.location.href = String(response.url);
     } catch (e) {
       // console.error(e);
-      generateErrorFirebaseAndAxiosErrors(
-        e,
-        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
+      throw generateErrorFirebaseAndAxiosErrors(
+        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。",
+        e
       );
     }
   } else if (type === "paypay") {
@@ -280,7 +280,10 @@ export const UpdateOrderAndReduceQuantity = async (orderId: string) => {
     ]);
   } catch (e) {
     console.log(e);
-    generateErrorFirebaseAndAxiosErrors(e, "オーダーの更新に失敗しました。");
+    throw generateErrorFirebaseAndAxiosErrors(
+      "オーダーの更新に失敗しました。",
+      e
+    );
   }
 };
 
@@ -307,7 +310,7 @@ export const HandlePaymentStatus = async (
     }
   } catch (e) {
     console.log(e);
-    generateErrorFirebaseAndAxiosErrors(e, "決済の確認に失敗しました。");
+    throw generateErrorFirebaseAndAxiosErrors("決済の確認に失敗しました。", e);
   }
 };
 
@@ -326,8 +329,8 @@ export const AssignOrderNumber = async (orderId: string) => {
   } catch (e) {
     console.log(e);
     throw generateErrorFirebaseAndAxiosErrors(
-      e,
-      "注文番号の付与に失敗しました。"
+      "注文番号の付与に失敗しました。",
+      e
     );
   }
 };
@@ -340,7 +343,7 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
     return title.data;
   } catch (e) {
     console.log(e);
-    throw generateErrorFirebaseAndAxiosErrors(e, "在庫の確認に失敗しました。");
+    throw generateErrorFirebaseAndAxiosErrors("在庫の確認に失敗しました。", e);
   }
 };
 
