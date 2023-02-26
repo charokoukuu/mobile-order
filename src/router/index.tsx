@@ -118,7 +118,20 @@ const Router = () => {
                 element={<Admin appBarHeight={appBarHeight} />}
               />
               <Route
-                path="/error/:errorText/:errorName/:errorCode"
+                path="/error/:errorText/*"
+                element={
+                  <ErrorPage
+                    text={"エラーが発生しました。"}
+                    appBarHeight={appBarHeight}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                  />
+                }
+              />
+              <Route
+                path="/error/:errorText/:errorMessage/:errorName/:errorCodeOther/*"
                 element={
                   <ErrorPage
                     text={"エラーが発生しました。"}

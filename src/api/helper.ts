@@ -50,11 +50,9 @@ export const generateErrorFirebaseAndAxiosErrors = (
 ) => {
   const errorMessage =
     e instanceof FirebaseError || e instanceof AxiosError
-      ? e instanceof FirebaseError
-        ? `${errorText}/${e.name}/${e.code}`
-        : `${errorText}/${e.status}/${e.code}`
-      : `${errorText}/${e}`;
-  return errorMessage;
+      ? `${errorText}/${e.message}/${e.name}/${e.code}`
+      : `${errorText}+${e}`;
+  return errorMessage.replace(/\s/g, "_");
 };
 
 export const GetAllData = async (collectionName: string) => {
