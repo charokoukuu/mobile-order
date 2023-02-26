@@ -21,7 +21,7 @@ export const History = ({ appBarHeight }: Props) => {
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
   const [isTabChenged, setIsTabChenged] = useState(false);
-  const filterStatusList = ["all", "complete", "ordered", "not_payed"];
+  const filterStatusList = ["a", "complete", "ordered", "not_payed"];
 
   useEffect(() => {
     (async () => {
@@ -77,7 +77,7 @@ export const History = ({ appBarHeight }: Props) => {
             setValue={setFilterStatusListNumber}
           />
           {oneOrderData.length === 0 && isTabChenged && (
-            <div className="h-[100vh] text-center m-auto text-[1.5rem] mt-10 japanese_L text-black opacity-[0.65]">
+            <div className="japanese_L m-auto mt-10 h-[100vh] text-center text-[1.5rem] text-black opacity-[0.65]">
               該当するものがありません
             </div>
           )}

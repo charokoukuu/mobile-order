@@ -8,7 +8,7 @@ import {
   Payment,
   isTodayUserOrderGet,
   CantOrderTitle,
-  dateFormater,
+  dateFormatter,
 } from "../api/helper";
 import { Cart } from "../component/Cart";
 import { LoadingAnimation } from "../component/LoadingAnimation";
@@ -42,7 +42,7 @@ export const Menu = ({ appBarHeight }: Props) => {
     ) as LocalStorageData;
     if (
       localStorageOrderData.orderData &&
-      localStorageOrderData.date === dateFormater(new Date())
+      localStorageOrderData.date === dateFormatter(new Date())
     ) {
       setOrderData(localStorageOrderData.orderData);
       setTotalPrice(localStorageOrderData.totalPrice);
@@ -105,7 +105,7 @@ export const Menu = ({ appBarHeight }: Props) => {
                 const localSave: LocalStorageData = {
                   orderData: deleteOrder,
                   totalPrice: newTotalPrice,
-                  date: dateFormater(new Date()),
+                  date: dateFormatter(new Date()),
                 };
                 localStorage.setItem("order", JSON.stringify(localSave));
               }}
@@ -149,7 +149,7 @@ export const Menu = ({ appBarHeight }: Props) => {
                 const localSave: LocalStorageData = {
                   orderData: [],
                   totalPrice: 0,
-                  date: dateFormater(new Date()),
+                  date: dateFormatter(new Date()),
                 };
                 localStorage.setItem("order", JSON.stringify(localSave));
               }}
@@ -170,7 +170,7 @@ export const Menu = ({ appBarHeight }: Props) => {
               const localSave: LocalStorageData = {
                 orderData: currentOrderData,
                 totalPrice: totalPrice + order.price * count,
-                date: dateFormater(new Date()),
+                date: dateFormatter(new Date()),
               };
               localStorage.setItem("order", JSON.stringify(localSave));
               setDetailDialogOpen(false);
