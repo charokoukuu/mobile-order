@@ -70,16 +70,12 @@ export const Order = (props: OrderProps) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Box className="mx-auto max-w-[900px]" />
-        <div>
+        <Box />
+        <div className="w-full bg-[#eeece4]">
           <div
-            className={classNames(
-              "flex overflow-y-scroll bg-[#eeece4] py-[5%]",
-              {
-                "justify-center": orderList?.length === 1,
-                "justify-left": orderList?.length !== 1,
-              }
-            )}
+            className={classNames("box mx-auto flex overflow-x-auto py-5", {
+              "max-w-4xl": orderCount.length <= 4,
+            })}
           >
             <Box />
             {orderList?.map((menu, index) => {
@@ -88,7 +84,7 @@ export const Order = (props: OrderProps) => {
               );
               if (!menuData) return <div key={index}></div>;
               return (
-                <div key={index} className="mx-[4%]">
+                <div key={index} className="mx-auto px-4">
                   <FoodCard
                     count={menu.count}
                     menu={menuData}
@@ -105,6 +101,7 @@ export const Order = (props: OrderProps) => {
                           props.orderData.indexOf(menuData)
                         );
                     }}
+                    className="h-[180px] w-[180px]"
                   />
                   <DetailDialog
                     initialPurchaseCount={initialValue}
