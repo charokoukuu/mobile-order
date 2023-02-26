@@ -2,7 +2,6 @@ import * as React from "react";
 import SwipeableViews from "react-swipeable-views";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { FoodCard } from "./FoodCard";
 import { Grid } from "@mui/material";
 import { MenuData } from "../types";
 import { CategoryProp } from "../views/Menu";
@@ -111,17 +110,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
         .map((menu: MenuData, index: number) => {
           return (
             <Grid item key={index} xs={6} sm={4}>
-              <FoodCard
-                menu={menu as MenuData}
-                deleteButton={false}
-                onClick={function (): void {
-                  menu.isBigSize === true &&
-                    props.setChosenMenu(menu as MenuData);
-                  menu.isBigSize === false &&
-                    props.setChosenMenu(menu as MenuData);
-                  props.setDetailDialogOpen(true);
-                }}
-              />
+              <img src={menu.image} alt="food" />
             </Grid>
           );
         })}
