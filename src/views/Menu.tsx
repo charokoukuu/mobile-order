@@ -132,7 +132,7 @@ export const Menu = ({ appBarHeight }: Props) => {
                   if (cantOrderTitle.length === 0) {
                     payment === "paypay" && (await PayPaySessionCreate(order));
                     payment === "stripe" &&
-                      (await Payment(payment, "test", totalPrice, orderData));
+                      (await Payment(payment, order.id, totalPrice, orderData));
                   } else {
                     setNoPaymentTitle(cantOrderTitle);
                     setIsModal(true);
