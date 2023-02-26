@@ -386,3 +386,10 @@ export const convertToTitleCountFormat = (dataArray: Array<MenuData>) => {
     return { title, count, price: priceMap.get(title) } as OrderListTypes;
   });
 };
+
+export const dateFormater = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month}-${day}`;
+};

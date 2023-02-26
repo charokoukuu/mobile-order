@@ -41,4 +41,5 @@ export interface OrderListTypes {
 export interface LocalStorageData {
   orderData: MenuData[];
   totalPrice: number;
+  date: string;
 }
