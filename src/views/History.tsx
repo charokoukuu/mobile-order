@@ -43,7 +43,7 @@ export const History = ({ appBarHeight }: Props) => {
           {oneOrderData?.map((e, i) => (
             <div key={i} className="my-[3%]">
               <Link to={`/order/${e.id}`}>
-                <div className="mx-auto px-2 py-1 w-[95%] rounded-lg shadow-[0px_3px_6px_rgba(0,0,0,0.2)]">
+                <div className="mx-auto w-[95%] rounded-lg px-2 py-1 shadow-[0px_3px_6px_rgba(0,0,0,0.2)]">
                   <div color="text.secondary">
                     <p className="text-end text-runticketGrayText">
                       {e.date.toDate().toLocaleString()}
@@ -66,7 +66,7 @@ export const History = ({ appBarHeight }: Props) => {
                           <TaskAltIcon className="text-xl" />
                         </Grid>
                         <Grid item xs={5}>
-                          <p className="text-[15px] text-indicatorGreen ml-1">
+                          <p className="ml-1 text-[15px] text-indicatorGreen">
                             注文受け取り済み
                           </p>
                         </Grid>
@@ -82,7 +82,7 @@ export const History = ({ appBarHeight }: Props) => {
                           <ErrorOutlineIcon className="text-xl" />
                         </Grid>
                         <Grid item xs={5} className="text-start">
-                          <p className="text-[15px] text-indicatorOrange ml-1">
+                          <p className="ml-1 text-[15px] text-indicatorOrange">
                             未受け取り
                           </p>
                         </Grid>
@@ -98,7 +98,7 @@ export const History = ({ appBarHeight }: Props) => {
                           <ErrorOutlineIcon className="text-xl" />
                         </Grid>
                         <Grid item xs={5} className="text-start">
-                          <p className="text-[15px] text-indicatorRed ml-1">
+                          <p className="ml-1 text-[15px] text-indicatorRed">
                             決済情報なし
                           </p>
                         </Grid>
