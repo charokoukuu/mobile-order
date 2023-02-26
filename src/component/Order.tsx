@@ -73,21 +73,16 @@ export const Order = (props: OrderProps) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Box className="mx-auto max-w-[900px]" />
-        <div>
+        <Box />
+        <div className="w-full bg-[#eeece4]">
           <div
-            className={classNames(
-              "flex overflow-y-scroll bg-[#eeece4] py-[5%]",
-              {
-                "justify-center": orderTitle?.length === 1,
-                "justify-left": orderTitle?.length !== 1,
-              }
-            )}
+            className={classNames("box mx-auto flex overflow-x-auto py-5", {
+              "max-w-4xl": orderCount.length <= 4,
+            })}
           >
-            <Box />
             {orderTitle?.map((menu, index) => {
               return (
-                <div key={index} className="mx-[4%]">
+                <div key={index} className="mx-auto px-4">
                   <FoodCard
                     count={orderCount[index]}
                     menu={menu}
@@ -100,6 +95,7 @@ export const Order = (props: OrderProps) => {
                     onDelete={function (): void {
                       props.onDelete(menu, props.orderData.indexOf(menu));
                     }}
+                    className="h-[180px] w-[180px]"
                   />
                   <DetailDialog
                     initialPurchaseCount={initialValue}

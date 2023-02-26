@@ -32,7 +32,7 @@ export const History = ({ appBarHeight }: Props) => {
   }, []);
 
   return (
-    <div className="mt-[10px]">
+    <div className="mx-auto mt-[10px] max-w-3xl">
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
       {isGetHistoryData && !oneOrderData?.length ? (
         <div className="text-center">注文履歴はありません</div>
@@ -80,7 +80,7 @@ export const History = ({ appBarHeight }: Props) => {
                         <>
                           <Grid
                             item
-                            xs={1}
+                            xs={0}
                             className="flex items-center text-indicatorOrange"
                           >
                             <ErrorOutlineIcon className="text-xl" />
@@ -96,7 +96,7 @@ export const History = ({ appBarHeight }: Props) => {
                         <>
                           <Grid
                             item
-                            xs={1}
+                            xs={0}
                             className="flex items-center text-indicatorRed"
                           >
                             <ErrorOutlineIcon className="text-xl" />
