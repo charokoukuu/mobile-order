@@ -179,7 +179,7 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
   }
 };
 
-export const isTodayUserOrderGet = async (userId: string) => {
+export const IsTodayUserOrderGet = async (userId: string) => {
   try {
     const q = query(
       collection(db, "order"),

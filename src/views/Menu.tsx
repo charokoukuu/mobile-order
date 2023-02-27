@@ -6,7 +6,7 @@ import {
   GetAllData,
   OrderSubmit,
   Payment,
-  isTodayUserOrderGet,
+  IsTodayUserOrderGet,
   CantOrderTitle,
   RedirectToErrorPage,
   IsGetSystemStatus,
@@ -57,7 +57,7 @@ export const Menu = ({ appBarHeight }: Props) => {
         }
         setMenu(await GetAllData("menu"));
         setIsTodayNotReceived(
-          await isTodayUserOrderGet(auth.currentUser?.uid || "")
+          await IsTodayUserOrderGet(auth.currentUser?.uid || "")
         );
         setIsGetMenu(true);
       } catch (e) {
