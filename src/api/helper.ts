@@ -297,7 +297,6 @@ export const UpdateOrderAndReduceQuantity = async (orderId: string) => {
       AssignOrderNumber(orderId),
     ]);
   } catch (e) {
-    console.log(e);
     throw generateErrorFirebaseAndAxiosErrors(
       "オーダーの更新に失敗しました。",
       e
