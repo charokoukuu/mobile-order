@@ -9,7 +9,7 @@ import {
   isTodayUserOrderGet,
   CantOrderTitle,
   RedirectToErrorPage,
-  isGetSystemStatus,
+  IsGetSystemStatus,
   dateFormatter,
 } from "../api/helper";
 import { Cart } from "../component/Cart";
@@ -51,7 +51,7 @@ export const Menu = ({ appBarHeight }: Props) => {
     }
     (async () => {
       try {
-        const isSystem = await isGetSystemStatus();
+        const isSystem = await IsGetSystemStatus();
         if (!isSystem) {
           window.location.href = "/maintenance";
         }

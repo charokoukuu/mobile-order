@@ -66,7 +66,7 @@ export const generateErrorFirebaseAndAxiosErrors = (
     .replace(/\?/g, "%3F");
 };
 
-export const isGetSystemStatus = async () => {
+export const IsGetSystemStatus = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "system"));
     const data: System = querySnapshot.docs.map(
@@ -354,7 +354,7 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
   const data = SetOrderIdQuantity(orderData);
   const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
   try {
-    const isSystem = await isGetSystemStatus();
+    const isSystem = await IsGetSystemStatus();
     if (isSystem) {
       const title = await cantOrderTitle(data);
       return title.data;
