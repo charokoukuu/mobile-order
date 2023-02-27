@@ -75,7 +75,7 @@ export const Order = (props: OrderProps) => {
         <Box />
         <div className="w-full bg-[#eeece4]">
           <div
-            className={classNames("box mx-auto flex overflow-x-auto py-5", {
+            className={classNames("box mx-auto flex overflow-x-auto", {
               "max-w-4xl": orderList.length <= 4,
             })}
           >

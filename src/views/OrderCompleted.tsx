@@ -78,7 +78,7 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     </h2>
                     <div className="relative h-full w-full py-20">
                       <QRCodeSVG
-                        className="absolute top-0 right-1/2 translate-x-1/2 transform"
+                        className="absolute top-0 right-1/2 translate-x-1/2"
                         value={orderData?.id}
                         size={150}
                       />
