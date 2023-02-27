@@ -131,6 +131,20 @@ const Router = () => {
                 }
               />
               <Route
+                path="/maintenance"
+                element={
+                  <ErrorPage
+                    text={"現在メンテナンス中です。"}
+                    appBarHeight={appBarHeight}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                    isMaintenance
+                  />
+                }
+              />
+              <Route
                 path="*"
                 element={
                   <ErrorPage

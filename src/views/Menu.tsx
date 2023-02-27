@@ -9,6 +9,7 @@ import {
   isTodayUserOrderGet,
   CantOrderTitle,
   RedirectToErrorPage,
+  isGetSystemStatus,
   dateFormatter,
 } from "../api/helper";
 import { Cart } from "../component/Cart";
@@ -50,6 +51,10 @@ export const Menu = ({ appBarHeight }: Props) => {
     }
     (async () => {
       try {
+        const isSystem = await isGetSystemStatus();
+        if (!isSystem) {
+          window.location.href = "/maintenance";
+        }
         setMenu(await GetAllData("menu"));
         setIsTodayNotReceived(
           await isTodayUserOrderGet(auth.currentUser?.uid || "")

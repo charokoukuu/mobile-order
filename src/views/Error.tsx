@@ -8,6 +8,7 @@ interface ErrorPageProps {
   onClick: () => void;
   text: string;
   buttonText: string;
+  isMaintenance?: boolean;
 }
 export const ErrorPage = (props: ErrorPageProps) => {
   const { errorText } = useParams();
@@ -28,6 +29,14 @@ export const ErrorPage = (props: ErrorPageProps) => {
                 </p>
               ))}
             </div>
+          )}
+          {props.isMaintenance && (
+            <p className="my-4 text-base">
+              ご迷惑をおかけしております。
+              <br />
+              {/* TODO:メンテナンス期間を表示する */}
+              メンテナンスが終了次第、サービスを再開いたします。
+            </p>
           )}
         </div>
         <Button
