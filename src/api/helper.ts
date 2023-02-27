@@ -13,6 +13,9 @@ import {
   orderBy,
   updateDoc,
   Timestamp,
+  startAfter,
+  DocumentSnapshot,
+  DocumentData,
 } from "firebase/firestore";
 import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
@@ -75,28 +78,29 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
 };
 
 export const SearchCollectionDataGet = async (
-  docId: string,
-  collectionId: string,
-  searchId: string,
-  maxValue: number
+  setData: React.Dispatch<React.SetStateAction<OrderData[]>>,
+  lastDoc: DocumentSnapshot<DocumentData> | null,
+  isStatus: string
 ) => {
-  const data: OrderData[] = [];
-  const q = query(
-    collection(db, docId),
-    where(collectionId, "==", searchId),
+  const baseQuery = query(
+    collection(db, "order"),
+    where("user.uid", "==", auth.currentUser?.uid),
     orderBy("date", "desc"),
-    limit(maxValue)
+    limit(10)
+  );
+
+  const q = query(
+    baseQuery,
+    ...(isStatus !== "all" ? [where("isStatus", "==", isStatus)] : []),
+    ...(lastDoc ? [startAfter(lastDoc)] : [])
   );
   const querySnapshot = await getDocs(q);
-  return new Promise<OrderData[]>((resolve, reject) => {
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data() as OrderData);
-    });
-    resolve(data);
-    reject("error");
-  });
+  setData(
+    (prev) =>
+      [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
+  );
+  lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
 };
-
 //当日の全ユーザのオーダーを取得
 export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
   const data: OrderData[] = [];
@@ -381,4 +385,11 @@ export const convertToTitleCountFormat = (dataArray: Array<MenuData>) => {
     const count = dataArray.filter((x) => x.title === title).length;
     return { title, count, price: priceMap.get(title) } as OrderListTypes;
   });
+};
+
+export const dateFormatter = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  return `${year}-${month}-${day}`;
 };
