@@ -354,8 +354,13 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
   const data = SetOrderIdQuantity(orderData);
   const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
   try {
-    const title = await cantOrderTitle(data);
-    return title.data;
+    const isSystem = await isGetSystemStatus();
+    if (isSystem) {
+      const title = await cantOrderTitle(data);
+      return title.data;
+    } else {
+      throw "システムメンテナンス中です。";
+    }
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors("在庫の確認に失敗しました。", e);
   }
