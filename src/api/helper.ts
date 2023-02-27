@@ -1,6 +1,12 @@
 // anyを許容するdisable,後でPayPayやStripeのAPIのデータ構造調べて型定義する
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MenuData, OrderData, OrderListTypes, UserData } from "../types";
+import {
+  MenuData,
+  OrderData,
+  OrderListTypes,
+  System,
+  UserData,
+} from "../types";
 import {
   doc,
   getDocs,
@@ -58,6 +64,21 @@ export const generateErrorFirebaseAndAxiosErrors = (
     .replace(/ /g, "_")
     .replace(/\//g, "%2F")
     .replace(/\?/g, "%3F");
+};
+
+export const isGetSystemStatus = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "system"));
+    const data: System = querySnapshot.docs.map(
+      (doc) => doc.data() as System
+    )[0];
+    return data.isSystem;
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "システムの状態の取得に失敗しました。",
+      e
+    );
+  }
 };
 
 export const GetAllData = async (collectionName: string) => {
@@ -202,13 +223,14 @@ export const FetchOneOrderDocument = async (collectionId: string) => {
 
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
+  const noRedirectPathNames = [pathName, "/maintenance"];
   return new Promise<void>((resolve, reject) => {
     try {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           if (
             !CorrectEmail(user?.email || "") &&
-            window.location.pathname !== pathName
+            !noRedirectPathNames.includes(window.location.pathname)
           ) {
             window.location.href = pathName;
             reject(new Error("Invalid email"));
@@ -217,7 +239,7 @@ export const GetUserInfo = (callback: (userInfo: User) => void) => {
             resolve();
           }
         } else {
-          if (window.location.pathname !== pathName) {
+          if (!noRedirectPathNames.includes(window.location.pathname)) {
             window.location.href = pathName;
             reject(new Error("User not logged in"));
           } else {
