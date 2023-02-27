@@ -49,11 +49,15 @@ export const generateErrorFirebaseAndAxiosErrors = (
   e: unknown
 ) => {
   console.error(e);
-  const errorMessage =
+  const errorMessagePrams =
     e instanceof FirebaseError || e instanceof AxiosError
-      ? `${errorText}/${e.message}/${e.name}/${e.code}`
+      ? `${errorText}+${e.message}+${e.name}+${e.code}`
       : `${errorText}+${e}`;
-  return errorMessage.replace(/\s/g, "_");
+  // errorMessageをURLに入れるためにスペースをアンダーバーに変換,/はエンコードする,?はエンコードする
+  return errorMessagePrams
+    .replace(/ /g, "_")
+    .replace(/\//g, "%2F")
+    .replace(/\?/g, "%3F");
 };
 
 export const GetAllData = async (collectionName: string) => {
