@@ -10,6 +10,7 @@ module.exports = {
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:tailwindcss/recommended",
     "prettier",
   ],
   overrides: [],
@@ -21,7 +22,7 @@ module.exports = {
   plugins: [
     "react",
     "@typescript-eslint",
-    "prettier-plugin-tailwindcss",
+    "tailwindcss",
   ],
   rules: {
     "react/jsx-uses-react": "off",
