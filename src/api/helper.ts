@@ -146,12 +146,6 @@ export const SearchCollectionDataGet = async (
     ...(isStatus !== "all" ? [where("isStatus", "==", isStatus)] : []),
     ...(lastDoc ? [startAfter(lastDoc)] : [])
   );
-  const querySnapshot = await getDocs(q);
-  setData(
-    (prev) =>
-      [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
-  );
-  lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
   try {
     const querySnapshot = await getDocs(q);
     setData(
