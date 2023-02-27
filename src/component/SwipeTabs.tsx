@@ -1,5 +1,4 @@
 import * as React from "react";
-import SwipeableViews from "react-swipeable-views";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { FoodCard } from "./FoodCard";
@@ -76,25 +75,25 @@ export default function SwipeTabs(props: SwipeTabsProps) {
           })}
         </Tabs>
       </SwipeTabsWapper>
-      <SwipeableViews
+      {/* <SwipeableViews
         className="mx-auto max-w-[730px] py-1"
         index={value}
         onChangeIndex={handleChangeIndex}
-      >
-        {menuCategoryArray.map((category: string, index: number) => {
-          return (
-            <TabPanel value={value} index={index} key={index}>
-              <FilterMenuData
-                menu={props.menu}
-                categoryMode={category}
-                setChosenMenu={props.setChosenMenu}
-                setDetailDialogOpen={props.setDetailDialogOpen}
-                category={props.category}
-              />
-            </TabPanel>
-          );
-        })}
-      </SwipeableViews>
+      > */}
+      {menuCategoryArray.map((category: string, index: number) => {
+        return (
+          <TabPanel value={value} index={index} key={index}>
+            <FilterMenuData
+              menu={props.menu}
+              categoryMode={category}
+              setChosenMenu={props.setChosenMenu}
+              setDetailDialogOpen={props.setDetailDialogOpen}
+              category={props.category}
+            />
+          </TabPanel>
+        );
+      })}
+      {/* </SwipeableViews> */}
     </div>
   );
 }
