@@ -2,7 +2,7 @@
 // import { useState } from "react";
 // import { functions } from "../api/Firebase";
 // import { RedirectModal } from "../component/RedirectModal";
-import { ErrorPage } from "../views/Error";
+import { ErrorPage } from "../views/ErrorPage";
 // import { Spacer } from "../component/SwipeTabs";
 
 export const TestData = (props: { appBarHeight: number }) => {

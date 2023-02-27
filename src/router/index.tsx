@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ErrorPage } from "../views/Error";
+import { ErrorPage } from "../views/ErrorPage";
 import { Menu } from "../views/Menu";
 import { OrderCompleted } from "../views/OrderCompleted";
 import { Register } from "../views/Register";
