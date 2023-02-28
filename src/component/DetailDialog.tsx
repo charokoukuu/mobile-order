@@ -62,6 +62,7 @@ export const DetailDialog = (props: DetailDialogProps) => {
               <Button
                 className="h-11 w-[90%] rounded-xl bg-runticketBlue"
                 variant="contained"
+                disabled={!props.open}
                 onClick={() => {
                   if (!props.initialPurchaseCount)
                     setTimeout(() => setPurchaseCount(1), 200);
@@ -77,6 +78,7 @@ export const DetailDialog = (props: DetailDialogProps) => {
               <Button
                 className="h-11 w-[90%] rounded-xl bg-runticketRed"
                 variant="contained"
+                disabled={!props.open}
                 onClick={() => {
                   props.onDelete && props.onDelete();
                 }}
