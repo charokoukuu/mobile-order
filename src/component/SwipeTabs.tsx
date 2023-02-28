@@ -118,7 +118,7 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
     );
   }, [props.categoryMode, props.menu]);
   return (
-    <Grid padding={1.5} container spacing={1.5} justifyContent="center">
+    <Grid padding={1.5} container spacing={1.5} justifyContent="start">
       <Spacer appBarHeight={props.appBarHeight || 56} mode={"menu"} />
       {filteredMenu.map((menu: MenuData, index: number) => {
         return (
