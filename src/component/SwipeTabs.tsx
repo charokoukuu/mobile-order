@@ -54,17 +54,14 @@ function a11yProps(index: number) {
 export default function SwipeTabs(props: SwipeTabsProps) {
   const menuCategoryArray: CategoryProp[] = props.category;
   const [value, setValue] = useState(0);
-  // const [swiper, setSwiper] = useState<SwiperCore | null>(null);
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    // swiper?.slideTo(newValue);
     swiperRef.current?.slideTo(newValue);
   };
   const onSwiper = (currentSwiper: SwiperCore) => {
     const swiperInstance = currentSwiper;
-    // setSwiper(swiperInstance);
     swiperRef.current = swiperInstance;
   };
   const onSlideChange = (currentSwiper: SwiperCore) => {
