@@ -34,9 +34,9 @@ const Router = () => {
     })();
   }, []);
   return (
-    <div>
+    <div className="min-h-[100dvh]">
       <BrowserRouter>
-        <div>
+        <div className="min-h-[90dvh]">
           <DrawerLeft
             open={isMenu}
             setIsmenu={setIsMenu}
