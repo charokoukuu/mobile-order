@@ -41,16 +41,14 @@ export const Cart = (props: CartProps) => {
                 badgeContent={props.totalOrderItemsCount}
                 color={"primary"}
               >
-                <ShoppingCartIcon
-                  sx={{ fontSize: "clamp(1rem, 10vw, 4rem)" }}
-                />
+                <ShoppingCartIcon className="text-4xl sm:text-5xl md:text-6xl" />
               </StyledBadge>
             </IconButton>
           </Grid>
           <Grid item xs={2} className="flex items-center justify-center">
             <p
               className={classNames(
-                "japanese_B  mr-4 text-center text-[40px] text-runticketBlue",
+                "japanese_B  mr-4 text-center text-4xl text-runticketBlue sm:text-5xl md:text-6xl",
                 {
                   "text-3xl": props.totalPrice.toString().length >= 5,
                 }
@@ -65,8 +63,7 @@ export const Cart = (props: CartProps) => {
             className="flex items-center justify-end pr-2 text-center"
           >
             <Button
-              className="rounded-lg bg-runticketBlue"
-              sx={{ fontSize: "clamp(0.1rem, 3vw, 1.4rem)" }}
+              className="rounded-lg bg-runticketBlue text-sm md:text-xl"
               variant="contained"
             >
               カートを見る
