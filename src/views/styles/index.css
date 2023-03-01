@@ -15,3 +15,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+html {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+main {
+  min-height: 90vh;
+  min-height: 90dvh;
+}

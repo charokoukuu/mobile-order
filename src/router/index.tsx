@@ -34,9 +34,9 @@ const Router = () => {
     })();
   }, []);
   return (
-    <div className="min-h-[100dvh]">
+    <>
       <BrowserRouter>
-        <div className="min-h-[90dvh]">
+        <main>
           <DrawerLeft
             open={isMenu}
             setIsmenu={setIsMenu}
@@ -128,10 +128,12 @@ const Router = () => {
               />
             </Routes>
           )}
-        </div>
+        </main>
       </BrowserRouter>
-      <Footer />
-    </div>
+      <footer>
+        <Footer />
+      </footer>
+    </>
   );
 };
 
