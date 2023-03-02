@@ -61,13 +61,13 @@ export const Help = (props: { appBarHeight: number }) => {
               src="/help/printer.svg"
               alt="menu"
               width={"50%"}
-              className="rotate-[-10deg] transform"
+              className="rotate-[-10deg]"
             />
             <img
               src="/help/scanner.svg"
               alt="menu"
               width={"50%"}
-              className="rotate-[-10deg] transform"
+              className="rotate-[-10deg]"
             />
           </div>
         </div>

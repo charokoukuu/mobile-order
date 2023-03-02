@@ -63,7 +63,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
             onClick={() => {
               window.location.href = "/";
             }}
-            className="absolute left-1/2 max-w-[260px] -translate-x-1/2 transform text-2xl text-white"
+            className="absolute left-1/2 max-w-[260px] -translate-x-1/2 text-2xl text-white"
           >
             <img
               src="https://firebasestorage.googleapis.com/v0/b/mobile-order-4d383.appspot.com/o/runticket.png?alt=media&token=f27edb3e-3806-43bf-b1fb-2179dcc23f07"

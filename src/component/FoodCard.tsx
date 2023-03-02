@@ -36,8 +36,8 @@ export const FoodCard = (props: FoodCardProps) => {
         />
 
         {!isSale && (
-          <div className="z-1 absolute top-1/2 left-1/2 w-[80%] -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] transform border-[3px] border-solid border-[#FC3f46] text-center">
-            <span className="font-[clamp(0.5rem_4.2vw_2rem)] text-[#FC3f46]">
+          <div className="absolute top-1/2 left-1/2 z-10 w-[80%] -translate-x-1/2 -translate-y-1/2 rotate-[-20deg] border-[3px] border-solid border-[#c81b20] text-center">
+            <span className="font-[clamp(0.5rem_4.2vw_2rem)] text-[#c81b20]">
               SOLD OUT
             </span>
           </div>
@@ -68,7 +68,7 @@ export const FoodCard = (props: FoodCardProps) => {
       </CardActionArea>
       {props.deleteButton && (
         <div
-          className="z-1 absolute top-[5%] right-[5%] flex rounded-full bg-white"
+          className="absolute top-[5%] right-[5%] z-10 flex rounded-full bg-white"
           onClick={props.onDelete}
         >
           <CancelIcon className="text-{rgba(0,0,0,0.8)} text-[25px]" />
