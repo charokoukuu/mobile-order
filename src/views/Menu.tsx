@@ -71,7 +71,7 @@ export const Menu = ({ appBarHeight }: Props) => {
   }, [orderData.length]);
 
   return (
-    <div className="relative">
+    <div className="relative mx-auto max-w-3xl">
       {isGetMenu ? (
         <div>
           {isTodayNotReceived && (

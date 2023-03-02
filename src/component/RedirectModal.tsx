@@ -26,7 +26,7 @@ export const RedirectModal = (props: RedirectModalProps) => {
     <>
       {props.isModal ? (
         <Modal open={props.isModal}>
-          <div className="fixed top-1/2 left-1/2 z-10 h-auto w-[80%] max-w-[500px] -translate-x-1/2 -translate-y-1/2 transform rounded-2xl bg-white p-5">
+          <div className="fixed top-1/2 left-1/2 z-10 h-auto w-[80%] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-5">
             <h2 className="text-center text-2xl font-bold">
               注文に失敗しました
             </h2>
