@@ -81,9 +81,11 @@ export const IsGetSystemStatus = async () => {
   }
 };
 
-export const GetAllData = async (collectionName: string) => {
+export const GetMenuData = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, collectionName));
+    const querySnapshot = await getDocs(
+      query(collection(db, "menu"), where("isStatus", "==", true))
+    );
     const data: MenuData[] = querySnapshot.docs.map(
       (doc) => doc.data() as MenuData
     );

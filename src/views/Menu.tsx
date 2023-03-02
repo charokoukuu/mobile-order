@@ -3,7 +3,7 @@ import { Order } from "../component/Order";
 import { DetailDialog } from "../component/DetailDialog";
 import { LocalStorageData, MenuData } from "../types";
 import {
-  GetAllData,
+  GetMenuData,
   OrderSubmit,
   Payment,
   IsTodayUserOrderGet,
@@ -55,7 +55,7 @@ export const Menu = ({ appBarHeight }: Props) => {
         if (!isSystem) {
           window.location.href = "/maintenance";
         }
-        setMenu(await GetAllData("menu"));
+        setMenu(await GetMenuData());
         setIsTodayNotReceived(
           await IsTodayUserOrderGet(auth.currentUser?.uid || "")
         );
