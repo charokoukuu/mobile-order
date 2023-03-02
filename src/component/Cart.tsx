@@ -34,8 +34,14 @@ export const Cart = (props: CartProps) => {
           "pb-4": isIOS,
         })}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={5} className="flex items-center justify-start">
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+          direction="row"
+        >
+          <Grid item xs={2}>
             <IconButton aria-label="cart">
               <StyledBadge
                 badgeContent={props.totalOrderItemsCount}
@@ -45,10 +51,10 @@ export const Cart = (props: CartProps) => {
               </StyledBadge>
             </IconButton>
           </Grid>
-          <Grid item xs={2} className="flex items-center justify-center">
+          <Grid item xs={5}>
             <p
               className={classNames(
-                "japanese_B  mr-4 text-center text-4xl text-runticketBlue sm:text-5xl md:text-6xl",
+                "japanese_B  mr-4 text-left text-4xl text-runticketBlue sm:text-5xl md:text-6xl",
                 {
                   "text-3xl": props.totalPrice.toString().length >= 5,
                 }
@@ -57,13 +63,9 @@ export const Cart = (props: CartProps) => {
               ¥{props.totalPrice}
             </p>
           </Grid>
-          <Grid
-            item
-            xs={5}
-            className="flex items-center justify-end pr-2 text-center"
-          >
+          <Grid item xs={5} className="flex justify-end pr-2">
             <Button
-              className="rounded-lg bg-runticketBlue text-sm md:text-xl"
+              className="rounded-lg bg-runticketBlue py-2 text-sm md:text-xl"
               variant="contained"
             >
               カートを見る
