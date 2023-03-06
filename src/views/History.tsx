@@ -92,8 +92,9 @@ export const History = ({ appBarHeight }: Props) => {
               該当するものがありません
             </div>
           )}
-          {allOrderData.length === 0 && <HistorySkeleton maxItem={10} />}
-          {allOrderData.length !== 0 &&
+          {allOrderData.length === 0 ? (
+            <HistorySkeleton maxItem={10} />
+          ) : (
             allOrderData
               .filter((item) =>
                 filterStatusList[filterStatusListNumber] === "all"
@@ -174,7 +175,8 @@ export const History = ({ appBarHeight }: Props) => {
                     </div>
                   </Link>
                 </div>
-              ))}
+              ))
+          )}
           {isAsyncFetch && <HistorySkeleton maxItem={10} />}
         </div>
       ) : (
