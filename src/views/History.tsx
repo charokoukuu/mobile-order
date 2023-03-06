@@ -10,6 +10,7 @@ import { Spacer } from "../component/SwipeTabs";
 import { OrderData } from "../types";
 import { DocumentSnapshot } from "firebase/firestore";
 import HistoryTabs from "../component/HistoryTabs";
+import HistorySkeleton from "../component/HistorySkelton";
 interface Props {
   appBarHeight: number;
 }
@@ -19,6 +20,7 @@ export const History = ({ appBarHeight }: Props) => {
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
   const [isTabChanged, setIsTabChanged] = useState(false);
+  const [isAsyncFetch, setIsAsyncFetch] = useState(false);
   const filterStatusList = ["all", "complete", "ordered", "not_payed"];
   const setLastDoc = (doc: DocumentSnapshot | null) => {
     lastDoc.current = doc;
@@ -28,6 +30,7 @@ export const History = ({ appBarHeight }: Props) => {
       try {
         setAllOrderData([]);
         setIsTabChanged(false);
+        lastDoc.current = null;
         await SearchCollectionDataGet(
           filterStatusList[filterStatusListNumber],
           setAllOrderData,
@@ -56,12 +59,14 @@ export const History = ({ appBarHeight }: Props) => {
     const clientHeight = document.documentElement.clientHeight;
 
     if (scrollTop + clientHeight >= scrollHeight - 5 && allOrderData.length) {
+      setIsAsyncFetch(true);
       await SearchCollectionDataGet(
         filterStatusList[filterStatusListNumber],
         setAllOrderData,
         lastDoc.current,
         setLastDoc
       );
+      setIsAsyncFetch(false);
     }
   };
   useEffect(() => {
@@ -87,6 +92,7 @@ export const History = ({ appBarHeight }: Props) => {
               該当するものがありません
             </div>
           )}
+          {allOrderData.length === 0 && <HistorySkeleton maxItem={10} />}
           {allOrderData.length !== 0 &&
             allOrderData
               .filter((item) =>
@@ -169,6 +175,7 @@ export const History = ({ appBarHeight }: Props) => {
                   </Link>
                 </div>
               ))}
+          {isAsyncFetch && <HistorySkeleton maxItem={10} />}
         </div>
       ) : (
         <LoadingAnimation type="jelly" />
