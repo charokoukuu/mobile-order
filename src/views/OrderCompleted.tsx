@@ -109,8 +109,8 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                         key={i}
                       >
                         <div className="w-32 text-left">{e.title}</div>
-                        <div className="w-5 text-left">×{e.count}</div>
-                        <div className="w-16 text-right">{`￥${
+                        <div className="w-8 text-left">×{e.count}</div>
+                        <div className="w-16 text-left">{`￥${
                           e.count * e.price
                         }`}</div>
                       </div>
