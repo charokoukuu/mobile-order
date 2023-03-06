@@ -14,7 +14,7 @@ interface Props {
   appBarHeight: number;
 }
 export const History = ({ appBarHeight }: Props) => {
-  const [oneOrderData, setOneOrderData] = useState<OrderData[]>([]);
+  const [allOrderData, setAllOrderData] = useState<OrderData[]>([]);
   const lastDoc = useRef<DocumentSnapshot | null>(null);
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
@@ -24,10 +24,10 @@ export const History = ({ appBarHeight }: Props) => {
   useEffect(() => {
     (async () => {
       try {
-        setOneOrderData([]);
+        setAllOrderData([]);
         setIsTabChanged(false);
         await SearchCollectionDataGet(
-          setOneOrderData,
+          setAllOrderData,
           lastDoc.current,
           filterStatusList[filterStatusListNumber]
         );
@@ -52,9 +52,9 @@ export const History = ({ appBarHeight }: Props) => {
     );
     const clientHeight = document.documentElement.clientHeight;
 
-    if (scrollTop + clientHeight >= scrollHeight - 5 && oneOrderData.length) {
+    if (scrollTop + clientHeight >= scrollHeight - 5 && allOrderData.length) {
       await SearchCollectionDataGet(
-        setOneOrderData,
+        setAllOrderData,
         lastDoc.current,
         filterStatusList[filterStatusListNumber]
       );
@@ -65,7 +65,7 @@ export const History = ({ appBarHeight }: Props) => {
     return () => window.removeEventListener("scroll", handleScroll);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [oneOrderData]);
+  }, [allOrderData]);
   return (
     <div className="mx-auto mt-[10px] max-w-3xl">
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
@@ -78,13 +78,13 @@ export const History = ({ appBarHeight }: Props) => {
             value={filterStatusListNumber}
             setValue={setFilterStatusListNumber}
           />
-          {oneOrderData.length === 0 && isTabChanged && (
+          {allOrderData.length === 0 && isTabChanged && (
             <div className="japanese_L m-auto mt-10 h-[100vh] text-center text-[1.5rem] text-black opacity-[0.65]">
               該当するものがありません
             </div>
           )}
-          {oneOrderData.length !== 0 &&
-            oneOrderData
+          {allOrderData.length !== 0 &&
+            allOrderData
               .filter((item) =>
                 filterStatusList[filterStatusListNumber] === "all"
                   ? true
