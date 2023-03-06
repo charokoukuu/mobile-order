@@ -14,9 +14,14 @@ import HistorySkeleton from "../component/HistorySkelton";
 interface Props {
   appBarHeight: number;
 }
+interface lastDocType {
+  lastDoc: DocumentSnapshot | null;
+  lastFetchData: OrderData[];
+}
 export const History = ({ appBarHeight }: Props) => {
   const [allOrderData, setAllOrderData] = useState<OrderData[]>([]);
-  const lastDoc = useRef<DocumentSnapshot | null>(null);
+  const lastDoc = useRef<lastDocType>({} as lastDocType);
+  const isScrollValidateEnable = useRef<boolean>(true);
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
   const [isTabChanged, setIsTabChanged] = useState(false);
@@ -28,12 +33,11 @@ export const History = ({ appBarHeight }: Props) => {
       try {
         setAllOrderData([]);
         setIsTabChanged(false);
-        lastDoc.current = null;
-
+        lastDoc.current.lastDoc = null;
         lastDoc.current = await SearchCollectionDataGet(
           filterStatusList[filterStatusListNumber],
           setAllOrderData,
-          lastDoc.current
+          lastDoc.current.lastDoc
         );
         setIsGetHistoryData(true);
         setIsTabChanged(true);
@@ -55,17 +59,23 @@ export const History = ({ appBarHeight }: Props) => {
       document.body.scrollHeight
     );
     const clientHeight = document.documentElement.clientHeight;
-
-    if (scrollTop + clientHeight >= scrollHeight - 5 && allOrderData.length) {
+    if (lastDoc.current.lastFetchData.length === 0) return;
+    if (
+      scrollTop + clientHeight >= scrollHeight - 5 &&
+      isScrollValidateEnable.current
+    ) {
+      isScrollValidateEnable.current = false;
       setIsAsyncFetch(true);
       lastDoc.current = await SearchCollectionDataGet(
         filterStatusList[filterStatusListNumber],
         setAllOrderData,
-        lastDoc.current
+        lastDoc.current.lastDoc
       );
+      isScrollValidateEnable.current = true;
       setIsAsyncFetch(false);
     }
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -89,9 +99,8 @@ export const History = ({ appBarHeight }: Props) => {
               該当するものがありません
             </div>
           )}
-          {allOrderData.length === 0 ? (
-            <HistorySkeleton maxItem={10} />
-          ) : (
+          {allOrderData.length === 0 && <HistorySkeleton maxItem={10} />}
+          {allOrderData.length !== 0 &&
             allOrderData
               .filter((item) =>
                 filterStatusList[filterStatusListNumber] === "all"
@@ -172,8 +181,7 @@ export const History = ({ appBarHeight }: Props) => {
                     </div>
                   </Link>
                 </div>
-              ))
-          )}
+              ))}
           {isAsyncFetch && <HistorySkeleton maxItem={10} />}
         </div>
       ) : (
