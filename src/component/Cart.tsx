@@ -47,7 +47,7 @@ export const Cart = (props: CartProps) => {
                 badgeContent={props.totalOrderItemsCount}
                 color={"primary"}
               >
-                <ShoppingCartIcon className="text-5xl sm:text-6xl md:text-7xl" />
+                <ShoppingCartIcon className="text-5xl sm:text-6xl md:text-6xl" />
               </StyledBadge>
             </IconButton>
           </Grid>
