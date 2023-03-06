@@ -157,7 +157,7 @@ export const SearchCollectionDataGet = async (
     lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      "オーダーデータの取得に失敗しました。",
+      "注文情報の取得に失敗しました。",
       e
     );
   }
@@ -175,7 +175,7 @@ export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
     return querySnapshot.docs.map((doc) => doc.data() as OrderData);
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      "オーダーデータの取得に失敗しました。",
+      "注文情報の取得に失敗しました。",
       e
     );
   }
@@ -195,7 +195,7 @@ export const IsTodayUserOrderGet = async (userId: string) => {
     return !querySnapshot.empty;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      "オーダーデータの取得に失敗しました。",
+      "注文情報の取得に失敗しました。",
       e
     );
   }
@@ -206,12 +206,12 @@ export const FetchOneOrderDocument = async (collectionId: string) => {
     const docRef = doc(db, "order", collectionId);
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) {
-      throw "オーダーデータが存在しません。";
+      throw "注文情報が存在しません。";
     }
     return docSnap.data() as OrderData;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      "オーダーデータの取得に失敗しました。",
+      "注文情報の取得に失敗しました。",
       e
     );
   }
@@ -377,7 +377,7 @@ export const SetOrderIdQuantity = (orderData: MenuData[]) => {
       acc.push({ id: cur.id, quantity: 1 });
     }
     return acc;
-  }, [] as { id: string; quantity: number; }[]);
+  }, [] as { id: string; quantity: number }[]);
   return data;
 };
 
