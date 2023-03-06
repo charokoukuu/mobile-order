@@ -47,7 +47,7 @@ export const Cart = (props: CartProps) => {
                 badgeContent={props.totalOrderItemsCount}
                 color={"primary"}
               >
-                <ShoppingCartIcon className="text-4xl sm:text-5xl md:text-6xl" />
+                <ShoppingCartIcon className="text-5xl sm:text-5xl md:text-6xl" />
               </StyledBadge>
             </IconButton>
           </Grid>
@@ -65,7 +65,7 @@ export const Cart = (props: CartProps) => {
           </Grid>
           <Grid item xs={5} className="flex justify-end pr-2">
             <Button
-              className="rounded-lg bg-runticketBlue py-2 text-sm md:text-xl"
+              className="rounded-lg bg-runticketBlue py-2.5 text-sm md:text-xl"
               variant="contained"
             >
               カートを見る
