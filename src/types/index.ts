@@ -1,6 +1,10 @@
 import { Timestamp } from "firebase/firestore";
 import { paymentType } from "../component/Order";
 
+export interface System {
+  isSystem: boolean;
+}
+
 export interface MenuData {
   title: string;
   description: string;

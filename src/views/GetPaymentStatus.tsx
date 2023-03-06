@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LoadingAnimation } from "../component/LoadingAnimation";
-import { PaymentGetStatus } from "../api/helper";
+import { HandlePaymentStatus, RedirectToErrorPage } from "../api/helper";
 import { Spacer } from "../component/SwipeTabs";
 import { paymentType } from "../component/Order";
 import { PayPayStatusCheck } from "../api/Payment";
@@ -14,11 +14,14 @@ export const GetPaymentStatus = ({ appBarHeight }: Props) => {
     (async () => {
       const checkoutId = params.id;
       const paymentType = params.paymentType as paymentType;
-
-      checkoutId && paymentType === "paypay" && PayPayStatusCheck(checkoutId);
-      checkoutId &&
-        paymentType === "stripe" &&
-        (await PaymentGetStatus(paymentType, checkoutId));
+      try {
+        checkoutId && paymentType === "paypay" && PayPayStatusCheck(checkoutId);
+        checkoutId &&
+          paymentType === "stripe" &&
+          (await HandlePaymentStatus(paymentType, checkoutId));
+      } catch (e) {
+        RedirectToErrorPage(e);
+      }
     })();
   }, [params.id, params.paymentType]);
 

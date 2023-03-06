@@ -1,4 +1,4 @@
-import { TodayAllOrderGet } from "../api/helper";
+import { RedirectToErrorPage, TodayAllOrderGet } from "../api/helper";
 import { useEffect, useState } from "react";
 import TableComp from "../component/TableComp";
 import { OrderData } from "../types";
@@ -11,8 +11,12 @@ const Admin = (props: { appBarHeight: number }) => {
   const [OrderCount, setOrderCount] = useState<number[]>([]);
   useEffect(() => {
     (async () => {
-      const order = await TodayAllOrderGet("order", 10);
-      setToDayOrder(order);
+      try {
+        const order = await TodayAllOrderGet("order", 10);
+        setToDayOrder(order);
+      } catch (e) {
+        RedirectToErrorPage(e);
+      }
     })();
   }, []);
 

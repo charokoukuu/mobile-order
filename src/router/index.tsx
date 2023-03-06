@@ -18,7 +18,7 @@ import { GetPaymentStatus } from "../views/GetPaymentStatus";
 import Admin from "../views/Admin";
 import Footer from "../component/Footer";
 import styled from "@emotion/styled";
-// import { TestData } from "../test/TestData";
+
 const Router = () => {
   const [isMenu, setIsMenu] = useState<boolean>(false);
   const [user, setUser] = useState<User>();
@@ -27,10 +27,14 @@ const Router = () => {
   useEffect(() => {
     window.document.title = "RunTicket";
     (async () => {
-      await GetUserInfo((e) => {
-        setUser(e);
-      });
-      setIsLogin(true);
+      try {
+        await GetUserInfo((e) => {
+          setUser(e);
+        });
+        setIsLogin(true);
+      } catch (e) {
+        console.error(e);
+      }
     })();
   }, []);
   return (
@@ -112,6 +116,33 @@ const Router = () => {
               <Route
                 path="/admin"
                 element={<Admin appBarHeight={appBarHeight} />}
+              />
+              <Route
+                path="/error/:errorText/*"
+                element={
+                  <ErrorPage
+                    text={"エラーが発生しました"}
+                    appBarHeight={appBarHeight}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                  />
+                }
+              />
+              <Route
+                path="/maintenance"
+                element={
+                  <ErrorPage
+                    text={"現在メンテナンス中です"}
+                    appBarHeight={appBarHeight}
+                    onClick={() => {
+                      window.location.href = "/";
+                    }}
+                    buttonText={"ホームに戻る"}
+                    isMaintenance
+                  />
+                }
               />
               <Route
                 path="*"

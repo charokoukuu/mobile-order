@@ -1,11 +1,12 @@
 // import { httpsCallable } from "firebase/functions";
-import { useState } from "react";
+// import { useState } from "react";
 // import { functions } from "../api/Firebase";
-import { RedirectModal } from "../component/RedirectModal";
-import { Spacer } from "../component/SwipeTabs";
+// import { RedirectModal } from "../component/RedirectModal";
+import { ErrorPage } from "../views/ErrorPage";
+// import { Spacer } from "../component/SwipeTabs";
 
 export const TestData = (props: { appBarHeight: number }) => {
-  const [isModal, setIsModal] = useState<boolean>(false);
+  // const [isModal, setIsModal] = useState<boolean>(false);
   // const Pay = () => {
   //   const paypay = httpsCallable(functions, "test");
   //   (async () => {
@@ -21,16 +22,13 @@ export const TestData = (props: { appBarHeight: number }) => {
   //   })();
   // };
   return (
-    <div>
-      <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
-      <RedirectModal
-        isModal={isModal}
-        countTimer={50000}
-        toURL="/register"
-        buttonText="ログイン画面に戻る"
-        noPaymentTitle={["なるき", "じゅんじゅん"]}
-      />
-      <button onClick={() => setIsModal(true)}>モーダルを開く</button>
-    </div>
+    <ErrorPage
+      appBarHeight={props.appBarHeight}
+      onClick={() => {
+        window.location.href = "/";
+      }}
+      text="こんちは"
+      buttonText="メニューに戻る"
+    />
   );
 };

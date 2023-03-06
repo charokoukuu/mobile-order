@@ -1,6 +1,12 @@
 // anyを許容するdisable,後でPayPayやStripeのAPIのデータ構造調べて型定義する
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MenuData, OrderData, OrderListTypes, UserData } from "../types";
+import {
+  MenuData,
+  OrderData,
+  OrderListTypes,
+  System,
+  UserData,
+} from "../types";
 import {
   doc,
   getDocs,
@@ -21,6 +27,8 @@ import { auth, db, functions } from "./Firebase";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { paymentType } from "../component/Order";
+import { FirebaseError } from "@firebase/util";
+import { AxiosError } from "axios";
 
 export const hostUrl = window.location.protocol + "//" + window.location.host;
 export const RandomID = () => {
@@ -38,19 +46,59 @@ export const CorrectEmail = (email: string) => {
   return regex.test(email);
 };
 
-export const GetAllData = async (collectionName: string) => {
-  const data: MenuData[] = [];
-  const querySnapshot = await getDocs(collection(db, collectionName));
-  return new Promise<MenuData[]>((resolve, reject) => {
-    try {
-      querySnapshot.forEach((doc) => {
-        data.push(doc.data() as MenuData);
-      });
-      resolve(data);
-    } catch (e) {
-      reject(e);
+export const RedirectToErrorPage = (errorText: string | unknown) => {
+  window.location.href = `/error/${errorText}`;
+};
+
+export const generateErrorFirebaseAndAxiosErrors = (
+  errorText: string,
+  e: unknown
+) => {
+  console.error(e);
+  const errorMessagePrams =
+    e instanceof FirebaseError || e instanceof AxiosError
+      ? `${errorText}+${e.message}+${e.name}+${e.code}`
+      : `${errorText}+${e}`;
+  // errorMessageをURLに入れるためにスペースをアンダーバーに変換,/はエンコードする,?はエンコードする
+  return errorMessagePrams
+    .replace(/ /g, "_")
+    .replace(/\//g, "%2F")
+    .replace(/\?/g, "%3F");
+};
+
+export const IsGetSystemStatus = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "system"));
+    const data: System = querySnapshot.docs.map(
+      (doc) => doc.data() as System
+    )[0];
+    return data.isSystem;
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "システムの状態の取得に失敗しました。",
+      e
+    );
+  }
+};
+
+export const GetMenuData = async () => {
+  try {
+    const querySnapshot = await getDocs(
+      query(collection(db, "menu"), where("isStatus", "==", true))
+    );
+    const data: MenuData[] = querySnapshot.docs.map(
+      (doc) => doc.data() as MenuData
+    );
+    if (data.length === 0) {
+      throw "メニューデータが存在しません。";
     }
-  });
+    return data;
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "メニューデータの取得に失敗しました。",
+      e
+    );
+  }
 };
 
 interface OrderSubmitProps {
@@ -72,9 +120,15 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     isStatus: "not_payed",
     payment: props.payment,
   };
-
-  await setDoc(doc(db, "order", id), orderData);
-  return orderData;
+  try {
+    await setDoc(doc(db, "order", id), orderData);
+    return orderData;
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "注文情報の送信に失敗しました。",
+      e
+    );
+  }
 };
 
 export const SearchCollectionDataGet = async (
@@ -94,85 +148,107 @@ export const SearchCollectionDataGet = async (
     ...(isStatus !== "all" ? [where("isStatus", "==", isStatus)] : []),
     ...(lastDoc ? [startAfter(lastDoc)] : [])
   );
-  const querySnapshot = await getDocs(q);
-  setData(
-    (prev) =>
-      [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
-  );
-  lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+  try {
+    const querySnapshot = await getDocs(q);
+    setData(
+      (prev) =>
+        [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
+    );
+    lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1] || null;
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "注文情報の取得に失敗しました。",
+      e
+    );
+  }
 };
 //当日の全ユーザのオーダーを取得
 export const TodayAllOrderGet = async (docId: string, maxValue: number) => {
-  const data: OrderData[] = [];
-  const q = query(
-    collection(db, docId),
-    orderBy("date", "desc"),
-    where("date", ">", Yesterday()),
-    limit(maxValue)
-  );
-  const querySnapshot = await getDocs(q);
-  return new Promise<OrderData[]>((resolve, reject) => {
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data() as OrderData);
-    });
-    resolve(data);
-    reject("error");
-  });
+  try {
+    const q = query(
+      collection(db, docId),
+      orderBy("date", "desc"),
+      where("date", ">", Yesterday()),
+      limit(maxValue)
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data() as OrderData);
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "注文情報の取得に失敗しました。",
+      e
+    );
+  }
 };
 
-export const isTodayUserOrderGet = async (userId: string) => {
-  let isData = false;
-  const q = query(
-    collection(db, "order"),
-    orderBy("date", "desc"),
-    where("date", ">", Yesterday()),
-    where("user.uid", "==", userId),
-    where("isStatus", "==", "ordered"),
-    limit(10)
-  );
-  const querySnapshot = await getDocs(q);
-  await querySnapshot.forEach(() => {
-    isData = true;
-  });
-  return isData;
+export const IsTodayUserOrderGet = async (userId: string) => {
+  try {
+    const q = query(
+      collection(db, "order"),
+      orderBy("date", "desc"),
+      where("date", ">", Yesterday()),
+      where("user.uid", "==", userId),
+      where("isStatus", "in", ["ordered", "cooked"]),
+      limit(1)
+    );
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "注文情報の取得に失敗しました。",
+      e
+    );
+  }
 };
-export const GetSpecificData: (
-  docId: string,
-  collectionId: string
-) => Promise<OrderData | null> = async (
-  docId: string,
-  collectionId: string
-) => {
-  const docRef = doc(db, docId, collectionId);
-  const docSnap = await getDoc(docRef);
-  return new Promise((resolve, reject) => {
-    if (docSnap.exists()) {
-      // truthy
-    } else {
-      resolve(null);
-      reject("No such document!");
+
+export const FetchOneOrderDocument = async (collectionId: string) => {
+  try {
+    const docRef = doc(db, "order", collectionId);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      throw "注文情報が存在しません。";
     }
-    resolve(docSnap.data() as OrderData);
-  });
+    return docSnap.data() as OrderData;
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "注文情報の取得に失敗しました。",
+      e
+    );
+  }
 };
+
 export const GetUserInfo = (callback: (userInfo: User) => void) => {
   const pathName = "/register";
-  return new Promise<any>((resolve) => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        if (
-          !CorrectEmail(user?.email || "") &&
-          window.location.pathname !== pathName
-        )
-          window.location.href = pathName;
-        callback(user);
-        resolve("");
-      } else {
-        if (window.location.pathname !== pathName)
-          window.location.href = pathName;
-        resolve("");
-      }
-    });
+  const noRedirectPathNames = [pathName, "/maintenance"];
+  return new Promise<void>((resolve, reject) => {
+    try {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          if (
+            !CorrectEmail(user?.email || "") &&
+            !noRedirectPathNames.includes(window.location.pathname)
+          ) {
+            window.location.href = pathName;
+            reject(new Error("Invalid email"));
+          } else {
+            callback(user);
+            resolve();
+          }
+        } else {
+          if (!noRedirectPathNames.includes(window.location.pathname)) {
+            window.location.href = pathName;
+            reject(new Error("User not logged in"));
+          } else {
+            resolve();
+          }
+        }
+      });
+    } catch (e) {
+      throw generateErrorFirebaseAndAxiosErrors(
+        "ユーザーデータの取得に失敗しました。",
+        e
+      );
+    }
   });
 };
 
@@ -180,15 +256,11 @@ export const Payment = async (
   type: paymentType,
   orderId: string,
   totalPrice: number,
-  orderData: MenuData[],
-  callback: (e: boolean) => void
+  orderData: MenuData[]
 ) => {
-  const orderDescription: string = orderData
-    .map((menu) => menu.title)
-    .join(",");
   if (type === "stripe") {
-    const StripeRequest = httpsCallable(functions, "StripeRequest");
     try {
+      const StripeRequest = httpsCallable(functions, "StripeRequest");
       const resData = await StripeRequest({
         orderData: orderData,
         hostUrl: hostUrl,
@@ -196,38 +268,22 @@ export const Payment = async (
         uId: auth.currentUser?.uid,
         uMail: auth.currentUser?.email,
       });
-      const respons: any = resData.data;
-      window.location.href = String(respons.url);
-    } catch (err) {
-      alert(
-        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
+      const response: any = resData.data;
+      window.location.href = String(response.url);
+    } catch (e) {
+      throw generateErrorFirebaseAndAxiosErrors(
+        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。",
+        e
       );
-      callback(false);
     }
   } else if (type === "paypay") {
     // NOTE: paypayに関しては`~/api/Payment`のPayPaySessionCreateに移行したため以下の処理は使用していない
-    try {
-      const PayPayRequest = httpsCallable(functions, "PayPayRequest");
-      const data = await PayPayRequest({
-        orderId: orderId,
-        hostUrl: hostUrl,
-        amount: totalPrice,
-        orderDescription: orderDescription,
-      });
-      const response: any = data.data;
-      window.location.href = String(response.BODY.data.url);
-    } catch (err) {
-      alert(
-        "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。"
-      );
-      callback(false);
-    }
   }
 };
 
 export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 
-export const GetPaymentStatus = async (orderId: string) => {
+export const UpdateOrderAndReduceQuantity = async (orderId: string) => {
   const washingtonRef = doc(db, "order", orderId);
   // orderDataを取得してfunctionでmenuのquantityを減らす
   const docSnap = await getDoc(washingtonRef);
@@ -242,12 +298,15 @@ export const GetPaymentStatus = async (orderId: string) => {
       }),
       AssignOrderNumber(orderId),
     ]);
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "オーダーの更新に失敗しました。",
+      e
+    );
   }
 };
 
-export const PaymentGetStatus = async (
+export const HandlePaymentStatus = async (
   payment: paymentType,
   checkoutId: string
 ) => {
@@ -263,13 +322,13 @@ export const PaymentGetStatus = async (
     if (
       payment === "paypay" ? isPayPayEnabled(result.data) : result.data.status
     ) {
-      await GetPaymentStatus(orderId);
+      await UpdateOrderAndReduceQuantity(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;
     }
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors("決済の確認に失敗しました。", e);
   }
 };
 
@@ -285,8 +344,11 @@ export const AssignOrderNumber = async (orderId: string) => {
     await updateDoc(docId, {
       orderNumber: result.data,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors(
+      "注文番号の付与に失敗しました。",
+      e
+    );
   }
 };
 
@@ -294,10 +356,15 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
   const data = SetOrderIdQuantity(orderData);
   const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
   try {
-    const title = await cantOrderTitle(data);
-    return title.data;
-  } catch (error) {
-    console.log(error);
+    const isSystem = await IsGetSystemStatus();
+    if (isSystem) {
+      const title = await cantOrderTitle(data);
+      return title.data;
+    } else {
+      throw "システムメンテナンス中です。";
+    }
+  } catch (e) {
+    throw generateErrorFirebaseAndAxiosErrors("在庫の確認に失敗しました。", e);
   }
 };
 
