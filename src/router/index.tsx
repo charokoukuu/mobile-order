@@ -134,7 +134,7 @@ const Router = () => {
                 path="/maintenance"
                 element={
                   <ErrorPage
-                    text={"現在メンテナンス中です。"}
+                    text={"現在メンテナンス中です"}
                     appBarHeight={appBarHeight}
                     onClick={() => {
                       window.location.href = "/";
