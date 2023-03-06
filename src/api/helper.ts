@@ -125,7 +125,7 @@ export const OrderSubmit = async (props: OrderSubmitProps) => {
     return orderData;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
-      "オーダーデータの送信に失敗しました。",
+      "注文情報の送信に失敗しました。",
       e
     );
   }
