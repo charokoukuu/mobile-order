@@ -38,9 +38,9 @@ const Router = () => {
     })();
   }, []);
   return (
-    <div>
+    <>
       <BrowserRouter>
-        <div>
+        <main>
           <DrawerLeft
             open={isMenu}
             setIsmenu={setIsMenu}
@@ -159,10 +159,10 @@ const Router = () => {
               />
             </Routes>
           )}
-        </div>
+        </main>
       </BrowserRouter>
       <Footer />
-    </div>
+    </>
   );
 };
 
