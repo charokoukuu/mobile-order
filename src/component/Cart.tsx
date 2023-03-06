@@ -30,43 +30,36 @@ export const Cart = (props: CartProps) => {
         onClick={() => {
           props.onClick();
         }}
-        className={classNames("m-auto max-w-[900px]", {
+        className={classNames("m-auto max-w-3xl", {
           "pb-4": isIOS,
         })}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={3} className="mr-auto text-center">
+        <Grid
+          container
+          spacing={2}
+          justifyContent="center"
+          alignItems="center"
+          direction="row"
+        >
+          <Grid item xs={2}>
             <IconButton aria-label="cart">
               <StyledBadge
                 badgeContent={props.totalOrderItemsCount}
                 color={"primary"}
               >
-                <ShoppingCartIcon
-                  sx={{ fontSize: "clamp(1rem, 10vw, 4rem)" }}
-                />
+                <ShoppingCartIcon className="text-5xl sm:text-6xl md:text-6xl" />
               </StyledBadge>
             </IconButton>
           </Grid>
-          <Grid
-            item
-            xs={3}
-            className={classNames(
-              "japanese_B right-[40%] m-auto text-end text-[40px] text-runticketBlue",
-              {
-                // props.totalPrice.toString().length >= 3 ? "45%" : "40%"
-                "right-[45px]": props.totalPrice.toString().length >= 3,
-              }
-            )}
-          >
-            ¥{props.totalPrice}
+          <Grid item xs={4}>
+            <p className="japanese_B  mr-4 text-left text-4xl text-runticketBlue sm:text-5xl md:text-6xl">
+              ¥{props.totalPrice}
+            </p>
           </Grid>
-          <Grid item xs={5} className="m-auto text-center">
+          <Grid item xs={6} className="flex justify-end pr-2">
             <Button
-              className="rounded-lg bg-runticketBlue text-[clamp(0.5rem_4vw_2rem)]"
+              className="rounded-lg bg-runticketBlue py-2.5 text-sm md:text-xl"
               variant="contained"
-              onClick={() => {
-                props.onClick();
-              }}
             >
               カートを見る
             </Button>
