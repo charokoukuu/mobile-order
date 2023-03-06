@@ -54,7 +54,7 @@ export const ErrorPage = (props: ErrorPageProps) => {
             errorText || ""
           }`}
         >
-          問い合わせる
+          お問い合わせ
         </Button>
       </Warning>
     </div>
