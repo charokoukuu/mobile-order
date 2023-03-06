@@ -22,20 +22,18 @@ export const History = ({ appBarHeight }: Props) => {
   const [isTabChanged, setIsTabChanged] = useState(false);
   const [isAsyncFetch, setIsAsyncFetch] = useState(false);
   const filterStatusList = ["all", "complete", "ordered", "not_payed"];
-  const setLastDoc = (doc: DocumentSnapshot | null) => {
-    lastDoc.current = doc;
-  };
+
   useEffect(() => {
     (async () => {
       try {
         setAllOrderData([]);
         setIsTabChanged(false);
         lastDoc.current = null;
-        await SearchCollectionDataGet(
+
+        lastDoc.current = await SearchCollectionDataGet(
           filterStatusList[filterStatusListNumber],
           setAllOrderData,
-          lastDoc.current,
-          setLastDoc
+          lastDoc.current
         );
         setIsGetHistoryData(true);
         setIsTabChanged(true);
@@ -60,11 +58,10 @@ export const History = ({ appBarHeight }: Props) => {
 
     if (scrollTop + clientHeight >= scrollHeight - 5 && allOrderData.length) {
       setIsAsyncFetch(true);
-      await SearchCollectionDataGet(
+      lastDoc.current = await SearchCollectionDataGet(
         filterStatusList[filterStatusListNumber],
         setAllOrderData,
-        lastDoc.current,
-        setLastDoc
+        lastDoc.current
       );
       setIsAsyncFetch(false);
     }

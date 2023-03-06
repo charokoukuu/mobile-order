@@ -135,7 +135,6 @@ export const SearchCollectionDataGet = async (
   isStatus: string,
   setData: React.Dispatch<React.SetStateAction<OrderData[]>>,
   lastDoc: DocumentSnapshot<DocumentData> | null,
-  setLastDoc: (doc: DocumentSnapshot<DocumentData> | null) => void
 ) => {
   const baseQuery = query(
     collection(db, "order"),
@@ -155,7 +154,7 @@ export const SearchCollectionDataGet = async (
       (prev) =>
         [...prev, ...querySnapshot.docs.map((doc) => doc.data())] as OrderData[]
     );
-    setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1] || null);
+    return querySnapshot.docs[querySnapshot.docs.length - 1] || null;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
       "注文情報の取得に失敗しました。",
@@ -378,7 +377,7 @@ export const SetOrderIdQuantity = (orderData: MenuData[]) => {
       acc.push({ id: cur.id, quantity: 1 });
     }
     return acc;
-  }, [] as { id: string; quantity: number }[]);
+  }, [] as { id: string; quantity: number; }[]);
   return data;
 };
 
