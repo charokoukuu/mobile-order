@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { OrderData, OrderListTypes } from "../types";
 import { Link, useParams } from "react-router-dom";
-import { convertToTitleCountFormat, GetSpecificData } from "../api/helper";
+import {
+  convertToTitleCountFormat,
+  FetchOneOrderDocument,
+} from "../api/helper";
 import { onSnapshot, doc } from "firebase/firestore";
 import { QRCodeSVG } from "qrcode.react";
 import { Button, Card, Divider } from "@mui/material";
@@ -27,14 +30,15 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
   useEffect(() => {
     (async () => {
       if (params.id) {
-        const orderData = await GetSpecificData("order", params.id);
-        if (orderData !== null) {
+        try {
+          const orderData = await FetchOneOrderDocument(params.id);
           setOrderData(orderData);
+          setIsGetOrderData(true);
           setOrderList(convertToTitleCountFormat(orderData.menu));
-        } else {
+        } catch (e) {
           setIsPramsIdError(true);
+          console.error(e);
         }
-        setIsGetOrderData(true);
       }
     })();
     onSnapshot(doc(db, "order", params.id || ""), (doc) => {
@@ -64,10 +68,9 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
         )
       )}
       <div className="mt-3">
-        {isGetOrderData ? (
+        {isGetOrderData || isPramsIdError ? (
           <Card className="mx-auto mt-5 w-[90%] max-w-[1200px] py-3">
-            {auth.currentUser?.uid === orderData?.user.uid ||
-            !isPramsIdError ? (
+            {auth.currentUser?.uid === orderData?.user.uid ? (
               <>
                 {/* <p>{orderData?.id}</p> */}
                 {(orderData?.isStatus === "ordered" ||
@@ -93,9 +96,11 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                     ご注文ありがとうございました
                   </p>
                 )}
-                <h2 className="my-3 text-center text-3xl font-bold text-black">
-                  {`￥${orderData?.totalPrice}`}
-                </h2>
+                {orderData && (
+                  <h2 className="my-3 text-center text-3xl font-bold text-black">
+                    {`￥${orderData?.totalPrice}`}
+                  </h2>
+                )}
                 <div className="my-7">
                   {orderList?.map((e, i) => {
                     return (
@@ -118,7 +123,11 @@ export const OrderCompleted = ({ appBarHeight }: Props) => {
                         onClick={() => {
                           orderData.payment === "paypay"
                             ? (window.location.href = `/check/${orderData.id}/${orderData.payment}`)
-                            : (window.location.href = `/check/${orderData.checkoutId}/${orderData.payment}`);
+                            : (window.location.href = `/check/${
+                                orderData.checkoutId
+                                  ? orderData.checkoutId
+                                  : orderData.id
+                              }/${orderData.payment}`);
                         }}
                       >
                         決済情報の再取得

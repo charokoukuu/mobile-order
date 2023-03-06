@@ -1,8 +1,14 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { OrderData } from "../types";
 import { auth } from "./Firebase";
-import { GetPaymentStatus, hostUrl, isPayPayEnabled } from "./helper";
+import {
+  UpdateOrderAndReduceQuantity,
+  hostUrl,
+  isPayPayEnabled,
+  generateErrorFirebaseAndAxiosErrors,
+} from "./helper";
 const url = "https://payment.run-ticket.com";
+
 export const PayPaySessionCreate = async (order: OrderData) => {
   try {
     const token: { data: string } = await axios.post(`${url}/token`, {
@@ -24,11 +30,12 @@ export const PayPaySessionCreate = async (order: OrderData) => {
         },
       }
     );
-
     window.location.href = createQR.data.BODY.data.url;
   } catch (e) {
-    const error = e as AxiosError<{ error: string }>;
-    throw new Error(error.message);
+    throw generateErrorFirebaseAndAxiosErrors(
+      "決済に失敗しました。申し訳ございませんが、時間を空けて再度お試しください。",
+      e
+    );
   }
 };
 
@@ -38,13 +45,15 @@ export const PayPayStatusCheck = async (orderId: string) => {
       orderId: orderId,
     });
     if (isPayPayEnabled(result)) {
-      await GetPaymentStatus(orderId);
+      await UpdateOrderAndReduceQuantity(orderId);
       window.location.href = `/order/${orderId}/success`;
     } else {
       window.location.href = `/order/${orderId}/failed`;
     }
   } catch (e) {
-    const error = e as AxiosError<{ error: string }>;
-    throw new Error(error.message);
+    throw generateErrorFirebaseAndAxiosErrors(
+      "PayPay決済を確認できませんでした。",
+      e
+    );
   }
 };

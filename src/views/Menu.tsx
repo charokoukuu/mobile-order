@@ -3,11 +3,13 @@ import { Order } from "../component/Order";
 import { DetailDialog } from "../component/DetailDialog";
 import { LocalStorageData, MenuData } from "../types";
 import {
-  GetAllData,
+  GetMenuData,
   OrderSubmit,
   Payment,
-  isTodayUserOrderGet,
+  IsTodayUserOrderGet,
   CantOrderTitle,
+  RedirectToErrorPage,
+  IsGetSystemStatus,
   dateFormatter,
 } from "../api/helper";
 import { Cart } from "../component/Cart";
@@ -49,16 +51,18 @@ export const Menu = ({ appBarHeight }: Props) => {
     }
     (async () => {
       try {
-        setMenu((await GetAllData("menu")) as MenuData[]);
+        const isSystem = await IsGetSystemStatus();
+        if (!isSystem) {
+          window.location.href = "/maintenance";
+        }
+        setMenu(await GetMenuData());
         setIsTodayNotReceived(
-          await isTodayUserOrderGet(auth.currentUser?.uid || "")
+          await IsTodayUserOrderGet(auth.currentUser?.uid || "")
         );
         setIsGetMenu(true);
       } catch (e) {
-        alert(
-          "メニューの取得に失敗しました。申し訳ございませんが、再度お試しください。"
-        );
-        window.location.href = "/";
+        setIsGetMenu(false);
+        RedirectToErrorPage(e);
       }
     })();
   }, []);
@@ -116,35 +120,32 @@ export const Menu = ({ appBarHeight }: Props) => {
                 setOrderDialog(false);
               }}
               onNext={async (payment, setIsLoad) => {
-                const order = await OrderSubmit({
-                  user: {
-                    uid: auth.currentUser?.uid || "",
-                    studentName: auth.currentUser?.displayName || "",
-                    mailAddress: auth.currentUser?.email || "",
-                  },
-                  totalPrice: totalPrice,
-                  menu: orderData,
-                  payment: payment,
-                });
-                const cantOrderTitle = (await CantOrderTitle(
-                  orderData
-                )) as string[];
-                if (cantOrderTitle.length === 0) {
-                  payment === "paypay" && (await PayPaySessionCreate(order));
-                  payment === "stripe" &&
-                    (await Payment(
-                      payment,
-                      order.id,
-                      totalPrice,
-                      orderData,
-                      (e) => {
-                        setIsLoad(e);
-                      }
-                    ));
+                try {
+                  const order = await OrderSubmit({
+                    user: {
+                      uid: auth.currentUser?.uid || "",
+                      studentName: auth.currentUser?.displayName || "",
+                      mailAddress: auth.currentUser?.email || "",
+                    },
+                    totalPrice: totalPrice,
+                    menu: orderData,
+                    payment: payment,
+                  });
+                  const cantOrderTitle = (await CantOrderTitle(
+                    orderData
+                  )) as string[];
+                  if (cantOrderTitle.length === 0) {
+                    payment === "paypay" && (await PayPaySessionCreate(order));
+                    payment === "stripe" &&
+                      (await Payment(payment, order.id, totalPrice, orderData));
+                  } else {
+                    setNoPaymentTitle(cantOrderTitle);
+                    setIsModal(true);
+                  }
+                } catch (e) {
+                  RedirectToErrorPage(e);
+                } finally {
                   setIsLoad(false);
-                } else {
-                  setIsModal(true);
-                  setNoPaymentTitle(cantOrderTitle);
                 }
                 const localSave: LocalStorageData = {
                   orderData: [],

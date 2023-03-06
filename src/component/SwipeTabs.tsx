@@ -114,7 +114,7 @@ export default function SwipeTabs(props: SwipeTabsProps) {
 const FilterMenuData = (props: FilterMenuDataProps) => {
   const filteredMenu = useMemo(() => {
     return props.menu.filter(
-      (item: MenuData) => item.category === props.categoryMode && item.isStatus
+      (item: MenuData) => item.category === props.categoryMode
     );
   }, [props.categoryMode, props.menu]);
   return (

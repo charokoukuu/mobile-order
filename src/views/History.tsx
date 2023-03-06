@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LoadingAnimation } from "../component/LoadingAnimation";
-import { SearchCollectionDataGet } from "../api/helper";
+import { RedirectToErrorPage, SearchCollectionDataGet } from "../api/helper";
 import { Link } from "react-router-dom";
 import { Grid } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -23,15 +23,19 @@ export const History = ({ appBarHeight }: Props) => {
 
   useEffect(() => {
     (async () => {
-      setOneOrderData([]);
-      setIsTabChanged(false);
-      await SearchCollectionDataGet(
-        setOneOrderData,
-        lastDoc.current,
-        filterStatusList[filterStatusListNumber]
-      );
-      setIsGetHistoryData(true);
-      setIsTabChanged(true);
+      try {
+        setOneOrderData([]);
+        setIsTabChanged(false);
+        await SearchCollectionDataGet(
+          setOneOrderData,
+          lastDoc.current,
+          filterStatusList[filterStatusListNumber]
+        );
+        setIsGetHistoryData(true);
+        setIsTabChanged(true);
+      } catch (e) {
+        RedirectToErrorPage(e);
+      }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterStatusListNumber]);
