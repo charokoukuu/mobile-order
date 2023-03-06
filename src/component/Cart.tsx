@@ -41,7 +41,7 @@ export const Cart = (props: CartProps) => {
           alignItems="center"
           direction="row"
         >
-          <Grid item xs={2}>
+          <Grid item xs={6} className="flex items-center justify-start">
             <IconButton aria-label="cart">
               <StyledBadge
                 badgeContent={props.totalOrderItemsCount}
@@ -50,9 +50,7 @@ export const Cart = (props: CartProps) => {
                 <ShoppingCartIcon className="text-5xl sm:text-6xl md:text-6xl" />
               </StyledBadge>
             </IconButton>
-          </Grid>
-          <Grid item xs={4}>
-            <p className="japanese_B  mr-4 text-left text-4xl text-runticketBlue sm:text-5xl md:text-6xl">
+            <p className="japanese_B ml-2 text-left text-4xl text-runticketBlue sm:text-5xl md:text-6xl">
               ¥{props.totalPrice}
             </p>
           </Grid>
