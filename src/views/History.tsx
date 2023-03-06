@@ -20,16 +20,19 @@ export const History = ({ appBarHeight }: Props) => {
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
   const [isTabChanged, setIsTabChanged] = useState(false);
   const filterStatusList = ["all", "complete", "ordered", "not_payed"];
-
+  const setLastDoc = (doc: DocumentSnapshot | null) => {
+    lastDoc.current = doc;
+  };
   useEffect(() => {
     (async () => {
       try {
         setAllOrderData([]);
         setIsTabChanged(false);
         await SearchCollectionDataGet(
+          filterStatusList[filterStatusListNumber],
           setAllOrderData,
           lastDoc.current,
-          filterStatusList[filterStatusListNumber]
+          setLastDoc
         );
         setIsGetHistoryData(true);
         setIsTabChanged(true);
@@ -54,9 +57,10 @@ export const History = ({ appBarHeight }: Props) => {
 
     if (scrollTop + clientHeight >= scrollHeight - 5 && allOrderData.length) {
       await SearchCollectionDataGet(
+        filterStatusList[filterStatusListNumber],
         setAllOrderData,
         lastDoc.current,
-        filterStatusList[filterStatusListNumber]
+        setLastDoc
       );
     }
   };
