@@ -10,26 +10,34 @@ import { Spacer } from "../component/SwipeTabs";
 import { OrderData } from "../types";
 import { DocumentSnapshot } from "firebase/firestore";
 import HistoryTabs from "../component/HistoryTabs";
+import HistorySkeleton from "../component/HistorySkelton";
 interface Props {
   appBarHeight: number;
 }
+interface lastDocType {
+  lastDoc: DocumentSnapshot | null;
+  lastFetchData: OrderData[];
+}
 export const History = ({ appBarHeight }: Props) => {
-  const [oneOrderData, setOneOrderData] = useState<OrderData[]>([]);
-  const lastDoc = useRef<DocumentSnapshot | null>(null);
+  const [allOrderData, setAllOrderData] = useState<OrderData[]>([]);
+  const lastDoc = useRef<lastDocType>({} as lastDocType);
+  const isScrollValidateEnable = useRef<boolean>(true);
   const [isGetHistoryData, setIsGetHistoryData] = useState<boolean>(false);
   const [filterStatusListNumber, setFilterStatusListNumber] = useState(0);
   const [isTabChanged, setIsTabChanged] = useState(false);
+  const [isAsyncFetch, setIsAsyncFetch] = useState(false);
   const filterStatusList = ["all", "complete", "ordered", "not_payed"];
 
   useEffect(() => {
     (async () => {
       try {
-        setOneOrderData([]);
+        setAllOrderData([]);
         setIsTabChanged(false);
-        await SearchCollectionDataGet(
-          setOneOrderData,
-          lastDoc.current,
-          filterStatusList[filterStatusListNumber]
+        lastDoc.current.lastDoc = null;
+        lastDoc.current = await SearchCollectionDataGet(
+          filterStatusList[filterStatusListNumber],
+          setAllOrderData,
+          lastDoc.current.lastDoc
         );
         setIsGetHistoryData(true);
         setIsTabChanged(true);
@@ -51,21 +59,29 @@ export const History = ({ appBarHeight }: Props) => {
       document.body.scrollHeight
     );
     const clientHeight = document.documentElement.clientHeight;
-
-    if (scrollTop + clientHeight >= scrollHeight - 5 && oneOrderData.length) {
-      await SearchCollectionDataGet(
-        setOneOrderData,
-        lastDoc.current,
-        filterStatusList[filterStatusListNumber]
+    if (lastDoc.current.lastFetchData.length === 0) return;
+    if (
+      scrollTop + clientHeight >= scrollHeight - 5 &&
+      isScrollValidateEnable.current
+    ) {
+      isScrollValidateEnable.current = false;
+      setIsAsyncFetch(true);
+      lastDoc.current = await SearchCollectionDataGet(
+        filterStatusList[filterStatusListNumber],
+        setAllOrderData,
+        lastDoc.current.lastDoc
       );
+      isScrollValidateEnable.current = true;
+      setIsAsyncFetch(false);
     }
   };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [oneOrderData]);
+  }, [allOrderData]);
   return (
     <div className="mx-auto mt-[10px] max-w-3xl">
       <Spacer appBarHeight={appBarHeight} mode={"history"} />
@@ -78,13 +94,14 @@ export const History = ({ appBarHeight }: Props) => {
             value={filterStatusListNumber}
             setValue={setFilterStatusListNumber}
           />
-          {oneOrderData.length === 0 && isTabChanged && (
+          {allOrderData.length === 0 && isTabChanged && (
             <div className="japanese_L m-auto mt-10 h-[100vh] text-center text-[1.5rem] text-black opacity-[0.65]">
               該当するものがありません
             </div>
           )}
-          {oneOrderData.length !== 0 &&
-            oneOrderData
+          {allOrderData.length === 0 && <HistorySkeleton maxItem={10} />}
+          {allOrderData.length !== 0 &&
+            allOrderData
               .filter((item) =>
                 filterStatusList[filterStatusListNumber] === "all"
                   ? true
@@ -165,6 +182,7 @@ export const History = ({ appBarHeight }: Props) => {
                   </Link>
                 </div>
               ))}
+          {isAsyncFetch && <HistorySkeleton maxItem={10} />}
         </div>
       ) : (
         <LoadingAnimation type="jelly" />
