@@ -68,7 +68,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src",
-    "fix": "prettier --write .  && eslint --fix ."
+    "fix": "prettier --write .  && eslint --fix .",
+    "deploy:prod": "npm run build && firebase use prod && firebase deploy --only hosting",
+    "deploy:dev": "npm run build && firebase use dev && firebase deploy --only hosting"
+
   },
   "eslintConfig": {
     "extends": [
