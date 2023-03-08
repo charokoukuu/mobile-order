@@ -3,6 +3,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { QrCodeMock } from "./icons/QrCodeMock";
 import { PhoneMock } from "./icons/PhoneMock";
+import { ScanCG } from "./icons/ScanCG";
 
 export default function Slide() {
   const SlideStyle = {
@@ -28,7 +29,7 @@ export default function Slide() {
     ],
     [
       "21階に設置したQRコードリーダーでチケットを読み取ります",
-      <PhoneMock style={SlideStyle} key="1" />,
+      <ScanCG style={SlideStyle} key="1" className="h-96" />,
     ],
     [
       "チケットを読み取ると、隣に設置してあるプリンターから食券を受け取ります",
