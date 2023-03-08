@@ -27,8 +27,16 @@ export default function Slide() {
       <QrCodeMock style={SlideStyle} key="0" />,
     ],
     [
-      "21階に設置したQRコードをリーダーにかざしてください",
+      "21階に設置したQRコードリーダーでチケットを読み取ります",
       <PhoneMock style={SlideStyle} key="1" />,
+    ],
+    [
+      "チケットを読み取ると、隣に設置してあるプリンターから食券を受け取ります",
+      <PhoneMock style={SlideStyle} key="2" />,
+    ],
+    [
+      "食堂のスタッフへ食券を提示してください",
+      <PhoneMock style={SlideStyle} key="3" />,
     ],
   ];
 
@@ -37,7 +45,12 @@ export default function Slide() {
       {Slides.map((slide, index) => {
         return (
           <div key={index}>
-            <p className="my-[5%] mx-[10%] text-black">{slide[0] as string}</p>
+            <p className="my-[5%] mx-[10%] text-black">
+              <span className="mr-2 text-lg font-bold text-black/80">
+                {index + 1}.
+              </span>
+              {slide[0] as string}
+            </p>
             <div className="mx-auto flex justify-center">{slide[1]}</div>
           </div>
         );
