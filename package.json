@@ -65,6 +65,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prod": "npx servor build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
