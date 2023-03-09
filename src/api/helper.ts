@@ -289,11 +289,11 @@ export const isIOS = /iP(hone|(o|a)d)/.test(navigator.userAgent);
 export const UpdateOrderAndReduceQuantity = async (orderId: string) => {
   const washingtonRef = doc(db, "order", orderId);
   // orderDataを取得してfunctionでmenuのquantityを減らす
-  const docSnap = await getDoc(washingtonRef);
-  const orderData = docSnap.data() as OrderData;
-  const setOrderIdQuantity = SetOrderIdQuantity(orderData.menu);
-  const reduceQuantity = httpsCallable(functions, "ReduceQuantity");
   try {
+    const docSnap = await getDoc(washingtonRef);
+    const orderData = docSnap.data() as OrderData;
+    const setOrderIdQuantity = SetOrderIdQuantity(orderData.menu);
+    const reduceQuantity = httpsCallable(functions, "ReduceQuantity");
     await Promise.all([
       reduceQuantity(setOrderIdQuantity),
       updateDoc(washingtonRef, {
@@ -380,7 +380,7 @@ export const SetOrderIdQuantity = (orderData: MenuData[]) => {
       acc.push({ id: cur.id, quantity: 1 });
     }
     return acc;
-  }, [] as { id: string; quantity: number }[]);
+  }, [] as { id: string; quantity: number; }[]);
   return data;
 };
 
