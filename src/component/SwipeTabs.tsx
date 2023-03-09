@@ -118,26 +118,28 @@ const FilterMenuData = (props: FilterMenuDataProps) => {
     );
   }, [props.categoryMode, props.menu]);
   return (
-    <Grid padding={1.5} container spacing={1.5} justifyContent="start">
+    <div className="menu_box">
       <Spacer appBarHeight={props.appBarHeight || 56} mode={"menu"} />
-      {filteredMenu.map((menu: MenuData, index: number) => {
-        return (
-          <Grid item key={index} xs={6} sm={4}>
-            <FoodCard
-              menu={menu as MenuData}
-              deleteButton={false}
-              onClick={function (): void {
-                menu.isBigSize === true &&
-                  props.setChosenMenu(menu as MenuData);
-                menu.isBigSize === false &&
-                  props.setChosenMenu(menu as MenuData);
-                props.setDetailDialogOpen(true);
-              }}
-            />
-          </Grid>
-        );
-      })}
-    </Grid>
+      <Grid padding={1.5} container spacing={1.5} justifyContent="start">
+        {filteredMenu.map((menu: MenuData, index: number) => {
+          return (
+            <Grid item key={index} xs={6} sm={4}>
+              <FoodCard
+                menu={menu as MenuData}
+                deleteButton={false}
+                onClick={function (): void {
+                  menu.isBigSize === true &&
+                    props.setChosenMenu(menu as MenuData);
+                  menu.isBigSize === false &&
+                    props.setChosenMenu(menu as MenuData);
+                  props.setDetailDialogOpen(true);
+                }}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </div>
   );
 };
 
