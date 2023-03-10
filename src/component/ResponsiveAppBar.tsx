@@ -67,7 +67,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
           >
             <img
               src="https://firebasestorage.googleapis.com/v0/b/mobile-order-4d383.appspot.com/o/runticket.png?alt=media&token=f27edb3e-3806-43bf-b1fb-2179dcc23f07"
-              alt="RunTicket"
+              alt="RucTicket"
             />
           </Button>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -86,7 +86,7 @@ const ResponsiveAppBar = (props: ResponsiveAppBarProps) => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={props.photoURL} />
+                <Avatar alt="user icon" src={props.photoURL} />
               </IconButton>
             </Tooltip>
             <Menu
