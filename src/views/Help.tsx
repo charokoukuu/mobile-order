@@ -4,7 +4,7 @@ export const Help = (props: { appBarHeight: number }) => {
   return (
     <div className="m-4 mx-auto max-w-3xl text-center">
       <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
-      <div className="rounded-lg bg-white p-[2%]">
+      <div className="mx-4 rounded-lg bg-white p-[2%]">
         <div className="my-4">
           <h2 className="my-4 text-4xl font-bold text-runticketBlue">STEP 1</h2>
           <p className="mb-3">メニューを選択します</p>

@@ -63,7 +63,7 @@ const Router = () => {
           />
           <AppBarWrapper>
             <ResponsiveAppBar
-              photoURL={user?.photoURL || "/static/images/avatar/2.jpg"}
+              photoURL={user?.photoURL || ""}
               onClick={function (): void {
                 setIsMenu(!isMenu);
               }}

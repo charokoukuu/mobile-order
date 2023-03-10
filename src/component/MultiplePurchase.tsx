@@ -31,8 +31,9 @@ export const MultiplePurchase = ({
                   setPurchaseCount(purchaseCount - 1);
                 }
               }}
-              className={classNames("bg-buttonGray shadow-none", {
-                "!bg-buttonBlue": purchaseCount > 1,
+              className={classNames("shadow-none", {
+                "bg-buttonGray ": purchaseCount === 1,
+                "bg-buttonBlue": purchaseCount >= 2,
               })}
             >
               <RemoveIcon className="text-white" />

@@ -94,68 +94,66 @@ export const Menu = ({ appBarHeight }: Props) => {
             setDetailDialogOpen={setDetailDialogOpen}
             appBarHeight={appBarHeight}
           />
-          <div className="mb-3">
-            <Order
-              open={orderDialog}
-              onDelete={(e) => {
-                let priceTimesCount = 0;
-                const deleteOrder = orderData.filter((menu) => {
-                  if (menu.title === e.title) priceTimesCount++;
-                  return menu.title !== e.title;
+          <Order
+            open={orderDialog}
+            onDelete={(e) => {
+              let priceTimesCount = 0;
+              const deleteOrder = orderData.filter((menu) => {
+                if (menu.title === e.title) priceTimesCount++;
+                return menu.title !== e.title;
+              });
+              const newTotalPrice = totalPrice - e.price * priceTimesCount;
+              setOrderData(deleteOrder);
+              setTotalPrice(newTotalPrice);
+              const localSave: LocalStorageData = {
+                orderData: deleteOrder,
+                totalPrice: newTotalPrice,
+                date: dateFormatter(new Date()),
+              };
+              localStorage.setItem("order", JSON.stringify(localSave));
+            }}
+            orderData={orderData}
+            totalPrice={totalPrice}
+            onPrev={() => {
+              setChosenMenu({} as MenuData);
+              setOrderDialog(false);
+            }}
+            onNext={async (payment, setIsLoad) => {
+              try {
+                const order = await OrderSubmit({
+                  user: {
+                    uid: auth.currentUser?.uid || "",
+                    studentName: auth.currentUser?.displayName || "",
+                    mailAddress: auth.currentUser?.email || "",
+                  },
+                  totalPrice: totalPrice,
+                  menu: orderData,
+                  payment: payment,
                 });
-                const newTotalPrice = totalPrice - e.price * priceTimesCount;
-                setOrderData(deleteOrder);
-                setTotalPrice(newTotalPrice);
-                const localSave: LocalStorageData = {
-                  orderData: deleteOrder,
-                  totalPrice: newTotalPrice,
-                  date: dateFormatter(new Date()),
-                };
-                localStorage.setItem("order", JSON.stringify(localSave));
-              }}
-              orderData={orderData}
-              totalPrice={totalPrice}
-              onPrev={() => {
-                setChosenMenu({} as MenuData);
-                setOrderDialog(false);
-              }}
-              onNext={async (payment, setIsLoad) => {
-                try {
-                  const order = await OrderSubmit({
-                    user: {
-                      uid: auth.currentUser?.uid || "",
-                      studentName: auth.currentUser?.displayName || "",
-                      mailAddress: auth.currentUser?.email || "",
-                    },
-                    totalPrice: totalPrice,
-                    menu: orderData,
-                    payment: payment,
-                  });
-                  const cantOrderTitle = (await CantOrderTitle(
-                    orderData
-                  )) as string[];
-                  if (cantOrderTitle.length === 0) {
-                    payment === "paypay" && (await PayPaySessionCreate(order));
-                    payment === "stripe" &&
-                      (await Payment(payment, order.id, totalPrice, orderData));
-                  } else {
-                    setNoPaymentTitle(cantOrderTitle);
-                    setIsModal(true);
-                  }
-                } catch (e) {
-                  RedirectToErrorPage(e);
-                } finally {
-                  setIsLoad(false);
+                const cantOrderTitle = (await CantOrderTitle(
+                  orderData
+                )) as string[];
+                if (cantOrderTitle.length === 0) {
+                  payment === "paypay" && (await PayPaySessionCreate(order));
+                  payment === "stripe" &&
+                    (await Payment(payment, order.id, totalPrice, orderData));
+                } else {
+                  setNoPaymentTitle(cantOrderTitle);
+                  setIsModal(true);
                 }
-                const localSave: LocalStorageData = {
-                  orderData: [],
-                  totalPrice: 0,
-                  date: dateFormatter(new Date()),
-                };
-                localStorage.setItem("order", JSON.stringify(localSave));
-              }}
-            />
-          </div>
+              } catch (e) {
+                RedirectToErrorPage(e);
+              } finally {
+                setIsLoad(false);
+              }
+              const localSave: LocalStorageData = {
+                orderData: [],
+                totalPrice: 0,
+                date: dateFormatter(new Date()),
+              };
+              localStorage.setItem("order", JSON.stringify(localSave));
+            }}
+          />
           <DetailDialog
             open={detailDialogOpen}
             menu={chosenMenu}
