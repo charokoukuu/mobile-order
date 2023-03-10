@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Terms } from "../views/Terms";
 import { PrivacyPolicy } from "../views/PrivacyPolicy";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface ScrollDialogProps {
   open: boolean;
@@ -16,6 +16,13 @@ interface ScrollDialogProps {
 
 export default function ScrollDialog(props: ScrollDialogProps) {
   const [mode, setMode] = useState<"terms" | "privacy">("terms");
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTo(0, 0);
+    }
+  }, [mode]);
 
   const handleClose = () => {
     props.setIsClose(false);
@@ -31,7 +38,7 @@ export default function ScrollDialog(props: ScrollDialogProps) {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">利用規約</DialogTitle>
-        <DialogContent dividers={true}>
+        <DialogContent dividers={true} ref={contentRef}>
           {mode === "terms" && (
             <Terms
               isDialog
