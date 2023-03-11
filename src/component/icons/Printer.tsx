@@ -5,12 +5,12 @@ interface Props {
   className?: string;
 }
 
-export const ScanCG = ({ style, className }: Props) => {
+export const Printer = ({ style, className }: Props) => {
   return (
     <img
       style={style}
       className={className}
-      src="/logo/rendering_scan_phone.png"
+      src="/help/printer.svg"
       alt="scanCG"
     />
   );

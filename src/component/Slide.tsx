@@ -2,8 +2,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { QrCodeMock } from "./icons/QrCodeMock";
-import { PhoneMock } from "./icons/PhoneMock";
-import { ScanCG } from "./icons/ScanCG";
+import { Scan } from "./icons/Scan";
+import { Printer } from "./icons/Printer";
+import { Ticket } from "./icons/Ticket";
 
 export default function Slide() {
   const SlideStyle = {
@@ -14,7 +15,7 @@ export default function Slide() {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -25,19 +26,19 @@ export default function Slide() {
   const Slides = [
     [
       "チケットの受け取りには、画面に表示されたQRコードを利用します",
-      <QrCodeMock style={SlideStyle} key="0" />,
+      <QrCodeMock style={SlideStyle} key="0" className="h-60 md:h-96" />,
     ],
     [
       "21階に設置したQRコードリーダーでチケットを読み取ります",
-      <ScanCG style={SlideStyle} key="1" className="h-96" />,
+      <Scan style={SlideStyle} key="1" className="h-60 md:h-96" />,
     ],
     [
       "チケットを読み取ると、隣に設置してあるプリンターから食券を受け取ります",
-      <PhoneMock style={SlideStyle} key="2" />,
+      <Printer style={SlideStyle} key="2" className="h-60 md:h-96" />,
     ],
     [
       "食堂のスタッフへ食券を提示してください",
-      <PhoneMock style={SlideStyle} key="3" />,
+      <Ticket style={SlideStyle} key="3" className="h-60 md:h-96" />,
     ],
   ];
 
