@@ -51,8 +51,8 @@ export const Menu = ({ appBarHeight }: Props) => {
     }
     (async () => {
       try {
-        const isSystem = await IsGetSystemStatus();
-        if (!isSystem) {
+        const isStatus = await IsGetSystemStatus();
+        if (!isStatus) {
           window.location.href = "/maintenance";
         }
         setMenu(await GetMenuData());

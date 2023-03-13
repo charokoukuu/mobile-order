@@ -2,7 +2,7 @@ import { Timestamp } from "firebase/firestore";
 import { paymentType } from "../component/Order";
 
 export interface System {
-  isSystem: boolean;
+  isStatus: boolean;
 }
 
 export interface MenuData {
