@@ -72,7 +72,7 @@ export const IsGetSystemStatus = async () => {
     const data: System = querySnapshot.docs.map(
       (doc) => doc.data() as System
     )[0];
-    return data.isSystem;
+    return data.isStatus;
   } catch (e) {
     throw generateErrorFirebaseAndAxiosErrors(
       "システムの状態の取得に失敗しました。",
@@ -359,8 +359,8 @@ export const CantOrderTitle = async (orderData: MenuData[]) => {
   const data = SetOrderIdQuantity(orderData);
   const cantOrderTitle = httpsCallable(functions, "cantOrderTitle");
   try {
-    const isSystem = await IsGetSystemStatus();
-    if (isSystem) {
+    const isStatus = await IsGetSystemStatus();
+    if (isStatus) {
       const title = await cantOrderTitle(data);
       return title.data;
     } else {
