@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "mobile-order-4d383"
-  }
+    "default": "runticket-dev-67d5f",
+    "prod": "mobile-order-4d383",
+    "dev": "runticket-dev-67d5f"
+  },
+  "targets": {},
+  "etags": {}
 }
