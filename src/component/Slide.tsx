@@ -34,7 +34,7 @@ export default function Slide() {
     ],
     [
       "チケットを読み取ると、隣に設置してあるプリンターから食券を受け取ります",
-      <Printer style={SlideStyle} key="2" className="h-60 md:h-96" />,
+      <Printer style={SlideStyle} key="2" className="h-60 rotate-[-10deg] md:h-96" />,
     ],
     [
       "食堂のスタッフへ食券を提示してください",
