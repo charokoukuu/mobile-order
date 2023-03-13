@@ -61,3 +61,8 @@ h3 {
 .japanese_R {
   font-family: japan_r;
 }
+
+.menu_box {
+  min-height: 85vh;
+  min-height: 85dvh;
+}
