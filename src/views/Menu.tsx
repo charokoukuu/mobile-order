@@ -120,20 +120,20 @@ export const Menu = ({ appBarHeight }: Props) => {
             }}
             onNext={async (payment, setIsLoad) => {
               try {
-                const order = await OrderSubmit({
-                  user: {
-                    uid: auth.currentUser?.uid || "",
-                    studentName: auth.currentUser?.displayName || "",
-                    mailAddress: auth.currentUser?.email || "",
-                  },
-                  totalPrice: totalPrice,
-                  menu: orderData,
-                  payment: payment,
-                });
                 const cantOrderTitle = (await CantOrderTitle(
                   orderData
                 )) as string[];
                 if (cantOrderTitle.length === 0) {
+                  const order = await OrderSubmit({
+                    user: {
+                      uid: auth.currentUser?.uid || "",
+                      studentName: auth.currentUser?.displayName || "",
+                      mailAddress: auth.currentUser?.email || "",
+                    },
+                    totalPrice: totalPrice,
+                    menu: orderData,
+                    payment: payment,
+                  });
                   payment === "paypay" && (await PayPaySessionCreate(order));
                   payment === "stripe" &&
                     (await Payment(payment, order.id, totalPrice, orderData));
