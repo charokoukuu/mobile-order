@@ -1,77 +1,25 @@
-import Divider from "@mui/material/Divider";
 import { Spacer } from "../component/SwipeTabs";
+import Iframe from "react-iframe";
 export const Help = (props: { appBarHeight: number }) => {
   return (
-    <div className="m-4 mx-auto max-w-3xl text-center">
+    <div className="m-4 mx-auto h-[100vh] max-w-3xl text-center">
       <Spacer appBarHeight={props.appBarHeight} mode={"history"} />
-      <div className="mx-4 rounded-lg bg-white p-[2%]">
-        <div className="my-4">
-          <h2 className="my-4 text-4xl font-bold text-runticketBlue">STEP 1</h2>
-          <p className="mb-3">メニューを選択します</p>
-          <img
-            className="mx-auto"
-            src="/help/home.png"
-            alt="menu"
-            width={"70%"}
-          />
-        </div>
-        <Divider />
-        <div className="my-4">
-          <h2 className="my-4 text-4xl font-bold text-runticketBlue">STEP 2</h2>
-          <p className="mb-3">オプションを選択し、カートに追加します</p>
-          <img
-            className="mx-auto"
-            src="/help/detail.png"
-            alt="menu"
-            width={"70%"}
-          />
-        </div>
-        <Divider />
-        <div className="my-4">
-          <h2 className="my-4 text-4xl font-bold text-runticketBlue">STEP 3</h2>
-          <p className="mb-3">
-            カートを見るボタンを押して購入する商品を確認します
-          </p>
-          <img
-            className="mx-auto"
-            src="/help/cart.png"
-            alt="menu"
-            width={"70%"}
-          />
-        </div>
-        <Divider />
-        <div className="my-4">
-          <h2 className="my-4 text-4xl font-bold text-runticketBlue">STEP 4</h2>
-          <p className="mb-3">決済方法を選択します</p>
-          <img
-            className="mx-auto"
-            src="/help/order.png"
-            alt="menu"
-            width={"70%"}
-          />
-        </div>
-        <Divider />
-        <div className="my-4">
-          <h2 className="my-4 text-4xl font-bold text-runticketBlue">STEP 5</h2>
-          <p className="m-auto mb-3 w-[70%]">
-            発行されたQRコードをスキャンし、食券を発行します
-          </p>
-          <div className="m-[5%_0_13%_0] flex">
-            <img
-              src="/help/printer.svg"
-              alt="menu"
-              width={"50%"}
-              className="rotate-[-10deg]"
-            />
-            <img
-              src="/help/scanner.svg"
-              alt="menu"
-              width={"50%"}
-              className="rotate-[-10deg]"
-            />
-          </div>
-        </div>
-      </div>
+      <Iframe
+        id="page1"
+        url="https://runticket-law.web.app/help.html?a=5"
+        position="absolute"
+        className="mx-auto max-w-3xl rounded-lg bg-white p-[2%] [&_h2]:my-[0.83em] [&_h2]:text-[1.5em] [&_h2]:font-bold [&_li]:list-decimal [&_ul]:ml-4 [&_ul_ul>li]:list-[lower-latin] [&_ul_ul_ul>li]:ml-4 [&_ul_ul_ul>li]:list-[cjk-ideographic]"
+        width="90%"
+        height="100%"
+        styles={{
+          bottm: "0",
+          left: "0",
+          transform: "translateX(5%)",
+          border: "none",
+          overflow: "hidden",
+          zIndex: 1,
+        }}
+      />
     </div>
   );
 };
