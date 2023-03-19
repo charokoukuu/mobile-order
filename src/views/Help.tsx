@@ -12,9 +12,8 @@ export const Help = (props: { appBarHeight: number }) => {
         width="90%"
         height="100%"
         styles={{
-          bottm: "0",
-          left: "0",
-          transform: "translateX(5%)",
+          left: "50%",
+          transform: "translateX(-50%)",
           border: "none",
           overflow: "hidden",
           zIndex: 1,
