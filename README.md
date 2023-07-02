@@ -36,3 +36,8 @@ sequenceDiagram
     Note right of backend:status:complete
     kiosk-->>User:食券発行
 ```
+
+# 追記
+当リポジトリは3月30日を以って下記に移行しました
+[https://github.com/charokoukuu/RunTicket](https://github.com/charokoukuu/RunTicket)
+
